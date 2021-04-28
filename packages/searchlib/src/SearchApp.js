@@ -34,24 +34,26 @@ function rebind(config) {
   );
 }
 
-export default function App() {
-  const appName = 'wise';
+export default function App(props) {
+  const { appName = 'wise' } = props;
 
   const appConfig = React.useMemo(() => {
     return rebind(cloneDeep(config.searchui[appName]));
-  }, []);
+  }, [appName]);
 
   return (
     <SearchProvider config={appConfig}>
       <WithSearch mapContextToProps={(context) => context}>
-        {(params) => <Search {...params} appConfig={appConfig} />}
+        {(params) => (
+          <Search {...params} appConfig={appConfig} appName={appName} />
+        )}
       </WithSearch>
     </SearchProvider>
   );
 }
 
-const Search = (props) => {
-  const { wasSearched, setSearchTerm, appConfig } = props;
+export const Search = (props) => {
+  const { wasSearched, setSearchTerm, appConfig, appName } = props;
 
   React.useEffect(() => {
     if (!wasSearched) {
@@ -65,7 +67,7 @@ const Search = (props) => {
   const itemViewProps = view.params;
 
   return (
-    <div className="App">
+    <div className={`App searchapp-${appName}`}>
       <AppConfigContext.Provider value={appConfig}>
         <ErrorBoundary>
           <Layout
