@@ -80,7 +80,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "eslintConfig": {
     "extends": [
@@ -162,6 +164,10 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
     "eslint": "^7.24.0",
     "eslint-cli": "^1.1.1",
     "eslint-config-prettier": "^8.1.0",
