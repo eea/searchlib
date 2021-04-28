@@ -1,4 +1,4 @@
-import SearchApp from '@eeacms/search';
+import SearchApp from '@eeacms/search/SearchApp';
 
 const page = {
   title: 'Search/Demo',
