@@ -124,6 +124,20 @@ const config = {
         ...wise_config,
       };
     },
+
+    get minimal() {
+      return {
+        ...config.searchui.default,
+        ...wise_config,
+        facets: [
+          simpleFacet({ field: 'Sector' }),
+          simpleFacet({
+            field: 'Origin_of_the_measure',
+            label: 'Origin of the measure',
+          }),
+        ],
+      };
+    },
   },
 };
 
