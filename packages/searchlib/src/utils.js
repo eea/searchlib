@@ -2,6 +2,10 @@ import isFunction from 'lodash.isfunction';
 import cloneDeep from 'lodash.clonedeep';
 import mergeWith from 'lodash/mergeWith';
 
+export function isString(obj) {
+  return typeof obj === 'string' || obj instanceof String;
+}
+
 export function rebind(config) {
   let clone = cloneDeep(config);
 
@@ -19,6 +23,9 @@ function customizer(objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue);
   }
+  // if (isString(objValue) || isString(srcValue)) {
+  //   console.log('string', objValue, srcValue);
+  // }
 }
 
 export function mergeConfig(object, ...sources) {

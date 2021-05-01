@@ -20,14 +20,14 @@ const SearchView = (props) => {
     }
   }, [wasSearched, setSearchTerm, defaultSearchText]);
 
-  const { sortOptions, listingViews } = appConfig;
+  const { sortOptions, resultViews } = appConfig;
   const defaultViewId =
-    listingViews.filter((v) => v.isDefault)[0]?.id || 'listing';
+    resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
   const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
-  const view = listingViews.filter((v) => v.id === activeViewId)[0];
-  const Item = view.itemComponent;
-  const ResultViewComponent = view.viewComponent;
-  const itemViewProps = view.params;
+  const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
+  const Item = listingViewDef.itemComponent;
+  const ResultViewComponent = listingViewDef.viewComponent;
+  const itemViewProps = listingViewDef.params;
   const Layout = appConfig.layoutComponent;
 
   return (
@@ -48,7 +48,7 @@ const SearchView = (props) => {
         bodyContent={
           <>
             <ViewSelector
-              views={listingViews}
+              views={resultViews}
               active={activeViewId}
               onSetView={setActiveViewId}
             />

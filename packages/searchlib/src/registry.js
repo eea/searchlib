@@ -1,6 +1,6 @@
 import { Facet } from '@elastic/react-search-ui';
 import { simpleFacet } from '@eeacms/search/components/factories';
-import { Item, LeftColumnLayout } from '@eeacms/search/components';
+import { ListingViewItem, LeftColumnLayout } from '@eeacms/search/components';
 import { Item as SUIItem } from 'semantic-ui-react';
 import { mergeConfig } from './utils';
 import {
@@ -36,37 +36,24 @@ const wise_config = {
       direction: 'asc',
     },
   ],
-  listingViews: [
-    {
-      id: 'listing',
-      title: 'Items',
-      icon: null,
-      isDefault: true,
-      viewComponent: SUIItem.Group,
-      itemComponent: Item,
-      titleField: 'Measure_name',
-      urlField: 'CodeCatalogue',
-      params: {
-        titleField: 'Measure_name',
-        urlField: null,
-        summaryField: null,
-        extraFields: [
-          {
-            field: 'Origin_of_the_measure',
-            label: 'Origin of the measure',
-          },
-          {
-            field: 'Nature_of_the_measure',
-            label: 'Nature of the measure',
-          },
-          {
-            field: 'Spatial_scope',
-            label: 'Spatial scope',
-          },
-        ],
+  listingViewParams: {
+    titleField: 'Measure_name',
+    // urlField: 'CodeCatalogue',
+    extraFields: [
+      {
+        field: 'Origin_of_the_measure',
+        label: 'Origin of the measure',
       },
-    },
-  ],
+      {
+        field: 'Nature_of_the_measure',
+        label: 'Nature of the measure',
+      },
+      {
+        field: 'Spatial_scope',
+        label: 'Spatial scope',
+      },
+    ],
+  },
 };
 
 const config = {
@@ -88,6 +75,22 @@ const config = {
 
       // when entering in search view, use this to search
       defaultSearchText: '',
+
+      resultViews: [
+        {
+          id: 'listing',
+          title: 'Items',
+          icon: null,
+          isDefault: true,
+          viewComponent: SUIItem.Group,
+          itemComponent: ListingViewItem,
+        },
+      ],
+
+      // parameters for the 'listing' Listing View
+      listingViewParams: {
+        enabled: true,
+      },
 
       sortOptions: [
         {

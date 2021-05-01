@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Item } from 'semantic-ui-react';
+import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
 const Header = (props) => {
   const [showModal, setShowModal] = React.useState(false);
@@ -32,25 +33,30 @@ const Header = (props) => {
   );
 };
 
-const ResultItem = (props) => {
-  const { result, extraFields = [] } = props;
+// needed because of weird use of component from react-search-ui
+const Inner = (props) => {
+  const { result } = props;
+  const { listingViewParams } = useAppConfig();
+  // console.log('appConfig', listingViewParams);
 
   return (
-    <>
-      <Item>
-        <Item.Content>
-          <Header {...props} />
-          <Item.Extra>
-            {extraFields.map(({ field, label }, i) => (
-              <div className="simple-item-extra" key={i}>
-                <strong>{label}:</strong> <em>{result[field].raw}</em>
-              </div>
-            ))}
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-    </>
+    <Item>
+      <Item.Content>
+        <Header {...props} {...listingViewParams} />
+        <Item.Extra>
+          {listingViewParams?.extraFields?.map(({ field, label }, i) => (
+            <div className="simple-item-extra" key={i}>
+              <strong>{label}:</strong> <em>{result[field].raw}</em>
+            </div>
+          ))}
+        </Item.Extra>
+      </Item.Content>
+    </Item>
   );
+};
+
+const ResultItem = (props) => {
+  return <Inner {...props} />;
 };
 
 export default ResultItem;
