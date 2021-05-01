@@ -1,13 +1,14 @@
-import {
-  buildRequest,
-  runRequest,
-  applyDisjunctiveFaceting,
-  buildState,
-} from './lib/search';
 import { Facet } from '@elastic/react-search-ui';
 import { simpleFacet } from '@eeacms/search/components/factories';
 import { Item, LeftColumnLayout } from '@eeacms/search/components';
 import { Item as SUIItem } from 'semantic-ui-react';
+import { mergeConfig } from './utils';
+import {
+  onResultClick,
+  onAutocompleteResultClick,
+  onAutocomplete,
+  onSearch,
+} from './request';
 
 const wise_config = {
   facets: [
@@ -29,11 +30,6 @@ const wise_config = {
     simpleFacet({ field: 'Descriptors' }),
   ],
   sortOptions: [
-    {
-      name: 'Relevance',
-      value: '',
-      direction: '',
-    },
     {
       name: 'Title',
       value: 'Measure_name',
@@ -82,6 +78,10 @@ const config = {
     default: {
       // debug: true,
       hasA11yNotifications: true,
+      onResultClick,
+      onAutocompleteResultClick,
+      onAutocomplete,
+      onSearch,
 
       // visually layout the search components (header, side, etc)
       layoutComponent: LeftColumnLayout,
@@ -89,54 +89,17 @@ const config = {
       // when entering in search view, use this to search
       defaultSearchText: '',
 
-      onResultClick: () => {
-        /* Not implemented */
-      },
-      onAutocompleteResultClick: () => {
-        /* Not implemented */
-      },
-
-      async onAutocomplete(props) {
-        const _config = this;
-        const { searchTerm } = props;
-        const resultsPerPage = 20;
-        const requestBody = buildRequest({ searchTerm }, _config);
-        const json = await runRequest(requestBody, _config);
-        const state = buildState(json.body, resultsPerPage, _config);
-        return {
-          autocompletedResults: state.results,
-        };
-      },
-      async onSearch(state) {
-        const _config = this;
-        const { resultsPerPage } = state;
-        const requestBody = buildRequest(state, _config);
-
-        // Note that this could be optimized by running all of these requests
-        // at the same time. Kept simple here for clarity.
-        const responseJson = await runRequest(requestBody, _config);
-        const { body } = responseJson;
-        const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
-          body,
-          state,
-          [],
-          _config,
-        );
-
-        const newState = buildState(
-          responseJsonWithDisjunctiveFacetCounts,
-          resultsPerPage,
-          _config,
-        );
-        return newState;
-      },
+      sortOptions: [
+        {
+          name: 'Relevance',
+          value: '',
+          direction: '',
+        },
+      ],
     },
 
     get wise() {
-      return {
-        ...config.searchui.default,
-        ...wise_config,
-      };
+      return mergeConfig(config.searchui.default, wise_config);
     },
 
     get minimal() {
