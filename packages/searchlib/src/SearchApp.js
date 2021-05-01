@@ -11,7 +11,6 @@ import { SearchView } from './components';
 import { rebind } from './utils';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-// import 'semantic-ui-css/semantic.min.css';
 
 export default function SearchApp(props) {
   const { appName } = props;

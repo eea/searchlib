@@ -4,6 +4,7 @@ import './index.css';
 import App from './SearchApp';
 import * as serviceWorker from './serviceWorker';
 
+// import 'semantic-ui-css/semantic.min.css';
 import './semantic-ui.less';
 
 ReactDOM.render(<App appName="wise" />, document.getElementById('root'));

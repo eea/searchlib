@@ -29,5 +29,6 @@ function customizer(objValue, srcValue) {
 }
 
 export function mergeConfig(object, ...sources) {
-  return mergeWith(object, ...sources, customizer);
+  let clone = cloneDeep(object);
+  return mergeWith(clone, ...sources, customizer);
 }
