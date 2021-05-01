@@ -12,6 +12,7 @@ const ViewSelector = (props) => {
             <Render {...props} />
           ) : (
             <Button
+              key={view.id}
               active={view.id === active}
               onClick={() => onSetView(view.id)}
             >

@@ -10,7 +10,6 @@ import { AppConfigContext } from './lib/hocs';
 import { SearchView } from './components';
 import { rebind } from './utils';
 
-import './semantic-ui.less';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 // import 'semantic-ui-css/semantic.min.css';
 

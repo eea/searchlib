@@ -4,6 +4,8 @@ import './index.css';
 import App from './SearchApp';
 import * as serviceWorker from './serviceWorker';
 
+import './semantic-ui.less';
+
 ReactDOM.render(<App appName="wise" />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
