@@ -30,6 +30,14 @@ const SearchView = (props) => {
   const itemViewProps = listingViewDef.params;
   const Layout = appConfig.layoutComponent;
 
+  const availableResultViews = [
+    ...resultViews.filter(({ id }) =>
+      Object.keys(appConfig).includes(`${id}ViewParams`)
+        ? appConfig[`${id}ViewParams`].enabled
+        : true,
+    ),
+  ];
+
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
@@ -48,7 +56,7 @@ const SearchView = (props) => {
         bodyContent={
           <>
             <ViewSelector
-              views={resultViews}
+              views={availableResultViews}
               active={activeViewId}
               onSetView={setActiveViewId}
             />

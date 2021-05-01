@@ -1,7 +1,12 @@
 import { Facet } from '@elastic/react-search-ui';
 import { simpleFacet } from '@eeacms/search/components/factories';
-import { ListingViewItem, LeftColumnLayout } from '@eeacms/search/components';
-import { Item as SUIItem } from 'semantic-ui-react';
+import {
+  ListingViewItem,
+  LeftColumnLayout,
+  TableRowItem,
+  TableView,
+} from '@eeacms/search/components';
+import { Item } from 'semantic-ui-react';
 import { mergeConfig } from './utils';
 import {
   onResultClick,
@@ -36,6 +41,18 @@ const wise_config = {
       direction: 'asc',
     },
   ],
+  tableViewParams: {
+    columns: [
+      {
+        title: 'Measure name',
+        field: 'Measure_name',
+      },
+      {
+        title: 'Origin of them easure',
+        field: 'Origin_of_the_measure',
+      },
+    ],
+  },
   listingViewParams: {
     titleField: 'Measure_name',
     // urlField: 'CodeCatalogue',
@@ -83,7 +100,7 @@ const config = {
           icon: null,
           render: null,
           isDefault: true,
-          viewComponent: SUIItem.Group,
+          viewComponent: Item.Group,
           itemComponent: ListingViewItem,
         },
         {
@@ -92,13 +109,18 @@ const config = {
           icon: null,
           render: null,
           isDefault: false,
-          viewComponent: SUIItem.Group,
-          itemComponent: ListingViewItem,
+          viewComponent: TableView,
+          itemComponent: TableRowItem,
         },
       ],
 
       // parameters for the 'listing' Listing View
+      // The config will lookup for `${id}ViewParams` objects
       listingViewParams: {
+        enabled: true,
+      },
+
+      tableViewParams: {
         enabled: true,
       },
 
