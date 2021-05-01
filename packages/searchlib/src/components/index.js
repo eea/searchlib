@@ -1,2 +1,4 @@
 export Facets from './Facets/Facets';
-export SimpleResult from './Result/SimpleResult';
+export Item from './Result/Item';
+export LeftColumnLayout from './Layout/LeftColumnLayout';
+export ViewSelector from './ViewSelector/ViewSelector';

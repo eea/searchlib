@@ -32,12 +32,8 @@ const Header = (props) => {
   );
 };
 
-const SimpleResult = (props) => {
+const ResultItem = (props) => {
   const { result, extraFields = [] } = props;
-  // console.log('resprops', props);
-  // titleField,
-  // urlField,
-  // summaryField,
 
   return (
     <>
@@ -57,4 +53,4 @@ const SimpleResult = (props) => {
   );
 };
 
-export default SimpleResult;
+export default ResultItem;

@@ -12,50 +12,42 @@ import {
   Paging,
   Sorting,
 } from '@elastic/react-search-ui';
-import { Layout } from '@elastic/react-search-ui-views'; // SingleSelectFacet
 import config from './registry';
 import { AppConfigContext } from './lib/hocs';
-import { Facets } from './components';
-import isFunction from 'lodash.isfunction';
-import cloneDeep from 'lodash.clonedeep';
-
-import { Item as SUIItem } from 'semantic-ui-react';
+import { Facets, ViewSelector } from './components';
+import { rebind } from './utils';
 
 import './semantic-ui.less';
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 // import 'semantic-ui-css/semantic.min.css';
 
-function rebind(config) {
-  // rebinds functions to the "activated" config
-  return Object.assign(
-    {},
-    ...Object.keys(config).map((name) => ({
-      [name]: isFunction(config[name])
-        ? config[name].bind(config)
-        : config[name],
-    })),
-  );
-}
-
-export default function App(props) {
-  const { appName = 'wise' } = props;
+export default function SearchApp(props) {
+  const { appName } = props;
 
   const appConfig = React.useMemo(() => {
-    return rebind(cloneDeep(config.searchui[appName]));
+    return rebind(config.searchui[appName]);
   }, [appName]);
 
   return (
     <SearchProvider config={appConfig}>
       <WithSearch mapContextToProps={(context) => context}>
         {(params) => (
-          <Search {...params} appConfig={appConfig} appName={appName} />
+          <AppConfigContext.Provider value={appConfig}>
+            <ErrorBoundary>
+              <SearchLayout
+                {...params}
+                appConfig={appConfig}
+                appName={appName}
+              />
+            </ErrorBoundary>
+          </AppConfigContext.Provider>
         )}
       </WithSearch>
     </SearchProvider>
   );
 }
 
-export const Search = (props) => {
+export const SearchLayout = (props) => {
   const { wasSearched, setSearchTerm, appConfig, appName } = props;
 
   React.useEffect(() => {
@@ -65,53 +57,56 @@ export const Search = (props) => {
   }, [wasSearched, setSearchTerm]);
 
   const { sortOptions, listingViews } = appConfig;
-  const view = listingViews[0];
+  const defaultViewId =
+    listingViews.filter((v) => v.isDefault)[0]?.id || 'listing';
+  const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
+  const view = listingViews.filter((v) => v.id === activeViewId)[0];
   const Item = view.itemComponent;
+  const ResultViewComponent = view.viewComponent;
   const itemViewProps = view.params;
+  const Layout = appConfig.layoutComponent;
 
   return (
     <div className={`searchapp searchapp-${appName}`}>
-      <AppConfigContext.Provider value={appConfig}>
-        <ErrorBoundary>
-          <Layout
-            header={
-              <SearchBox
-                autocompleteMinimumCharacters={3}
-                autocompleteSuggestions={true}
-              />
-            }
-            sideContent={
-              <>
-                {wasSearched && (
-                  <Sorting label={'Sort by'} sortOptions={sortOptions} />
-                )}
-
-                <Facets />
-              </>
-            }
-            bodyContent={
-              <Results
-                titleField="Measure name"
-                urlField="CodeCatalogue"
-                shouldTrackClickThrough={true}
-                view={({ children }) => {
-                  return <SUIItem.Group>{children}</SUIItem.Group>;
-                }}
-                resultView={(props) => (
-                  <Result {...props} {...itemViewProps} view={Item} />
-                )}
-              />
-            }
-            bodyHeader={
-              <React.Fragment>
-                <PagingInfo />
-                <ResultsPerPage />
-              </React.Fragment>
-            }
-            bodyFooter={<Paging />}
+      <Layout
+        header={
+          <SearchBox
+            autocompleteMinimumCharacters={3}
+            autocompleteSuggestions={true}
           />
-        </ErrorBoundary>
-      </AppConfigContext.Provider>
+        }
+        sideContent={
+          <>
+            <Sorting label={'Sort by'} sortOptions={sortOptions} />
+            <Facets />
+          </>
+        }
+        bodyContent={
+          <>
+            <ViewSelector
+              views={listingViews}
+              active={activeViewId}
+              onSetView={setActiveViewId}
+            />
+            <Results
+              shouldTrackClickThrough={true}
+              view={({ children }) => {
+                return <ResultViewComponent>{children}</ResultViewComponent>;
+              }}
+              resultView={(props) => (
+                <Result {...props} {...itemViewProps} view={Item} />
+              )}
+            />
+          </>
+        }
+        bodyHeader={
+          <>
+            <PagingInfo />
+            <ResultsPerPage />
+          </>
+        }
+        bodyFooter={<Paging />}
+      />
     </div>
   );
 };

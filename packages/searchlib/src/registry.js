@@ -6,7 +6,8 @@ import {
 } from './lib/search';
 import { Facet } from '@elastic/react-search-ui';
 import { simpleFacet } from '@eeacms/search/components/factories';
-import { SimpleResult } from '@eeacms/search/components';
+import { Item, LeftColumnLayout } from '@eeacms/search/components';
+import { Item as SUIItem } from 'semantic-ui-react';
 
 const wise_config = {
   facets: [
@@ -41,9 +42,14 @@ const wise_config = {
   ],
   listingViews: [
     {
+      id: 'listing',
       title: 'Items',
       icon: null,
-      itemComponent: SimpleResult,
+      isDefault: true,
+      viewComponent: SUIItem.Group,
+      itemComponent: Item,
+      titleField: 'Measure_name',
+      urlField: 'CodeCatalogue',
       params: {
         titleField: 'Measure_name',
         urlField: null,
@@ -76,6 +82,7 @@ const config = {
     default: {
       // debug: true,
       hasA11yNotifications: true,
+      layoutComponent: LeftColumnLayout,
       onResultClick: () => {
         /* Not implemented */
       },
