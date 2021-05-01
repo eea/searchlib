@@ -13,13 +13,16 @@ import {
   Sorting,
 } from '@elastic/react-search-ui';
 import { Layout } from '@elastic/react-search-ui-views'; // SingleSelectFacet
-import '@elastic/react-search-ui-views/lib/styles/styles.css';
 import config from './registry';
 import { AppConfigContext } from './lib/hocs';
 import { Facets } from './components';
-import './semantic-ui.less';
 import isFunction from 'lodash.isfunction';
 import cloneDeep from 'lodash.clonedeep';
+
+import { Item as SUIItem } from 'semantic-ui-react';
+
+import './semantic-ui.less';
+import '@elastic/react-search-ui-views/lib/styles/styles.css';
 // import 'semantic-ui-css/semantic.min.css';
 
 function rebind(config) {
@@ -67,7 +70,7 @@ export const Search = (props) => {
   const itemViewProps = view.params;
 
   return (
-    <div className={`App searchapp-${appName}`}>
+    <div className={`searchapp searchapp-${appName}`}>
       <AppConfigContext.Provider value={appConfig}>
         <ErrorBoundary>
           <Layout
@@ -78,19 +81,22 @@ export const Search = (props) => {
               />
             }
             sideContent={
-              <div>
+              <>
                 {wasSearched && (
                   <Sorting label={'Sort by'} sortOptions={sortOptions} />
                 )}
 
                 <Facets />
-              </div>
+              </>
             }
             bodyContent={
               <Results
                 titleField="Measure name"
                 urlField="CodeCatalogue"
                 shouldTrackClickThrough={true}
+                view={({ children }) => {
+                  return <SUIItem.Group>{children}</SUIItem.Group>;
+                }}
                 resultView={(props) => (
                   <Result {...props} {...itemViewProps} view={Item} />
                 )}

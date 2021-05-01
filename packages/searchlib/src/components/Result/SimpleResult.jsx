@@ -1,19 +1,21 @@
 import React from 'react';
-import { Modal } from 'semantic-ui-react';
+import { Modal, Item } from 'semantic-ui-react';
 
 const Header = (props) => {
-  const { Level = 'h4', urlField, titleField, result } = props;
   const [showModal, setShowModal] = React.useState(false);
+  const { result } = props;
+  const { Level = 'h4', urlField, titleField } = props;
+
   const link = urlField ? (
     <a href={result[urlField].raw}>{result[titleField].raw}</a>
   ) : (
-    <button
-      tabIndex="-1"
+    <Item.Header
+      as="a"
       onClick={() => setShowModal(true)}
       onKeyDown={() => setShowModal(true)}
     >
       {result[titleField].raw}
-    </button>
+    </Item.Header>
   );
 
   return (
@@ -38,14 +40,20 @@ const SimpleResult = (props) => {
   // summaryField,
 
   return (
-    <div className="simple-item">
-      <Header {...props} />
-      {extraFields.map(({ field, label }, i) => (
-        <div className="simple-item-extra" key={i}>
-          <strong>{label}:</strong> <em>{result[field].raw}</em>
-        </div>
-      ))}
-    </div>
+    <>
+      <Item>
+        <Item.Content>
+          <Header {...props} />
+          <Item.Extra>
+            {extraFields.map(({ field, label }, i) => (
+              <div className="simple-item-extra" key={i}>
+                <strong>{label}:</strong> <em>{result[field].raw}</em>
+              </div>
+            ))}
+          </Item.Extra>
+        </Item.Content>
+      </Item>
+    </>
   );
 };
 

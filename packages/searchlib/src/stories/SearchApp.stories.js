@@ -1,4 +1,5 @@
 import SearchApp from '@eeacms/search/SearchApp';
+import '@eeacms/search/index.css';
 
 const page = {
   title: 'Search/Demo',
