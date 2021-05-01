@@ -82,13 +82,20 @@ const config = {
     default: {
       // debug: true,
       hasA11yNotifications: true,
+
+      // visually layout the search components (header, side, etc)
       layoutComponent: LeftColumnLayout,
+
+      // when entering in search view, use this to search
+      defaultSearchText: '',
+
       onResultClick: () => {
         /* Not implemented */
       },
       onAutocompleteResultClick: () => {
         /* Not implemented */
       },
+
       async onAutocomplete(props) {
         const _config = this;
         const { searchTerm } = props;
