@@ -6,7 +6,7 @@ const WrappedTable = (props) => {
   const { tableViewParams } = useAppConfig();
 
   return (
-    <Table>
+    <Table celled compact>
       <Table.Header>
         <Table.Row>
           {tableViewParams.columns.map((col, index) => (

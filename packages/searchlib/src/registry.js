@@ -48,7 +48,7 @@ const wise_config = {
         field: 'Measure_name',
       },
       {
-        title: 'Origin of them easure',
+        title: 'Origin of the measure',
         field: 'Origin_of_the_measure',
       },
     ],
