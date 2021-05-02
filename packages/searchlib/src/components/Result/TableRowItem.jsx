@@ -3,7 +3,8 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Table } from 'semantic-ui-react';
 
 const WrappedRowItem = (props) => {
-  const { tableViewParams } = useAppConfig();
+  const { appConfig } = useAppConfig();
+  const { tableViewParams } = appConfig;
   const { result } = props;
   return (
     <Table.Row>

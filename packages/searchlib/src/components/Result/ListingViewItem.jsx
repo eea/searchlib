@@ -36,7 +36,8 @@ const Header = (props) => {
 // needed because of weird use of component from react-search-ui
 const Inner = (props) => {
   const { result } = props;
-  const { listingViewParams } = useAppConfig();
+  const { appConfig } = useAppConfig();
+  const { listingViewParams } = appConfig;
   // console.log('appConfig', listingViewParams);
 
   return (

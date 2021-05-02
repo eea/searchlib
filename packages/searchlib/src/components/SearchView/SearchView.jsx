@@ -29,6 +29,7 @@ const SearchView = (props) => {
   const ResultViewComponent = listingViewDef.viewComponent;
   const itemViewProps = listingViewDef.params;
   const Layout = appConfig.layoutComponent;
+  console.log('appconfig searchview', appConfig);
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>

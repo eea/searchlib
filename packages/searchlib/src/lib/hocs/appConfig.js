@@ -17,9 +17,11 @@ export const useAppConfig = () => {
 
 export const withAppConfig = (WrappedComponent) => {
   const WrappedField = (props) => {
-    const config = useAppConfig();
+    const { appConfig, registry } = useAppConfig();
 
-    return <WrappedComponent appConfig={config} {...props} />;
+    return (
+      <WrappedComponent appConfig={appConfig} registry={registry} {...props} />
+    );
   };
 
   return WrappedField;

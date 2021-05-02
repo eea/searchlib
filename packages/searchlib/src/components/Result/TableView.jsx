@@ -3,7 +3,8 @@ import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const WrappedTable = (props) => {
-  const { tableViewParams } = useAppConfig();
+  const { appConfig } = useAppConfig();
+  const { tableViewParams } = appConfig;
 
   return (
     <Table celled compact>
