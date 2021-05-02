@@ -66,6 +66,7 @@ function getRangeFilter(filter) {
 export default function buildRequestFilter(filters) {
   if (!filters) return;
 
+  // TODO: extract filters from facets
   filters = filters.reduce((acc, filter) => {
     if (
       [

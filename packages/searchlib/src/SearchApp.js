@@ -17,7 +17,7 @@ export default function SearchApp(props) {
   const appConfig = React.useMemo(() => rebind(registry.searchui[appName]), [
     appName,
     registry,
-  ]); // TODO: also expose registry
+  ]);
 
   const context = { appConfig, registry };
 

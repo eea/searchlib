@@ -45,6 +45,7 @@ function getRangeFacet(aggregations, fieldName) {
 }
 
 export default function buildStateFacets(aggregations) {
+  // TODO: make this generic
   // const visitors = getRangeFacet(aggregations, 'visitors');
 
   const Country = getValueFacet(aggregations, 'Country');

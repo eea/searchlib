@@ -8,9 +8,10 @@ import {
   Paging,
   Sorting,
 } from '@elastic/react-search-ui';
-import { Facets, ViewSelector } from '@eeacms/search/components';
+import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
 
 const SearchView = (props) => {
+  console.log('props', props);
   const { wasSearched, setSearchTerm, appConfig, appName } = props;
   const { defaultSearchText } = appConfig;
 
@@ -29,7 +30,6 @@ const SearchView = (props) => {
   const ResultViewComponent = listingViewDef.viewComponent;
   const itemViewProps = listingViewDef.params;
   const Layout = appConfig.layoutComponent;
-  console.log('appconfig searchview', appConfig);
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>
@@ -38,6 +38,8 @@ const SearchView = (props) => {
         : true,
     ),
   ];
+
+  // TODO: improve searchbox
 
   return (
     <div className={`searchapp searchapp-${appName}`}>
@@ -64,6 +66,7 @@ const SearchView = (props) => {
         }
         bodyContent={
           <>
+            <FilterList {...props} />
             <ViewSelector
               views={availableResultViews}
               active={activeViewId}

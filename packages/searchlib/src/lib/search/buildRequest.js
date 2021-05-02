@@ -84,6 +84,7 @@ export default function buildRequest(state, config) {
 
     aggs: {
       ...aggregations,
+
       // states: { terms: { field: 'states.keyword', size: 30 } },
       // world_heritage_site: {
       //   terms: { field: 'world_heritage_site' },
