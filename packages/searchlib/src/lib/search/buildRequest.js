@@ -68,7 +68,6 @@ export default function buildRequest(state, config) {
 
   const { highlight } = config;
 
-  console.log('facets', { aggregations, facets });
   const body = {
     // Static query Configuration
     // --------------------------

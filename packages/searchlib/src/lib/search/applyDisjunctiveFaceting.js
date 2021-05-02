@@ -5,7 +5,7 @@ function combineAggregationsFromResponses(responses) {
   return responses.reduce((acc, response) => {
     return {
       ...acc,
-      ...response.aggregations,
+      ...response.body.aggregations,
     };
   }, {});
 }
