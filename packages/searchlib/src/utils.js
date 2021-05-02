@@ -32,3 +32,15 @@ export function mergeConfig(object, ...sources) {
   let clone = cloneDeep(object);
   return mergeWith(clone, ...sources, customizer);
 }
+
+export function applyConfigurationSchema(config) {
+  // based on partial configuration, it "finishes" the config with knowledge on
+  // how to fill in the gaps
+  config.disjunctiveFacets = [...(config.disjunctiveFacets || [])];
+  config.facets.forEach((facet) => {
+    if (facet.isMulti && !config.disjunctiveFacets.includes(facet.field)) {
+      config.disjunctiveFacets.push(facet.field);
+    }
+  });
+  return config;
+}

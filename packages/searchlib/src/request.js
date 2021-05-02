@@ -37,7 +37,6 @@ export async function onSearch(state) {
   const responseJsonWithDisjunctiveFacetCounts = await applyDisjunctiveFaceting(
     body,
     state,
-    [],
     _config,
   );
 

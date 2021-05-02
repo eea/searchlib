@@ -11,7 +11,6 @@ import {
 import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
 
 const SearchView = (props) => {
-  console.log('props', props);
   const { wasSearched, setSearchTerm, appConfig, appName } = props;
   const { defaultSearchText } = appConfig;
 

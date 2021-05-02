@@ -9,7 +9,7 @@ const Filter = (props) => {
       <Label.Group>
         {values?.map((v, index) => {
           return (
-            <Label>
+            <Label key={index}>
               {v}
               <Icon onClick={() => onClear(field)} name="delete" />
             </Label>

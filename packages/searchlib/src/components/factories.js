@@ -6,7 +6,7 @@ const buildRequest = (facet) => {
   };
 };
 
-export const simpleFacet = ({
+export const suiFacet = ({
   field,
   label,
   filterType = 'any',
@@ -19,7 +19,7 @@ export const simpleFacet = ({
     label: label || field,
     filterType,
     isFilterable,
-    params,
     buildRequest,
+    ...params,
   };
 };

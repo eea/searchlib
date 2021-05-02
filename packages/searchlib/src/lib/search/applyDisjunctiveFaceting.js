@@ -37,14 +37,14 @@ function changeSizeToZero(body) {
   };
 }
 
-async function getDisjunctiveFacetCounts(state, disunctiveFacetNames) {
+async function getDisjunctiveFacetCounts(state, config) {
   const responses = await Promise.all(
     // Note that this could be optimized by *not* executing a request if not
     // filter is currently applied for that field. Kept simple here for
     // clarity.
-    disunctiveFacetNames.map((facetName) => {
+    config.disjunctiveFacets.map((facetName) => {
       let newState = removeFilterByName(state, facetName);
-      let body = buildRequest(newState);
+      let body = buildRequest(newState, config);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
       return runRequest(body);
@@ -60,19 +60,12 @@ async function getDisjunctiveFacetCounts(state, disunctiveFacetNames) {
  *
  * @param {*} json
  * @param {*} state
- * @param {string[]} disunctiveFacetNames
+ * @param {string[]} disjunctiveFacetNames
  *
  * @return {Promise<Object>} A map of updated aggregation counts for the specified facet names
  */
-export default async function applyDisjunctiveFaceting(
-  json,
-  state,
-  disunctiveFacetNames,
-) {
-  const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
-    state,
-    disunctiveFacetNames,
-  );
+export default async function applyDisjunctiveFaceting(json, state, config) {
+  const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(state, config);
 
   return {
     ...json,

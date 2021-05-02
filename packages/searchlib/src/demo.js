@@ -1,24 +1,24 @@
-import { simpleFacet } from '@eeacms/search/components/factories';
+import { suiFacet } from '@eeacms/search/components/factories';
 import { mergeConfig } from './utils';
 
 const wise_config = {
   facets: [
-    simpleFacet({ field: 'Country', isFilterable: true }),
-    simpleFacet({ field: 'Sector' }),
-    simpleFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
-    simpleFacet({ field: 'Status' }),
-    simpleFacet({
+    suiFacet({ field: 'Country', isFilterable: true, isMulti: true }),
+    suiFacet({ field: 'Sector' }),
+    suiFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
+    suiFacet({ field: 'Status' }),
+    suiFacet({
       field: 'Origin_of_the_measure',
       label: 'Origin of the measure',
     }),
-    simpleFacet({
+    suiFacet({
       field: 'Nature_of_the_measure',
       label: 'Nature of the measure',
     }),
-    simpleFacet({ field: 'Water_body_category', label: 'Water body category' }),
-    simpleFacet({ field: 'Spatial_scope', label: 'Spatial scope' }),
-    simpleFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
-    simpleFacet({ field: 'Descriptors' }),
+    suiFacet({ field: 'Water_body_category', label: 'Water body category' }),
+    suiFacet({ field: 'Spatial_scope', label: 'Spatial scope' }),
+    suiFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
+    suiFacet({ field: 'Descriptors' }),
   ],
   highlight: {
     fields: {
@@ -73,8 +73,8 @@ export default function installDemo(config) {
 
   config.searchui.minimal = mergeConfig(config.searchui.default, wise_config);
   config.searchui.minimal.facets = [
-    simpleFacet({ field: 'Sector' }),
-    simpleFacet({
+    suiFacet({ field: 'Sector' }),
+    suiFacet({
       field: 'Origin_of_the_measure',
       label: 'Origin of the measure',
     }),
