@@ -34,6 +34,11 @@ const wise_config = {
     simpleFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
     simpleFacet({ field: 'Descriptors' }),
   ],
+  highlight: {
+    fields: {
+      Measure_name: {},
+    },
+  },
   sortOptions: [
     {
       name: 'Title',
@@ -93,6 +98,12 @@ const config = {
       // when entering in search view, use this to search
       defaultSearchText: '',
 
+      highlight: {
+        fragment_size: 200,
+        number_of_fragments: 1,
+        fields: {},
+      },
+
       resultViews: [
         {
           id: 'listing',
@@ -138,17 +149,15 @@ const config = {
     },
 
     get minimal() {
-      return {
-        ...config.searchui.default,
-        ...wise_config,
-        facets: [
-          simpleFacet({ field: 'Sector' }),
-          simpleFacet({
-            field: 'Origin_of_the_measure',
-            label: 'Origin of the measure',
-          }),
-        ],
-      };
+      const conf = mergeConfig(config.searchui.default, wise_config);
+      conf.facets = [
+        simpleFacet({ field: 'Sector' }),
+        simpleFacet({
+          field: 'Origin_of_the_measure',
+          label: 'Origin of the measure',
+        }),
+      ];
+      return conf;
     },
   },
 };

@@ -44,6 +44,14 @@ const SearchView = (props) => {
         header={
           <SearchBox
             autocompleteMinimumCharacters={3}
+            autocompleteResults={{
+              linkTarget: '_blank',
+              sectionTitle: 'Results',
+              titleField: 'Measure_name',
+              urlField: 'CodeCatalogue',
+              shouldTrackClickThrough: true,
+              clickThroughTags: ['test'],
+            }}
             autocompleteSuggestions={true}
           />
         }
