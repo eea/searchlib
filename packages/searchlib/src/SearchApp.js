@@ -19,7 +19,7 @@ export default function SearchApp(props) {
     [appName, registry],
   );
 
-  console.log('appconfig', appConfig);
+  // console.log('appconfig', appConfig);
   const appConfigContext = { appConfig, registry };
 
   return (

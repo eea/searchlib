@@ -1,3 +1,6 @@
+/**
+ * Used by buildRequest to build the "filters" part of the ES request
+ */
 export default function buildRequestFilter(filters, config) {
   if (!filters) return;
 

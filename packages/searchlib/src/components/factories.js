@@ -1,4 +1,5 @@
 import { getTermFilter } from '@eeacms/search/lib/search/filters';
+import { getValueFacet } from '@eeacms/search/lib/search/facetValues';
 
 export const buildRequest = (facet) => {
   return {
@@ -23,6 +24,7 @@ export const suiFacet = ({
     isFilterable,
     buildRequest,
     buildFilter: getTermFilter,
+    getValue: getValueFacet,
     ...params,
   };
 };

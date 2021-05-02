@@ -65,10 +65,6 @@ const wise_config = {
 };
 
 export default function installDemo(config) {
-  // config.searchui.wise = {
-  //   ...config.searchui.default,
-  //   ...wise_config,
-  // };
   config.searchui.wise = mergeConfig(wise_config, config.searchui.default);
 
   config.searchui.minimal = mergeConfig(config.searchui.default, wise_config);

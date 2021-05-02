@@ -68,11 +68,11 @@ function buildResults(hits) {
 
   We do similar things for facets and totals.
 */
-export default function buildState(response, resultsPerPage) {
+export default function buildState(response, resultsPerPage, config) {
   const results = buildResults(response.hits.hits);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
-  const facets = buildStateFacets(response.aggregations);
+  const facets = buildStateFacets(response.aggregations, config);
 
   // console.log('response', results);
 
