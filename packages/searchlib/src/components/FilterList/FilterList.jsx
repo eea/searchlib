@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Label, Icon } from 'semantic-ui-react';
 
 const Filter = (props) => {
-  const { field, type, values, onClear } = props;
+  const { field, type, values, onClear, removeFilter } = props;
+
   return (
     <div className="filter-list-item">
       {`${field} (${type}):`}
@@ -11,7 +12,14 @@ const Filter = (props) => {
           return (
             <Label key={index}>
               {v}
-              <Icon onClick={() => onClear(field)} name="delete" />
+              <Icon
+                onClick={() => {
+                  return values.length === 1
+                    ? onClear(field)
+                    : removeFilter(field, v, type);
+                }}
+                name="delete"
+              />
             </Label>
           );
         })}
@@ -21,7 +29,7 @@ const Filter = (props) => {
 };
 
 const FilterList = (props) => {
-  const { filters, clearFilters } = props;
+  const { filters, clearFilters, setFilter, removeFilter } = props;
   return (
     <div className="filter-list">
       <div className="filter-list-header">
@@ -40,6 +48,8 @@ const FilterList = (props) => {
             <Filter
               key={index}
               {...filter}
+              setFilter={setFilter}
+              removeFilter={removeFilter}
               onClear={(field) => {
                 const activeFilters = filters.map(({ field }) => field);
                 const exclude = activeFilters.filter((name) => name !== field);
