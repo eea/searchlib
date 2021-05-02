@@ -57,13 +57,14 @@ function buildResults(hits) {
 /*
   Converts an Elasticsearch response to new application state
 
-  When implementing an onSearch Handler in Search UI, the handler needs to convert
-  search results into a new application state that Search UI understands.
+  When implementing an onSearch Handler in Search UI, the handler needs to
+  convert search results into a new application state that Search UI
+  understands.
 
   For instance, Elasticsearch returns "hits" for search results. This maps to
-  the "results" property in application state, which requires a specific format. So this
-  file iterates through "hits" and reformats them to "results" that Search UI
-  understands.
+  the "results" property in application state, which requires a specific
+  format. So this file iterates through "hits" and reformats them to "results"
+  that Search UI understands.
 
   We do similar things for facets and totals.
 */

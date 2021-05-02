@@ -1,4 +1,6 @@
-const buildRequest = (facet) => {
+import { getTermFilter } from '@eeacms/search/lib/search/filters';
+
+export const buildRequest = (facet) => {
   return {
     [facet.field]: {
       terms: { field: facet.field },
@@ -20,6 +22,7 @@ export const suiFacet = ({
     filterType,
     isFilterable,
     buildRequest,
+    buildFilter: getTermFilter,
     ...params,
   };
 };
