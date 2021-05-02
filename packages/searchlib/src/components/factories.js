@@ -1,3 +1,11 @@
+const buildRequest = (facet) => {
+  return {
+    [facet.field]: {
+      terms: { field: facet.field },
+    },
+  };
+};
+
 export const simpleFacet = ({
   field,
   label,
@@ -12,5 +20,6 @@ export const simpleFacet = ({
     filterType,
     isFilterable,
     params,
+    buildRequest,
   };
 };
