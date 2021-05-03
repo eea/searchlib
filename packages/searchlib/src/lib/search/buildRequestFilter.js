@@ -14,10 +14,6 @@ export default function buildRequestFilter(filters, config) {
       return [...acc, facetFilters[filter.field].buildFilter(filter)];
     }
 
-    // if (['acres', 'visitors'].includes(filter.field)) {
-    //   return [...acc, getRangeFilter(filter)];
-    // }
-
     return acc;
   }, []);
 

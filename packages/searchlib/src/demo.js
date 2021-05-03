@@ -61,6 +61,50 @@ const wise_config = {
         label: 'Spatial scope',
       },
     ],
+    details: {
+      titleField: 'Measure_name',
+      extraFields: [
+        {
+          field: 'Origin_of_the_measure',
+          label: 'Origin of the measure',
+        },
+        {
+          field: 'Nature_of_the_measure',
+          label: 'Nature of the measure',
+        },
+        {
+          field: 'Spatial_scope',
+          label: 'Spatial scope',
+        },
+      ],
+      sections: [
+        {
+          fields: [
+            {
+              field: 'Use_or_activity',
+              label: 'Use or activity',
+            },
+            {
+              field: 'Measure_Impacts_to',
+              label: 'Measure impacts',
+            },
+          ],
+        },
+        {
+          title: 'Main',
+          fields: [
+            {
+              field: 'Origin_of_the_measure',
+              label: 'Origin of the measure',
+            },
+            {
+              field: 'Nature_of_the_measure',
+              label: 'Nature of the measure',
+            },
+          ],
+        },
+      ],
+    },
   },
 };
 
