@@ -44,6 +44,7 @@ export const Header = (props) => {
           <a href={result[urlField].raw}>{result[titleField].raw}</a>
         ) : (
           <Item.Header
+            className="listing-view-item"
             as="a"
             onClick={() => setShowModal(true)}
             onKeyDown={() => setShowModal(true)}
