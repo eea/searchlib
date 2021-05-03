@@ -2,7 +2,7 @@
 module.exports = {
   title: 'EEA Searchlib',
   tagline: 'Search library on top of ElasticSearch',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://eea.europa.eu',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -21,11 +21,13 @@ module.exports = {
           type: 'doc',
           docId: 'intro',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Searchlib UI',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {type: 'doc', docId: 'harvester', label: 'Harvester', position: 'left'},
+        {type: 'doc', docId: 'indexing', label: 'Indexing', position: 'left'},
+        {type: 'doc', docId: 'semanticsearch', label: 'Semantic Search Service', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/eea/searchlib',
           label: 'GitHub',
           position: 'right',
         },
@@ -38,7 +40,7 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Searchlib UI',
               to: '/docs/intro',
             },
           ],
@@ -47,34 +49,13 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'Github',
+              href: 'https://github.com/eea/searchlib',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} EEA. Built with Docusaurus.`,
     },
   },
   presets: [
@@ -85,13 +66,13 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/eea/searchlib/edit/main/website/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
