@@ -6,13 +6,13 @@ import * as serviceWorker from './serviceWorker';
 
 // import 'semantic-ui-css/semantic.min.css';
 import './semantic-ui.less';
-import config from './registry';
+import registry from './registry';
 import installDemo from './demo';
 
-const registry = installDemo(config);
+const demoRegistry = installDemo(registry);
 
 ReactDOM.render(
-  <SearchApp registry={registry} appName="wise" />,
+  <SearchApp registry={demoRegistry} appName="wise" />,
   document.getElementById('root'),
 );
 

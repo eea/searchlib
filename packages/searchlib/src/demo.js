@@ -1,4 +1,4 @@
-import { suiFacet } from '@eeacms/search/components/factories';
+import { suiFacet } from '@eeacms/search/lib/facets';
 import { mergeConfig } from './utils';
 
 const wise_config = {

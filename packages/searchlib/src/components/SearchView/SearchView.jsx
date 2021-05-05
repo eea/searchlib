@@ -14,8 +14,9 @@ import {
   FilterList,
   DebugConfig,
 } from '@eeacms/search/components';
+import { withAppConfig } from '@eeacms/search/lib/hocs';
 
-const SearchView = (props) => {
+export const SearchView = (props) => {
   const { wasSearched, setSearchTerm, appConfig, appName } = props;
   const { defaultSearchText } = appConfig;
 
@@ -29,11 +30,13 @@ const SearchView = (props) => {
   const defaultViewId =
     resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
   const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
+
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
-  const Item = listingViewDef.itemComponent;
-  const ResultViewComponent = listingViewDef.viewComponent;
+
+  const Item = listingViewDef.factories.item;
+  const ResultViewComponent = listingViewDef.factories.view;
   const itemViewProps = listingViewDef.params;
-  const Layout = appConfig.layoutComponent;
+  const Layout = appConfig.factories.layout;
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>
@@ -102,4 +105,4 @@ const SearchView = (props) => {
   );
 };
 
-export default SearchView;
+export default withAppConfig(SearchView);

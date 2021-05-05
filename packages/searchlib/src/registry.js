@@ -24,26 +24,27 @@ export const buildRequest = (facet) => {
 };
 
 const config = {
-  registry: {
-    componentFactories: {
-      'searchui.Facet': {
-        component: Facet,
-        buildRequest,
-        buildFilter: getTermFilter,
-        getValue: getValueFacet,
-      },
-      'Item.Group': {
-        component: Item.Group,
-      },
-      ListingViewItem: {
-        component: ListingViewItem,
-      },
-      TableView: {
-        component: TableView,
-      },
-      TableRowItem: {
-        component: TableRowItem,
-      },
+  resolve: {
+    'searchui.Facet': {
+      component: Facet,
+      buildRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
+    },
+    'Item.Group': {
+      component: Item.Group,
+    },
+    ListingViewItem: {
+      component: ListingViewItem,
+    },
+    TableView: {
+      component: TableView,
+    },
+    TableRowItem: {
+      component: TableRowItem,
+    },
+    LeftColumnLayout: {
+      component: LeftColumnLayout,
     },
   },
 
@@ -57,7 +58,7 @@ const config = {
       onSearch,
 
       // visually layout the search components (header, side, etc)
-      layoutComponent: LeftColumnLayout,
+      layoutComponent: 'LeftColumnLayout',
 
       // when entering in search view, use this to search
       defaultSearchText: '',
@@ -75,8 +76,10 @@ const config = {
           icon: null,
           render: null,
           isDefault: true,
-          viewComponentFactory: 'Item.Group',
-          itemComponentFactory: 'ListingViewItem',
+          factories: {
+            view: 'Item.Group',
+            item: 'ListingViewItem',
+          },
         },
         {
           id: 'table',
@@ -84,8 +87,10 @@ const config = {
           icon: null,
           render: null,
           isDefault: false,
-          viewComponent: 'TableView',
-          itemComponent: 'TableRowItem',
+          factories: {
+            view: 'TableView',
+            item: 'TableRowItem',
+          },
         },
       ],
 

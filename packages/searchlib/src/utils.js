@@ -46,10 +46,43 @@ export function applyConfigurationSchema(config) {
 }
 
 /**
- * "Resolve" factories in the appConfig based on info in registry
+ * Recursively "resolve" factories in the appConfig based on info in registry
  */
-export function resolveFactories(appConfig, registry, branches = ['facets']) {
-  branches.forEach((name) => {
-    //
-  });
+export function injectFactories(appConfig, registry) {
+  const traverse = (obj) => {
+    const type = Array.isArray(obj) ? 'array' : typeof obj;
+
+    switch (type) {
+      case 'string':
+        return registry[obj];
+      case 'array':
+        return obj.map(traverse);
+      default:
+        return Object.keys(obj).includes('factory')
+          ? { ...obj, factory: registry[obj.factory] }
+          : {
+              ...obj,
+              ...(obj.factories && {
+                factories: Object.assign(
+                  {},
+                  ...Object.keys(obj.factories).map((name) => ({
+                    [name]: registry[name],
+                  })),
+                ),
+              }),
+            };
+    }
+  };
+
+  // const traverse = (obj) => {
+  //   for (let k in obj) {
+  //     if (obj[k] && typeof obj[k] === 'object') {
+  //       traverse(obj[k]);
+  //     } else {
+  //       obj[k] = resolver(obj);
+  //     }
+  //   }
+  // };
+
+  return traverse(appConfig);
 }
