@@ -4,7 +4,7 @@ import { getValueFacet } from '@eeacms/search/lib/search/facetValues';
 export const buildRequest = (facet) => {
   return {
     [facet.field]: {
-      terms: { field: facet.field },
+      terms: { field: facet.field, size: 100000 },
     },
   };
 };

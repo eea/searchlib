@@ -4,7 +4,7 @@ import { mergeConfig } from './utils';
 const wise_config = {
   facets: [
     suiFacet({ field: 'Country', isFilterable: true, isMulti: true }),
-    suiFacet({ field: 'Sector' }),
+    suiFacet({ field: 'Sector', isMulti: true }),
     suiFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
     suiFacet({ field: 'Status' }),
     suiFacet({
