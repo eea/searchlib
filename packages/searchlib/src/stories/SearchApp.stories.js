@@ -18,6 +18,11 @@ const page = {
         options: ['wise', 'minimal'],
       },
     },
+    debug: {
+      control: {
+        type: 'boolean',
+      },
+    },
   },
 };
 export default page;

@@ -18,6 +18,7 @@ export default function SearchApp(props) {
     () => applyConfigurationSchema(rebind(registry.searchui[appName])),
     [appName, registry],
   );
+  appConfig.debug = props.debug;
 
   // console.log('appconfig', appConfig);
   const appConfigContext = { appConfig, registry };

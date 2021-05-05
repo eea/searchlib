@@ -5,5 +5,6 @@ export TableView from './Result/TableView';
 export LeftColumnLayout from './Layout/LeftColumnLayout';
 export ViewSelector from './ViewSelector/ViewSelector';
 export FilterList from './FilterList/FilterList';
+export DebugConfig from './DebugConfig/DebugConfig';
 
 export SearchView from './SearchView/SearchView';
