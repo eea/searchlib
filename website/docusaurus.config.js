@@ -1,7 +1,7 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'EEA Searchlib',
-  tagline: 'Search library on top of ElasticSearch',
+  title: 'EEA Semantic Search Service',
+  tagline: 'Semantic Search Service powered by ElasticSearch',
   url: 'https://eea.europa.eu',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -11,21 +11,21 @@ module.exports = {
   projectName: 'searchlib', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Searchlib',
+      title: 'Semantic Search',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Semantic Search Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'searchlib-ui/intro',
           position: 'left',
           label: 'Searchlib UI',
         },
         {type: 'doc', docId: 'harvester', label: 'Harvester', position: 'left'},
         {type: 'doc', docId: 'indexing', label: 'Indexing', position: 'left'},
-        {type: 'doc', docId: 'semanticsearch', label: 'Semantic Search Service', position: 'left'},
+        {type: 'doc', docId: 'deployment/intro', label: 'Deployment', position: 'left'},
         {
           href: 'https://github.com/eea/searchlib',
           label: 'GitHub',

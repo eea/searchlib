@@ -1,8 +1,4 @@
----
-sidebar_position: 1
----
-
-# Searchlib UI
+# Architecture
 
 ElasticSearch-powered React components and independent service.
 
@@ -18,18 +14,32 @@ The Search Server UI should have the following characteristics:
 
 - It should be a reusable component. It needs to be easily deployable as a separate app or integrated in other websites (Plone 4/5 classic, Volto).
 - It should be easy to extend and contribute from many developer teams.
-- In its most basic instance, it needs to function based on declarative configuration. With just configuration it should be possible to create complex search-level experiences (various facets, configurable listing views, autocomplete experience, etc). The idea is to make all the "special cases" part of the default library, so that it will grow its capabilities.
+- In its most basic instance, it needs to function based on declarative
+  configuration. With just configuration it should be possible to create
+  complex search-level experiences (various facets, configurable listing views,
+  autocomplete experience, etc). The idea is to make all the "special cases"
+  part of the default library, so that it will grow its capabilities.
 - The configuration can be passed as a JSON.
 - It should allow multiple instances per website.
 - It should function in conjunction with the indexing done in the EEA Search Server Harvester.
 
 ### Solution
 
-The next generate EEA Semantic Search UI will be based on React, as it will provide synergy with the rest of the active web development teams. React is the most popular frontend framework and it has the benefit of having a large support from many communities and vendors. The ElasticSearch corporation already provides a library to integrate with their ElasticSearch servers and that library will be used as the basis for our SearchUI solution.
+The next generate EEA Semantic Search UI will be based on React, as it will
+provide synergy with the rest of the active web development teams. React is the
+most popular frontend framework and it has the benefit of having a large
+support from many communities and vendors. The ElasticSearch corporation
+already provides a library to integrate with their ElasticSearch servers and
+that library will be used as the basis for our SearchUI solution.
 
-ElasticSearch company's official ElasticSearch UI components are considered the most future-proof base for our final product. The react-search-ui library provides a set of "headless" virtual components with concrete implementation in react-search-ui-views. It is a solid base, with code that is easy to understand and we will start our implementation from there.
+ElasticSearch company's official ElasticSearch UI components are considered the
+most future-proof base for our final product. The react-search-ui library
+provides a set of "headless" virtual components with concrete implementation in
+react-search-ui-views. It is a solid base, with code that is easy to understand
+and we will start our implementation from there.
 
-We will also draw inspiration and adopt or include implementations of search components from other ES libraries:
+We will also draw inspiration and adopt or include implementations of search
+components from other ES libraries:
 
 - https://github.com/searchkit/searchkit
 - https://github.com/appbaseio/reactivesearch
@@ -75,3 +85,4 @@ Distribution and package setup:
   * To use the shells, include two distributed libs: main library + shell dist,
     then use from plan JS
   * main library can be used directly from React
+

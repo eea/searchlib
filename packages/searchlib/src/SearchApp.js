@@ -7,7 +7,7 @@ import {
 } from '@elastic/react-search-ui';
 import { AppConfigContext } from './lib/hocs';
 import { SearchView } from './components';
-import { rebind, applyConfigurationSchema } from './utils';
+import { rebind, applyConfigurationSchema, resolveFactories } from './utils';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
@@ -19,8 +19,8 @@ export default function SearchApp(props) {
     [appName, registry],
   );
   appConfig.debug = props.debug;
+  resolveFactories(appConfig, registry);
 
-  // console.log('appconfig', appConfig);
   const appConfigContext = { appConfig, registry };
 
   return (

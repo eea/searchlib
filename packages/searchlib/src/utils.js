@@ -44,3 +44,12 @@ export function applyConfigurationSchema(config) {
   });
   return config;
 }
+
+/**
+ * "Resolve" factories in the appConfig based on info in registry
+ */
+export function resolveFactories(appConfig, registry, branches = ['facets']) {
+  branches.forEach((name) => {
+    //
+  });
+}

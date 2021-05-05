@@ -12,10 +12,39 @@ import {
   onAutocomplete,
   onSearch,
 } from './request';
+import { getTermFilter } from '@eeacms/search/lib/search/filters';
+import { getValueFacet } from '@eeacms/search/lib/search/facetValues';
+
+export const buildRequest = (facet) => {
+  return {
+    [facet.field]: {
+      terms: { field: facet.field, size: 100000 },
+    },
+  };
+};
 
 const config = {
-  componentFactories: {
-    'searchui.Facet': Facet,
+  registry: {
+    componentFactories: {
+      'searchui.Facet': {
+        component: Facet,
+        buildRequest,
+        buildFilter: getTermFilter,
+        getValue: getValueFacet,
+      },
+      'Item.Group': {
+        component: Item.Group,
+      },
+      ListingViewItem: {
+        component: ListingViewItem,
+      },
+      TableView: {
+        component: TableView,
+      },
+      TableRowItem: {
+        component: TableRowItem,
+      },
+    },
   },
 
   searchui: {
@@ -46,8 +75,8 @@ const config = {
           icon: null,
           render: null,
           isDefault: true,
-          viewComponent: Item.Group,
-          itemComponent: ListingViewItem,
+          viewComponentFactory: 'Item.Group',
+          itemComponentFactory: 'ListingViewItem',
         },
         {
           id: 'table',
@@ -55,8 +84,8 @@ const config = {
           icon: null,
           render: null,
           isDefault: false,
-          viewComponent: TableView,
-          itemComponent: TableRowItem,
+          viewComponent: 'TableView',
+          itemComponent: 'TableRowItem',
         },
       ],
 
