@@ -6,7 +6,7 @@ import '@eeacms/search/index.css';
 import '@eeacms/search/semantic-ui.less';
 
 const page = {
-  title: 'Search/Demo',
+  title: 'Search UI/Demos',
   component: SearchApp,
   args: {
     appName: 'wise',
@@ -27,7 +27,7 @@ const Template = (args) => {
   return <SearchApp registry={registry} {...args} />;
 };
 
-export const WiseDemo = Template.bind({});
+export const Full = Template.bind({});
 // WiseDemo.args = {
 //   appName: 'wise',
 // };
