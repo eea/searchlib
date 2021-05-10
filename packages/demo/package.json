@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Searchlib demo",
   "author": "Tiberiu Ichim <tiberiu.ichim@gmail.com>",
-  "homepage": "https://github.com/eea/searchlib/",
   "license": "MIT",
   "main": "src/index.js",
   "directories": {
