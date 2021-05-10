@@ -1,7 +1,10 @@
 {
-  "name": "@eeacms/search",
-  "version": "0.1.0",
-  "private": false,
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "Searchlib demo",
+  "author": "Tiberiu Ichim <tiberiu.ichim@gmail.com>",
+  "homepage": "https://github.com/eea/searchlib/",
+  "license": "MIT",
   "main": "src/index.js",
   "directories": {
     "src": "src",
@@ -10,8 +13,38 @@
   "files": [
     "src"
   ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eea/searchlib.git"
+  },
+  "scripts": {
+    "demo": "node scripts/start.js",
+    "build": "node scripts/build.js"
+  },
+  "bugs": {
+    "url": "https://github.com/eea/searchlib/issues"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "eslint": "^7.24.0",
+    "eslint-cli": "^1.1.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "webpack-cli": "^4.7.0"
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
+    "@eeacms/search": "*",
     "@elastic/react-search-ui": "^1.5.1",
     "@elastic/search-ui": "^1.5.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
@@ -86,19 +119,6 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
   },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -109,6 +129,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
   },
   "jest": {
@@ -171,20 +197,5 @@
     "plugins": [
       "@babel/plugin-proposal-export-default-from"
     ]
-  },
-  "devDependencies": {
-    "webpack-cli": "^4.7.0",
-    "@babel/plugin-proposal-export-default-from": "^7.12.13",
-    "@storybook/addon-actions": "^6.2.9",
-    "@storybook/addon-essentials": "^6.2.9",
-    "@storybook/addon-links": "^6.2.9",
-    "@storybook/react": "^6.2.9",
-    "eslint": "^7.24.0",
-    "eslint-cli": "^1.1.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
-    "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
   }
 }
