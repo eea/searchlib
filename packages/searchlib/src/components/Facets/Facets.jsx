@@ -8,11 +8,14 @@ const Facets = (props) => {
     <div className="facets">
       {facets.map((info, i) => {
         const { factory } = info;
-        const FacetComponent = registry.componentFactories[factory];
+        const facet = registry.resolve[factory];
+        const FacetComponent = facet.component;
         const props = {
           ...info,
           ...info.params,
+          ...facet,
         };
+        // console.log('info', props);
         return <FacetComponent key={i} {...props} />;
       })}
     </div>

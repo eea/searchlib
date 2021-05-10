@@ -15,6 +15,7 @@ import {
   DebugConfig,
 } from '@eeacms/search/components';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
+import registry from '@eeacms/search/registry';
 
 export const SearchView = (props) => {
   const { wasSearched, setSearchTerm, appConfig, appName } = props;
@@ -32,11 +33,13 @@ export const SearchView = (props) => {
   const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
+  // console.log(listingViewDef);
 
-  const Item = listingViewDef.factories.item;
-  const ResultViewComponent = listingViewDef.factories.view;
+  const Item = registry.resolve[listingViewDef.factories.item].component;
+  const ResultViewComponent =
+    registry.resolve[listingViewDef.factories.view].component;
   const itemViewProps = listingViewDef.params;
-  const Layout = appConfig.factories.layout;
+  const Layout = registry.resolve[appConfig.layoutComponent].component;
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>

@@ -1,4 +1,5 @@
 import buildRequestFilter from './buildRequestFilter';
+import registry from '@eeacms/search/registry';
 
 function buildFrom(current, resultsPerPage) {
   if (!current || !resultsPerPage) return;
@@ -63,7 +64,10 @@ export default function buildRequest(state, config) {
 
   const aggregations = Object.assign(
     {},
-    ...facets.map((facet) => facet.buildRequest(facet)),
+    ...facets.map((facet) => {
+      const { buildRequest } = registry.resolve[facet.factory];
+      return buildRequest(facet);
+    }),
   );
 
   const { highlight } = config;

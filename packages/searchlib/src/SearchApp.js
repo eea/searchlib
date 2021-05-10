@@ -7,7 +7,7 @@ import {
 } from '@elastic/react-search-ui';
 import { AppConfigContext } from './lib/hocs';
 import { SearchView } from './components';
-import { rebind, applyConfigurationSchema, injectFactories } from './utils';
+import { rebind, applyConfigurationSchema } from './utils';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
@@ -15,11 +15,7 @@ export default function SearchApp(props) {
   const { appName, registry } = props;
 
   const appConfig = React.useMemo(
-    () =>
-      injectFactories(
-        applyConfigurationSchema(rebind(registry.searchui[appName])),
-        registry,
-      ),
+    () => applyConfigurationSchema(rebind(registry.searchui[appName])),
     [appName, registry],
   );
   appConfig.debug = props.debug;

@@ -69,6 +69,8 @@ const config = {
         fields: {},
       },
 
+      facets: [],
+
       resultViews: [
         {
           id: 'listing',

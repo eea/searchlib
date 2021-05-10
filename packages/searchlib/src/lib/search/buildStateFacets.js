@@ -1,9 +1,11 @@
+import registry from '@eeacms/search/registry';
+
 export default function buildStateFacets(aggregations, config) {
   const { facets } = config;
   const facetsMap = Object.assign(
     {},
     ...facets.map((facet) => {
-      return { [facet.field]: facet };
+      return { [facet.field]: registry.resolve[facet.factory] };
     }),
   );
 
