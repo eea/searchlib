@@ -98,7 +98,7 @@ function getClientEnvironment(publicUrl) {
     }, {}),
   };
 
-  console.log('raw', raw);
+  // console.log('raw', raw);
   return { raw, stringified };
 }
 

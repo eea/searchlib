@@ -25,7 +25,7 @@
     "demo": "lerna run demo"
   },
   "dependencies": {
-    "@eeacms/search": "file:packages/searchlib",
-    "demo": "file:packages/demo"
+    "@eeacms/search": "link:packages/searchlib",
+    "demo": "link:packages/demo"
   }
 }

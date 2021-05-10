@@ -162,9 +162,6 @@ module.exports = function (webpackEnv) {
     return loaders;
   };
 
-  const xx = path.resolve(paths.appSrc, '../node_modules/@eeacms/search/src');
-  console.log('xx', xx);
-
   const config = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
@@ -404,7 +401,7 @@ module.exports = function (webpackEnv) {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: [
                 paths.appSrc,
-                path.resolve(paths.appSrc, '../../searchlib/src'),
+                path.dirname(path.normalize(require.resolve('@eeacms/search'))),
               ],
               loader: require.resolve('babel-loader'),
               options: {
@@ -778,6 +775,7 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
   };
-  console.log(config.resolve.alias);
+  console.log('resolve alias:', config.resolve.alias);
+  // console.log(path.resolve(config.resolve.alias['@eeacms/search']));
   return config;
 };

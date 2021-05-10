@@ -31,7 +31,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [["@eeacms/search", "./node_modules/@eeacms/search/src"]],
+        "map": [["@eeacms/search", "../searchlib/src"]],
         "extensions": [".js", ".jsx", ".json"]
       }
     }
