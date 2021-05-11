@@ -63,7 +63,12 @@
     "replace-ext": "^1.0.0",
     "require-dot-file": "^0.4.0",
     "run-sequence": "^2.2.1",
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0",
     "wrench-sui": "^0.0.3",
     "yamljs": "^0.3.0"
+  },
+  "dependencies": {
+    "mini-css-extract-plugin": "^1.6.0"
   }
 }
