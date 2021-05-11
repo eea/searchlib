@@ -44,4 +44,5 @@ ReactDOM.render(
 );
 ```
 
-Check the demo package for more details.
+Check the [demo](https://github.com/eea/searchlib/tree/main/packages/demo)
+package for more details.
