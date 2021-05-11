@@ -101,7 +101,9 @@ module.exports = (config) => {
     {
       test: /\.less$/,
       include: [
-        path.resolve('./theme'),
+        path.resolve('./../demo'),
+        path.resolve('./../demo/theme'),
+        path.resolve('./../searchlib-less'),
         path.resolve('./src'),
         /node_modules\/@plone\/volto\/theme/,
         /plone\.volto\/theme/,
