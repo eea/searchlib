@@ -1,6 +1,6 @@
 // inspired by https://github.com/mui-org/material-ui/blob/next/babel.config.js
 let defaultPresets;
-const env = process.env.BABEL_ENV || 'umd';
+const env = process.env.LIB_BABEL_ENV || 'umd';
 
 // We release a ES version of the package.
 // It's something that matches the latest official supported features of JavaScript.

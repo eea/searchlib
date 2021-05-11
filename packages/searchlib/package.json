@@ -2,14 +2,18 @@
   "name": "@eeacms/search",
   "version": "0.1.0",
   "private": false,
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "module": "src/index.js",
   "directories": {
     "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "src"
+    "src",
+    "dist",
+    "es",
+    "esm",
+    "lib"
   ],
   "dependencies": {
     "@babel/core": "7.12.3",
@@ -90,10 +94,11 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "prebuild": "rimraf dist && rimraf es && rimraf esm && rimraf lib",
     "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
-    "build-csj": "BABEL_ENV=cjs yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir lib",
-    "build-esm": "BABEL_ENV=esm yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir esm",
-    "build-es": "BABEL_ENV=es yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir es",
+    "build-csj": "BABEL_ENV=production LIB_BABEL_ENV=cjs yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir lib",
+    "build-esm": "BABEL_ENV=production LIB_BABEL_ENV=esm yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir esm",
+    "build-es": "BABEL_ENV=production LIB_BABEL_ENV=es yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir es",
     "build-umd": "webpack --mode=production"
   },
   "eslintConfig": {

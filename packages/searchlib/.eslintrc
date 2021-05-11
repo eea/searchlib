@@ -31,7 +31,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [["@eeacms/search", "./src"]],
+        "map": [["@eeacms/search", "@eeacms/search/src"]],
         "extensions": [".js", ".jsx", ".json"]
       },
       "babel-plugin-root-import": {

@@ -2,7 +2,6 @@ const pack = require('./package.json');
 const path = require('path');
 
 const babelConfig = require('./babel.config');
-console.log('src', path.resolve('./src'));
 
 module.exports = {
   resolve: {
