@@ -77,8 +77,11 @@ function getWebpackAliases(options = {}) {
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
     const out = {
       src: paths.appSrc,
-      '../../theme.config': path.resolve(searchlib, '../theme/theme.config'),
-      '../../theme.config$': path.resolve(searchlib, '../theme/theme.config'),
+      '../../theme.config': path.resolve(paths.appPath, './theme/theme.config'),
+      '../../theme.config$': path.resolve(
+        paths.appPath,
+        './theme/theme.config',
+      ),
       ...options.paths,
       '@eeacms/search': searchlib,
     };

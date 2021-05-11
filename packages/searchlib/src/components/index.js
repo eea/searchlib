@@ -8,3 +8,5 @@ export { default as FilterList } from './FilterList/FilterList';
 export { default as DebugConfig } from './DebugConfig/DebugConfig';
 
 export { default as SearchView } from './SearchView/SearchView';
+
+export { default as SearchApp } from './SearchApp/SearchApp';
