@@ -3,7 +3,7 @@ import {
   runRequest,
   applyDisjunctiveFaceting,
   buildState,
-} from './lib/search';
+} from './search';
 
 export function onResultClick() {
   /* Not implemented */

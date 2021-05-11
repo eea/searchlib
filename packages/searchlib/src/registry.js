@@ -11,7 +11,7 @@ import {
   onAutocompleteResultClick,
   onAutocomplete,
   onSearch,
-} from './request';
+} from './lib/request';
 import { getTermFilter } from '@eeacms/search/lib/search/filters';
 import { getValueFacet } from '@eeacms/search/lib/search/facetValues';
 

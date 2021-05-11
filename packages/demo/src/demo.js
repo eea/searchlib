@@ -1,5 +1,5 @@
 import { suiFacet } from '@eeacms/search/lib/facets';
-import { mergeConfig } from './utils';
+import { mergeConfig } from '@eeacms/search/lib/utils';
 
 const wise_config = {
   facets: [

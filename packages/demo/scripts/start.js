@@ -5,9 +5,9 @@ process.env.NODE_ENV = 'development';
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
-process.on('unhandledRejection', (err) => {
-  throw err;
-});
+// process.on('unhandledRejection', (err) => {
+//   throw err;
+// });
 
 // Ensure environment variables are read.
 require('../config/env');
@@ -16,7 +16,7 @@ const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const clearConsole = require('react-dev-utils/clearConsole');
+// const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
   choosePort,
@@ -24,7 +24,7 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
+// const openBrowser = require('react-dev-utils/openBrowser');
 const semver = require('semver');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
@@ -59,7 +59,7 @@ if (process.env.HOST) {
   console.log(
     `Learn more here: ${chalk.yellow('https://cra.link/advanced-config')}`,
   );
-  console.log();
+  // console.log();
 }
 
 // We require that you explicitly set browsers and do not fall back to

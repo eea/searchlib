@@ -60,18 +60,33 @@ function getWebpackAliases(options = {}) {
   }
 
   const baseUrlResolved = path.resolve(paths.appPath, baseUrl);
+  // let searchlib = path.resolve(
+  //   paths.appSrc,
+  //   '../node_modules/@eeacms/search/src',
+  // );
+  // if (!fs.existsSync(searchlib)) {
+  //   searchlib = path.resolve(require.resolve('@eeacms/search'));
+  // }
+  const searchlib = path.dirname(
+    path.normalize(require.resolve('@eeacms/search')),
+  );
+  console.log('searchlib', searchlib);
+  // throw new Error(chalk.red.bold(searchlib));
+  // "@eeacms/search": "../searchlib/src"
 
   if (path.relative(paths.appPath, baseUrlResolved) === '') {
-    return {
+    const out = {
       src: paths.appSrc,
-      '@eeacms/search': paths.appSrc,
-      '../../theme.config': path.resolve(paths.appSrc, '../theme/theme.config'),
+      '../../theme.config': path.resolve(paths.appPath, './theme/theme.config'),
       '../../theme.config$': path.resolve(
-        paths.appSrc,
-        '../theme/theme.config',
+        paths.appPath,
+        './theme/theme.config',
       ),
       ...options.paths,
+      '@eeacms/search': searchlib,
     };
+    console.log('mods', out);
+    return out;
   }
 }
 
@@ -134,6 +149,7 @@ function getModules() {
     jestAliases: getJestAliases(options),
     hasTsConfig,
   };
+  console.log('retret', ret);
   return ret;
 }
 

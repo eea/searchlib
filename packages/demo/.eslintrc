@@ -33,9 +33,6 @@
       "alias": {
         "map": [["@eeacms/search", "@eeacms/search/src"]],
         "extensions": [".js", ".jsx", ".json"]
-      },
-      "babel-plugin-root-import": {
-        "rootPathSuffix": "src"
       }
     }
   },

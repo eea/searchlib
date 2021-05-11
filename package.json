@@ -1,10 +1,33 @@
 {
   "name": "root",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@babel/cli": "^7.13.16",
+    "@babel/plugin-proposal-export-default-from": "^7.12.13",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "eslint": "^7.24.0",
+    "eslint-cli": "^1.1.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1",
+    "webpack-cli": "^4.7.0"
   },
   "scripts": {
-    "storybook": "cd packages/searchlib && yarn storybook"
+    "storybook": "cd packages/searchlib && yarn storybook",
+    "build": "NODE_ENV=production yarn lerna run build",
+    "demo": "yarn workspace demo demo"
+  },
+  "dependencies": {
+    "@eeacms/search": "link:packages/searchlib",
+    "demo": "link:packages/demo"
   }
 }

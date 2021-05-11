@@ -5,11 +5,11 @@ import {
   SearchProvider,
   WithSearch,
 } from '@elastic/react-search-ui';
-import { AppConfigContext } from './lib/hocs';
-import { SearchView } from './components';
-import { rebind, applyConfigurationSchema } from './utils';
+import { AppConfigContext } from '@eeacms/search/lib/hocs';
+import { SearchView } from '@eeacms/search/components';
+import { rebind, applyConfigurationSchema } from '@eeacms/search/lib/utils';
 
-import '@elastic/react-search-ui-views/lib/styles/styles.css';
+// import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
 export default function SearchApp(props) {
   const { appName, registry } = props;
