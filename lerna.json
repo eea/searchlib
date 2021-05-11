@@ -2,7 +2,17 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "independent",
-  "packages": [
-    "packages/*"
-  ]
+  "packages": ["packages/*"],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        ".babelrc",
+        ".eslintrc.js",
+        "babel.config.js",
+        "*.stories.js",
+        "*.test.js",
+        "*.md"
+      ]
+    }
+  }
 }

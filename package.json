@@ -5,8 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^4.0.0",
-    "webpack-cli": "^4.7.0",
+    "@babel/cli": "^7.13.16",
     "@babel/plugin-proposal-export-default-from": "^7.12.13",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
@@ -18,7 +17,9 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1"
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1",
+    "webpack-cli": "^4.7.0"
   },
   "scripts": {
     "storybook": "cd packages/searchlib && yarn storybook",
