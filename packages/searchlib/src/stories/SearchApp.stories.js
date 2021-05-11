@@ -1,10 +1,10 @@
 import React from 'react';
 import { SearchApp } from '@eeacms/search';
 import config from '@eeacms/search/registry';
-import installDemo from './../../../demo/src';
+import installDemo from 'demo/src/demo';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
-import '../../../demo/src/semantic-ui.less';
+import 'demo/src/semantic-ui.less';
 
 const page = {
   title: 'Search UI/Demos',
