@@ -96,7 +96,7 @@
     "build-storybook": "build-storybook",
     "prebuild": "rimraf dist && rimraf es && rimraf esm && rimraf lib",
     "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
-    "build-csj": "BABEL_ENV=production LIB_BABEL_ENV=cjs yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir lib",
+    "build-cjs": "BABEL_ENV=production LIB_BABEL_ENV=cjs yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir cjs",
     "build-esm": "BABEL_ENV=production LIB_BABEL_ENV=esm yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir esm",
     "build-es": "BABEL_ENV=production LIB_BABEL_ENV=es yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir es",
     "build-umd": "webpack --mode=production"
