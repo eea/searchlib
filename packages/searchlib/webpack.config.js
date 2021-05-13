@@ -1,9 +1,21 @@
-const pack = require('./package.json');
+const pkg = require('./package.json');
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const babelConfig = require('./babel.config');
 
 module.exports = {
+  plugins: [new BundleAnalyzerPlugin()],
+  entry: `${__dirname}/src/index.js`,
+  output: {
+    library: pkg.name,
+    libraryTarget: 'commonjs2',
+    path: `${__dirname}/dist`,
+    filename: 'index.js',
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -27,12 +39,11 @@ module.exports = {
       },
     ],
   },
-
-  entry: `${__dirname}/src/index.js`,
-  output: {
-    library: pack.name,
-    libraryTarget: 'umd',
-    path: `${__dirname}/dist`,
-    filename: 'index.js',
-  },
+  externals: ['react', 'react-dom', 'semantic-ui-react'],
 };
+
+// "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
+// "build-cjs": "BABEL_ENV=production LIB_BABEL_ENV=cjs yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir dist/cjs",
+// "build-esm": "BABEL_ENV=production LIB_BABEL_ENV=esm yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir dist/esm",
+// "build-es": "BABEL_ENV=production LIB_BABEL_ENV=es yarn babel --root-mode upward src --ignore */*.test.js,**/*.test.js,*/*.stories.js,**/stories.js --out-dir dist/es",
+// "build-umd": "webpack --mode=production"
