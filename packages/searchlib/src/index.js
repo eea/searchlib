@@ -22,3 +22,6 @@
 // serviceWorker.unregister();
 
 export * from './components';
+export * from './lib/facets';
+export * from './lib/utils';
+export registry from './registry';
