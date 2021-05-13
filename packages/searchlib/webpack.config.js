@@ -39,7 +39,7 @@ module.exports = {
       },
     ],
   },
-  externals: ['react', 'react-dom', 'semantic-ui-react'],
+  externals: ['react', 'react-dom', 'semantic-ui-react', 'react-json-view'],
 };
 
 // "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
