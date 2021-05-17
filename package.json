@@ -24,10 +24,12 @@
   "scripts": {
     "storybook": "cd packages/searchlib && yarn storybook",
     "build": "NODE_ENV=production yarn lerna run build",
-    "start": "yarn workspace demo start"
+    "start": "yarn workspace demo start",
+    "yalc-publish": "yarn lerna run publish"
   },
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",
-    "demo": "link:packages/demo"
+    "demo": "link:packages/demo",
+    "yalc": "^1.0.0-pre.53"
   }
 }

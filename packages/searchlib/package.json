@@ -16,7 +16,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prebuild": "rimraf dist",
-    "build": "NODE_ENV=production webpack build"
+    "build": "NODE_ENV=production webpack build",
+    "yalc-publish": "yarn build && npx yalc publish"
   },
   "eslintConfig": {
     "extends": [
