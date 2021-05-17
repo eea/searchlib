@@ -5,12 +5,10 @@
   "main": "dist/index.js",
   "module": "src/index.js",
   "directories": {
-    "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "storybook": "start-storybook -p 6006",
