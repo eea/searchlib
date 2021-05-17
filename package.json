@@ -2,7 +2,9 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/searchlib",
+    "packages/searchlib-less",
+    "packages/demo"
   ],
   "devDependencies": {
     "@babel/cli": "^7.13.16",
