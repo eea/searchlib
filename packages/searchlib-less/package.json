@@ -13,7 +13,7 @@
     "url": "git+https://github.com/eea/searchlib.git"
   },
   "scripts": {
-    "build": "yarn gulp"
+    "build": "yarn webpack build"
   },
   "bugs": {
     "url": "https://github.com/eea/searchlib/issues"
@@ -69,6 +69,8 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "mini-css-extract-plugin": "^1.6.0"
+    "mini-css-extract-plugin": "^1.6.0",
+    "webpack": "4",
+    "webpack-cli": "^4.7.0"
   }
 }

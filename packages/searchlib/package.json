@@ -187,6 +187,7 @@
     "@elastic/react-search-ui-views": "^1.5.1",
     "@elastic/search-ui": "^1.5.1",
     "semantic-ui-react": "^2.0.3",
+    "webpack-bundle-analyzer": "^4.4.1",
     "webpack-node-externals": "^3.0.0"
   },
   "peerDependencies": {

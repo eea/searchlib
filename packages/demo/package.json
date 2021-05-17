@@ -20,7 +20,7 @@
     "url": "git+https://github.com/eea/searchlib.git"
   },
   "scripts": {
-    "demo": "node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },

@@ -7,8 +7,14 @@ const BundleAnalyzerPlugin =
 
 const babelConfig = require('./babel.config');
 
+const plugins = [];
+
+if (process.env.BUNDLE_ANALYZE) {
+  plugins.push(new BundleAnalyzerPlugin());
+}
+
 module.exports = {
-  plugins: [new BundleAnalyzerPlugin()],
+  plugins,
   entry: `${__dirname}/src/index.js`,
   output: {
     library: pkg.name,

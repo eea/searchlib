@@ -24,7 +24,7 @@
   "scripts": {
     "storybook": "cd packages/searchlib && yarn storybook",
     "build": "NODE_ENV=production yarn lerna run build",
-    "demo": "yarn workspace demo demo"
+    "start": "yarn workspace demo start"
   },
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",
