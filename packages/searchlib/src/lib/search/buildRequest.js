@@ -73,6 +73,7 @@ export default function buildRequest(state, config) {
   const { highlight } = config;
 
   const body = {
+    track_total_hits: true,
     // Static query Configuration
     // --------------------------
     // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-highlighting.html

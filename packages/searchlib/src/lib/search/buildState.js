@@ -7,7 +7,7 @@ function buildTotalPages(resultsPerPage, totalResults) {
 }
 
 function buildTotalResults(hits) {
-  return hits.total;
+  return hits.total.value;
 }
 
 function getHighlight(hit, fieldName) {

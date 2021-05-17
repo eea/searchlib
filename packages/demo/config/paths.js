@@ -48,6 +48,14 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
+const resolveSearchlib = () => {
+  const searchlib = path.join(
+    path.dirname(path.normalize(require.resolve('@eeacms/search'))),
+    '../src',
+  );
+  return searchlib;
+};
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -65,6 +73,8 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
+
+  searchlib: resolveSearchlib(),
   publicUrlOrPath,
 };
 
