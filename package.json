@@ -23,10 +23,10 @@
     "webpack-cli": "^4.7.0"
   },
   "scripts": {
-    "storybook": "cd packages/searchlib; storybook",
-    "build": "NODE_ENV=production lerna run build",
-    "start": "cd packages/demo; start",
-    "yalc-publish": "lerna run yalc-publish"
+    "storybook": "cd packages/searchlib; pnpm storybook",
+    "build": "NODE_ENV=production pnpm m run build",
+    "start": "cd packages/demo; pnpm start",
+    "yalc-publish": "pnpm m run yalc-publish"
   },
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",

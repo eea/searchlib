@@ -16,7 +16,6 @@ framework/
 .vscode/
 .history/
 *~
-dist
 es
 esm
 cjs
