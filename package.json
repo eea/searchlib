@@ -26,7 +26,7 @@
   "scripts": {
     "storybook": "lerna run --scope searchlib storybook",
     "build": "NODE_ENV=production lerna run build",
-    "start": "lerna --scope demo start",
+    "start": "lerna --scope demo run start",
     "yalc-publish": "lerna run yalc-publish"
   },
   "dependencies": {
