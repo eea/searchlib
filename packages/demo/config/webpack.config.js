@@ -314,6 +314,8 @@ module.exports = function (webpackEnv) {
       // {
       // name: (entrypoint) => `runtime-${entrypoint.name}`,
       // },
+      mergeDuplicateChunks: true,
+      flagIncludedChunks: true,
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
@@ -775,8 +777,8 @@ module.exports = function (webpackEnv) {
     // our own hints via the FileSizeReporter
     performance: false,
     externals: {
-      react: 'react',
-      'react-dom': 'react-dom',
+      // react: 'react',
+      // 'react-dom': 'react-dom',
     },
   };
   console.log('resolve alias:', config.resolve.alias);
