@@ -1,2 +1,0 @@
-# Developing Searchlib-UI
-
