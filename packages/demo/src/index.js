@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { SearchApp, registry } from '@eeacms/search';
 import installDemo from './demo';
-
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
 // import './index.css';

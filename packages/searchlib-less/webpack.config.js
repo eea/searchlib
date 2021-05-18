@@ -19,6 +19,7 @@ const makeConfig = () => (
     resolve: {
       alias: {
         '../../theme.config': path.resolve('theme/theme.config'),
+        '@eeacms/search-less': __dirname,
       }
     },
 

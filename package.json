@@ -19,7 +19,6 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "lerna": "^4.0.0",
     "prettier": "^2.2.1",
     "webpack-cli": "^4.7.0"
   },
@@ -32,6 +31,7 @@
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",
     "demo": "link:packages/demo",
+    "lerna": "^4.0.0",
     "yalc": "^1.0.0-pre.53"
   }
 }
