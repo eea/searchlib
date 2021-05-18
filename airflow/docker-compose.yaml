@@ -36,7 +36,7 @@
 #
 # Feel free to modify this file to suit your needs.
 ---
-version: '3'
+version: '3.7'
 x-airflow-common:
   &airflow-common
   image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.0.2}
@@ -133,8 +133,34 @@ services:
       retries: 5
     restart: always
 
+  postgrest:
+    image: postgrest/postgrest
+    ports:
+      - "3000:3000"
+    links:
+      - postgres-db:db
+    environment:
+      PGRST_DB_URI: postgres://app_user:password@db:5432/tasks_db
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: app_user #In production this role should not be the same as the one used for the connection
+      PGRST_SERVER_PROXY_URI: "http://127.0.0.1:3000"
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: tasks_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres-tasks-db-volume:/var/lib/postgresql/data
+
 volumes:
   postgres-db-volume:
+  postgres-tasks-db-volume:
   dags:
   logs:
   plugins:

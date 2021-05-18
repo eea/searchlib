@@ -19,3 +19,6 @@ framework/
 es
 esm
 cjs
+airflow/logs/
+airflow/plugins/
+airflow/docker-compose.override.yaml
