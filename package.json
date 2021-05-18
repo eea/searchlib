@@ -31,6 +31,7 @@
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",
     "demo": "link:packages/demo",
+    "pnpm": "^6.3.0",
     "yalc": "^1.0.0-pre.53"
   }
 }

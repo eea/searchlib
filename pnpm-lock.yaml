@@ -18,12 +18,14 @@ importers:
       eslint-import-resolver-alias: ^1.1.2
       eslint-import-resolver-babel-plugin-root-import: ^1.1.1
       eslint-plugin-prettier: ^3.3.1
+      pnpm: ^6.3.0
       prettier: ^2.2.1
       webpack-cli: ^4.7.0
       yalc: ^1.0.0-pre.53
     dependencies:
       '@eeacms/search': link:packages/searchlib
       demo: link:packages/demo
+      pnpm: 6.3.0
       yalc: 1.0.0-pre.53
     devDependencies:
       '@babel/cli': 7.14.3
@@ -15179,6 +15181,12 @@ packages:
     transitivePeerDependencies:
       - typescript
     dev: true
+
+  /pnpm/6.3.0:
+    resolution: {integrity: sha512-mSeVHYbCiPgpQjoib15GzeYae9Ttth1WKuhGe49UwlttYRHYXEsvW+JsEiX4Zm9bltFvSl7dKevCCrm1JJB0qg==}
+    engines: {node: '>=12.17'}
+    hasBin: true
+    dev: false
 
   /polished/4.1.2:
     resolution: {integrity: sha512-jq4t3PJUpVRcveC53nnbEX35VyQI05x3tniwp26WFdm1dwaNUBHAi5awa/roBlwQxx1uRhwNSYeAi/aMbfiJCQ==}
