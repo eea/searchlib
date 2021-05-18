@@ -15,6 +15,7 @@ export function onAutocompleteResultClick() {
 
 export async function onAutocomplete(props) {
   const _config = this;
+  console.log('onAutocomplete', _config);
   const { searchTerm } = props;
   const resultsPerPage = 20;
   const requestBody = buildRequest({ searchTerm }, _config);
@@ -27,6 +28,7 @@ export async function onAutocomplete(props) {
 
 export async function onSearch(state) {
   const _config = this;
+  console.log('onSearch', _config);
   const { resultsPerPage } = state;
   const requestBody = buildRequest(state, _config);
 

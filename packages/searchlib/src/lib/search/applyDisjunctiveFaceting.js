@@ -47,7 +47,7 @@ async function getDisjunctiveFacetCounts(state, config) {
       let body = buildRequest(newState, config);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
-      return runRequest(body);
+      return runRequest(body, config);
     }),
   );
   return combineAggregationsFromResponses(responses);

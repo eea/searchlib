@@ -50,6 +50,8 @@ const config = {
 
   searchui: {
     default: {
+      host:'http://localhost:9200',
+      elastic_index: 'esbootstrapdata-wise_latest',
       // debug: true,
       hasA11yNotifications: true,
       onResultClick,
@@ -117,8 +119,8 @@ const config = {
   },
 };
 
-if (window) {
-  window.searchUiConfig = config;
-}
+// if (window) {
+//   window.searchUiConfig = config;
+// }
 
 export default config;

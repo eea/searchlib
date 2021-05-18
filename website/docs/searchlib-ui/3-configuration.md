@@ -46,3 +46,7 @@ ReactDOM.render(
 
 Check the [demo](https://github.com/eea/searchlib/tree/main/packages/demo)
 package for more details.
+
+## Runtime configuration
+
+You should probably configure `config.host` and `config.elastic_index`;

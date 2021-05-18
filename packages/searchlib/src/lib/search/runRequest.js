@@ -6,9 +6,10 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-export default async function runRequest(body) {
-  const host = process.env.ELASTICSEARCH_HOST || 'http://localhost:9200';
-  const index = 'esbootstrapdata-wise_latest';
+export default async function runRequest(body, config) {
+  const host = config.host || process.env.ELASTICSEARCH_HOST;
+  const index = config.elastic_index || process.env.ELASTICSEARCH_INDEX;
+
   // const agent = host.startsWith('http:') ? httpAgent : httpsAgent;
 
   const url = `${host}/${index}/_search`;
