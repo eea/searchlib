@@ -131,6 +131,7 @@ importers:
       url-loader: 4.1.1
       web-vitals: ^1.0.1
       webpack: 4.44.2
+      webpack-bundle-analyzer: ^4.4.2
       webpack-cli: ^4.7.0
       webpack-dev-server: 3.11.1
       webpack-manifest-plugin: 2.2.0
@@ -223,7 +224,8 @@ importers:
       url-loader: 4.1.1_file-loader@6.1.1+webpack@4.44.2
       web-vitals: 1.1.2
       webpack: 4.44.2_webpack-cli@4.7.0
-      webpack-cli: 4.7.0_569ed825a240b83b38eaf6a91c442b78
+      webpack-bundle-analyzer: 4.4.2
+      webpack-cli: 4.7.0_2778563dec678cea839c19aeb5611de0
       webpack-dev-server: 3.11.1_webpack-cli@4.7.0+webpack@4.44.2
       webpack-manifest-plugin: 2.2.0_webpack@4.44.2
       workbox-webpack-plugin: 5.1.4_webpack@4.44.2
@@ -3809,7 +3811,6 @@ packages:
 
   /@polka/url/1.0.0-next.12:
     resolution: {integrity: sha512-6RglhutqrGFMO1MNUXp95RBuYIuc8wTnMAV5MUhLmjTOy78ncwOw7RgeQ/HeymkKXRhZd0s2DNrM1rL7unk3MQ==}
-    dev: false
 
   /@popperjs/core/2.9.2:
     resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
@@ -7544,7 +7545,6 @@ packages:
   /acorn-walk/8.1.0:
     resolution: {integrity: sha512-mjmzmv12YIG/G8JQdQuz2MUDShEJ6teYpT5bmWA4q7iwoGen8xtt3twF3OvzIUl+Q06aWIjvnwQUKvQ6TtMRjg==}
     engines: {node: '>=0.4.0'}
-    dev: false
 
   /acorn/6.4.2:
     resolution: {integrity: sha512-XtGIhXwF8YM8bJhGxG5kXgjkEuNGLTkoYqVE+KMR+aspr4KGYmKYg7yUe3KghyQ9yheNwLnjmzh/7+gfDBmHCQ==}
@@ -12130,7 +12130,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       duplexer: 0.1.2
-    dev: false
 
   /handle-thing/2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==}
@@ -15156,7 +15155,6 @@ packages:
   /opener/1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
-    dev: false
 
   /opn/5.5.0:
     resolution: {integrity: sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA==}
@@ -18391,7 +18389,6 @@ packages:
       '@polka/url': 1.0.0-next.12
       mime: 2.5.2
       totalist: 1.1.0
-    dev: false
 
   /sisteransi/1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
@@ -19311,7 +19308,6 @@ packages:
   /totalist/1.1.0:
     resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
     engines: {node: '>=6'}
-    dev: false
 
   /touch/2.0.2:
     resolution: {integrity: sha512-qjNtvsFXTRq7IuMLweVgFxmEuQ6gLbRs2jQxL80TtZ31dEKWYIxRXquij6w6VimyDek5hD3PytljHmEtAs2u0A==}
@@ -19980,7 +19976,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
 
   /webpack-cli/4.7.0:
     resolution: {integrity: sha512-7bKr9182/sGfjFm+xdZSwgQuFjgEcy0iCTIBxRUeteJ2Kr8/Wz0qNJX+jw60LU36jApt4nmMkep6+W5AKhok6g==}
@@ -20051,43 +20046,6 @@ packages:
       v8-compile-cache: 2.3.0
       webpack: 4.44.2_webpack-cli@4.7.0
       webpack-bundle-analyzer: 4.4.2
-      webpack-dev-server: 3.11.1_webpack-cli@4.7.0+webpack@4.44.2
-      webpack-merge: 5.7.3
-    dev: true
-
-  /webpack-cli/4.7.0_569ed825a240b83b38eaf6a91c442b78:
-    resolution: {integrity: sha512-7bKr9182/sGfjFm+xdZSwgQuFjgEcy0iCTIBxRUeteJ2Kr8/Wz0qNJX+jw60LU36jApt4nmMkep6+W5AKhok6g==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    peerDependencies:
-      '@webpack-cli/generators': '*'
-      '@webpack-cli/migrate': '*'
-      webpack: 4.x.x || 5.x.x
-      webpack-bundle-analyzer: '*'
-      webpack-dev-server: '*'
-    peerDependenciesMeta:
-      '@webpack-cli/generators':
-        optional: true
-      '@webpack-cli/migrate':
-        optional: true
-      webpack-bundle-analyzer:
-        optional: true
-      webpack-dev-server:
-        optional: true
-    dependencies:
-      '@discoveryjs/json-ext': 0.5.3
-      '@webpack-cli/configtest': 1.0.3_webpack-cli@4.7.0+webpack@4.44.2
-      '@webpack-cli/info': 1.2.4_webpack-cli@4.7.0
-      '@webpack-cli/serve': 1.4.0_9930b48f97fc6c2f231530b534a67c62
-      colorette: 1.2.2
-      commander: 7.2.0
-      execa: 5.0.0
-      fastest-levenshtein: 1.0.12
-      import-local: 3.0.2
-      interpret: 2.2.0
-      rechoir: 0.7.0
-      v8-compile-cache: 2.3.0
-      webpack: 4.44.2_webpack-cli@4.7.0
       webpack-dev-server: 3.11.1_webpack-cli@4.7.0+webpack@4.44.2
       webpack-merge: 5.7.3
     dev: true

@@ -106,6 +106,7 @@
     "url-loader": "4.1.1",
     "web-vitals": "^1.0.1",
     "webpack": "4.44.2",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",
@@ -199,5 +200,9 @@
     "plugins": [
       "@babel/plugin-proposal-export-default-from"
     ]
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

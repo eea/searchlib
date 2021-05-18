@@ -25,6 +25,8 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -308,9 +310,10 @@ module.exports = function (webpackEnv) {
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: (entrypoint) => `runtime-${entrypoint.name}`,
-      },
+      runtimeChunk: 'single',
+      // {
+      // name: (entrypoint) => `runtime-${entrypoint.name}`,
+      // },
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
@@ -771,8 +774,14 @@ module.exports = function (webpackEnv) {
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
+    externals: {
+      react: 'react',
+      'react-dom': 'react-dom',
+    },
   };
   console.log('resolve alias:', config.resolve.alias);
   // console.log(path.resolve(config.resolve.alias['@eeacms/search']));
+  if (process.env.BUNDLE_ANALYZE)
+    config.plugins.push(new BundleAnalyzerPlugin());
   return config;
 };
