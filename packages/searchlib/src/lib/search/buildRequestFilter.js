@@ -1,17 +1,22 @@
+import registry from '@eeacms/search/registry';
+
 /**
  * Used by buildRequest to build the "filters" part of the ES request
  */
 export default function buildRequestFilter(filters, config) {
   if (!filters) return;
 
-  const facetFilters = Object.assign(
+  const facetsMap = Object.assign(
     {},
-    ...config.facets.map((facet) => ({ [facet.field]: facet })),
+    ...config.facets.map((facet) => {
+      return { [facet.field]: registry.resolve[facet.factory] };
+    }),
   );
 
   filters = filters.reduce((acc, filter) => {
-    if (Object.keys(facetFilters).includes(filter.field)) {
-      return [...acc, facetFilters[filter.field].buildFilter(filter)];
+    if (Object.keys(facetsMap).includes(filter.field)) {
+      const f = facetsMap[filter.field].buildFilter(filter);
+      return [...acc, f];
     }
 
     return acc;
