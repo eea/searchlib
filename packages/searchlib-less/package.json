@@ -5,7 +5,7 @@
   "author": "Tiberiu Ichim <tiberiu.ichim@gmail.com>",
   "homepage": "https://github.com/eea/searchlib",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/main.js",
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
