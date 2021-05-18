@@ -13,7 +13,7 @@
     "url": "git+https://github.com/eea/searchlib.git"
   },
   "scripts": {
-    "build": "yarn webpack build"
+    "build": "webpack build"
   },
   "bugs": {
     "url": "https://github.com/eea/searchlib/issues"

@@ -1,0 +1,4 @@
+packages:
+  - 'packages/searchlib'
+  - 'packages/searchlib-less'
+  - 'packages/demo'
