@@ -23,15 +23,15 @@
     "webpack-cli": "^4.7.0"
   },
   "scripts": {
-    "storybook": "lerna run --scope searchlib storybook",
+    "storybook": "cd packages/searchlib; storybook",
     "build": "NODE_ENV=production lerna run build",
-    "start": "lerna --scope demo run start",
+    "start": "cd packages/demo; start",
     "yalc-publish": "lerna run yalc-publish"
   },
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",
+    "@microsoft/rush": "^5.47.0",
     "demo": "link:packages/demo",
-    "lerna": "^4.0.0",
     "yalc": "^1.0.0-pre.53"
   }
 }
