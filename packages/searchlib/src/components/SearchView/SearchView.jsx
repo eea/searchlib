@@ -8,12 +8,7 @@ import {
   Paging,
   Sorting,
 } from '@elastic/react-search-ui';
-import {
-  Facets,
-  ViewSelector,
-  FilterList,
-  DebugConfig,
-} from '@eeacms/search/components';
+import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import registry from '@eeacms/search/registry';
 
@@ -55,21 +50,18 @@ export const SearchView = (props) => {
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
         header={
-          <>
-            <SearchBox
-              autocompleteMinimumCharacters={3}
-              autocompleteResults={{
-                linkTarget: '_blank',
-                sectionTitle: 'Results',
-                titleField: 'Measure_name',
-                urlField: 'CodeCatalogue',
-                shouldTrackClickThrough: true,
-                clickThroughTags: ['test'],
-              }}
-              autocompleteSuggestions={true}
-            />
-            {appConfig.debug ? <DebugConfig /> : ''}
-          </>
+          <SearchBox
+            autocompleteMinimumCharacters={3}
+            autocompleteResults={{
+              linkTarget: '_blank',
+              sectionTitle: 'Results',
+              titleField: 'Measure_name',
+              urlField: 'CodeCatalogue',
+              shouldTrackClickThrough: true,
+              clickThroughTags: ['test'],
+            }}
+            autocompleteSuggestions={true}
+          />
         }
         sideContent={
           <>
