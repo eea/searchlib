@@ -9,6 +9,8 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@eeacms/search": "workspace:^0.1.0",
+    "@elastic/react-search-ui-views": "^1.5.1",
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "react": "^17.0.2",
