@@ -50,7 +50,7 @@ const config = {
 
   searchui: {
     default: {
-      host:'http://localhost:9200',
+      host: 'http://localhost:9200',
       elastic_index: 'esbootstrapdata-wise_latest',
       // debug: true,
       hasA11yNotifications: true,

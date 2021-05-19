@@ -49,4 +49,5 @@ package for more details.
 
 ## Runtime configuration
 
-You should probably configure `config.host` and `config.elastic_index`;
+You can set `config.host` and `config.elastic_index` to adjust for the specific
+ElasticSearch host and index.

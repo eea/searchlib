@@ -7,12 +7,11 @@ const httpsAgent = new https.Agent({
 });
 
 export default async function runRequest(body, config) {
-  const host = config.host || process.env.ELASTICSEARCH_HOST;
-  const index = config.elastic_index || process.env.ELASTICSEARCH_INDEX;
+  const { host, elastic_index } = config;
 
   // const agent = host.startsWith('http:') ? httpAgent : httpsAgent;
 
-  const url = `${host}/${index}/_search`;
+  const url = `${host}/${elastic_index}/_search`;
 
   const resp = await fetch(url, {
     method: 'POST',
