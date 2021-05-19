@@ -25,7 +25,8 @@
   "scripts": {
     "storybook": "cd packages/searchlib; pnpm storybook",
     "build": "NODE_ENV=production pnpm m run build",
-    "start": "cd packages/demo; pnpm start",
+    "demo": "cd packages/demo; pnpm start",
+    "standalone": "cd packages/searchlib-standalone; pnpm start",
     "yalc-publish": "pnpm m run yalc-publish",
     "website": "cd website; yarn start"
   },

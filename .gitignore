@@ -22,3 +22,4 @@ cjs
 airflow/logs/
 airflow/plugins/
 airflow/docker-compose.override.yaml
+cache
