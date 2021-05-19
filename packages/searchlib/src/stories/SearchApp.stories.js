@@ -11,6 +11,8 @@ const page = {
   component: SearchApp,
   args: {
     appName: 'wise',
+    elastic_index: 'esbootstrapdata-wise_latest',
+    host: 'http://localhost:9200',
   },
   argTypes: {
     appName: {
@@ -30,10 +32,9 @@ export default page;
 
 const Template = (args) => {
   const registry = installDemo(config);
-  return <SearchApp registry={registry} {...args} />;
+  registry.searchui[args.appName].host = args.host;
+  registry.searchui[args.appName].elastic_index = args.elastic_index;
+  return <SearchApp registry={registry} appName={args.appName} />;
 };
 
 export const Full = Template.bind({});
-// WiseDemo.args = {
-//   appName: 'wise',
-// };
