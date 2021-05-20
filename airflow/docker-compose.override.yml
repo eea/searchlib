@@ -1,4 +1,4 @@
-# Local development volumes 
+# Local development volumes
 ---
 version: '3'
 x-airflow-override:
@@ -9,10 +9,13 @@ x-airflow-override:
     - ./plugins:/opt/airflow/plugins
 
 services:
+  redis:
+    # ports:
+    #   - 6379:6379
+
   airflow-webserver:
-    <<: *airflow-override
-  
-  airflow-scheduler:
+    ports:
+      - "8100:8080"
     <<: *airflow-override
 
   airflow-scheduler:
@@ -26,6 +29,8 @@ services:
 
   flower:
     <<: *airflow-override
+    ports:
+      - "5555:5555"
 
   swagger:
     image: swaggerapi/swagger-ui
@@ -35,3 +40,11 @@ services:
       - "8081"
     environment:
       API_URL: http://localhost:3000/
+
+  postgrest:
+    ports:
+      - "6000:3000"
+
+  postgres-db:
+    ports:
+      - "5432:5432"

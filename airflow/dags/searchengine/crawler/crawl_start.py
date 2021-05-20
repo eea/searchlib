@@ -4,9 +4,6 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
 
-# from textwrap import dedent
-
-
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
