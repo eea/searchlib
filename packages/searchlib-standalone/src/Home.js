@@ -3,8 +3,6 @@ import { SearchApp, registry } from '@eeacms/search';
 
 import installDemo from './config';
 
-import '@elastic/react-search-ui-views/lib/styles/styles.css';
-
 const demoRegistry = installDemo(registry);
 
 class Home extends React.Component {
