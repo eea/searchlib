@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@eeacms/search": ["../searchlib/src"]
+    }
+  },
+  "include": ["src"]
+}
