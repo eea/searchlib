@@ -17,7 +17,7 @@ default_args = {
     start_date=days_ago(2),
     tags=["crawl"],
 )
-def crawl_plonerestapi_website(website_info: dict = None):
+def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""):
     """
     ### Crawls a plone.restapi powered website.
 
@@ -25,11 +25,11 @@ def crawl_plonerestapi_website(website_info: dict = None):
     """
 
     @task()
-    def show_dag_run_conf():
+    def show_dag_run_conf(website_url, maintainer_email):
         # start_url, maintainer_email="no-reply@plone.org"
-        print("website conf", website_info)
+        print("website conf", website_url, maintainer_email)
 
-    show_dag_run_conf()
+    show_dag_run_conf(website_url, maintainer_email)
 
 
 crawl_website_dag = crawl_plonerestapi_website()

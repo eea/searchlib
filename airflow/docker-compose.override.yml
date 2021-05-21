@@ -4,8 +4,8 @@ version: '3'
 x-airflow-override:
   &airflow-override
   volumes:
+    - ./plugins:/opt/airflow/plugins
     - ./dags:/opt/airflow/dags
-    - ./data/plugins:/opt/airflow/plugins
     - ./data/logs:/opt/airflow/logs
 
 services:
