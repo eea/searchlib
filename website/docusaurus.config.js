@@ -23,9 +23,19 @@ module.exports = {
           position: 'left',
           label: 'Searchlib UI',
         },
-        {type: 'doc', docId: 'harvester', label: 'Harvester', position: 'left'},
-        {type: 'doc', docId: 'indexing', label: 'Indexing', position: 'left'},
-        {type: 'doc', docId: 'deployment/intro', label: 'Deployment', position: 'left'},
+        {
+          type: 'doc',
+          docId: 'harvesting/intro',
+          label: 'Harvester',
+          position: 'left',
+        },
+        { type: 'doc', docId: 'indexing', label: 'Indexing', position: 'left' },
+        {
+          type: 'doc',
+          docId: 'deployment/intro',
+          label: 'Deployment',
+          position: 'left',
+        },
         {
           href: 'https://github.com/eea/searchlib',
           label: 'GitHub',
@@ -64,8 +74,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/eea/searchlib/edit/main/website/',
+          editUrl: 'https://github.com/eea/searchlib/edit/main/website/',
         },
         blog: {
           showReadingTime: true,

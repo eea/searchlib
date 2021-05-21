@@ -13,6 +13,7 @@ default_args = {
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
 }
+
 with DAG(
     "harvest",
     default_args=default_args,
