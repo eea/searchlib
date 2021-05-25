@@ -44,12 +44,10 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
 
     url_with_api = get_api_url(url)
     doc = SimpleHttpOperator(
-        task_id="get_sitemap",
+        task_id="get_doc",
         method="GET",
-#        http_conn_id="http_default",
         endpoint=url_with_api,
         headers={"Content-Type": "application/json"},
-#        log_response=True,
     )
     
     @task
@@ -57,7 +55,7 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         print ("doc:", doc)
 
     print_doc(doc.output)
-    
+
     show_dag_run_conf(url, maintainer_email)
     
 

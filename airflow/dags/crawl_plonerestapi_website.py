@@ -103,20 +103,20 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
     print_sitemap(sitemap.output)
 
     urls = get_urls_from_sitemap(sitemap.output)
-    @task 
-    def trigger_fetch_for_urls(urls):
-        print(urls)
-        trigger_dagrun.TriggerDagRunOperator(
-                task_id="trigger_fetch_url1",
-                trigger_dag_id="fetch_url",
-                conf={"url": "url2", "maintainer_email": "tibi@example.com"},
-            )
+    #@task 
+    #def trigger_fetch_for_urls(urls):
+    #    print(urls)
+    #    trigger_dagrun.TriggerDagRunOperator(
+    #            task_id="trigger_fetch_url1",
+    #            trigger_dag_id="fetch_url",
+    #            conf={"url": "url2", "maintainer_email": "tibi@example.com"},
+    #        )
 
-    trigger_dagrun.TriggerDagRunOperator(
-            task_id="trigger_fetch_url2",
-            trigger_dag_id="fetch_url",
-            conf={"url": "url3", "maintainer_email": "tibi@example.com"},
-        )
+    #trigger_dagrun.TriggerDagRunOperator(
+    #        task_id="trigger_fetch_url2",
+    #        trigger_dag_id="fetch_url",
+    #        conf={"url": "url3", "maintainer_email": "tibi@example.com"},
+    #    )
 
     @task
     def get_urls_to_update(urls):
@@ -144,5 +144,5 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
             conf={"url": url, "maintainer_email": "tibi@example.com"},
         )
 
-    trigger_fetch_for_urls(urls)
+    #trigger_fetch_for_urls(urls)
 crawl_website_dag = crawl_plonerestapi_website()
