@@ -33,8 +33,32 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         # start_url, maintainer_email="no-reply@plone.org"
         print("url conf", url, maintainer_email)
 
+    @task()
+    def get_api_url(url):
+        no_protocol_url = url.split("://")[-1]
+        url_parts = no_protocol_url.split("/")
+        url_parts.insert(1,'api')
+        url_with_api = '/'.join(url_parts)
+        print(url_with_api)
+        return url_with_api
 
+    url_with_api = get_api_url(url)
+    doc = SimpleHttpOperator(
+        task_id="get_sitemap",
+        method="GET",
+#        http_conn_id="http_default",
+        endpoint=url_with_api,
+        headers={"Content-Type": "application/json"},
+#        log_response=True,
+    )
+    
+    @task
+    def print_doc(doc):
+        print ("doc:", doc)
+
+    print_doc(doc.output)
+    
     show_dag_run_conf(url, maintainer_email)
-
+    
 
 fetch_url_dag = fetch_url()
