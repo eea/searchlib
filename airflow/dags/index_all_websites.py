@@ -26,8 +26,10 @@ def index_all_websites():
     DAG for all of them.
     """
 
-    configured_websites = Variable.get("INDEXED_WEBSITES", deserialize_json=True)
+#    configured_websites = Variable.get("INDEXED_WEBSITES", deserialize_json=True)
 
+#    print ("ABC")
+    configured_websites = ['https://biodiversity.europa.eu']
     for site_url in configured_websites:
         trigger_dagrun.TriggerDagRunOperator(
             task_id="trigger_crawl_dag",
