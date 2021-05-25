@@ -8,6 +8,8 @@ from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.utils.dates import days_ago
+from airflow.operators import trigger_dagrun
+
 
 #from ../scripts import crawler
 
@@ -74,10 +76,11 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
                 }
             response.append(item)
         print(response)
+        return response
 
     @task()
-    def print_urls(urls):
-        print(urls)
+    def print_urls(urls: object):
+        print("urls:",urls)
 
     show_dag_run_conf(website_url, maintainer_email)
 
@@ -100,6 +103,15 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
     print_sitemap(sitemap.output)
 
     urls = get_urls_from_sitemap(sitemap.output)
-    print_urls(urls)
 
+#    for url in urls:
+#        pass
+#        print("trigger_url:", url['url'])
+#        trigger_dagrun.TriggerDagRunOperator(
+#            task_id="trigger_fetch_url",
+#            trigger_dag_id="fetch_url",
+#            conf={"url": url['url'], "maintainer_email": "tibi@example.com"},
+#        )
+
+#    trigger_fetch_for_urls(urls)
 crawl_website_dag = crawl_plonerestapi_website()

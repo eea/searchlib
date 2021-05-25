@@ -1,12 +1,12 @@
 # Local development volumes
----
-version: '3'
+#---
+version: '2.1'
 x-airflow-override:
   &airflow-override
   volumes:
-    - ./plugins:/opt/airflow/plugins
     - ./dags:/opt/airflow/dags
-    - ./data/logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - ./logs:/opt/airflow/logs
 
 services:
   redis:
