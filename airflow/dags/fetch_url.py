@@ -17,6 +17,15 @@ default_args = {
     "owner": "airflow",
 }
 
+def get_doc_req(url, ti):
+    """
+    Gets totalTestResultsIncrease field from Covid API for given state and returns value
+    """
+    headers = {'Accept': 'application/json'}
+    res = requests.get(url, headers=headers)
+    print(res.text)
+    return res.text
+
 @dag(
     default_args=default_args,
     schedule_interval=None,
@@ -39,6 +48,7 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         url_parts = no_protocol_url.split("/")
         url_parts.insert(1,'api')
         url_with_api = '/'.join(url_parts)
+        #url_with_api = 'https://'+url_with_api
         print(url_with_api)
         return url_with_api
 
@@ -47,9 +57,15 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         task_id="get_doc",
         method="GET",
         endpoint=url_with_api,
-        headers={"Content-Type": "application/json"},
+        headers={"Accept": "application/json"},
     )
     
+#    doc_from_req = PythonOperator(
+#        task_id = 'get_doc_from_req',
+#        python_callable=get_doc_req,
+#        op_kwargs={'url':url_with_api}
+#    )
+
     @task
     def print_doc(doc):
         print ("doc:", doc)
