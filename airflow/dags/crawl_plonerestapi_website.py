@@ -55,36 +55,6 @@ def get_urls_to_update(urls: list = []) -> dict:
     print(my_clean_urls)
     return my_clean_urls
 
-
-def trigger_fetch_for_urls(*args, **kwargs):
-    # see https://stackoverflow.com/questions/41453379/execute-airflow-tasks-in-for-loop
-    ti = kwargs["ti"]
-
-    print("args")
-    pprint(args)
-    print("kwargs")
-    pprint(kwargs)
-
-    data = ti.xcom_pull(task_ids="get_urls_to_update")
-    for x, url in enumerate(data["urls"]):
-        print("Processing url", url)
-
-        execution_date = timezone.utcnow()
-        run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
-        try:
-            # Ignore MyPy type for self.execution_date
-            # because it doesn't pick up the timezone.parse() for strings
-            dag_run = trigger_dag(
-                dag_id="fetch_url",
-                run_id=run_id,
-                conf={"url": url, "maintainer_email": "tibi@example.com"},
-                # execution_date=self.execution_date,
-                replace_microseconds=False,
-            )
-            print(dag_run)
-        except DagRunAlreadyExists as e:
-            raise e
-
 @dag(
     default_args=default_args,
     schedule_interval=None,
@@ -119,6 +89,38 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
         items=xc_clean_urls,
         trigger_dag_id="fetch_url",
     )
+
+crawl_website_dag = crawl_plonerestapi_website()
+
+#def trigger_fetch_for_urls(*args, **kwargs):
+#    # see https://stackoverflow.com/questions/41453379/execute-airflow-tasks-in-for-loop
+#    ti = kwargs["ti"]
+
+#    print("args")
+#    pprint(args)
+#    print("kwargs")
+#    pprint(kwargs)
+
+#    data = ti.xcom_pull(task_ids="get_urls_to_update")
+#    for x, url in enumerate(data["urls"]):
+#        print("Processing url", url)
+
+#        execution_date = timezone.utcnow()
+#        run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
+#        try:
+            # Ignore MyPy type for self.execution_date
+            # because it doesn't pick up the timezone.parse() for strings
+#            dag_run = trigger_dag(
+#                dag_id="fetch_url",
+#                run_id=run_id,
+#                conf={"url": url, "maintainer_email": "tibi@example.com"},
+                # execution_date=self.execution_date,
+#                replace_microseconds=False,
+#            )
+#            print(dag_run)
+#        except DagRunAlreadyExists as e:
+#            raise e
+
 #    t3 = PythonOperator(
 #        task_id="trigger_fetch_for_urls",
 #        provide_context=True,
@@ -126,8 +128,6 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
 #    )
 
 #    t3.set_upstream(xc_clean_urls)
-
-crawl_website_dag = crawl_plonerestapi_website()
 
 
 # clean_urls = [
