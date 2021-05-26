@@ -44,7 +44,9 @@ x-airflow-common:
     - airflow.env
   environment:
     &airflow-common-env
+    AIRFLOW_VAR_FOO: BAR
     AIRFLOW_VAR_FOO_BAZ: '{"hello":"world"}'
+    AIRFLOW_VAR_TEST_WEBSITES: '["https://biodiversity.europa.eu1"]'
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow

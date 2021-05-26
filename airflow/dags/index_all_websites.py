@@ -5,6 +5,8 @@ from airflow.models import Variable
 from airflow.operators import trigger_dagrun
 from airflow.utils.dates import days_ago
 
+import helpers
+
 # These args will get passed on to each operator
 # You can override them on a per-task basis during operator initialization
 default_args = {
@@ -26,13 +28,29 @@ def index_all_websites():
     DAG for all of them.
     """
 
-    # configured_websites = Variable.get("INDEXED_WEBSITES", deserialize_json=True)
+#    xxx = Variable.get("foo")
+    configured_websites = Variable.get("indexed_websites", deserialize_json=True)
+#    xxx2 = Variable.get("foo_baz", deserialize_json=True)
+#    xxx3 = Variable.get("test_websites", deserialize_json=True)
+#    xxx4 = Variable.get("indexed_websites")
+#    xxx5 = Variable.get("indexed_websites", deserialize_json=True)
 
-    # print ("ABC")
-    configured_websites = ["https://biodiversity.europa.eu"]
+    @task
+    def print_value(val):
+        print ("type:", type(val))
+        print ("value:", val)
+    
+#    print ("ABC")
+#    configured_websites = ["https://biodiversity.europa.eu"]
+    
+    #print_value(xxx)
+ #   print_value(xxx5)
+#    x = helpers.nicename('asdf:asfsd/fq re/qe123')
+#    print_value(x)
     for site_url in configured_websites:
+        task_id = 'trigger_crawl_dag_' + helpers.nicename(site_url)
         trigger_dagrun.TriggerDagRunOperator(
-            task_id="trigger_crawl_dag",
+            task_id=task_id,
             trigger_dag_id="crawl_plonerestapi_website",
             conf={"website_url": site_url, "maintainer_email": "tibi@example.com"},
         )
