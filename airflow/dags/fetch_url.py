@@ -1,15 +1,14 @@
 import json
-
-import requests
 from xml.dom import minidom
 
+import requests
 from airflow.decorators import dag, task
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.utils.dates import days_ago
 
-#from ../scripts import crawler
+# from ../scripts import crawler
 
 # These args will get passed on to each operator
 # You can override them on a per-task basis during operator initialization
@@ -17,14 +16,16 @@ default_args = {
     "owner": "airflow",
 }
 
+
 def get_doc_req(url, ti):
     """
     Gets totalTestResultsIncrease field from Covid API for given state and returns value
     """
-    headers = {'Accept': 'application/json'}
+    headers = {"Accept": "application/json"}
     res = requests.get(url, headers=headers)
     print(res.text)
     return res.text
+
 
 @dag(
     default_args=default_args,
@@ -46,9 +47,9 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
     def get_api_url(url):
         no_protocol_url = url.split("://")[-1]
         url_parts = no_protocol_url.split("/")
-        url_parts.insert(1,'api')
-        url_with_api = '/'.join(url_parts)
-        #url_with_api = 'https://'+url_with_api
+        url_parts.insert(1, "api")
+        url_with_api = "/".join(url_parts)
+        # url_with_api = 'https://'+url_with_api
         print(url_with_api)
         return url_with_api
 
@@ -59,20 +60,20 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         endpoint=url_with_api,
         headers={"Accept": "application/json"},
     )
-    
-#    doc_from_req = PythonOperator(
-#        task_id = 'get_doc_from_req',
-#        python_callable=get_doc_req,
-#        op_kwargs={'url':url_with_api}
-#    )
+
+    #    doc_from_req = PythonOperator(
+    #        task_id = 'get_doc_from_req',
+    #        python_callable=get_doc_req,
+    #        op_kwargs={'url':url_with_api}
+    #    )
 
     @task
     def print_doc(doc):
-        print ("doc:", doc)
+        print("doc:", doc)
 
     print_doc(doc.output)
 
     show_dag_run_conf(url, maintainer_email)
-    
+
 
 fetch_url_dag = fetch_url()
