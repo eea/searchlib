@@ -60,10 +60,10 @@ class BulkTriggerDagRunOperator(BaseOperator):
     template_fields_renderers = {"conf": "py"}
     ui_color = "#ffefeb"
 
-#    @property
-#    def operator_extra_links(self):
-#        """Return operator extra links"""
-#        return [TriggerDagRunLink()]
+    #    @property
+    #    def operator_extra_links(self):
+    #        """Return operator extra links"""
+    #        return [TriggerDagRunLink()]
 
     def __init__(
         self,
@@ -97,7 +97,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
 
     def execute(self, context: Dict):
         try:
-            print ("EXECUTE BULK ITEM")
+            print("EXECUTE BULK ITEM")
             # Ignore MyPy type for self.execution_date
             # because it doesn't pick up the timezone.parse() for strings
             for item in self.items[:5]:
@@ -105,21 +105,25 @@ class BulkTriggerDagRunOperator(BaseOperator):
                 run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
                 print(item)
                 dag_run = trigger_dag(
-                        dag_id=self.trigger_dag_id,
-                        run_id=run_id,
-                        conf={"item": item},
-                        execution_date=self.execution_date,
-                        replace_microseconds=False,
-                    )
+                    dag_id=self.trigger_dag_id,
+                    run_id=run_id,
+                    conf={"item": item},
+                    execution_date=self.execution_date,
+                    replace_microseconds=False,
+                )
         except DagRunAlreadyExists as e:
             if self.reset_dag_run:
-                self.log.info("Clearing %s on %s", self.trigger_dag_id, self.execution_date)
+                self.log.info(
+                    "Clearing %s on %s", self.trigger_dag_id, self.execution_date
+                )
 
                 # Get target dag object and call clear()
 
                 dag_model = DagModel.get_current(self.trigger_dag_id)
                 if dag_model is None:
-                    raise DagNotFound(f"Dag id {self.trigger_dag_id} not found in DagModel")
+                    raise DagNotFound(
+                        f"Dag id {self.trigger_dag_id} not found in DagModel"
+                    )
 
                 dag_bag = DagBag(dag_folder=dag_model.fileloc, read_dags_from_db=True)
 

@@ -33,7 +33,7 @@ def index_all_websites():
     helpers.debug_value(configured_websites)
 
     for site_url in configured_websites:
-        task_id = 'trigger_crawl_dag_' + helpers.nicename(site_url)
+        task_id = "trigger_crawl_dag_" + helpers.nicename(site_url)
         trigger_dagrun.TriggerDagRunOperator(
             task_id=task_id,
             trigger_dag_id="crawl_plonerestapi_website",

@@ -5,10 +5,8 @@ from xml.dom import minidom
 import requests
 from airflow.api.common.experimental.trigger_dag import trigger_dag
 from airflow.decorators import dag, task
-from airflow.exceptions import (AirflowException, DagNotFound,
-                                DagRunAlreadyExists)
-from airflow.models import (BaseOperator, BaseOperatorLink, DagBag, DagModel,
-                            DagRun)
+from airflow.exceptions import AirflowException, DagNotFound, DagRunAlreadyExists
+from airflow.models import BaseOperator, BaseOperatorLink, DagBag, DagModel, DagRun
 
 from airflow.operators import trigger_dagrun
 from airflow.operators.python_operator import PythonOperator
@@ -25,12 +23,12 @@ default_args = {
     "owner": "airflow",
 }
 
+
 @task()
 def get_sitemap_url(website_url: str):
     sitemap_url = website_url.split("://")[-1] + "/sitemap.xml.gz"
     print("sitemap_url", sitemap_url)
     return sitemap_url
-
 
 
 @task()
@@ -47,6 +45,7 @@ def get_urls_from_sitemap(sitemap: str):
     print(response)
     return response
 
+
 @task
 def get_urls_to_update(urls: list = []) -> dict:
     my_clean_urls = []
@@ -54,6 +53,7 @@ def get_urls_to_update(urls: list = []) -> dict:
         my_clean_urls.append(url["url"])
     print(my_clean_urls)
     return my_clean_urls
+
 
 @dag(
     default_args=default_args,
@@ -68,7 +68,9 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
     Main task to crawl a website
     """
 
-    helpers.show_dag_run_conf({'website_url':website_url, 'maintainer_email':maintainer_email})
+    helpers.show_dag_run_conf(
+        {"website_url": website_url, "maintainer_email": maintainer_email}
+    )
 
     sitemap_url = get_sitemap_url(website_url)
 
@@ -90,9 +92,10 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
         trigger_dag_id="fetch_url",
     )
 
+
 crawl_website_dag = crawl_plonerestapi_website()
 
-#def trigger_fetch_for_urls(*args, **kwargs):
+# def trigger_fetch_for_urls(*args, **kwargs):
 #    # see https://stackoverflow.com/questions/41453379/execute-airflow-tasks-in-for-loop
 #    ti = kwargs["ti"]
 
@@ -108,13 +111,13 @@ crawl_website_dag = crawl_plonerestapi_website()
 #        execution_date = timezone.utcnow()
 #        run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
 #        try:
-            # Ignore MyPy type for self.execution_date
-            # because it doesn't pick up the timezone.parse() for strings
+# Ignore MyPy type for self.execution_date
+# because it doesn't pick up the timezone.parse() for strings
 #            dag_run = trigger_dag(
 #                dag_id="fetch_url",
 #                run_id=run_id,
 #                conf={"url": url, "maintainer_email": "tibi@example.com"},
-                # execution_date=self.execution_date,
+# execution_date=self.execution_date,
 #                replace_microseconds=False,
 #            )
 #            print(dag_run)
