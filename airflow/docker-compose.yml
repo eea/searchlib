@@ -39,7 +39,8 @@
 version: '2.1'
 x-airflow-common:
   &airflow-common
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.0.2}
+#  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.0.2}
+  build: .
   env_file:
     - airflow.env
   environment:
@@ -155,6 +156,53 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - postgres-tasks-db-volume:/var/lib/postgresql/data
+  es:
+      image: eeacms/elastic:7
+      depends_on:
+          - es-sysctl
+
+      environment:
+          - "cluster.name=es7_test"
+          - "node.name=es7_standalone"
+          - "discovery.type=single-node"
+          - "xpack.security.enabled=false"
+          - "name=elastic7"
+          - "elastic_password=qwerty"
+      ulimits:
+          memlock:
+              soft: -1
+              hard: -1
+          nofile:
+              soft: 65536
+              hard: 65536
+      mem_limit: 4073741824
+      mem_swappiness: 0
+      cap_add:
+          - IPC_LOCK
+
+      volumes_from:
+          - es7-storage-volume
+      ports:
+          - 9200:9200
+
+  es-sysctl:
+      network_mode: none
+      image: rawmind/alpine-sysctl:0.1
+      privileged: true
+      environment:
+          - "SYSCTL_KEY=vm.max_map_count"
+          - "SYSCTL_VALUE=262144"
+
+  es7-storage-volume:
+      network_mode: none
+      image: rawmind/alpine-volume:0.0.2-1
+      environment:
+          - SERVICE_UID=1000
+          - SERVICE_GID=1000
+          - SERVICE_VOLUME=/usr/share/elasticsearch/data
+      volumes:
+          - es7-storage-volume:/usr/share/elasticsearch/data
+
 
 volumes:
   postgres-db-volume:
@@ -162,3 +210,6 @@ volumes:
   dags:
   logs:
   plugins:
+  es7-storage-volume:
+    driver: local 
+

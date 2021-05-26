@@ -10,6 +10,7 @@ from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.utils.dates import days_ago
 
 import helpers
+import elastic_helpers
 
 # from ../scripts import crawler
 
@@ -31,7 +32,7 @@ def get_api_url(url):
 
 
 @task
-def get_relevant_data(doc):
+def get_relevant_data(doc, item):
     json_doc = json.loads(doc)
     print(type(json_doc))
     print(json_doc)
@@ -39,6 +40,8 @@ def get_relevant_data(doc):
     data["title"] = json_doc.get("title", "no title")
     data["review_state"] = json_doc.get("review_state", "no state")
     data["modified"] = json_doc.get("modified", "not modified")
+    data["UID"] = json_doc.get("UID")
+    data["id"] = helpers.nicename(item)
     return data
 
 
@@ -60,11 +63,14 @@ def fetch_url(item: str = ""):
         headers={"Accept": "application/json"},
     )
 
-    prepared_data = get_relevant_data(doc.output)
+    prepared_data = get_relevant_data(doc.output, item)
 
     helpers.debug_value(doc.output)
     helpers.debug_value(prepared_data)
     helpers.show_dag_run_conf({"item": item})
+    # es_conf = elastic_helpers.get_elastic_config()
+    # es_conn = elastic_helpers.connect(es_conf)
+    elastic_helpers.index_doc(prepared_data)
 
 
 fetch_url_dag = fetch_url()

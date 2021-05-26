@@ -100,7 +100,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
             print("EXECUTE BULK ITEM")
             # Ignore MyPy type for self.execution_date
             # because it doesn't pick up the timezone.parse() for strings
-            for item in self.items[:5]:
+            for item in self.items:
                 execution_date = timezone.utcnow()
                 run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
                 print(item)
