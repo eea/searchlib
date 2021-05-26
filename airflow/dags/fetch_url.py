@@ -32,7 +32,7 @@ def get_api_url(url):
 
 
 @task
-def get_relevant_data(doc, item):
+def get_relevant_data(doc, item, parent):
     json_doc = json.loads(doc)
     print(type(json_doc))
     print(json_doc)
@@ -42,6 +42,7 @@ def get_relevant_data(doc, item):
     data["modified"] = json_doc.get("modified", "not modified")
     data["UID"] = json_doc.get("UID")
     data["id"] = helpers.nicename(item)
+    data["cluster"] = parent
     return data
 
 
@@ -51,7 +52,7 @@ def get_relevant_data(doc, item):
     start_date=days_ago(2),
     tags=["crawl"],
 )
-def fetch_url(item: str = ""):
+def fetch_url(item: str = "", parent: str = ""):
     """
     ### get info about an url
     """
@@ -63,8 +64,9 @@ def fetch_url(item: str = ""):
         headers={"Accept": "application/json"},
     )
 
-    prepared_data = get_relevant_data(doc.output, item)
+    prepared_data = get_relevant_data(doc.output, item, parent)
 
+    helpers.debug_value(parent)
     helpers.debug_value(doc.output)
     helpers.debug_value(prepared_data)
     helpers.show_dag_run_conf({"item": item})

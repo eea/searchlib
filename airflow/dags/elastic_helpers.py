@@ -8,6 +8,7 @@ def get_elastic_config():
     conf = {}
     conf["host"] = Variable.get("elastic_host")
     conf["port"] = Variable.get("elastic_port")
+    conf["index"] = Variable.get("elastic_index")
     return conf
 
 
@@ -23,4 +24,4 @@ def connect(conf):
 def index_doc(doc):
     conf = get_elastic_config()
     es = connect(conf)
-    es.index(index="test1", id=doc["id"], body=doc)
+    es.index(index=conf["index"], id=doc["id"], body=doc)

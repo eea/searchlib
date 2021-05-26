@@ -56,7 +56,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
     :type failed_states: list
     """
 
-    template_fields = ("trigger_dag_id", "execution_date", "items")
+    template_fields = ("trigger_dag_id", "execution_date", "items", "parent")
     template_fields_renderers = {"conf": "py"}
     ui_color = "#ffefeb"
 
@@ -69,6 +69,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
         self,
         *,
         items: list,
+        parent: str,
         trigger_dag_id: str,
         conf: Optional[Dict] = None,
         execution_date: Optional[Union[str, datetime.datetime]] = None,
@@ -81,6 +82,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
     ) -> None:
         super().__init__(**kwargs)
         self.items = items
+        self.parent = parent
         self.trigger_dag_id = trigger_dag_id
         self.reset_dag_run = reset_dag_run
         self.wait_for_completion = wait_for_completion
@@ -107,7 +109,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
                 dag_run = trigger_dag(
                     dag_id=self.trigger_dag_id,
                     run_id=run_id,
-                    conf={"item": item},
+                    conf={"item": item, "parent": self.parent},
                     execution_date=self.execution_date,
                     replace_microseconds=False,
                 )

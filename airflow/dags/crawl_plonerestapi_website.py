@@ -90,6 +90,7 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
         task_id="fetch_urls",
         items=xc_clean_urls,
         trigger_dag_id="fetch_url",
+        parent=website_url,
     )
 
 
