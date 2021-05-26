@@ -159,17 +159,11 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
 
     sitemap_url = get_sitemap_url(website_url)
 
-    # sitemap = PythonOperator(
-    #    task_id = 'get_sitemap_request',
-    #    python_callable = get_sitemap,
-    #    op_kwargs={'sitemap_url':sitemap_url}
-    # )
-
     xc_sitemap = SimpleHttpOperator(
         task_id="get_sitemap",
         method="GET",
-        #        http_conn_id="http_default",
         endpoint=sitemap_url,
+        #        http_conn_id="http_default",
         #        log_response=True,
     )
 
@@ -183,12 +177,16 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
         task_id="trigger_fetch_for_urls",
         provide_context=True,
         python_callable=trigger_fetch_for_urls,
-        # dag=dag,
     )
 
     t3.set_upstream(xc_clean_urls)
 
     # trigger_fetch_for_urls(xc_clean_urls)
+    # sitemap = PythonOperator(
+    #    task_id = 'get_sitemap_request',
+    #    python_callable = get_sitemap,
+    #    op_kwargs={'sitemap_url':sitemap_url}
+    # )
 
     # for x, url in enumerate(xc_clean_urls["urls"]):
     #     # print("trigger_url:", url)
