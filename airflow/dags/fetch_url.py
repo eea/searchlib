@@ -8,6 +8,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.utils.dates import days_ago
 
+import helpers
 # from ../scripts import crawler
 
 # These args will get passed on to each operator
@@ -16,32 +17,16 @@ default_args = {
     "owner": "airflow",
 }
 
-
-def get_doc_req(url, ti):
-    """
-    Gets totalTestResultsIncrease field from Covid API for given state and returns value
-    """
-    headers = {"Accept": "application/json"}
-    res = requests.get(url, headers=headers)
-    print(res.text)
-    return res.text
-
-
 @dag(
     default_args=default_args,
     schedule_interval=None,
     start_date=days_ago(2),
     tags=["crawl"],
 )
-def fetch_url(url: str = "", maintainer_email: str = ""):
+def fetch_url(item: str = ""):
     """
     ### get info about an url
     """
-
-    @task()
-    def show_dag_run_conf(url, maintainer_email):
-        # start_url, maintainer_email="no-reply@plone.org"
-        print("url conf", url, maintainer_email)
 
     @task()
     def get_api_url(url):
@@ -53,7 +38,7 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         print(url_with_api)
         return url_with_api
 
-    url_with_api = get_api_url(url)
+    url_with_api = get_api_url(item)
     doc = SimpleHttpOperator(
         task_id="get_doc",
         method="GET",
@@ -61,19 +46,14 @@ def fetch_url(url: str = "", maintainer_email: str = ""):
         headers={"Accept": "application/json"},
     )
 
-    #    doc_from_req = PythonOperator(
-    #        task_id = 'get_doc_from_req',
-    #        python_callable=get_doc_req,
-    #        op_kwargs={'url':url_with_api}
-    #    )
-
+    
     @task
     def print_doc(doc):
         print("doc:", doc)
 
-    print_doc(doc.output)
+    helpers.debug_value(doc.output)
 
-    show_dag_run_conf(url, maintainer_email)
+    helpers.show_dag_run_conf({"item":item})
 
 
 fetch_url_dag = fetch_url()

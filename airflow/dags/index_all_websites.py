@@ -28,25 +28,10 @@ def index_all_websites():
     DAG for all of them.
     """
 
-#    xxx = Variable.get("foo")
     configured_websites = Variable.get("indexed_websites", deserialize_json=True)
-#    xxx2 = Variable.get("foo_baz", deserialize_json=True)
-#    xxx3 = Variable.get("test_websites", deserialize_json=True)
-#    xxx4 = Variable.get("indexed_websites")
-#    xxx5 = Variable.get("indexed_websites", deserialize_json=True)
 
-    @task
-    def print_value(val):
-        print ("type:", type(val))
-        print ("value:", val)
-    
-#    print ("ABC")
-#    configured_websites = ["https://biodiversity.europa.eu"]
-    
-    #print_value(xxx)
- #   print_value(xxx5)
-#    x = helpers.nicename('asdf:asfsd/fq re/qe123')
-#    print_value(x)
+    helpers.debug_value(configured_websites)
+
     for site_url in configured_websites:
         task_id = 'trigger_crawl_dag_' + helpers.nicename(site_url)
         trigger_dagrun.TriggerDagRunOperator(
