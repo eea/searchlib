@@ -11,6 +11,7 @@ from airflow.utils.dates import days_ago
 
 import helpers
 import elastic_helpers
+from eea.rabbitmq.client import RabbitMQConnector
 
 # from ../scripts import crawler
 
@@ -46,6 +47,23 @@ def get_relevant_data(doc, item, parent):
     return data
 
 
+@task
+def send_to_rabbitmq(doc):
+    rabbit_config = {
+        "rabbit_host": "rabbitmq",
+        "rabbit_port": "5672",
+        "rabbit_username": "guest",
+        "rabbit_password": "guest",
+    }
+    queue_name = "biodiversity_test"
+
+    rabbit = RabbitMQConnector(**rabbit_config)
+    rabbit.open_connection()
+    rabbit.declare_queue(queue_name)
+    rabbit.send_message(queue_name, json.dumps(doc))
+    rabbit.close_connection()
+
+
 @dag(
     default_args=default_args,
     schedule_interval=None,
@@ -65,14 +83,16 @@ def fetch_url(item: str = "", parent: str = ""):
     )
 
     prepared_data = get_relevant_data(doc.output, item, parent)
+    send_to_rabbitmq(prepared_data)
 
-    helpers.debug_value(parent)
-    helpers.debug_value(doc.output)
-    helpers.debug_value(prepared_data)
-    helpers.show_dag_run_conf({"item": item})
-    # es_conf = elastic_helpers.get_elastic_config()
-    # es_conn = elastic_helpers.connect(es_conf)
-    elastic_helpers.index_doc(prepared_data)
+
+#    helpers.debug_value(parent)
+#    helpers.debug_value(doc.output)
+#    helpers.debug_value(prepared_data)
+#    helpers.show_dag_run_conf({"item": item})
+# es_conf = elastic_helpers.get_elastic_config()
+# es_conn = elastic_helpers.connect(es_conf)
+#    elastic_helpers.index_doc(prepared_data)
 
 
 fetch_url_dag = fetch_url()

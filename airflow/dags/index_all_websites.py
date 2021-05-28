@@ -30,7 +30,7 @@ def index_all_websites():
 
     configured_websites = Variable.get("indexed_websites", deserialize_json=True)
 
-    helpers.debug_value(configured_websites)
+    #    helpers.debug_value(configured_websites)
 
     for site_url in configured_websites:
         task_id = "trigger_crawl_dag_" + helpers.nicename(site_url)

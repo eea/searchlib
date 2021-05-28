@@ -68,9 +68,9 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
     Main task to crawl a website
     """
 
-    helpers.show_dag_run_conf(
-        {"website_url": website_url, "maintainer_email": maintainer_email}
-    )
+    #   helpers.show_dag_run_conf(
+    #        {"website_url": website_url, "maintainer_email": maintainer_email}
+    #    )
 
     sitemap_url = get_sitemap_url(website_url)
 
@@ -80,7 +80,7 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
         endpoint=sitemap_url,
     )
 
-    helpers.debug_value(xc_sitemap.output)
+    #    helpers.debug_value(xc_sitemap.output)
 
     xc_urls = get_urls_from_sitemap(xc_sitemap.output)
 

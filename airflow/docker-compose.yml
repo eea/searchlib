@@ -203,6 +203,15 @@ services:
       volumes:
           - es7-storage-volume:/usr/share/elasticsearch/data
 
+  rabbitmq:
+      image: eeacms/rabbitmq:3.7.15-1
+      environment:
+          RABBITMQ_DEFAULT_PASS: guest
+          RABBITMQ_DEFAULT_USER: guest
+          TZ: Europe/Copenhagen
+      ports:
+          - 5672:5672
+          - 15672:15672
 
 volumes:
   postgres-db-volume:
