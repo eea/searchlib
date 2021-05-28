@@ -213,6 +213,12 @@ services:
           - 5672:5672
           - 15672:15672
 
+  logstash:
+      image: logstash:7.12.1
+      volumes: 
+          - ../logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      depends_on:
+          - es
 volumes:
   postgres-db-volume:
   postgres-tasks-db-volume:
