@@ -1,10 +1,12 @@
 import re
+
 from airflow.decorators import task
-from pprint import pprint
+
+# from pprint import pprint
 
 
 def nicename(value):
-    return re.sub("[^a-zA-Z0-9\n\.]", "_", value)
+    return re.sub("[^a-zA-Z0-9\n.]", "_", value)
 
 
 @task()

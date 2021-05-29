@@ -5,9 +5,10 @@ from xml.dom import minidom
 import requests
 from airflow.api.common.experimental.trigger_dag import trigger_dag
 from airflow.decorators import dag, task
-from airflow.exceptions import AirflowException, DagNotFound, DagRunAlreadyExists
-from airflow.models import BaseOperator, BaseOperatorLink, DagBag, DagModel, DagRun
-
+from airflow.exceptions import (AirflowException, DagNotFound,
+                                DagRunAlreadyExists)
+from airflow.models import (BaseOperator, BaseOperatorLink, DagBag, DagModel,
+                            DagRun)
 from airflow.operators import trigger_dagrun
 from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
@@ -145,41 +146,6 @@ crawl_website_dag = crawl_plonerestapi_website()
 #        conf={"url": "url3", "maintainer_email": "tibi@example.com"},
 #    )
 
-
-#  {'conf': <airflow.configuration.AirflowConfigParser object at 0x7f84bce49da0>,
-#  'dag': <DAG: crawl_plonerestapi_website>,
-#  'dag_run': <DagRun crawl_plonerestapi_website @ 2021-05-26 04:24:22.463409+00:00: manual__2021-05-26T04:24:22.453381+00:00, externally triggered: True>,
-#  'ds': '2021-05-26',
-#  'ds_nodash': '20210526',
-#  'execution_date': DateTime(2021, 5, 26, 4, 24, 22, 463409, tzinfo=Timezone('+00:00')),
-#  'inlets': [],
-#  'macros': <module 'airflow.macros' from '/home/airflow/.local/lib/python3.6/site-packages/airflow/macros/__init__.py'>,
-#  'next_ds': '2021-05-26',
-#  'next_ds_nodash': '20210526',
-#  'next_execution_date': DateTime(2021, 5, 26, 4, 24, 22, 463409, tzinfo=Timezone('+00:00')),
-#  'outlets': [],
-#  'params': {'maintainer_email': 'tibi@example.com',
-#             'website_url': 'https://biodiversity.europa.eu'},
-#  'prev_ds': '2021-05-26',
-#  'prev_ds_nodash': '20210526',
-#  'prev_execution_date': DateTime(2021, 5, 26, 4, 24, 22, 463409, tzinfo=Timezone('+00:00')),
-#  'prev_execution_date_success': <Proxy at 0x7f84b1b19948 with factory <function TaskInstance.get_template_context.<locals>.<lambda> at 0x7f84b1b37ea0>>,
-#  'prev_start_date_success': <Proxy at 0x7f84b1e6ca08 with factory <function TaskInstance.get_template_context.<locals>.<lambda> at 0x7f84b1ecde18>>,
-#  'run_id': 'manual__2021-05-26T04:24:22.453381+00:00',
-#  'task': <Task(PythonOperator): trigger_fetch_for_urls>,
-#  'task_instance': <TaskInstance: crawl_plonerestapi_website.trigger_fetch_for_urls 2021-05-26T04:24:22.463409+00:00 [running]>,
-#  'task_instance_key_str': 'crawl_plonerestapi_website__trigger_fetch_for_urls__20210526',
-#  'templates_dict': None,
-#  'test_mode': False,
-#  'ti': <TaskInstance: crawl_plonerestapi_website.trigger_fetch_for_urls 2021-05-26T04:24:22.463409+00:00 [running]>,
-#  'tomorrow_ds': '2021-05-27',
-#  'tomorrow_ds_nodash': '20210527',
-#  'ts': '2021-05-26T04:24:22.463409+00:00',
-#  'ts_nodash': '20210526T042422',
-#  'ts_nodash_with_tz': '20210526T042422.463409+0000',
-#  'var': {'json': None, 'value': None},
-#  'yesterday_ds': '2021-05-25',
-#  'yesterday_ds_nodash': '20210525'}
 # [2021-05-26 04:24:45,042] {logging_mixin.py:104} INFO - kwargs
 # [2021-05-26 04:24:45,043] {logging_mixin.py:104} INFO - {'conf': <airflow.configuration.AirflowConfigParser object at 0x7f84bce49da0>,
 #  'dag': <DAG: crawl_plonerestapi_website>,

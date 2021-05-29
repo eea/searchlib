@@ -1,33 +1,17 @@
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
 import datetime
-import json
-import time
 from typing import Dict, List, Optional, Union
 
 from airflow.api.common.experimental.trigger_dag import trigger_dag
-from airflow.exceptions import AirflowException, DagNotFound, DagRunAlreadyExists
-from airflow.models import BaseOperator, BaseOperatorLink, DagBag, DagModel, DagRun
+from airflow.exceptions import DagNotFound, DagRunAlreadyExists
+from airflow.models import BaseOperator  # BaseOperatorLink,AirflowException,
+from airflow.models import DagBag, DagModel, DagRun
 from airflow.utils import timezone
-from airflow.utils.helpers import build_airflow_url_with_query
 from airflow.utils.state import State
 from airflow.utils.types import DagRunType
+
+# from airflow.utils.helpers import build_airflow_url_with_query
+# import json
+# import time
 
 
 class BulkTriggerDagRunOperator(BaseOperator):
@@ -113,6 +97,7 @@ class BulkTriggerDagRunOperator(BaseOperator):
                     execution_date=self.execution_date,
                     replace_microseconds=False,
                 )
+                print(dag_run)
         except DagRunAlreadyExists as e:
             if self.reset_dag_run:
                 self.log.info(
@@ -134,5 +119,6 @@ class BulkTriggerDagRunOperator(BaseOperator):
                 dag.clear(start_date=self.execution_date, end_date=self.execution_date)
 
                 dag_run = DagRun.find(dag_id=dag.dag_id, run_id=run_id)[0]
+                print(dag_run)
             else:
                 raise e
