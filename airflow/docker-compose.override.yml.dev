@@ -41,10 +41,10 @@ services:
     environment:
       API_URL: http://localhost:3000/
 
-  postgrest:
-    ports:
-      - "6000:3000"
-
-  postgres-db:
-    ports:
-      - "5432:5432"
+  # postgrest:
+  #   ports:
+  #     - "6000:3000"
+  #
+  # postgres-db:
+  #   ports:
+  #     - "5432:5432"
