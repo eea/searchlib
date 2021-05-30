@@ -1,4 +1,5 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
+
 module.exports = {
   title: 'EEA Semantic Search Service',
   tagline: 'Semantic Search Service powered by ElasticSearch',

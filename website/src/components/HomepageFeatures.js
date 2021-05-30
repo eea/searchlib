@@ -8,32 +8,24 @@ const FeatureList = [
     Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        EEA Searchlib was designed from the ground up to be easily installed
-        and used to get a search engine in your website.
+        EEA Searchlib was designed from the ground up to be easily installed and
+        used to get a search engine in your website.
       </>
     ),
   },
   {
     title: 'Focus on What Matters',
     Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Reasons 3
-      </>
-    ),
+    description: <>Reasons 3</>,
   },
   {
     title: 'Powered by React',
     Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Reasons 2
-      </>
-    ),
+    description: <>Reasons 2</>,
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, title, description }) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
