@@ -1,19 +1,11 @@
 import json
-from xml.dom import minidom
 
-import requests
-import json
 from airflow.decorators import dag, task
-from airflow.models import Variable
-from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.utils.dates import days_ago
-
-import helpers
-import elastic_helpers
 from eea.rabbitmq.client import RabbitMQConnector
 
-# from ../scripts import crawler
+import helpers
 
 # These args will get passed on to each operator
 # You can override them on a per-task basis during operator initialization
@@ -55,7 +47,7 @@ def send_to_rabbitmq(doc):
         "rabbit_username": "guest",
         "rabbit_password": "guest",
     }
-    queue_name = "biodiversity_test"
+    queue_name = "es_indexing"
 
     rabbit = RabbitMQConnector(**rabbit_config)
     rabbit.open_connection()
@@ -86,6 +78,8 @@ def fetch_url(item: str = "", parent: str = ""):
     send_to_rabbitmq(prepared_data)
 
 
+fetch_url_dag = fetch_url()
+
 #    helpers.debug_value(parent)
 #    helpers.debug_value(doc.output)
 #    helpers.debug_value(prepared_data)
@@ -93,6 +87,9 @@ def fetch_url(item: str = "", parent: str = ""):
 # es_conf = elastic_helpers.get_elastic_config()
 # es_conn = elastic_helpers.connect(es_conf)
 #    elastic_helpers.index_doc(prepared_data)
-
-
-fetch_url_dag = fetch_url()
+# import requests
+# from airflow.models import Variable
+# from airflow.operators.python_operator import PythonOperator
+# import elastic_helpers
+# from xml.dom import minidom
+# from ../scripts import crawler

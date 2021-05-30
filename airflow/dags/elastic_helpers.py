@@ -1,7 +1,6 @@
-from elasticsearch import Elasticsearch
-
 from airflow.decorators import task
 from airflow.models import Variable
+from elasticsearch import Elasticsearch
 
 
 def get_elastic_config():
