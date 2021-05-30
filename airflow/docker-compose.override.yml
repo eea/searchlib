@@ -41,6 +41,16 @@ services:
     environment:
       API_URL: http://localhost:3000/
 
+  es:
+    ports:
+      - 9200:9200
+
+  rabbitmq:
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+
   # postgrest:
   #   ports:
   #     - "6000:3000"

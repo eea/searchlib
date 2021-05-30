@@ -143,8 +143,6 @@ services:
 
       volumes_from:
           - es7-storage-volume
-      ports:
-          - 9200:9200
 
   es-sysctl:
       network_mode: none
@@ -170,9 +168,6 @@ services:
           RABBITMQ_DEFAULT_PASS: guest
           RABBITMQ_DEFAULT_USER: guest
           TZ: Europe/Copenhagen
-      ports:
-          - 5672:5672
-          - 15672:15672
 
   logstash:
       image: logstash:7.12.1
@@ -203,6 +198,7 @@ services:
   #     POSTGRES_PASSWORD: password
   #   volumes:
   #     - postgres-tasks-db-volume:/var/lib/postgresql/data
+
 volumes:
   postgres-db-volume:
   postgres-tasks-db-volume:
