@@ -1,21 +1,9 @@
-# import json
-from pprint import pprint
 from xml.dom import minidom
 
-import requests
-from airflow.api.common.experimental.trigger_dag import trigger_dag
 from airflow.decorators import dag, task
-from airflow.exceptions import (AirflowException, DagNotFound,
-                                DagRunAlreadyExists)
-from airflow.models import (BaseOperator, BaseOperatorLink, DagBag, DagModel,
-                            DagRun)
-from airflow.operators import trigger_dagrun
-from airflow.operators.python_operator import PythonOperator
 from airflow.providers.http.operators.http import SimpleHttpOperator
-from airflow.utils import timezone
 from airflow.utils.dates import days_ago
 
-import helpers
 from bulk_trigger_dagrun import BulkTriggerDagRunOperator
 
 # These args will get passed on to each operator
@@ -40,7 +28,8 @@ def get_urls_from_sitemap(sitemap: str):
     for url in urls:
         item = {
             "url": url.getElementsByTagName("loc")[0].firstChild.nodeValue,
-            "date": url.getElementsByTagName("lastmod")[0].firstChild.nodeValue,
+            "date":
+            url.getElementsByTagName("lastmod")[0].firstChild.nodeValue,
         }
         response.append(item)
     print(response)
@@ -62,7 +51,8 @@ def get_urls_to_update(urls: list = []) -> dict:
     start_date=days_ago(2),
     tags=["crawl"],
 )
-def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""):
+def crawl_plonerestapi_website(website_url: str = "",
+                               maintainer_email: str = ""):
     """
     ### Crawls a plone.restapi powered website.
 
@@ -97,54 +87,6 @@ def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""
 
 crawl_website_dag = crawl_plonerestapi_website()
 
-# def trigger_fetch_for_urls(*args, **kwargs):
-#    # see https://stackoverflow.com/questions/41453379/execute-airflow-tasks-in-for-loop
-#    ti = kwargs["ti"]
-
-#    print("args")
-#    pprint(args)
-#    print("kwargs")
-#    pprint(kwargs)
-
-#    data = ti.xcom_pull(task_ids="get_urls_to_update")
-#    for x, url in enumerate(data["urls"]):
-#        print("Processing url", url)
-
-#        execution_date = timezone.utcnow()
-#        run_id = DagRun.generate_run_id(DagRunType.MANUAL, execution_date)
-#        try:
-# Ignore MyPy type for self.execution_date
-# because it doesn't pick up the timezone.parse() for strings
-#            dag_run = trigger_dag(
-#                dag_id="fetch_url",
-#                run_id=run_id,
-#                conf={"url": url, "maintainer_email": "tibi@example.com"},
-# execution_date=self.execution_date,
-#                replace_microseconds=False,
-#            )
-#            print(dag_run)
-#        except DagRunAlreadyExists as e:
-#            raise e
-
-#    t3 = PythonOperator(
-#        task_id="trigger_fetch_for_urls",
-#        provide_context=True,
-#        python_callable=trigger_fetch_for_urls,
-#    )
-
-#    t3.set_upstream(xc_clean_urls)
-
-
-# clean_urls = [
-#     "http://biodiversity.europa.eu/protected-areas/life-nature-and-biodiversity-projects"
-# ]
-# trigger_fetch_for_urls(urls)
-
-# trigger_dagrun.TriggerDagRunOperator(
-#        task_id="trigger_fetch_url2",
-#        trigger_dag_id="fetch_url",
-#        conf={"url": "url3", "maintainer_email": "tibi@example.com"},
-#    )
 
 # [2021-05-26 04:24:45,042] {logging_mixin.py:104} INFO - kwargs
 # [2021-05-26 04:24:45,043] {logging_mixin.py:104} INFO - {'conf': <airflow.configuration.AirflowConfigParser object at 0x7f84bce49da0>,
