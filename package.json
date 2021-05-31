@@ -28,7 +28,8 @@
     "demo": "cd packages/demo; pnpm start",
     "standalone": "cd packages/searchlib-standalone; pnpm start",
     "yalc-publish": "pnpm m run yalc-publish",
-    "website": "cd website; yarn start"
+    "website": "cd website; yarn start",
+    "start:prod": " pnpm m run start:prod"
   },
   "dependencies": {
     "@eeacms/search": "link:packages/searchlib",

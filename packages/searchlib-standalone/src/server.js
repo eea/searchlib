@@ -3,6 +3,7 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -28,10 +29,29 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = '') => {
     : '';
 };
 
+const esProxyWhitelist = {
+  GET: ['^/_aliases', '^/_all'],
+  POST: ['^/_search', /^\/[\w\d.-]+\/_search/],
+};
+
+function filterRequests(pathname, req) {
+  const tomatch = esProxyWhitelist[req.method] || [];
+  return tomatch.filter((m) => pathname.match(m)).length > 0;
+}
+
+const target =
+  process.env.RAZZLE_ELASTIC_URL ||
+  process.env.ELASTIC_URL ||
+  'http://localhost:9200';
+
+const esproxy = createProxyMiddleware(filterRequests, { target });
+esproxy.id = 'esproxy';
+
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use([esproxy])
   .get('/*', (req, res) => {
     const context = {};
     const markup = renderToString(

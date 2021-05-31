@@ -5,4 +5,6 @@ services:
     build: .
     ports:
       - 3000:3000
+    environment:
+      - ELASTIC_URL=http://localhost:9200
     # entrypoint: sh -c "tail -f /dev/null"

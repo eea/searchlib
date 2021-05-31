@@ -107,8 +107,12 @@ const wise_config = {
   },
 };
 
-export default function installDemo(config) {
-  config.searchui.wise = mergeConfig(wise_config, config.searchui.default);
+export default function install(config) {
+  config.searchui.standalone = mergeConfig(
+    wise_config, // TODO: needs standalone configuration
+    config.searchui.default,
+  );
+  config.searchui.standalone.host = process.env.RAZZLE_ES_HOST || '';
 
   config.searchui.minimal = mergeConfig(config.searchui.default, wise_config);
   config.searchui.minimal.facets = [

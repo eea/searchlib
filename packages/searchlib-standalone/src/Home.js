@@ -1,13 +1,13 @@
 import React from 'react';
 import { SearchApp, registry } from '@eeacms/search';
 
-import installDemo from './config';
+import installConfig from './config';
 
-const demoRegistry = installDemo(registry);
+const localRegistry = installConfig(registry);
 
 class Home extends React.Component {
   render() {
-    return <SearchApp registry={demoRegistry} appName="wise" />;
+    return <SearchApp registry={localRegistry} appName="standalone" />;
   }
 }
 
