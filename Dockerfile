@@ -25,16 +25,8 @@ RUN pnpm i || true
 
 RUN pnpm build
 
-CMD ["pnpm", "start:prod"]
+WORKDIR /opt/frontend/packages/searchlib-standalone
 
-# RUN yo --no-insight @plone/volto --no-interactive
-#
-# RUN RAZZLE_API_PATH=VOLTO_API_PATH RAZZLE_INTERNAL_API_PATH=VOLTO_INTERNAL_API_PATH yarn \
-#  && RAZZLE_API_PATH=VOLTO_API_PATH RAZZLE_INTERNAL_API_PATH=VOLTO_INTERNAL_API_PATH yarn build
-#
-# COPY entrypoint.sh /
-#
-# EXPOSE 3000 3001 4000 4001
-#
-# ENTRYPOINT ["/entrypoint.sh"]
-# CMD ["yarn", "start:prod"]
+EXPOSE 3000 3001 4000 4001
+
+CMD ["yarn", "start:prod"]
