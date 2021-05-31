@@ -28,8 +28,7 @@ def get_urls_from_sitemap(sitemap: str):
     for url in urls:
         item = {
             "url": url.getElementsByTagName("loc")[0].firstChild.nodeValue,
-            "date":
-            url.getElementsByTagName("lastmod")[0].firstChild.nodeValue,
+            "date": url.getElementsByTagName("lastmod")[0].firstChild.nodeValue,
         }
         response.append(item)
     print(response)
@@ -51,8 +50,7 @@ def get_urls_to_update(urls: list = []) -> dict:
     start_date=days_ago(2),
     tags=["crawl"],
 )
-def crawl_plonerestapi_website(website_url: str = "",
-                               maintainer_email: str = ""):
+def crawl_plonerestapi_website(website_url: str = "", maintainer_email: str = ""):
     """
     ### Crawls a plone.restapi powered website.
 

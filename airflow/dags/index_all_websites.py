@@ -26,8 +26,7 @@ def index_all_websites():
     DAG for all of them.
     """
 
-    configured_websites = Variable.get("indexed_websites",
-                                       deserialize_json=True)
+    configured_websites = Variable.get("indexed_websites", deserialize_json=True)
 
     #    helpers.debug_value(configured_websites)
 
@@ -36,9 +35,11 @@ def index_all_websites():
         trigger_dagrun.TriggerDagRunOperator(
             task_id=task_id,
             trigger_dag_id="crawl_plonerestapi_website",
-            conf={"website_url": site_url,
-                  # TODO: read also maintainer from configuration
-                  "maintainer_email": "tibi@example.com"},
+            conf={
+                "website_url": site_url,
+                # TODO: read also maintainer from configuration
+                "maintainer_email": "tibi@example.com",
+            },
         )
 
 
