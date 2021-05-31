@@ -39,6 +39,7 @@
     "mini-css-extract-plugin": "^0.9.0",
     "razzle": "^4.0.4",
     "razzle-dev-utils": "^4.0.4",
+    "semantic-ui-less": "^2.4.1",
     "webpack": "^4.44.1",
     "webpack-dev-server": "^3.11.2"
   }

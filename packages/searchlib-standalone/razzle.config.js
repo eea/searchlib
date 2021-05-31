@@ -31,37 +31,48 @@ module.exports = {
     },
     paths, // the modified paths that will be used by Razzle.
   }) {
-    // webpackConfig.resolve.alias['@eeacms/search'] = searchlibPath;
-    // console.log(webpackConfig.module.rules);
-    const cssLoaderFinder = makeLoaderFinder('css-loader');
-    const cssLoader = webpackConfig.module.rules.find(cssLoaderFinder);
+    // // webpackConfig.resolve.alias['@eeacms/search'] = searchlibPath;
+    // // console.log(webpackConfig.module.rules);
+    // const cssLoaderFinder = makeLoaderFinder('css-loader');
+    // const cssLoader = webpackConfig.module.rules.find(cssLoaderFinder);
+    //
+    // const lessLoader = {
+    //   loader: require.resolve('less-loader'),
+    //   options: {
+    //     dev: {
+    //       sourceMap: true,
+    //     },
+    //     prod: {
+    //       sourceMap: true,
+    //     },
+    //   },
+    // };
+    //
+    // const lessLoaderRule = {
+    //   test: /\.less$/,
+    //   include: [path.resolve('./theme'), /node_modules\/semantic-ui-less/],
+    //   use: [lessLoader].concat(cssLoader.use),
+    // };
+    //
+    // console.log(lessLoaderRule.use);
+    // // console.log(typeof lessLoaderRule.use);
+    //
+    // // console.log(webpackConfig);
+    // webpackConfig.module.rules = webpackConfig.module.rules.concat([
+    //   lessLoaderRule,
+    // ]);
 
-    const lessLoader = {
-      loader: require.resolve('less-loader'),
-      options: {
-        dev: {
-          sourceMap: true,
-        },
-        prod: {
-          sourceMap: true,
-        },
-      },
-    };
-
-    const lessLoaderRule = {
-      test: /\.less$/,
-      include: [path.resolve('./theme'), /node_modules\/semantic-ui-less/],
-      use: [lessLoader].concat(cssLoader.use),
-    };
-
-    // console.log(typeof lessLoaderRule.use);
-
+    //   webpackConfig.module.rules[webpackConfig.module.rules.length - 1].use,
+    // );
     // console.log(webpackConfig);
-    webpackConfig.module.rules = webpackConfig.module.rules.concat([
-      lessLoaderRule,
-    ]);
+    // console.log(require.resolve('@eeacms/search'));
+    // webpackConfig.resolve.alias['@eeacms/search'] = path.join(
+    //   __dirname,
+    //   '../searchlib/src',
+    // );
     return webpackConfig;
   },
+  plugins: [require('./webpack-less-plugin')],
 };
 
 // isServer

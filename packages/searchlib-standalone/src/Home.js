@@ -7,9 +7,7 @@ const demoRegistry = installDemo(registry);
 
 class Home extends React.Component {
   render() {
-    return (
-      <SearchApp registry={demoRegistry} appName="wise" />
-    );
+    return <SearchApp registry={demoRegistry} appName="wise" />;
   }
 }
 

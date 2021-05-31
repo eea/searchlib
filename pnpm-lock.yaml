@@ -502,6 +502,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       react-router-dom: ^5.2.0
+      semantic-ui-less: ^2.4.1
       webpack: ^4.44.1
       webpack-dev-server: ^3.11.2
     dependencies:
@@ -534,6 +535,7 @@ importers:
       mini-css-extract-plugin: 0.9.0_webpack@4.46.0
       razzle: 4.0.4_ef4f024c55e80da7cb2e3253681e1e29
       razzle-dev-utils: 4.0.4_25582cf9a45d8a495d3f9acca3867c25
+      semantic-ui-less: 2.4.1
       webpack: 4.46.0
       webpack-dev-server: 3.11.2_webpack@4.46.0
 
@@ -10212,7 +10214,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.1_debug@4.3.1
+      follow-redirects: 1.14.1
     transitivePeerDependencies:
       - debug
     dev: false
@@ -14713,7 +14715,7 @@ packages:
       fbjs: 3.0.0
       react: 17.0.2
 
-  /follow-redirects/1.14.1_debug@4.3.1:
+  /follow-redirects/1.14.1:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -14721,8 +14723,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dependencies:
-      debug: 4.3.1_supports-color@6.1.0
 
   /for-in/1.0.2:
     resolution: {integrity: sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=}
@@ -15588,7 +15588,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.1_debug@4.3.1
+      follow-redirects: 1.14.1
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -16941,7 +16941,6 @@ packages:
 
   /jquery/3.6.0:
     resolution: {integrity: sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==}
-    dev: false
 
   /js-string-escape/1.0.1:
     resolution: {integrity: sha1-4mJbrbwNZ8dTPp7cEGjFh65BN+8=}
@@ -21919,7 +21918,6 @@ packages:
     resolution: {integrity: sha512-/+nhPV6If2ydCz89/SSWzYD8ualDtjh4Tk3F6cqRj2luZj1DRjJ2nM9NKqmeyLlQFNFM94wpnpKXcjxRzZh5GA==}
     dependencies:
       jquery: 3.6.0
-    dev: false
 
   /semantic-ui-react/2.0.3_react-dom@17.0.2:
     resolution: {integrity: sha512-a0hGN6XXw64sRSKwWqMCKSI/AGLohxNeWuErS39eswvBbUnLjBij8ZoEdiqDiz/PuWpwYIRjgmQVrut+7h3b2g==}
