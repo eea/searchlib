@@ -95,10 +95,14 @@ module.exports = {
       loader: require.resolve('postcss-loader'),
       options: hasPostCssConfig()
         ? undefined
-        : Object.assign({}, options.postcss[constantEnv], {
-            plugins: () => options.postcss.plugins,
-          }),
+        : {
+            postcssOptions: Object.assign({}, options.postcss[constantEnv], {
+              plugins: () => options.postcss.plugins,
+            }),
+          },
     };
+
+    console.log(postCssLoader);
 
     const lessLoader = {
       loader: require.resolve('less-loader'),
@@ -107,19 +111,18 @@ module.exports = {
 
     webpackConfig.resolve.alias['../../theme.config$'] =
       path.resolve(`./theme/theme.config`);
-    console.log('resolve', webpackConfig.resolve.alias);
     const lessInclude = [
       path.resolve('./src'),
       path.resolve('./theme'),
       path.resolve('./theme/theme.config'),
       /node_modules\/semantic-ui-less/,
     ];
-    console.log('lessInclude', lessInclude);
+    // console.log('lessInclude', lessInclude);
 
     webpackConfig.module.rules = [
       ...webpackConfig.module.rules,
       {
-        test: /\.less$/,
+        test: /\.less$|\.config$|\.overrides$|\.variables$/,
         include: lessInclude,
         use: isServer
           ? [

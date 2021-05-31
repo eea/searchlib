@@ -1,4 +1,5 @@
-const makeLoaderFinder = require('razzle-dev-utils/makeLoaderFinder');
+// const makeLoaderFinder = require('razzle-dev-utils/makeLoaderFinder');
+const lessPlugin = require('./webpack-less-plugin').modifyWebpackConfig;
 const path = require('path');
 
 // const searchlibPath = path.normalize(path.join(require.resolve('@eeacms/search'), './../../src'));
@@ -22,15 +23,7 @@ module.exports = {
     // ]);
     return webpackOptions;
   },
-  modifyWebpackConfig({
-    webpackConfig, // the created webpack config
-    webpackObject, // the imported webpack node module
-    options: {
-      razzleOptions, // the modified options passed to Razzle in the `options` key in `razzle.config.js` (options: { key: 'value'})
-      webpackOptions, // the modified options that will be used to configure webpack/ webpack loaders and plugins
-    },
-    paths, // the modified paths that will be used by Razzle.
-  }) {
+  modifyWebpackConfig(params) {
     // // webpackConfig.resolve.alias['@eeacms/search'] = searchlibPath;
     // // console.log(webpackConfig.module.rules);
     // const cssLoaderFinder = makeLoaderFinder('css-loader');
@@ -70,9 +63,25 @@ module.exports = {
     //   __dirname,
     //   '../searchlib/src',
     // );
-    return webpackConfig;
+    //
+    // const {
+    //   webpackConfig, // the created webpack config
+    //   webpackObject, // the imported webpack node module
+    //   options: {
+    //     razzleOptions, // the modified options passed to Razzle in the `options` key in `razzle.config.js` (options: { key: 'value'})
+    //     webpackOptions, // the modified options that will be used to configure webpack/ webpack loaders and plugins
+    //   },
+    //   paths, // the modified paths that will be used by Razzle.
+    // } = params;
+
+    const config = lessPlugin(params);
+    // config.resolve.alias['../../theme.config$'] =
+    //   path.resolve(`./theme/theme.config`);
+
+    return config;
   },
-  plugins: [require('./webpack-less-plugin')],
+  // plugins: ['./webpack-less-plugin'],
+  // plugins: ['less'],
 };
 
 // isServer
