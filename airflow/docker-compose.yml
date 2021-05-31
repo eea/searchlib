@@ -172,8 +172,8 @@ services:
   logstash:
       image: logstash:7.12.1
       volumes:
-          - ../logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-          - ../logstash/logstash.conf:/usr/share/logstash/config/logstash.conf
+          - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+          - ./logstash/logstash.conf:/usr/share/logstash/config/logstash.conf
       depends_on:
           - es
 
