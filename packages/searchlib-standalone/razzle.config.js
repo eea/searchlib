@@ -64,24 +64,24 @@ module.exports = {
     //   '../searchlib/src',
     // );
     //
-    // const {
-    //   webpackConfig, // the created webpack config
-    //   webpackObject, // the imported webpack node module
-    //   options: {
-    //     razzleOptions, // the modified options passed to Razzle in the `options` key in `razzle.config.js` (options: { key: 'value'})
-    //     webpackOptions, // the modified options that will be used to configure webpack/ webpack loaders and plugins
-    //   },
-    //   paths, // the modified paths that will be used by Razzle.
-    // } = params;
+    const {
+      webpackConfig, // the created webpack config
+      webpackObject, // the imported webpack node module
+      options: {
+        razzleOptions, // the modified options passed to Razzle in the `options` key in `razzle.config.js` (options: { key: 'value'})
+        webpackOptions, // the modified options that will be used to configure webpack/ webpack loaders and plugins
+      },
+      paths, // the modified paths that will be used by Razzle.
+    } = params;
 
-    const config = lessPlugin(params);
-    // config.resolve.alias['../../theme.config$'] =
-    //   path.resolve(`./theme/theme.config`);
+    // const config = lessPlugin(params);
+    webpackConfig.resolve.alias['../../theme.config$'] =
+      path.resolve(`./theme/theme.config`);
 
-    return config;
+    return webpackConfig;
   },
   // plugins: ['./webpack-less-plugin'],
-  // plugins: ['less'],
+  plugins: ['less'],
 };
 
 // isServer
