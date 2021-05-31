@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "razzle start",
-    "build": "razzle build",
+    "build": "razzle build --noninteractive",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js"
+    "start:prod": "NODE_ENV=production NODE_PATH=./node_modules node build/server.js"
   },
   "dependencies": {
     "@eeacms/search": "workspace:^0.1.0",

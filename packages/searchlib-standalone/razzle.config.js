@@ -1,28 +1,28 @@
 // const makeLoaderFinder = require('razzle-dev-utils/makeLoaderFinder');
-const lessPlugin = require('./webpack-less-plugin').modifyWebpackConfig;
+// const lessPlugin = require('./webpack-less-plugin').modifyWebpackConfig;
 const path = require('path');
 
 // const searchlibPath = path.normalize(path.join(require.resolve('@eeacms/search'), './../../src'));
 
 module.exports = {
-  modifyWebpackOptions({
-    env: {
-      target, // the target 'node' or 'web'
-      dev, // is this a development build? true or false
-    },
-    options: {
-      webpackOptions, // the default options that will be used to configure webpack/ webpack loaders and plugins
-    },
-  }) {
-    // webpackOptions.notNodeExternalResMatch = (request, context) => {
-    //   return /@eeacms\/search/.test(request)
-    // };
-    // webpackOptions.babelRule.include = webpackOptions.babelRule.include.concat([
-    //   /@eeacms\/search/,
-    //   searchlibPath
-    // ]);
-    return webpackOptions;
-  },
+  // modifyWebpackOptions({
+  //   env: {
+  //     target, // the target 'node' or 'web'
+  //     dev, // is this a development build? true or false
+  //   },
+  //   options: {
+  //     webpackOptions, // the default options that will be used to configure webpack/ webpack loaders and plugins
+  //   },
+  // }) {
+  //   // webpackOptions.notNodeExternalResMatch = (request, context) => {
+  //   //   return /@eeacms\/search/.test(request)
+  //   // };
+  //   // webpackOptions.babelRule.include = webpackOptions.babelRule.include.concat([
+  //   //   /@eeacms\/search/,
+  //   //   searchlibPath
+  //   // ]);
+  //   return webpackOptions;
+  // },
   modifyWebpackConfig(params) {
     // // webpackConfig.resolve.alias['@eeacms/search'] = searchlibPath;
     // // console.log(webpackConfig.module.rules);
@@ -72,12 +72,18 @@ module.exports = {
         webpackOptions, // the modified options that will be used to configure webpack/ webpack loaders and plugins
       },
       paths, // the modified paths that will be used by Razzle.
+      env: { target },
     } = params;
 
+    // console.log('target', target);
     // const config = lessPlugin(params);
     webpackConfig.resolve.alias['../../theme.config$'] =
       path.resolve(`./theme/theme.config`);
 
+    if (target === 'node') {
+      console.log(webpackConfig.externals);
+      // webpackConfig.externals = ['express', 'formidable'];
+    }
     return webpackConfig;
   },
   // plugins: ['./webpack-less-plugin'],
