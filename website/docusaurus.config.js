@@ -38,6 +38,17 @@ module.exports = {
           position: 'left',
         },
         {
+          type: 'doc',
+          docId: 'quickaccess',
+          label: 'Quick access',
+          position: 'left',
+        },
+        {
+          href: '/ecosystem',
+          label: 'Services diagram',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/eea/searchlib',
           label: 'GitHub',
           position: 'right',

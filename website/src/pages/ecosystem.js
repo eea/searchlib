@@ -90,12 +90,22 @@ export default function Ecosystem(props) {
 
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
+      title={`Services ecosystem ${siteConfig.title}`}
+      description="Services ecosystem for SemanticSearch"
     >
-      <h1>System architecture</h1>
       <main>
-        <Graph graph={graph} options={options} />
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <article>
+                <header>
+                  <h1>Services ecosystem</h1>
+                </header>
+                <Graph graph={graph} options={options} />
+              </article>
+            </div>
+          </div>
+        </div>
       </main>
     </Layout>
   );
