@@ -7,8 +7,6 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
-// console.log('assets', assets);
-
 const cssLinksFromAssets = (assets, entrypoint) => {
   return assets[entrypoint]
     ? assets[entrypoint].css
