@@ -1,6 +1,6 @@
 import { suiFacet, mergeConfig } from '@eeacms/search';
 
-const wise_config = {
+const demo_config = {
   facets: [
     suiFacet({ field: 'Country', isFilterable: true, isMulti: true }),
     suiFacet({ field: 'Sector', isMulti: true }),
@@ -108,15 +108,16 @@ const wise_config = {
 };
 
 export default function install(config) {
-  config.searchui.standalone = mergeConfig(
-    wise_config, // TODO: needs standalone configuration
-    config.searchui.default,
-  );
+  const envConfig = process.env.RAZZLE_ENV_CONFIG
+    ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
+    : demo_config;
+
+  config.searchui.standalone = mergeConfig(envConfig, config.searchui.default);
   config.searchui.standalone.host = process.env.RAZZLE_ES_HOST || '';
   config.searchui.standalone.elastic_index =
     process.env.RAZZLE_ES_INDEX || '_all';
 
-  config.searchui.minimal = mergeConfig(config.searchui.default, wise_config);
+  config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [
     suiFacet({ field: 'Sector' }),
     suiFacet({
