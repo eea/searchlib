@@ -10,7 +10,7 @@ first, with:
 npm install -g pnpm
 ```
 
-## Run the demo
+### Run the demo
 
 Run:
 
@@ -20,7 +20,7 @@ pnpm build
 pnpm start
 ```
 
-## Develop the searchlib for a classic Plone addon
+### Develop the searchlib for a classic Plone addon
 
 Run:
 
@@ -36,7 +36,7 @@ Then, inside your classic Plone addon, in a create-react-app application, run:
 npx yalc add @eeacms/search
 ```
 
-## Run the standalone version
+### Run the standalone version
 
 Run:
 
@@ -44,3 +44,8 @@ Run:
 pnpm install
 pnpm standalone
 ```
+
+## Indexing and other related projects
+
+- [Airflow Crawler custom code](https://github.com/eea/eea-crawler)
+- [Airflow Crawler docker image](https://github.com/eea/eea.docker.airflow)
