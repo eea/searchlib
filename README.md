@@ -35,3 +35,12 @@ Then, inside your classic Plone addon, in a create-react-app application, run:
 ```
 npx yalc add @eeacms/search
 ```
+
+## Run the standalone version
+
+Run:
+
+```
+pnpm install
+pnpm standalone
+```
