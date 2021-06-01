@@ -112,10 +112,31 @@ export default function install(config) {
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : demo_config;
 
-  config.searchui.standalone = mergeConfig(envConfig, config.searchui.default);
-  config.searchui.standalone.host = process.env.RAZZLE_ES_HOST || '';
-  config.searchui.standalone.elastic_index =
-    process.env.RAZZLE_ES_INDEX || '_all';
+  config.searchui.standalone = {
+    ...mergeConfig(envConfig, config.searchui.default),
+    host: process.env.RAZZLE_ES_HOST || '',
+    elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
+    facets: [],
+    highlight: {},
+    sortOptions: [],
+    tableViewParams: {
+      columns: [
+        {
+          title: 'Title',
+          field: 'title',
+        },
+      ],
+    },
+    listingViewParams: {
+      titleField: 'title',
+      extraFields: [],
+      details: {
+        titleField: 'title',
+        extraFields: [],
+      },
+      sections: [],
+    },
+  };
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [

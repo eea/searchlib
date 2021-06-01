@@ -23,7 +23,7 @@ USER node
 
 RUN pnpm i || true
 
-RUN pnpm build
+RUN cd packages/searchlib-standalone && pnpm build
 
 WORKDIR /opt/frontend/packages/searchlib-standalone
 

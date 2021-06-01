@@ -36,12 +36,14 @@ export const Header = (props) => {
   const { details } = listingViewParams;
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
+  const title = result[titleField]?.raw || result.id?.raw;
+  console.log({ url, title, result });
 
   return (
     <>
       <Level>
         {url ? (
-          <a href={result[urlField].raw}>{result[titleField].raw}</a>
+          <a href={url}>{title}</a>
         ) : (
           <Item.Header
             className="listing-view-item"
@@ -49,7 +51,7 @@ export const Header = (props) => {
             onClick={() => setShowModal(true)}
             onKeyDown={() => setShowModal(true)}
           >
-            {result[titleField].raw}
+            {title}
           </Item.Header>
         )}
       </Level>
