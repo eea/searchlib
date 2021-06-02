@@ -4,7 +4,14 @@ For development (easier access to dag files) use the following:
 
 ```
 cp docker-compose.override.yaml.dev docker-compose.override.yaml
-mkdir logs
-mkdir plugins
-chown 50000:50000 dags logs plugins
+mkdir -p data/logs data/plugins
+sudo chown -R 50000:50000 data
+```
+
+The Airflow DAGs are hosted at https://github.com/eea/eea-crawler/ and are
+linked here as a Git submodule. To bring them here, make sure to run:
+
+```
+git submodule init
+git submodule update
 ```
