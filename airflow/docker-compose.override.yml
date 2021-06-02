@@ -4,9 +4,9 @@ version: '2.1'
 x-airflow-override:
   &airflow-override
   volumes:
-    - ./dags:/opt/airflow/dags
-    - ./plugins:/opt/airflow/plugins
-    - ./logs:/opt/airflow/logs
+    - ./crawler/dags:/opt/airflow/dags
+    - ./crawler/plugins:/opt/airflow/plugins
+    - ./data/logs:/opt/airflow/logs
 
 services:
   redis:
