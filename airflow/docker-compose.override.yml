@@ -45,6 +45,15 @@ services:
     ports:
       - 9600:9600
 
+  postgres:
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+
+  es7-storage-volume:
+    volumes:
+      - ./data/es:/usr/share/elasticsearch/data
+
+  #/usr/share/elasticsearch/data
   # postgrest:
   #   ports:
   #     - "6000:3000"
