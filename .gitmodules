@@ -1,3 +1,0 @@
-[submodule "airflow/crawler"]
-	path = airflow/crawler
-	url = git@github.com:eea/eea-crawler.git
