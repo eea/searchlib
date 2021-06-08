@@ -10,6 +10,7 @@ services:
 
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
+      - ./data/logs:/opt/airflow/logs:z
   airflow-scheduler:
     build: ./eea.docker.airflow
     environment:
@@ -19,6 +20,7 @@ services:
 
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
+      - ./data/logs:/opt/airflow/logs:z
 
   airflow-worker:
     build: ./eea.docker.airflow
@@ -28,6 +30,7 @@ services:
       DEV_ENV: "true"
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
+      - ./data/logs:/opt/airflow/logs:z
 
   airflow-init:
     build: ./eea.docker.airflow
@@ -37,6 +40,7 @@ services:
       DEV_ENV: "true"
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
+      - ./data/logs:/opt/airflow/logs:z
 
   flower:
     build: ./eea.docker.airflow
@@ -46,6 +50,7 @@ services:
       DEV_ENV: "true"
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
+      - ./data/logs:/opt/airflow/logs:z
 
   logstash:
     build: ./eea.docker.logstash
