@@ -141,8 +141,6 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
-    volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
     restart: always
 
   redis:
@@ -155,8 +153,6 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
       RABBITMQ_DEFAULT_USER: guest
       TZ: Europe/Copenhagen
-    volumes:
-      - rabbitmq-volume:/var/lib/rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
@@ -224,8 +220,6 @@ services:
 
 
 volumes:
-  postgres-db-volume:
-  rabbitmq-volume:
   crawler-config-volume:
     driver: local
   elastic-storage-volume:

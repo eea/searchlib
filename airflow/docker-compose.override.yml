@@ -52,6 +52,18 @@ services:
       - ./eea-crawler/dags:/opt/airflow/dags
       - ./data/logs:/opt/airflow/logs:z
 
+  postgres:
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data:z
+
+  elastic:
+    volumes:
+      - ./data/es:/usr/share/elasticsearch/data
+
+  rabbitmq:
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq:z
+
   logstash:
     build: ./eea.docker.logstash
     environment:
@@ -60,4 +72,4 @@ services:
     volumes:
       - ./eea-crawler/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./eea-crawler/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
- 
+
