@@ -1,0 +1,9 @@
+[submodule "airflow/eea-crawler"]
+	path = airflow/eea-crawler
+	url = git@github.com:eea/eea-crawler.git
+[submodule "airflow/eea.docker.airflow"]
+	path = airflow/eea.docker.airflow
+	url = git@github.com:eea/eea.docker.airflow.git
+[submodule "airflow/eea.docker.logstash"]
+	path = airflow/eea.docker.logstash
+	url = git@github.com:eea/eea.docker.logstash.git

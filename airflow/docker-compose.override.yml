@@ -1,71 +1,58 @@
-# Local development volumes
-#---
-version: '2.1'
-x-airflow-override:
-  &airflow-override
-  volumes:
-    - ./crawler/dags:/opt/airflow/dags
-    - ./crawler/plugins:/opt/airflow/plugins
-    - ./data/logs:/opt/airflow/logs
+version: "2"
 
 services:
-  redis:
-    # ports:
-    #   - 6379:6379
-
   airflow-webserver:
-    ports:
-      - "8100:8080"
-    <<: *airflow-override
+    build: ./eea.docker.airflow
+    environment:
+      AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
+      SENTRY_DSN: ''
+      DEV_ENV: "true"
 
+    volumes:
+      - ./eea-crawler/dags:/opt/airflow/dags
   airflow-scheduler:
-    <<: *airflow-override
+    build: ./eea.docker.airflow
+    environment:
+      AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
+      SENTRY_DSN: ''
+      DEV_ENV: "true"
+
+    volumes:
+      - ./eea-crawler/dags:/opt/airflow/dags
 
   airflow-worker:
-    <<: *airflow-override
+    build: ./eea.docker.airflow
+    environment:
+      AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
+      SENTRY_DSN: ''
+      DEV_ENV: "true"
+    volumes:
+      - ./eea-crawler/dags:/opt/airflow/dags
 
   airflow-init:
-    <<: *airflow-override
+    build: ./eea.docker.airflow
+    environment:
+      AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
+      SENTRY_DSN: ''
+      DEV_ENV: "true"
+    volumes:
+      - ./eea-crawler/dags:/opt/airflow/dags
 
   flower:
-    <<: *airflow-override
-    ports:
-      - "5555:5555"
-
-  es:
-    ports:
-      - 9200:9200
-
-  rabbitmq:
-    ports:
-      - 5672:5672
-      - 15672:15672
+    build: ./eea.docker.airflow
+    environment:
+      AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
+      SENTRY_DSN: ''
+      DEV_ENV: "true"
+    volumes:
+      - ./eea-crawler/dags:/opt/airflow/dags
 
   logstash:
-    ports:
-      - 9600:9600
+    build: ./eea.docker.logstash
+    environment:
+      DEV_ENV: "true"
 
-  postgres:
     volumes:
-      - ./data/pg:/var/lib/postgresql/data
-
-  es7-storage-volume:
-    volumes:
-      - ./data/es:/usr/share/elasticsearch/data
-
-  #/usr/share/elasticsearch/data
-  # postgrest:
-  #   ports:
-  #     - "6000:3000"
-  #
-  # postgres-db:
-  #   ports:
-  #     - "5432:5432"
-  # swagger:
-  #   image: swaggerapi/swagger-ui
-  #   ports:
-  #     - "8081:8080"
-  #   expose:
-  #     - "8081"
-  #   environment:
-  #     API_URL: http://localhost:3000/
+      - ./eea-crawler/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./eea-crawler/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+ 
