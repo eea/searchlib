@@ -46,6 +46,20 @@ const demo_config = {
     }),
   ],
 
+  resultViews: [
+    {
+      id: 'cards',
+      title: 'Cards',
+      icon: null,
+      render: null,
+      isDefault: true,
+      factories: {
+        view: 'Card.Group',
+        item: 'CardItem',
+      },
+    },
+  ],
+
   highlight: {
     fields: {
       Measure_name: {},
@@ -62,17 +76,20 @@ const demo_config = {
 
   tableViewParams: {
     columns: [
-      {
-        title: 'Measure name',
-        field: 'Measure_name',
-      },
-      {
-        title: 'Origin of the measure',
-        field: 'Origin_of_the_measure',
-      },
+      // {
+      //   title: 'Measure name',
+      //   field: 'Measure_name',
+      // },
+      // {
+      //   title: 'Origin of the measure',
+      //   field: 'Origin_of_the_measure',
+      // },
     ],
   },
 
+  cardViewParams: {
+    titleField: 'title',
+  },
   listingViewParams: {
     titleField: 'Measure_name',
     // urlField: 'CodeCatalogue',

@@ -6,7 +6,8 @@ import {
   TableView,
 } from '@eeacms/search/components';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
-import { Item } from 'semantic-ui-react';
+import CardItem from '@eeacms/search/components/CardItem/CardItem';
+import { Item, Card } from 'semantic-ui-react';
 import {
   onResultClick,
   onAutocompleteResultClick,
@@ -47,8 +48,14 @@ const config = {
     'Item.Group': {
       component: Item.Group,
     },
+    'Card.Group': {
+      component: Card.Group,
+    },
     ListingViewItem: {
       component: ListingViewItem,
+    },
+    CardItem: {
+      component: CardItem,
     },
     TableView: {
       component: TableView,
@@ -117,6 +124,10 @@ const config = {
       // parameters for the 'listing' Listing View
       // The config will lookup for `${id}ViewParams` objects
       listingViewParams: {
+        enabled: true,
+      },
+
+      cardViewParams: {
         enabled: true,
       },
 

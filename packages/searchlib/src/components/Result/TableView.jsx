@@ -1,5 +1,5 @@
-import { Table } from 'semantic-ui-react';
 import React from 'react';
+import { Table } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const WrappedTable = (props) => {

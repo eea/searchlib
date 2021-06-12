@@ -1,4 +1,5 @@
 import React from 'react';
+import { withAppConfig } from '@eeacms/search/lib/hocs';
 import {
   SearchBox,
   Results,
@@ -9,7 +10,6 @@ import {
   Sorting,
 } from '@elastic/react-search-ui';
 import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
-import { withAppConfig } from '@eeacms/search/lib/hocs';
 import registry from '@eeacms/search/registry';
 
 export const SearchView = (props) => {
@@ -28,12 +28,13 @@ export const SearchView = (props) => {
   const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
-  // console.log(listingViewDef);
+  console.log(listingViewDef);
 
   const Item = registry.resolve[listingViewDef.factories.item].component;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
   const itemViewProps = listingViewDef.params;
+  // const itemViewProps = appConfig[`${activeViewId}ViewParams`];
   const Layout = registry.resolve[appConfig.layoutComponent].component;
   console.log('layout', Layout, appConfig.layoutComponent);
 

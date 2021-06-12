@@ -10,3 +10,4 @@ export { default as SearchView } from './SearchView/SearchView';
 export { default as TableRowItem } from './Result/TableRowItem';
 export { default as TableView } from './Result/TableView';
 export { default as ViewSelector } from './ViewSelector/ViewSelector';
+export { default as CardItem } from './CardItem/CardItem';
