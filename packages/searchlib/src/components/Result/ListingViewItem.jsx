@@ -37,7 +37,7 @@ export const Header = (props) => {
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id?.raw;
-  console.log({ url, title, result });
+  // console.log({ url, title, result });
 
   return (
     <>

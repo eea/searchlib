@@ -35,6 +35,7 @@ export const SearchView = (props) => {
     registry.resolve[listingViewDef.factories.view].component;
   const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
+  console.log('layout', Layout, appConfig.layoutComponent);
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>
@@ -49,6 +50,7 @@ export const SearchView = (props) => {
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
+        appConfig={appConfig}
         header={
           <SearchBox
             autocompleteMinimumCharacters={3}
@@ -90,6 +92,7 @@ export const SearchView = (props) => {
         }
         bodyHeader={
           <>
+            <h1>{appConfig.title}</h1>
             <PagingInfo />
             <ResultsPerPage />
           </>

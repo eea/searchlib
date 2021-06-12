@@ -1,6 +1,7 @@
 import { Facet } from '@elastic/react-search-ui';
 import {
   LeftColumnLayout,
+  RightColumnLayout,
   TableRowItem,
   TableView,
 } from '@eeacms/search/components';
@@ -57,6 +58,9 @@ const config = {
     },
     LeftColumnLayout: {
       component: LeftColumnLayout,
+    },
+    RightColumnLayout: {
+      component: RightColumnLayout,
     },
   },
 

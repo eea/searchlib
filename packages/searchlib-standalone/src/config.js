@@ -259,6 +259,8 @@ export default function install(config) {
     ...mergeConfig(envConfig, config.searchui.default),
     elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
     host: process.env.RAZZLE_ES_HOST || '',
+    title: 'Global search and catalogue',
+    layoutComponent: 'RightColumnLayout',
   };
 
   config.searchui.standalone = {
