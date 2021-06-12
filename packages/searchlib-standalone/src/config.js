@@ -48,7 +48,7 @@ const demo_config = {
 
   resultViews: [
     {
-      id: 'cards',
+      id: 'card',
       title: 'Cards',
       icon: null,
       render: null,
@@ -89,7 +89,12 @@ const demo_config = {
 
   cardViewParams: {
     titleField: 'title',
+    metatypeField: 'type',
+    descriptionField: 'description',
+    tagsField: 'topic',
+    issuedField: 'issued',
   },
+
   listingViewParams: {
     titleField: 'Measure_name',
     // urlField: 'CodeCatalogue',

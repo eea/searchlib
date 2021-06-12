@@ -6,7 +6,7 @@ import {
   WithSearch,
 } from '@elastic/react-search-ui';
 import { AppConfigContext } from '@eeacms/search/lib/hocs';
-import { SearchView } from '@eeacms/search/components';
+import { SearchView } from '@eeacms/search/components/SearchView/SearchView';
 import { rebind, applyConfigurationSchema } from '@eeacms/search/lib/utils';
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
@@ -29,7 +29,7 @@ export default function SearchApp(props) {
         {(params) => (
           <AppConfigContext.Provider value={appConfigContext}>
             <ErrorBoundary>
-              <SearchView {...params} appName={appName} />
+              <SearchView {...params} appName={appName} appConfig={appConfig} />
             </ErrorBoundary>
           </AppConfigContext.Provider>
         )}

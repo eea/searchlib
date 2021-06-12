@@ -33,8 +33,9 @@ export const SearchView = (props) => {
   const Item = registry.resolve[listingViewDef.factories.item].component;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
-  const itemViewProps = listingViewDef.params;
-  // const itemViewProps = appConfig[`${activeViewId}ViewParams`];
+  // const itemViewProps = listingViewDef.params;
+  const itemViewProps = appConfig[`${activeViewId}ViewParams`];
+  console.log('viewprops', itemViewProps);
   const Layout = registry.resolve[appConfig.layoutComponent].component;
   console.log('layout', Layout, appConfig.layoutComponent);
 
