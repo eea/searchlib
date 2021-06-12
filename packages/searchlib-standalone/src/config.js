@@ -1,6 +1,44 @@
 import { suiFacet, suiRangeFacet, mergeConfig } from '@eeacms/search';
 
 const demo_config = {
+  title: 'Global search and catalogue',
+  layoutComponent: 'RightColumnLayout',
+
+  extraQueryParams: {
+    topic: {
+      linear: {
+        items_count_topic: {
+          scale: 1,
+          origin: 0,
+        },
+      },
+    },
+    spatial: {
+      linear: {
+        items_count_spatial: {
+          scale: 1,
+          origin: 0,
+        },
+      },
+    },
+    places: {
+      linear: {
+        items_count_places: {
+          scale: 1,
+          origin: 0,
+        },
+      },
+    },
+    organisation: {
+      linear: {
+        items_count_organisation: {
+          scale: 1,
+          origin: 0,
+        },
+      },
+    },
+  },
+
   facets: [
     suiFacet({
       field: 'topic',
@@ -281,8 +319,6 @@ export default function install(config) {
     ...mergeConfig(envConfig, config.searchui.default),
     elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
     host: process.env.RAZZLE_ES_HOST || '',
-    title: 'Global search and catalogue',
-    layoutComponent: 'RightColumnLayout',
   };
 
   config.searchui.standalone = {
