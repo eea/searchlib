@@ -7,6 +7,11 @@ export function isString(obj) {
 }
 
 export function rebind(config) {
+  if (!config) {
+    // eslint-disable-next-line no-console
+    console.error('Empty configuration!');
+    return config;
+  }
   let clone = cloneDeep(config);
 
   // rebinds functions to the "activated" config
