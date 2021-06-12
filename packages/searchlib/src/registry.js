@@ -1,3 +1,4 @@
+import React from 'react';
 import { Facet } from '@elastic/react-search-ui';
 import {
   LeftColumnLayout,
@@ -49,7 +50,9 @@ const config = {
       component: Item.Group,
     },
     'Card.Group': {
-      component: Card.Group,
+      component: (props) => (
+        <Card.Group {...props} stackable itemsPerRow={4} doubling />
+      ),
     },
     ListingViewItem: {
       component: ListingViewItem,

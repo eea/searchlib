@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StringList = ({ children }) => {
-  return Array.isArray(children) ? children.join(', ') : children || '';
+const StringList = ({ value }) => {
+  return Array.isArray(value) ? value.join(', ') : value || '';
 };
 export default StringList;

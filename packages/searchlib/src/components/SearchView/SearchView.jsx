@@ -28,16 +28,14 @@ export const SearchView = (props) => {
   const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
-  console.log(listingViewDef);
 
   const Item = registry.resolve[listingViewDef.factories.item].component;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
+
   // const itemViewProps = listingViewDef.params;
   const itemViewProps = appConfig[`${activeViewId}ViewParams`];
-  console.log('viewprops', itemViewProps);
   const Layout = registry.resolve[appConfig.layoutComponent].component;
-  console.log('layout', Layout, appConfig.layoutComponent);
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) =>
@@ -73,8 +71,15 @@ export const SearchView = (props) => {
             <Facets />
           </>
         }
+        bodyHeader={
+          <>
+            <PagingInfo />
+            <ResultsPerPage />
+          </>
+        }
         bodyContent={
           <>
+            <h1>{appConfig.title}</h1>
             <FilterList {...props} />
             <ViewSelector
               views={availableResultViews}
@@ -90,13 +95,6 @@ export const SearchView = (props) => {
                 <Result {...props} {...itemViewProps} view={Item} />
               )}
             />
-          </>
-        }
-        bodyHeader={
-          <>
-            <h1>{appConfig.title}</h1>
-            <PagingInfo />
-            <ResultsPerPage />
           </>
         }
         bodyFooter={<Paging />}
