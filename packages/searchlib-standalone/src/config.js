@@ -1,23 +1,49 @@
-import { suiFacet, mergeConfig } from '@eeacms/search';
+import { suiFacet, suiRangeFacet, mergeConfig } from '@eeacms/search';
 
 const demo_config = {
   facets: [
-    suiFacet({ field: 'Country', isFilterable: true, isMulti: true }),
-    // suiFacet({ field: 'Sector', isMulti: true }),
-    // suiFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
-    // suiFacet({ field: 'Status' }),
-    // suiFacet({
-    //   field: 'Origin_of_the_measure',
-    //   label: 'Origin of the measure',
-    // }),
-    // suiFacet({
-    //   field: 'Nature_of_the_measure',
-    //   label: 'Nature of the measure',
-    // }),
-    // suiFacet({ field: 'Water_body_category', label: 'Water body category' }),
-    // suiFacet({ field: 'Spatial_scope', label: 'Spatial scope' }),
-    // suiFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
-    // suiFacet({ field: 'Descriptors' }),
+    suiFacet({
+      field: 'topic',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Topics',
+    }),
+    suiFacet({
+      field: 'spatial',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Countries',
+    }),
+    suiFacet({
+      field: 'places',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Regions/Places/Cities/Seas...',
+    }),
+    suiFacet({
+      field: 'type',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Content types',
+    }),
+    suiFacet({
+      field: 'organisation',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Organisation involved',
+    }),
+    suiFacet({
+      field: 'cluster_name',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Websites',
+    }),
+    suiRangeFacet({
+      field: 'year',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Year',
+    }),
   ],
 
   highlight: {
@@ -228,6 +254,12 @@ export default function install(config) {
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : demo_config;
+
+  config.searchui.globalsearch = {
+    ...mergeConfig(envConfig, config.searchui.default),
+    elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
+    host: process.env.RAZZLE_ES_HOST || '',
+  };
 
   config.searchui.standalone = {
     ...mergeConfig(envConfig, config.searchui.default),

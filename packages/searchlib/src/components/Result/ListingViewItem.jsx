@@ -84,7 +84,7 @@ const Inner = (props) => {
         <Item.Extra>
           {listingViewParams?.extraFields?.map(({ field, label }, i) => (
             <div className="simple-item-extra" key={i}>
-              <em>{label}:</em> {result[field].raw}
+              <em>{label}:</em> {result[field]?.raw}
             </div>
           ))}
         </Item.Extra>

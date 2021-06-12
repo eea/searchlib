@@ -15,6 +15,7 @@
     "build-storybook": "build-storybook",
     "prebuild": "rimraf dist",
     "build": "NODE_ENV=production webpack build",
+    "watch": "NODE_ENV=development webpack watch",
     "cypress:open": "cypress open",
     "yalc-publish": "pnpm build && npx yalc publish"
   },

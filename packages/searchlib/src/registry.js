@@ -12,8 +12,14 @@ import {
   onAutocomplete,
   onSearch,
 } from './lib/request';
-import { getTermFilter } from '@eeacms/search/lib/search/filters';
-import { getValueFacet } from '@eeacms/search/lib/search/facetValues';
+import {
+  getTermFilter,
+  getRangeFilter,
+} from '@eeacms/search/lib/search/filters';
+import {
+  getValueFacet,
+  getRangeFacet,
+} from '@eeacms/search/lib/search/facetValues';
 
 export const buildRequest = (facet) => {
   return {
@@ -30,6 +36,12 @@ const config = {
       buildRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
+    },
+    'searchui.RangeFacet': {
+      component: Facet,
+      buildRequest,
+      buildFilter: getRangeFilter,
+      getValue: getRangeFacet,
     },
     'Item.Group': {
       component: Item.Group,

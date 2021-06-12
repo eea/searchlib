@@ -14,3 +14,20 @@ export const suiFacet = ({
     ...params,
   };
 };
+
+export const suiRangeFacet = ({
+  field,
+  label,
+  filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    field,
+    factory: 'searchui.RangeFacet',
+    label: label || field,
+    filterType,
+    isFilterable,
+    ...params,
+  };
+};

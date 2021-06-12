@@ -10,7 +10,7 @@ export function rebind(config) {
   if (!config) {
     // eslint-disable-next-line no-console
     console.error('Empty configuration!');
-    return config;
+    return {};
   }
   let clone = cloneDeep(config);
 
@@ -42,7 +42,7 @@ export function applyConfigurationSchema(config) {
   // based on partial configuration, it "finishes" the config with knowledge on
   // how to fill in the gaps
   config.disjunctiveFacets = [...(config.disjunctiveFacets || [])];
-  config.facets.forEach((facet) => {
+  config.facets?.forEach((facet) => {
     if (facet.isMulti && !config.disjunctiveFacets.includes(facet.field)) {
       config.disjunctiveFacets.push(facet.field);
     }

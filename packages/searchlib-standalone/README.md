@@ -15,3 +15,17 @@ a `RAZZLE_ES_HOST` variable.
 
 You can expose a JSON string with the configuration, as `RAZZLE_ENV_CONFIG`. It
 will be `JSON.parse`d.
+
+## Development
+
+Inside `../searchlib` run:
+
+```
+pnpm run watch
+```
+
+Inside this folder, run:
+
+```
+env RAZZLE_ES_INDEX=global-search RAZZLE_APP_NAME=globalsearch pnpm run start
+```

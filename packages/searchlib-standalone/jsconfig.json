@@ -5,5 +5,5 @@
       "@eeacms/search": ["../../searchlib/src"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../searchlib/src"]
 }
