@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facet } from '@elastic/react-search-ui';
+import { withSearch, Facet } from '@elastic/react-search-ui';
 import cx from 'classnames';
 import { Table } from 'semantic-ui-react';
 
@@ -11,7 +11,7 @@ function getFilterValueDisplay(filterValue) {
 
 const Select = ({ options, value, onChange }) => {
   const handler = (e) => onChange(e.target.value);
-  console.log('value', value);
+  // console.log('value', value);
 
   return (
     <select onBlur={handler} onChange={handler} value={value}>
@@ -24,24 +24,27 @@ const Select = ({ options, value, onChange }) => {
   );
 };
 
-const FacetComponent = ({
-  className,
-  label,
-  onMoreClick,
-  onRemove,
-  onSelect,
-  options,
-  showMore,
-  showSearch,
-  onSearch,
-  searchPlaceholder,
-}) => {
-  const matchOptions = [
+const ViewComponent = (props) => {
+  const {
+    className,
+    label,
+    onMoreClick,
+    onRemove,
+    onSelect,
+    options,
+    showMore,
+    showSearch,
+    onSearch,
+    searchPlaceholder,
+    onChangeFilterType,
+    filterType = 'any',
+  } = props;
+  const filterTypes = [
     { key: 2, text: 'Match any', value: 'any' },
     { key: 1, text: 'Match all', value: 'all' },
   ];
 
-  const [matchOption, setMatchOption] = React.useState('any');
+  // const [matchOption, setMatchOption] = React.useState('any');
 
   return (
     <fieldset className={cx('sui-facet', className)}>
@@ -62,15 +65,11 @@ const FacetComponent = ({
 
       <Select
         className="match-select"
-        value={matchOption}
-        options={matchOptions}
-        onChange={(value) => setMatchOption(value)}
+        value={filterType}
+        options={filterTypes}
+        onChange={onChangeFilterType}
       />
       {options.length < 1 && <div>No matching options</div>}
-
-      {/* <Dropdown text="Match" selection options={matchOptions} /> */}
-      {/* <Menu compact> */}
-      {/* </Menu> */}
 
       <Table>
         <Table.Header>
@@ -173,7 +172,40 @@ const FacetComponent = ({
   );
 };
 
-const FacetComponentWrapper = (props) => <FacetComponent {...props} />;
+const MultiTypeFacetComponent = (props) => {
+  console.log('facet props', props);
+  const { field, removeFilter, facets } = props;
+  const [filterType, setFilterType] = React.useState('any');
+  return (
+    <Facet
+      {...props}
+      filterType={filterType}
+      view={(props) => (
+        <ViewComponent
+          filterType={filterType}
+          onChangeFilterType={(filterType) => {
+            // when changing filter type, it resets it
+            removeFilter(field);
+            setFilterType(filterType);
+          }}
+          {...props}
+        />
+      )}
+    />
+  );
+};
 
-const TermFacet = (props) => <Facet {...props} view={FacetComponentWrapper} />;
-export default TermFacet;
+// const MultiTypeFacet = withMultiTypeFilter({})(MultiTypeFacetComponent);
+//
+// const TermFacet = MultiTypeFacet;
+
+export default withSearch(
+  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+    filters,
+    facets,
+    addFilter,
+    removeFilter,
+    setFilter,
+    a11yNotify,
+  }),
+)(MultiTypeFacetComponent);
