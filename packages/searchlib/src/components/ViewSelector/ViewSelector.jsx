@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 
 const ViewSelector = (props) => {
   const { views, active, onSetView } = props;
   return (
-    <div className="viewSelector">
+    <Container className="viewSelector">
       <Button.Group compact>
         {views.map((view) => {
           const { render: Render, icon: Icon, title } = view;
@@ -21,7 +21,7 @@ const ViewSelector = (props) => {
           );
         })}
       </Button.Group>
-    </div>
+    </Container>
   );
 };
 

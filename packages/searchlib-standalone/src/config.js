@@ -1,4 +1,9 @@
-import { suiFacet, suiRangeFacet, mergeConfig } from '@eeacms/search';
+import {
+  suiFacet,
+  suiRangeFacet,
+  multiTermFacet,
+  mergeConfig,
+} from '@eeacms/search';
 
 const demo_config = {
   title: 'Global search and catalogue',
@@ -40,7 +45,7 @@ const demo_config = {
   },
 
   facets: [
-    suiFacet({
+    multiTermFacet({
       field: 'topic',
       isFilterable: true,
       isMulti: true,

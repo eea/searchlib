@@ -31,3 +31,20 @@ export const suiRangeFacet = ({
     ...params,
   };
 };
+
+export const multiTermFacet = ({
+  field,
+  label,
+  filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    field,
+    factory: 'MultiTermFacet',
+    label: label || field,
+    filterType,
+    isFilterable,
+    ...params,
+  };
+};

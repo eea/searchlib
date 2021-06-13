@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facet } from '@elastic/react-search-ui';
+import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import {
   LeftColumnLayout,
   RightColumnLayout,
@@ -46,6 +47,12 @@ const config = {
       buildRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
+    },
+    MultiTermFacet: {
+      component: MultiTermFacet,
+      buildRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
     },
     'Item.Group': {
       component: Item.Group,
