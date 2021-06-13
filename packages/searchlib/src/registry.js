@@ -7,7 +7,8 @@ import {
   TableView,
 } from '@eeacms/search/components';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
-import CardItem from '@eeacms/search/components/CardItem/CardItem';
+import CardItem from '@eeacms/search/components/Result/CardItem';
+import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import { Item, Card } from 'semantic-ui-react';
 import {
   onResultClick,
@@ -54,11 +55,19 @@ const config = {
         <Card.Group {...props} stackable itemsPerRow={4} doubling />
       ),
     },
+    'HorizontalCard.Group': {
+      component: (props) => (
+        <Card.Group {...props} stackable itemsPerRow={1} doubling />
+      ),
+    },
     ListingViewItem: {
       component: ListingViewItem,
     },
     CardItem: {
       component: CardItem,
+    },
+    HorizontalCardItem: {
+      component: HorizontalCardItem,
     },
     TableView: {
       component: TableView,

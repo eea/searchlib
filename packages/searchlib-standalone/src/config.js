@@ -96,6 +96,17 @@ const demo_config = {
         item: 'CardItem',
       },
     },
+    {
+      id: 'horizontalCard',
+      title: 'Horizontal cards',
+      icon: null,
+      render: null,
+      isDefault: false,
+      factories: {
+        view: 'HorizontalCard.Group',
+        item: 'HorizontalCardItem',
+      },
+    },
   ],
 
   highlight: {
@@ -112,88 +123,30 @@ const demo_config = {
     },
   ],
 
-  tableViewParams: {
-    columns: [
-      // {
-      //   title: 'Measure name',
-      //   field: 'Measure_name',
-      // },
-      // {
-      //   title: 'Origin of the measure',
-      //   field: 'Origin_of_the_measure',
-      // },
-    ],
-  },
-
   cardViewParams: {
     titleField: 'title',
     metatypeField: 'type',
     descriptionField: 'description',
     tagsField: 'topic',
     issuedField: 'issued',
+    enabled: true,
+  },
+
+  horizontalCardViewParams: {
+    titleField: 'title',
+    metatypeField: 'type',
+    descriptionField: 'description',
+    tagsField: 'topic',
+    issuedField: 'issued',
+    enabled: true,
   },
 
   listingViewParams: {
-    titleField: 'Measure_name',
-    // urlField: 'CodeCatalogue',
-    extraFields: [
-      {
-        field: 'Origin_of_the_measure',
-        label: 'Origin of the measure',
-      },
-      {
-        field: 'Nature_of_the_measure',
-        label: 'Nature of the measure',
-      },
-      {
-        field: 'Spatial_scope',
-        label: 'Spatial scope',
-      },
-    ],
-    details: {
-      titleField: 'Measure_name',
-      extraFields: [
-        {
-          field: 'Origin_of_the_measure',
-          label: 'Origin of the measure',
-        },
-        {
-          field: 'Nature_of_the_measure',
-          label: 'Nature of the measure',
-        },
-        {
-          field: 'Spatial_scope',
-          label: 'Spatial scope',
-        },
-      ],
-      sections: [
-        {
-          fields: [
-            {
-              field: 'Use_or_activity',
-              label: 'Use or activity',
-            },
-            {
-              field: 'Measure_Impacts_to',
-              label: 'Measure impacts',
-            },
-          ],
-        },
-        {
-          title: 'Main',
-          fields: [
-            {
-              field: 'Origin_of_the_measure',
-              label: 'Origin of the measure',
-            },
-            {
-              field: 'Nature_of_the_measure',
-              label: 'Nature of the measure',
-            },
-          ],
-        },
-      ],
-    },
+    enabled: false,
+  },
+
+  tableViewParams: {
+    enabled: false,
   },
 };
 

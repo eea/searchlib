@@ -6,7 +6,7 @@ import LeftColumnLayout from './Layout/LeftColumnLayout';
 import RightColumnLayout from './Layout/RightColumnLayout';
 import TableRowItem from './Result/TableRowItem';
 import ViewSelector from './ViewSelector/ViewSelector';
-import CardItem from './CardItem/CardItem';
+import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 

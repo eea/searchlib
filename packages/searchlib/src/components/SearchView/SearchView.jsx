@@ -38,11 +38,12 @@ export const SearchView = (props) => {
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
   const availableResultViews = [
-    ...resultViews.filter(({ id }) =>
-      Object.keys(appConfig).includes(`${id}ViewParams`)
-        ? appConfig[`${id}ViewParams`].enabled
-        : true,
-    ),
+    ...resultViews.filter(({ id }) => {
+      const paramsPropId = `${id}ViewParams`;
+      return Object.keys(appConfig).includes(paramsPropId)
+        ? appConfig[paramsPropId].enabled
+        : true;
+    }),
   ];
 
   // TODO: improve searchbox

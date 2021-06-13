@@ -6,6 +6,14 @@ export function isString(obj) {
   return typeof obj === 'string' || obj instanceof String;
 }
 
+export function isObject(obj) {
+  return (
+    obj instanceof Object &&
+    !(obj instanceof Array) &&
+    !(typeof obj === 'function')
+  );
+}
+
 export function rebind(config) {
   if (!config) {
     // eslint-disable-next-line no-console
@@ -27,6 +35,9 @@ export function rebind(config) {
 function customizer(objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue);
+  }
+  if (isObject(objValue) && isObject(srcValue)) {
+    return { ...srcValue, ...objValue };
   }
   // if (isString(objValue) || isString(srcValue)) {
   //   console.log('string', objValue, srcValue);

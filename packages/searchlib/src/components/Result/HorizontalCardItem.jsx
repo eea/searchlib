@@ -1,13 +1,14 @@
 import React from 'react';
-import { Card, Image, Placeholder, Label } from 'semantic-ui-react';
+
+import { Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 
 const CardItem = (props) => {
   const { result } = props;
-  console.log('card props', props);
+  // console.log('hcard props', props);
   return (
-    <Card className="card-item">
-      <Label color="green" attached className="meta-type">
+    <Card className="horizontal-card-item">
+      <Label color="green" className="meta-type">
         <StringList value={result[props.metatypeField]?.raw} />
       </Label>
 
