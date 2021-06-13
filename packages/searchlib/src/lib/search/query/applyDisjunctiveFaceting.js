@@ -1,5 +1,5 @@
-import runRequest from './runRequest';
-import buildRequest from './buildRequest';
+import runRequest from '@eeacms/search/lib/runRequest';
+import buildRequest from './build';
 
 function combineAggregationsFromResponses(responses) {
   return responses.reduce((acc, response) => {

@@ -1,9 +1,5 @@
-import {
-  buildRequest,
-  runRequest,
-  applyDisjunctiveFaceting,
-  buildState,
-} from './search';
+import { applyDisjunctiveFaceting, buildRequest, buildState } from './search';
+import { default as runRequest } from './runRequest';
 
 export function onResultClick() {
   /* Not implemented */

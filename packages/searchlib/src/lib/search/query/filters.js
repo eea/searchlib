@@ -1,3 +1,7 @@
+/**
+ * Construct the ES DSL query for a filter or facet
+ *
+ */
 export function getTermFilterValue(field, fieldValue) {
   // We do this because if the value is a boolean value, we need to apply
   // our filter differently. We're also only storing the string representation
@@ -12,6 +16,8 @@ export function getTermFilterValue(field, fieldValue) {
 }
 
 export function getTermFilter(filter) {
+  // Construct ES DSL query for term facets
+
   if (filter.type === 'any') {
     return {
       bool: {
@@ -33,6 +39,8 @@ export function getTermFilter(filter) {
 }
 
 export function getRangeFilter(filter) {
+  // Construct ES DSL query for range facets
+
   if (filter.type === 'any') {
     return {
       bool: {

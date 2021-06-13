@@ -20,11 +20,9 @@ import {
 import {
   getTermFilter,
   getRangeFilter,
-} from '@eeacms/search/lib/search/filters';
-import {
   getValueFacet,
   getRangeFacet,
-} from '@eeacms/search/lib/search/facetValues';
+} from '@eeacms/search/lib/search';
 
 export const buildRequest = (facet) => {
   return {

@@ -1,10 +1,5 @@
 export function getValueFacet(aggregations, fieldName) {
-  if (
-    aggregations &&
-    aggregations[fieldName] &&
-    aggregations[fieldName].buckets &&
-    aggregations[fieldName].buckets.length > 0
-  ) {
+  if (aggregations?.[fieldName]?.buckets?.length > 0) {
     return [
       {
         field: fieldName,
@@ -20,12 +15,7 @@ export function getValueFacet(aggregations, fieldName) {
 }
 
 export function getRangeFacet(aggregations, fieldName) {
-  if (
-    aggregations &&
-    aggregations[fieldName] &&
-    aggregations[fieldName].buckets &&
-    aggregations[fieldName].buckets.length > 0
-  ) {
+  if (aggregations?.[fieldName]?.buckets?.length > 0) {
     return [
       {
         field: fieldName,
