@@ -173,9 +173,11 @@ const ViewComponent = (props) => {
 };
 
 const MultiTypeFacetComponent = (props) => {
-  console.log('facet props', props);
-  const { field, removeFilter, facets } = props;
+  // console.log('facet props', props);
+  const { field, addFilter, setFilter, removeFilter, facets, filters } = props;
   const [filterType, setFilterType] = React.useState('any');
+  const filterValue = filters.find((f) => f.field === field);
+  console.log('filterValue', filterValue, props);
   return (
     <Facet
       {...props}
@@ -186,6 +188,9 @@ const MultiTypeFacetComponent = (props) => {
           onChangeFilterType={(filterType) => {
             // when changing filter type, it resets it
             removeFilter(field);
+            filterValue.values?.forEach((v) => {
+              addFilter(filterValue.field, v, filterType);
+            });
             setFilterType(filterType);
           }}
           {...props}
