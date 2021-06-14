@@ -9,16 +9,18 @@ import ViewSelector from './ViewSelector/ViewSelector';
 import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
+import ToggleSort from './ToggleSort/ToggleSort';
 
 export {
+  CardItem,
+  DateTime,
   Facets,
   FilterList,
   LeftColumnLayout,
   RightColumnLayout,
+  StringList,
   TableRowItem,
   TableView,
+  ToggleSort,
   ViewSelector,
-  CardItem,
-  StringList,
-  DateTime,
 };
