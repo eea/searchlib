@@ -1,7 +1,8 @@
 import React from 'react';
-import { Facet } from '@elastic/react-search-ui';
+// import { Facet } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import {
+  Facet,
   LeftColumnLayout,
   RightColumnLayout,
   TableRowItem,

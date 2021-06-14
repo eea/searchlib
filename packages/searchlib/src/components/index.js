@@ -10,6 +10,7 @@ import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
+import Facet from './Facets/Facet';
 
 export {
   CardItem,
@@ -23,4 +24,5 @@ export {
   TableView,
   ToggleSort,
   ViewSelector,
+  Facet,
 };

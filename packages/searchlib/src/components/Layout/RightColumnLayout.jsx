@@ -22,7 +22,7 @@ const RightColumnLayout = (props) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Grid>
+      <Grid container className="body-footer">
         <div>{bodyFooter}</div>
       </Grid>
     </div>

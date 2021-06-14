@@ -1,9 +1,9 @@
 import React from 'react';
-import { withSearch, Facet } from '@elastic/react-search-ui';
+import { withSearch } from '@elastic/react-search-ui';
 import { helpers } from '@elastic/search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { ToggleSort } from '@eeacms/search/components';
+import { ToggleSort, Facet } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 // import { Table } from 'semantic-ui-react';
 
@@ -77,15 +77,9 @@ const ViewComponent = (props) => {
         </div>
       )}
 
-      <Select
-        className="match-select"
-        value={filterType}
-        options={filterTypes}
-        onChange={onChangeFilterType}
-      />
       {options.length < 1 && <div>No matching options</div>}
 
-      <div className="sui-multi-checkbox-facet">
+      <div className="sui-multi-checkbox-facet facet-term-controls">
         <div className="sui-multi-checkbox-facet__option-label">
           <div className="sui-multi-checkbox-facet__option-input-wrapper">
             <div className="sui-multi-checkbox-facet__checkbox"></div>
@@ -120,6 +114,13 @@ const ViewComponent = (props) => {
           </span>
         </div>
       </div>
+
+      <Select
+        className="match-select"
+        value={filterType}
+        options={filterTypes}
+        onChange={onChangeFilterType}
+      />
 
       <div className="sui-multi-checkbox-facet">
         {sortedOptions.map((option) => {
@@ -184,6 +185,7 @@ const MultiTypeFacetComponent = (props) => {
         <ViewComponent
           filterType={filterType}
           onChangeFilterType={(filterType) => {
+            console.log('onchange filtertype');
             if (!filterValue) {
               setFilterType(filterType);
               return;
@@ -211,59 +213,3 @@ export default withSearch(
     a11yNotify,
   }),
 )(MultiTypeFacetComponent);
-
-// {false && (
-//   <Table>
-//     <Table.Header>
-//       <Table.Row>
-//         <Table.HeaderCell>Count</Table.HeaderCell>
-//         <Table.HeaderCell>{label}</Table.HeaderCell>
-//         <Table.HeaderCell></Table.HeaderCell>
-//       </Table.Row>
-//     </Table.Header>
-//     <Table.Body>
-//       {options.map((option, index) => {
-//         const checked = option.selected;
-//         return (
-//           <Table.Row key={index}>
-//             <Table.Cell>
-//               <label
-//                 key={`${getFilterValueDisplay(option.value)}`}
-//                 htmlFor={`example_facet_${label}${getFilterValueDisplay(
-//                   option.value,
-//                 )}`}
-//                 className="sui-multi-checkbox-facet__option-label"
-//               >
-//                 <span className="sui-multi-checkbox-facet__option-count">
-//                   {option.count.toLocaleString('en')}
-//                 </span>
-//               </label>
-//             </Table.Cell>
-//             <Table.Cell>
-//               <div className="sui-multi-checkbox-facet__option-input-wrapper">
-//                 <span className="sui-multi-checkbox-facet__input-text">
-//                   {getFilterValueDisplay(option.value)}
-//                 </span>
-//               </div>
-//             </Table.Cell>
-//             <Table.Cell>
-//               <input
-//                 id={`example_facet_${label}${getFilterValueDisplay(
-//                   option.value,
-//                 )}`}
-//                 type="checkbox"
-//                 className="sui-multi-checkbox-facet__checkbox"
-//                 checked={checked}
-//                 onChange={() =>
-//                   checked
-//                     ? onRemove(option.value)
-//                     : onSelect(option.value)
-//                 }
-//               />
-//             </Table.Cell>
-//           </Table.Row>
-//         );
-//       })}
-//     </Table.Body>
-//   </Table>
-// )}
