@@ -27,7 +27,7 @@ import {
 export const buildRequest = (facet) => {
   return {
     [facet.field]: {
-      terms: { field: facet.field, size: 100000 },
+      terms: { field: facet.field, size: 1000000 },
     },
   };
 };

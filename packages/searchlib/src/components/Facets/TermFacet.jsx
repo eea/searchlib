@@ -51,7 +51,6 @@ const ViewComponent = (props) => {
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
 
-  console.log('vc props', helpers, props);
   const {
     sortedValues: sortedOptions,
     toggleSort,

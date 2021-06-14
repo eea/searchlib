@@ -50,6 +50,7 @@ const demo_config = {
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
+      // factory: 'sui.Facet',
     }),
     suiFacet({
       field: 'spatial',
@@ -86,6 +87,12 @@ const demo_config = {
       isFilterable: false,
       isMulti: true,
       label: 'Year',
+    }),
+    suiFacet({
+      field: 'language',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Language',
     }),
   ],
 
