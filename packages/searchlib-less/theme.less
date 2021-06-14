@@ -1,11 +1,14 @@
 body {
-  background-color: @primaryColor;
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.searchapp {
+  background-color: @primaryColor;
+  margin: 0;
 }
 
 code {
@@ -49,14 +52,17 @@ code {
 }
 
 .ui.four.cards > .card.card-item {
-  font-size: 0.8em;
-}
+  font-size: 0.7em;
 
-.card-item {
-  .meta-type {
+  .label.meta-type {
     position: absolute;
     margin-top: 50px;
     z-index: 2;
+    border-radius: 0px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    background-color: #009590;
+    color: white;
   }
 
   .header {
@@ -65,17 +71,29 @@ code {
 
   .content {
     overflow: hidden;
+    max-height: 8em;
 
     .description {
-      max-height: 120px;
+      max-height: 4em;
+      overflow: hidden;
     }
 
     .meta {
       white-space: nowrap;
+      overflow: hidden;
     }
   }
 }
 
 .viewSelector {
   padding-bottom: 1em;
+}
+
+.search-body-header {
+  display: flex;
+  align-items: baseline;
+
+  .sui-paging-info {
+    flex-grow: 1;
+  }
 }

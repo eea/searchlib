@@ -1,6 +1,6 @@
 {
-  "name": "my-razzle-app",
-  "version": "4.0.4",
+  "name": "@eeacms/search-standalone",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "start": "razzle start",

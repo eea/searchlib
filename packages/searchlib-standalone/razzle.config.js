@@ -21,6 +21,7 @@ module.exports = {
   modifyWebpackConfig({ webpackConfig }) {
     webpackConfig.resolve.alias['../../theme.config$'] =
       path.resolve(`./theme/theme.config`);
+    webpackConfig.resolve.alias['@package'] = path.resolve(`./src`);
 
     return webpackConfig;
   },

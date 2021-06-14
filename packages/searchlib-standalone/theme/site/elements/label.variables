@@ -1,3 +1,8 @@
 /*******************************
     User Variable Overrides
 *******************************/
+
+@ribbonTriangleSize: 0.5em;
+@ribbonDistance: 0.5em;
+@verticalPadding: 0.5em;
+@horizontalPadding: 0.5em;

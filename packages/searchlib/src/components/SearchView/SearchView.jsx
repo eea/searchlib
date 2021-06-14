@@ -74,10 +74,10 @@ export const SearchView = (props) => {
           </>
         }
         bodyHeader={
-          <>
+          <div className="search-body-header">
             <PagingInfo />
             <ResultsPerPage />
-          </>
+          </div>
         }
         bodyContent={
           <>

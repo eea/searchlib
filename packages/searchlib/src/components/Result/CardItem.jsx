@@ -4,10 +4,12 @@ import { DateTime, StringList } from '@eeacms/search';
 
 const CardItem = (props) => {
   const { result } = props;
+
   // console.log('card props', props);
+
   return (
     <Card className="card-item">
-      <Label color="green" className="meta-type">
+      <Label className="meta-type">
         <StringList value={result[props.metatypeField]?.raw} />
       </Label>
 
