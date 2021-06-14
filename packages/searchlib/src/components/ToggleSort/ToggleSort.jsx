@@ -5,9 +5,9 @@ const ToggleSort = ({ icon, label, on, onToggle }) => {
     <div
       className={on ? 'active' : ''}
       onClick={onToggle}
-      onKeydown={onToggle}
+      onKeyDown={onToggle}
       role="button"
-      tabindex="-1"
+      tabIndex="-1"
     >
       {label}
       {on && icon}

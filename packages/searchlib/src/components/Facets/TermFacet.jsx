@@ -98,7 +98,7 @@ const ViewComponent = (props) => {
                   sorting.sortOrder === 'ascending' ? (
                     <Icon name="sort alphabet ascending" />
                   ) : (
-                    <Icon name="sort alphabet descending  " />
+                    <Icon name="sort alphabet descending" />
                   )
                 }
               />

@@ -33,12 +33,16 @@ function buildSort(sortDirection, sortField) {
   }
 }
 
-function buildMatch(searchTerm) {
+function buildMatch(searchTerm, config) {
   return searchTerm
     ? {
         multi_match: {
           query: searchTerm,
-          fields: ['all_fields_for_freetext'],
+          fields: [
+            ...(config.extraQueryParams?.text_fields || [
+              'all_fields_for_freetext',
+            ]),
+          ],
         },
       }
     : { match_all: {} };
@@ -54,10 +58,10 @@ export default function buildRequest(state, config) {
     sortField,
   } = state;
 
-  const sort = buildSort(sortDirection, sortField);
-  const match = buildMatch(searchTerm);
+  const sort = buildSort(sortDirection, sortField, config);
+  const match = buildMatch(searchTerm, config);
   const size = resultsPerPage;
-  const from = buildFrom(current, resultsPerPage);
+  const from = buildFrom(current, resultsPerPage, config);
   const filter = buildRequestFilter(filters, config);
 
   // console.log({ sort, match, size, from, filter, filters });
@@ -76,6 +80,7 @@ export default function buildRequest(state, config) {
 
   const body = {
     track_total_hits: true,
+
     // Static query Configuration
     // --------------------------
     // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-highlighting.html
@@ -96,9 +101,15 @@ export default function buildRequest(state, config) {
     // --------------------------
     // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/full-text-queries.html
     query: {
-      bool: {
-        must: [match],
-        ...(filter && { filter }),
+      function_score: {
+        query: {
+          bool: {
+            must: [match],
+            ...(filter && { filter }),
+          },
+        },
+        functions: [...(config.extraQueryParams?.functions || [])],
+        score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
     },
 
