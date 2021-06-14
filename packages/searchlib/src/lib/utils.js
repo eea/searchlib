@@ -39,9 +39,9 @@ function customizer(objValue, srcValue) {
   if (isObject(objValue) && isObject(srcValue)) {
     return { ...srcValue, ...objValue };
   }
-  // if (isString(objValue) || isString(srcValue)) {
-  //   console.log('string', objValue, srcValue);
-  // }
+  if (isString(objValue) || isString(srcValue)) {
+    return objValue;
+  }
 }
 
 export function mergeConfig(object, ...sources) {

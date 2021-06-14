@@ -15,7 +15,6 @@ export default function buildRequestFilter(filters, config) {
 
   filters = filters.reduce((acc, filter) => {
     if (Object.keys(facetsMap).includes(filter.field)) {
-      console.log('filter', filter);
       const f = facetsMap[filter.field].buildFilter(filter);
       return [...acc, f];
     }

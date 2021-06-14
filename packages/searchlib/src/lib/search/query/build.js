@@ -48,6 +48,10 @@ function buildMatch(searchTerm, config) {
     : { match_all: {} };
 }
 
+function boostFacets(filters, config) {
+  return [];
+}
+
 export default function buildRequest(state, config) {
   const {
     current,
@@ -108,7 +112,10 @@ export default function buildRequest(state, config) {
             ...(filter && { filter }),
           },
         },
-        functions: [...(config.extraQueryParams?.functions || [])],
+        functions: [
+          ...(config.extraQueryParams?.functions || []),
+          ...boostFacets(filters, config),
+        ],
         score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
     },

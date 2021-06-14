@@ -39,7 +39,7 @@ const demo_config = {
       },
     ],
     score_mode: 'sum',
-    facet_decay_functions: {
+    facet_boost_functions: {
       topic: {
         linear: {
           items_count_topic: {
@@ -305,7 +305,7 @@ const demo_config = {
 // };
 
 export default function install(config) {
-  console.log(process.env.RAZZLE_ENV_CONFIG);
+  // console.log(process.env.RAZZLE_ENV_CONFIG);
 
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
