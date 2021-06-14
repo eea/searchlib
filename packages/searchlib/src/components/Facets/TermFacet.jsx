@@ -13,12 +13,17 @@ function getFilterValueDisplay(filterValue) {
   return String(filterValue);
 }
 
-const Select = ({ options, value, onChange }) => {
+const Select = ({ options, value, onChange, className }) => {
   const handler = (e) => onChange(e.target.value);
   // console.log('value', value);
 
   return (
-    <select onBlur={handler} onChange={handler} value={value}>
+    <select
+      onBlur={handler}
+      onChange={handler}
+      value={value}
+      className={className}
+    >
       {options.map((opt) => (
         <option value={opt.value} key={opt.key}>
           {opt.text}
@@ -85,7 +90,17 @@ const ViewComponent = (props) => {
             <div className="sui-multi-checkbox-facet__checkbox"></div>
             <span className="sui-multi-checkbox-facet__input-text">
               <ToggleSort
-                label={label}
+                label={
+                  <>
+                    {label}
+                    <Select
+                      className="match-select"
+                      value={filterType}
+                      options={filterTypes}
+                      onChange={onChangeFilterType}
+                    />
+                  </>
+                }
                 onToggle={() => toggleSort('value')}
                 on={sorting.sortOn === 'value'}
                 icon={
@@ -114,13 +129,6 @@ const ViewComponent = (props) => {
           </span>
         </div>
       </div>
-
-      <Select
-        className="match-select"
-        value={filterType}
-        options={filterTypes}
-        onChange={onChangeFilterType}
-      />
 
       <div className="sui-multi-checkbox-facet">
         {sortedOptions.map((option) => {
