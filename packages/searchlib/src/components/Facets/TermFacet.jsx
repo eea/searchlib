@@ -1,7 +1,7 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import { helpers } from '@elastic/search-ui';
-import { Icon } from 'semantic-ui-react';
+import { Input, Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort, Facet } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
@@ -71,6 +71,7 @@ const ViewComponent = (props) => {
 
       {showSearch && (
         <div className="sui-facet-search">
+          <Icon name="search" size="12px" color="blue" />
           <input
             className="sui-facet-search__text-input"
             type="search"
