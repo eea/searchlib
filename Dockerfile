@@ -23,6 +23,11 @@ USER node
 
 RUN pnpm i || true
 
+RUN cd packages/searchlib && pnpm build
+
+ENV RAZZLE_ES_INDEX=global-search
+ENV RAZZLE_APP_NAME=globalsearch
+
 RUN cd packages/searchlib-standalone && pnpm build
 
 WORKDIR /opt/frontend/packages/searchlib-standalone
