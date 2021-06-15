@@ -99,8 +99,15 @@ code {
   }
 }
 
-.ui.accordion .sui-facet__title {
-  display: none;
+.facets {
+  margin-top: 1em;
+  .accordion.ui {
+    .sui-facet__title {
+      display: none;
+    }
+    border-bottom: 1px solid #ccc;
+    padding: 0.4em 0em;
+  }
 }
 
 .sui-multi-checkbox-facet.facet-term-controls {
@@ -116,4 +123,11 @@ code {
 
 .toggleSort {
   display: flex;
+}
+.searchlib-multiterm-facet {
+  .sui-multi-checkbox-facet {
+    max-height: 200px;
+    overflow: auto;
+    padding: 0 0.6em;
+  }
 }
