@@ -71,7 +71,7 @@ const ViewComponent = (props) => {
 
       {showSearch && (
         <div className="sui-facet-search">
-          <Icon name="search" size="12px" color="blue" />
+          <Icon name="search" size="small" color="blue" />
           <input
             className="sui-facet-search__text-input"
             type="search"
