@@ -1,11 +1,16 @@
 import React from 'react';
 import { Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
-const CardItem = (props) => {
+const CardItemComponent = (props) => {
   const { result } = props;
+  const { appConfig, registry } = useAppConfig();
 
-  // console.log('card props', props);
+  // console.log('card props', props, appConfig);
+  const factoryName = appConfig.cardViewParams.getThumbnailUrl;
+  const getThumb =
+    registry.resolve[factoryName] || ((result, config, fallback) => fallback);
 
   return (
     <Card className="card-item">
@@ -14,7 +19,11 @@ const CardItem = (props) => {
       </Label>
 
       <Image
-        src="https://react.semantic-ui.com/images/wireframe/white-image.png"
+        src={getThumb(
+          result,
+          appConfig,
+          'https://react.semantic-ui.com/images/wireframe/white-image.png',
+        )}
         wrapped
         ui={false}
         size="tiny"
@@ -49,5 +58,7 @@ const CardItem = (props) => {
     </Card>
   );
 };
+
+const CardItem = (props) => <CardItemComponent {...props} />;
 
 export default CardItem;

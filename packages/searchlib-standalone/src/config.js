@@ -188,6 +188,7 @@ const demo_config = {
     tagsField: 'topic',
     issuedField: 'issued',
     enabled: true,
+    getThumbnailUrl: 'getGlobalsearchThumbUrl',
   },
 
   horizontalCardViewParams: {
@@ -357,6 +358,9 @@ export default function install(config) {
       sections: [],
     },
   };
+
+  config.resolve.getGlobalsearchThumbUrl = (result, config, fallback) =>
+    fallback;
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [
