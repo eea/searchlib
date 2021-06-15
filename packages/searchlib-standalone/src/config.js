@@ -89,7 +89,7 @@ const demo_config = {
       isMulti: true,
       label: 'Countries',
     }),
-    suiFacet({
+    multiTermFacet({
       field: 'places',
       isFilterable: true,
       isMulti: true,

@@ -4,7 +4,7 @@ const ToggleSort = ({ icon, label, on, onToggle, children }) => {
   return (
     <div className="toggleSort">
       <div
-        className={on ? 'active' : ''}
+        className={on ? 'toggle-label active' : 'toggle-label'}
         onClick={onToggle}
         onKeyDown={onToggle}
         role="button"
