@@ -171,12 +171,12 @@ const demo_config = {
     },
     {
       name: 'Oldest',
-      value: 'issued',
+      value: 'issued.date',
       direction: 'asc',
     },
     {
       name: 'Newest',
-      value: 'issued',
+      value: 'issued.date',
       direction: 'desc',
     },
   ],
