@@ -159,11 +159,26 @@ const demo_config = {
   },
 
   sortOptions: [
-    // {
-    //   name: 'Title',
-    //   value: 'Measure_name',
-    //   direction: 'asc',
-    // },
+    {
+      name: 'Title a-z',
+      value: 'title',
+      direction: 'asc',
+    },
+    {
+      name: 'Title z-a',
+      value: 'title',
+      direction: 'desc',
+    },
+    {
+      name: 'Oldest',
+      value: 'issued',
+      direction: 'asc',
+    },
+    {
+      name: 'Newest',
+      value: 'issued',
+      direction: 'desc',
+    },
   ],
 
   cardViewParams: {
