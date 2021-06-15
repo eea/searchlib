@@ -7,4 +7,6 @@ services:
       - 3000:3000
     environment:
       - ELASTIC_URL=http://localhost:9200
+      - RAZZLE_ES_INDEX=global-search
+      - RAZZLE_APP_NAME=globalsearch
     # entrypoint: sh -c "tail -f /dev/null"
