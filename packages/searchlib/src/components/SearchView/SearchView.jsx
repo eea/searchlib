@@ -89,8 +89,8 @@ export const SearchView = (props) => {
             autocompleteResults={{
               linkTarget: '_blank',
               sectionTitle: 'Results',
-              titleField: 'Measure_name',
-              urlField: 'CodeCatalogue',
+              titleField: 'title',
+              urlField: 'id',
               shouldTrackClickThrough: true,
               clickThroughTags: ['test'],
             }}
