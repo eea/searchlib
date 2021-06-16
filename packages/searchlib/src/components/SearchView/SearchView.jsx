@@ -11,17 +11,47 @@ import {
 } from '@elastic/react-search-ui';
 import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
+import { SearchContext } from '@elastic/react-search-ui';
 
 export const SearchView = (props) => {
   // console.log('searchview props', props);
-  const { wasSearched, setSearchTerm, appConfig, appName } = props;
+  const {
+    wasSearched,
+    setSearchTerm,
+    addFilter,
+    appConfig,
+    appName,
+    setCurrent,
+    setSort,
+  } = props;
   const { defaultSearchText } = appConfig;
+
+  const { driver } = React.useContext(SearchContext);
 
   React.useEffect(() => {
     if (!wasSearched) {
       setSearchTerm(defaultSearchText);
+
+      const state = driver.URLManager.getStateFromURL();
+
+      state.filters?.forEach((f) => addFilter(f.field, f.values, f.type));
+
+      if (state.current) {
+        setCurrent(state.current);
+      }
+      if (state.sortField) {
+        setSort(state.sortField, state.sortDirection);
+      }
     }
-  }, [wasSearched, setSearchTerm, defaultSearchText]);
+  }, [
+    wasSearched,
+    setSearchTerm,
+    defaultSearchText,
+    driver,
+    addFilter,
+    setCurrent,
+    setSort,
+  ]);
 
   const { sortOptions, resultViews } = appConfig;
   const defaultViewId =

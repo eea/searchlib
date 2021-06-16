@@ -25,14 +25,24 @@ export default function SearchApp(props) {
 
   return (
     <SearchProvider config={appConfig}>
-      <WithSearch mapContextToProps={(context) => context}>
-        {(params) => (
-          <AppConfigContext.Provider value={appConfigContext}>
-            <ErrorBoundary>
-              <SearchView {...params} appName={appName} appConfig={appConfig} />
-            </ErrorBoundary>
-          </AppConfigContext.Provider>
-        )}
+      <WithSearch
+        mapContextToProps={(context) => {
+          return context;
+        }}
+      >
+        {(params) => {
+          return (
+            <AppConfigContext.Provider value={appConfigContext}>
+              <ErrorBoundary>
+                <SearchView
+                  {...params}
+                  appName={appName}
+                  appConfig={appConfig}
+                />
+              </ErrorBoundary>
+            </AppConfigContext.Provider>
+          );
+        }}
       </WithSearch>
     </SearchProvider>
   );

@@ -1,7 +1,6 @@
 import registry from '@eeacms/search/registry';
 
 export default function buildStateFacets(aggregations, config) {
-console.log("XXXX", config);
   const { facets } = config;
   const facetsMap = Object.assign(
     {},

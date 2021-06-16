@@ -27,6 +27,7 @@ export async function onSearch(state) {
   console.log('onSearch', _config);
   const { resultsPerPage } = state;
   const requestBody = buildRequest(state, _config);
+  console.log('request body', { requestBody, state });
 
   // Note that this could be optimized by running all of these requests
   // at the same time. Kept simple here for clarity.
