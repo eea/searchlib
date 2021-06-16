@@ -459,7 +459,10 @@ export default function install(config) {
             }
           }
         }
-        image = 'https://www.eea.europa.eu/portal_depiction/' + _contentType + '/image_preview'
+        image =
+          'https://www.eea.europa.eu/portal_depiction/' +
+          _contentType +
+          '/image_preview';
       }
     }
 
