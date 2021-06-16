@@ -22,15 +22,19 @@ const CardItemComponent = (props) => {
   const { appConfig, registry } = useAppConfig();
 
   // console.log('card props', props, appConfig);
-  const factoryName = appConfig.cardViewParams.getThumbnailUrl;
+
+  const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
+
   const getThumb =
-    registry.resolve[factoryName] || ((result, config, fallback) => fallback);
+    registry.resolve[thumbFactoryName] ||
+    ((result, config, fallback) => fallback);
 
   const thumbUrl = getThumb(
     result,
     appConfig,
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
+
   const url = result.id?.raw;
 
   return (
