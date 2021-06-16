@@ -4,15 +4,21 @@ ElasticSearch-powered React components and independent service.
 
 ## Context
 
-EEA needs a modern, flexible and generic search solution, one that is platform-independent and that can scale from micro-small listings to full-featured custom search engines.
+EEA needs a modern, flexible and generic search solution, one that is
+platform-independent and that can scale from micro-small listings to
+full-featured custom search engines.
 
-We already have eea.searchserver.js which provides a solid and viable solution for common operations such as indexing from various sources, index updating and provides a public-facing Search UI. The problem is one of outdated technology, difficulties in expanding it and the need for domain-specific knowledge.
+We already have eea.searchserver.js which provides a solid and viable solution
+for common operations such as indexing from various sources, index updating and
+provides a public-facing Search UI. The problem is one of outdated technology,
+difficulties in expanding it and the need for domain-specific knowledge.
 
 ### Requirements
 
 The Search Server UI should have the following characteristics:
 
-- It should be a reusable component. It needs to be easily deployable as a separate app or integrated in other websites (Plone 4/5 classic, Volto).
+- It should be a reusable component. It needs to be easily deployable as a
+separate app or integrated in other websites (Plone 4/5 classic, Volto).
 - It should be easy to extend and contribute from many developer teams.
 - In its most basic instance, it needs to function based on declarative
   configuration. With just configuration it should be possible to create
@@ -21,7 +27,8 @@ The Search Server UI should have the following characteristics:
   part of the default library, so that it will grow its capabilities.
 - The configuration can be passed as a JSON.
 - It should allow multiple instances per website.
-- It should function in conjunction with the indexing done in the EEA Search Server Harvester.
+- It should function in conjunction with the indexing done in the EEA Search
+Server Harvester.
 
 ### Solution
 
