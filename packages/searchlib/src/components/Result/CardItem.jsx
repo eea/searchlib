@@ -58,11 +58,9 @@ const CardItemComponent = (props) => {
         rel="noreferrer"
         label={
           days < 30 && (
-            <>
-              <Label color="yellow" ribbon="right">
-                New
-              </Label>
-            </>
+            <Label color="yellow" ribbon="right">
+              New
+            </Label>
           )
         }
       />

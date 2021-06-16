@@ -766,6 +766,7 @@ const demo_config = {
     tagsField: 'topic',
     issuedField: 'issued',
     enabled: true,
+    getThumbnailUrl: 'getGlobalsearchThumbUrl',
   },
 
   listingViewParams: {

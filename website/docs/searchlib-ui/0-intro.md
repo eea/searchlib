@@ -15,6 +15,6 @@ It provides several ways of integration:
 
 We also provide Storybook for demo and testing purposes.
 
-## Libraries and their relations
+## SearchUI products and libraries
 
 ![ecosystem map](/img/searchlib_ecosystem_map.svg)
