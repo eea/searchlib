@@ -3,6 +3,20 @@ import { Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
+const ExternalLink = (props) => {
+  return (
+    <a
+      className={props.className}
+      href={props.href}
+      target="_blank"
+      rel="noreferrer"
+      style={props.style}
+    >
+      {props.children}
+    </a>
+  );
+};
+
 const CardItemComponent = (props) => {
   const { result } = props;
   const { appConfig, registry } = useAppConfig();
@@ -12,6 +26,13 @@ const CardItemComponent = (props) => {
   const getThumb =
     registry.resolve[factoryName] || ((result, config, fallback) => fallback);
 
+  const thumbUrl = getThumb(
+    result,
+    appConfig,
+    'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  );
+  const url = result.id?.raw;
+
   return (
     <Card className="card-item">
       <Label className="meta-type">
@@ -19,16 +40,17 @@ const CardItemComponent = (props) => {
       </Label>
 
       <Image
-        src={getThumb(
-          result,
-          appConfig,
-          'https://react.semantic-ui.com/images/wireframe/white-image.png',
-        )}
+        src={thumbUrl}
         wrapped
         ui={false}
-        size="tiny"
-        as="a"
-        href={result.id?.raw}
+        size="medium"
+        fluid
+        centered
+        style={{ backgroundImage: `url('${thumbUrl}')` }}
+        as={ExternalLink}
+        href={url}
+        target="_blank"
+        rel="noreferrer"
         label={
           <>
             <Label color="yellow" ribbon="right">
@@ -39,8 +61,12 @@ const CardItemComponent = (props) => {
       />
 
       <Card.Content>
-        <Card.Meta>{result.id?.raw}</Card.Meta>
-        <Card.Header>{result[props.titleField]?.raw}</Card.Header>
+        <Card.Meta>{url}</Card.Meta>
+        <Card.Header>
+          <ExternalLink href={url}>
+            {result[props.titleField]?.raw}
+          </ExternalLink>
+        </Card.Header>
         <Card.Description>
           {result[props.descriptionField]?.raw}
         </Card.Description>
