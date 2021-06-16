@@ -89,7 +89,7 @@ const demo_config = {
       isMulti: true,
       label: 'Countries',
     }),
-    suiFacet({
+    multiTermFacet({
       field: 'places',
       isFilterable: true,
       isMulti: true,
@@ -171,12 +171,12 @@ const demo_config = {
     },
     {
       name: 'Oldest',
-      value: 'issued',
+      value: 'issued.date',
       direction: 'asc',
     },
     {
       name: 'Newest',
-      value: 'issued',
+      value: 'issued.date',
       direction: 'desc',
     },
   ],
@@ -188,6 +188,7 @@ const demo_config = {
     tagsField: 'topic',
     issuedField: 'issued',
     enabled: true,
+    getThumbnailUrl: 'getGlobalsearchThumbUrl',
   },
 
   horizontalCardViewParams: {
@@ -356,6 +357,116 @@ export default function install(config) {
       },
       sections: [],
     },
+  };
+
+  config.resolve.getGlobalsearchThumbUrl = (result, config, fallback) => {
+    let image = fallback;
+    let has_img = false;
+    if (
+      result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')
+    ) {
+      image = 'https://www.eea.europa.eu/portal_depiction/term/image_preview';
+      has_img = true;
+    }
+    if (result.objectProvides.raw.indexOf('Country profile') !== -1) {
+      image =
+        'https://www.eea.europa.eu/portal_depiction/country-profile/image_preview';
+      has_img = true;
+    }
+    if (result.about.raw.indexOf('://land.copernicus.eu') !== -1) {
+      image = result.about.raw + '/image_preview';
+      has_img = true;
+    }
+    if (result.about.raw.startsWith('http://www.eea.europa.eu')) {
+      image = result.about.raw + '/image_preview';
+      has_img = true;
+    } else {
+      if (!has_img) {
+        let contentTypes = {
+          highlight: 'highlight',
+          'press-release': 'pressrelease',
+          news: 'highlight',
+          'news-item': 'news-item',
+          event: 'event',
+          promotion: 'generic',
+          article: 'article',
+          'eco-tip': 'ecotip',
+          image: 'generic',
+          video: 'cloudvideo',
+          report: 'report',
+          publication: 'report',
+          dataset: 'data',
+          'data-(rdf)': 'data',
+          data: 'data',
+          'data-visualization': 'davizvisualization',
+          'indicator-specification': 'specification',
+          'indicator-factsheet': 'assessment',
+          'indicator-assessment': 'assessment',
+          infographic: 'interactive-data',
+          briefing: 'fiche',
+          page: 'document',
+          link: 'link',
+          'data-file': 'datafile',
+          'assessment-part': 'assessmentpart',
+          file: 'file',
+          'eea-job-vacancy': 'eeavacancy',
+          'epub-file': 'epubfile',
+          'external-data-reference': 'externaldataspec',
+          'eyewitness-story': 'generic',
+          figure: 'eeafigure',
+          'figure-file': 'eeafigurefile',
+          folder: 'folder',
+          'gis-map-application': 'gis-application',
+          'methodology-reference': 'generic',
+          organization: 'organisation',
+          organisation: 'organisation',
+          'policy-question': 'policyquestion',
+          'policy-document': 'policydocumentreference',
+          'rationale-reference': 'rationalereference',
+          'soer-key-fact': 'soerkeyfact',
+          'soer-message': 'soermessage',
+          sparql: 'sparql',
+          'data-table-via-sparql': 'sparql',
+          speech: 'news-item',
+          text: 'document',
+          'work-item': 'generic',
+          'collection---old-style ': 'topic',
+          'Catalogue---listing': 'topic',
+          'legislation-instrument': 'legislation-instrument',
+          legislation: 'legislation-instrument',
+          'legislation-data-reporting': 'legislation-instrument',
+          'reporting-obligation': 'reporting-obligation',
+          'country-country': 'country-profile',
+        };
+        let _type;
+        let _typeClass;
+        let _contentType = 'generic';
+        if (!Array.isArray(result.objectProvides.raw)) {
+          result.objectProvides.raw = [result.objectProvides.raw];
+        }
+        if (result.objectProvides.raw.length > 0) {
+          var pos = result.objectProvides.raw.length - 1;
+          while (true) {
+            _type = result.objectProvides.raw[pos];
+            _typeClass = _type.toLowerCase().replace(/\s/g, '-');
+            if (contentTypes[_typeClass]) {
+              _contentType = contentTypes[_typeClass];
+              break;
+            }
+            pos--;
+            if (pos < 0) {
+              break;
+            }
+          }
+        }
+        image =
+          'https://www.eea.europa.eu/portal_depiction/' +
+          _contentType +
+          '/image_preview';
+      }
+    }
+
+    return image;
   };
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);

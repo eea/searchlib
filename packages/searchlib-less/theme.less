@@ -55,6 +55,15 @@ code {
 .ui.four.cards > .card.card-item {
   font-size: 0.8em;
 
+  a.image {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    img {
+      display: none;
+    }
+  }
+
   .label.meta-type {
     position: absolute;
     margin-top: 50px;
@@ -121,10 +130,25 @@ code {
   font-size: 70%;
 }
 
-.toggleSort {
-  display: flex;
-}
 .searchlib-multiterm-facet {
+  .toggleSort {
+    display: flex;
+    div.toggle-label {
+      max-width: 7em;
+      overflow: hidden;
+    }
+  }
+  .sui-facet-search {
+    display: flex;
+
+    i.icon {
+      padding: 6px 0;
+    }
+  }
+  .sui-facet-search__text-input {
+    border: 0px;
+    font-size: 80%;
+  }
   .sui-multi-checkbox-facet {
     max-height: 200px;
     overflow: auto;

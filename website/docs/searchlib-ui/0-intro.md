@@ -14,3 +14,7 @@ It provides several ways of integration:
 - as part of a classic Plone addon
 
 We also provide Storybook for demo and testing purposes.
+
+## Libraries and their relations
+
+![ecosystem map](/img/searchlib_ecosystem_map.svg)
