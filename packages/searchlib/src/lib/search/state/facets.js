@@ -1,6 +1,7 @@
 import registry from '@eeacms/search/registry';
 
 export default function buildStateFacets(aggregations, config) {
+console.log("XXXX", config);
   const { facets } = config;
   const facetsMap = Object.assign(
     {},
@@ -13,7 +14,12 @@ export default function buildStateFacets(aggregations, config) {
     {},
     ...facets.map((facet) => {
       const { getValue } = facetsMap[facet.field];
-      const value = getValue(aggregations, facet.field);
+      const value = getValue(
+        aggregations,
+        facet.field,
+        facet.whitelist,
+        facet.blacklist,
+      );
       return value ? { [facet.field]: value } : {};
     }),
   );

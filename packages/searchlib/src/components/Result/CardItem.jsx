@@ -22,7 +22,6 @@ const CardItemComponent = (props) => {
   const { appConfig, registry } = useAppConfig();
   const days =
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
-  console.log('days:', days);
   // console.log('card props', props, appConfig);
 
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
