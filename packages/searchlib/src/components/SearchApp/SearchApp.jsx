@@ -21,7 +21,7 @@ export default function SearchApp(props) {
   appConfig.debug = props.debug;
 
   const appConfigContext = { appConfig, registry };
-  console.log('appConfig', appConfig);
+  // console.log('appConfig', appConfig);
 
   return (
     <SearchProvider config={appConfig}>
