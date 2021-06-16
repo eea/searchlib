@@ -6,7 +6,9 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 const CardItemComponent = (props) => {
   const { result } = props;
   const { appConfig, registry } = useAppConfig();
-
+  const days =
+    (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
+  console.log('days:', days);
   // console.log('card props', props, appConfig);
   const factoryName = appConfig.cardViewParams.getThumbnailUrl;
   const getThumb =
@@ -30,11 +32,13 @@ const CardItemComponent = (props) => {
         as="a"
         href={result.id?.raw}
         label={
-          <>
-            <Label color="yellow" ribbon="right">
-              New
-            </Label>
-          </>
+          days < 30 && (
+            <>
+              <Label color="yellow" ribbon="right">
+                New
+              </Label>
+            </>
+          )
         }
       />
 
