@@ -15,7 +15,7 @@ import buildStateFacets from './facets';
   We do similar things for facets and totals.
 */
 export default function buildState(response, resultsPerPage, config) {
-  const results = buildResults(response.hits.hits);
+  const results = buildResults(response.hits.hits, config.field_filters);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
   const facets = buildStateFacets(response.aggregations, config);
@@ -57,21 +57,33 @@ function getHighlight(hit, fieldName) {
   return hit.highlight[fieldName][0];
 }
 
-function buildResults(hits) {
+function buildResults(hits, field_filters) {
   const addEachKeyValueToObject = (acc, [key, value]) => ({
     ...acc,
     [key]: value,
   });
 
-  const toObject = (value, snippet) => {
-    return { raw: value, ...(snippet && { snippet }) };
+  const toObject = (field, value, snippet) => {
+    const bl = field_filters[field]?.blacklist || [];
+    const wl = field_filters[field]?.whitelist || [];
+    if (!Array.isArray(value)) {
+      value = [value];
+    }
+    let filtered_value = value.filter((val) => bl.indexOf(val) === -1);
+    if (wl.length > 0) {
+      filtered_value = filtered_value.filter((val) => wl.indexOf(val) !== -1);
+    }
+    if (filtered_value.length === 1) {
+      filtered_value = filtered_value[0];
+    }
+    return { raw: filtered_value, ...(snippet && { snippet }) };
   };
 
   return hits.map((record) => {
     const rec = Object.entries(record._source)
       .map(([fieldName, fieldValue]) => [
         fieldName,
-        toObject(fieldValue, getHighlight(record, fieldName)),
+        toObject(fieldName, fieldValue, getHighlight(record, fieldName)),
       ])
       .reduce(addEachKeyValueToObject, {});
 
@@ -79,7 +91,6 @@ function buildResults(hits) {
       rec.id = { raw: record._id }; // TODO: make sure to have ids
     }
     rec._original = record;
-
     return rec;
   });
 }
