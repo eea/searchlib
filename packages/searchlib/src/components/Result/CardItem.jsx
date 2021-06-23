@@ -47,7 +47,6 @@ const CardItemComponent = (props) => {
         src={thumbUrl}
         wrapped
         ui={false}
-        size="medium"
         fluid
         centered
         style={{ backgroundImage: `url('${thumbUrl}')` }}

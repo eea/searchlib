@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
-
-// import { Suggestion } from './types';
-// import { appendClassName } from './view-helpers';
 import cx from 'classnames';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
+
+// import { Suggestion } from './types';
+// import { appendClassName } from './view-helpers';
 // import SearchInput from './SearchInput';
+
 function SearchInput({ getAutocomplete, getButtonProps, getInputProps }) {
   return (
     <>
@@ -20,7 +21,7 @@ function SearchInput({ getAutocomplete, getButtonProps, getInputProps }) {
   );
 }
 
-function SearchBox(props) {
+function SearchBoxView(props) {
   const {
     className,
     allAutocompletedItemsCount,
@@ -47,6 +48,7 @@ function SearchBox(props) {
     notifyAutocompleteSelected,
     ...rest
   } = props;
+  console.log('props', props);
   const focusedClass = isFocused ? 'focus' : '';
   const AutocompleteView = autocompleteView || Autocomplete;
   const InputView = inputView || SearchInput;
@@ -122,7 +124,7 @@ function SearchBox(props) {
   );
 }
 
-SearchBox.propTypes = {
+SearchBoxView.propTypes = {
   // Provided by container
   allAutocompletedItemsCount: PropTypes.number.isRequired,
   autocompletedResults: PropTypes.arrayOf(Result).isRequired,
@@ -165,4 +167,4 @@ SearchBox.propTypes = {
   onSelectAutocomplete: PropTypes.func,
 };
 
-export default SearchBox;
+export default SearchBoxView;
