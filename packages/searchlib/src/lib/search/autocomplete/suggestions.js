@@ -1,5 +1,7 @@
 import runRequest from '@eeacms/search/lib/runRequest';
 
+import React from 'react';
+
 const clean = (text) =>
   text
     .split(' ')
@@ -9,7 +11,7 @@ const clean = (text) =>
     .join(' ');
 
 export function buildState(data, { searchTerm }, config) {
-  // console.log('hits', data);
+  console.log('hits', data);
 
   const buckets_full = data.aggregations.autocomplete_full.buckets || [];
   const buckets_last = data.aggregations.autocomplete_last.buckets || [];
@@ -48,7 +50,7 @@ export function buildState(data, { searchTerm }, config) {
   return {
     didYouMean: hints.map((term) => ({
       suggestion: term,
-      highlight: null,
+      highlight: `${term} -> <strong>${term}</strong>`,
       data: null,
     })),
   };
