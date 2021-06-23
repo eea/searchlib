@@ -11,6 +11,7 @@ import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
 import Facet from './Facets/Facet';
+import SearchBox from './SearchBox/SearchBox';
 
 export {
   CardItem,
@@ -25,4 +26,5 @@ export {
   ToggleSort,
   ViewSelector,
   Facet,
+  SearchBox,
 };
