@@ -22,7 +22,6 @@ const MicrophoneInput = ({ onChange }) => {
 
     timeoutRef.current = setTimeout(() => {
       if (transcript) {
-        console.log('onchange', transcript);
         onChange(transcript);
         resetTranscript();
       }
@@ -30,7 +29,6 @@ const MicrophoneInput = ({ onChange }) => {
 
     return () => {
       timeoutRef.current && clearTimeout(timeoutRef.current);
-      console.log('cleanup');
     };
   }, [onChange, resetTranscript, transcript]);
 
