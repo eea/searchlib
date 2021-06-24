@@ -4,7 +4,15 @@
 export { default as buildRequest } from './query/build';
 export { default as buildState } from './state/build';
 export { default as applyDisjunctiveFaceting } from './query/applyDisjunctiveFaceting';
-export { getTermFilter, getRangeFilter } from './query/filters';
-export { getValueFacet, getRangeFacet } from './state/facetValues';
+export {
+  getTermFilter,
+  getRangeFilter,
+  getHistogramFilter,
+} from './query/filters';
+export {
+  getValueFacet,
+  getRangeFacet,
+  getHistogramFacet,
+} from './state/facetValues';
 
 export { getAutocompleteSuggestions } from './autocomplete/suggestions';

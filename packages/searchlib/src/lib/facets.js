@@ -48,3 +48,20 @@ export const multiTermFacet = ({
     ...params,
   };
 };
+
+export const histogramFacet = ({
+  field,
+  label,
+  // filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    field,
+    factory: 'HistogramFacet',
+    label: label || field,
+    // filterType,
+    isFilterable,
+    ...params,
+  };
+};

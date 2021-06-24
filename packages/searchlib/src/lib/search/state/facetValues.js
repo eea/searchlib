@@ -1,4 +1,4 @@
-import { indexOf } from 'lodash';
+// import { indexOf } from 'lodash';
 
 export function getValueFacet(aggregations, fieldName, whitelist, blacklist) {
   const bl = blacklist || [];
@@ -44,4 +44,8 @@ export function getRangeFacet(aggregations, fieldName) {
       },
     ];
   }
+}
+
+export function getHistogramFacet(aggregations, fieldName) {
+  //
 }

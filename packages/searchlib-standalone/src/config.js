@@ -1,6 +1,7 @@
 import {
   suiFacet,
-  suiRangeFacet,
+  // suiRangeFacet,
+  histogramFacet,
   multiTermFacet,
   mergeConfig,
 } from '@eeacms/search';
@@ -122,7 +123,7 @@ const demo_config = {
       isMulti: true,
       label: 'Websites',
     }),
-    suiRangeFacet({
+    histogramFacet({
       field: 'year',
       isFilterable: false,
       isMulti: true,

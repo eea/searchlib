@@ -70,3 +70,23 @@ export function getRangeFilter(filter) {
     };
   }
 }
+
+export function getHistogramFilter(filter) {
+  console.log('histogram filter', filter);
+  return {};
+
+  // qs['aggs'][fobj['field']] = { range: { field: fobj['field'] } };
+  // for (var facet_cnt = 0; facet_cnt < options.facets.length; facet_cnt++) {
+  //   if (options.facets[facet_cnt].field === fobj['field']) {
+  //     if (
+  //       options.facets[facet_cnt].histogram_config.aggs_script !== undefined
+  //     ) {
+  //       delete qs['aggs'][fobj['field']]['range'].field;
+  //       qs['aggs'][fobj['field']]['range'].script =
+  //         options.facets[facet_cnt].histogram_config.aggs_script;
+  //     }
+  //     qs['aggs'][fobj['field']]['range'].ranges =
+  //       options.facets[facet_cnt].histogram_config.ranges;
+  //   }
+  // }
+}

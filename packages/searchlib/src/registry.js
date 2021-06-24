@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Facet } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
+import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import {
   Facet,
   LeftColumnLayout,
@@ -23,6 +24,8 @@ import {
   getRangeFilter,
   getValueFacet,
   getRangeFacet,
+  getHistogramFilter,
+  getHistogramFacet,
 } from '@eeacms/search/lib/search';
 
 export const buildRequest = (facet) => {
@@ -52,6 +55,14 @@ const config = {
       buildRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
+    },
+    HistogramFacet: {
+      component: HistogramFacet,
+      buildRequest,
+      buildFilter: getHistogramFilter,
+      getValue: getRangeFacet,
+      // buildFilter: getHistogramFilter,
+      // getValue: getHistogramFacet,
     },
     'Item.Group': {
       component: Item.Group,
