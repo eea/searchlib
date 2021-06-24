@@ -130,13 +130,13 @@ const config = {
         },
 
         // {
-        //               linkTarget: '_blank',
-        //               sectionTitle: 'Results',
-        //               titleField: 'title',
-        //               urlField: 'id',
-        //               shouldTrackClickThrough: true,
-        //               clickThroughTags: ['test'],
-        //             }
+        //   linkTarget: '_blank',
+        //   sectionTitle: 'Results',
+        //   titleField: 'title',
+        //   urlField: 'id',
+        //   shouldTrackClickThrough: true,
+        //   clickThroughTags: ['test'],
+        // }
       },
 
       resultViews: [

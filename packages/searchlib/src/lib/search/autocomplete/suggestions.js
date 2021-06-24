@@ -110,7 +110,7 @@ export function buildRequest({ searchTerm }, config) {
     },
     query: {
       bool: {
-        must: [], // predefined_filters
+        must: [], // TODO: predefined_filters
       },
     },
   };

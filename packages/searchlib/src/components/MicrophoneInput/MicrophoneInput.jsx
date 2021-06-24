@@ -4,8 +4,6 @@ import cx from 'classnames';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
-// import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
-// const prevTranscript = usePrevious(transcript);
 
 const MicrophoneInput = ({ onChange }) => {
   const {
