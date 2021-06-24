@@ -4,7 +4,7 @@ import { Group } from '@visx/group';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { withParentSize } from '@visx/responsive';
 import { withTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
+// import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
 
 const tooltipStyles = {
   ...defaultStyles,

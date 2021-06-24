@@ -66,6 +66,7 @@ export default function buildRequest(state, config) {
   const match = buildMatch(searchTerm, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
+
   const filter = buildRequestFilter(filters, config);
 
   // console.log({ sort, match, size, from, filter, filters });

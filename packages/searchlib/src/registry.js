@@ -26,39 +26,32 @@ import {
   getRangeFacet,
   getHistogramFilter,
   getHistogramFacet,
+  buildTermFacetAggregationRequest,
 } from '@eeacms/search/lib/search';
-
-export const buildRequest = (facet) => {
-  return {
-    [facet.field]: {
-      terms: { field: facet.field, size: 1000000 },
-    },
-  };
-};
 
 const config = {
   resolve: {
     'searchui.Facet': {
       component: Facet,
-      buildRequest,
+      buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
     },
     'searchui.RangeFacet': {
       component: Facet,
-      buildRequest,
+      buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
     },
     MultiTermFacet: {
       component: MultiTermFacet,
-      buildRequest,
+      buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
     },
     HistogramFacet: {
       component: HistogramFacet,
-      buildRequest,
+      buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getHistogramFilter,
       // getValue: getRangeFacet,
       // buildFilter: getHistogramFilter,

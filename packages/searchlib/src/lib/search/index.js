@@ -9,6 +9,7 @@ export {
   getRangeFilter,
   getHistogramFilter,
 } from './query/filters';
+export * from './query/facetsAggregations';
 export {
   getValueFacet,
   getRangeFacet,
