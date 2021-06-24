@@ -2,24 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
+import SearchInput from '../SearchInput/SearchInput';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
 // import { Suggestion } from './types';
 // import { appendClassName } from './view-helpers';
 // import SearchInput from './SearchInput';
-
-function SearchInput({ getAutocomplete, getButtonProps, getInputProps }) {
-  return (
-    <>
-      <div className="sui-search-box__wrapper">
-        <input {...getInputProps()} />
-        {getAutocomplete()}
-      </div>
-      <input {...getButtonProps()} />
-    </>
-  );
-}
 
 function SearchBoxView(props) {
   const {
@@ -48,7 +37,6 @@ function SearchBoxView(props) {
     notifyAutocompleteSelected,
     ...rest
   } = props;
-  console.log('props', props);
   const focusedClass = isFocused ? 'focus' : '';
   const AutocompleteView = autocompleteView || Autocomplete;
   const InputView = inputView || SearchInput;
@@ -80,6 +68,12 @@ function SearchBoxView(props) {
           >
             <div className={cx('sui-search-box', className, autocompleteClass)}>
               <InputView
+                onChange={(newValue) => {
+                  // To avoid over dispatching
+                  if (value === newValue) return;
+                  onChange(newValue);
+                  rest.setSearchTerm(newValue);
+                }}
                 {...downshiftProps}
                 getInputProps={(additionalProps) => {
                   const { className, ...rest } = additionalProps || {};

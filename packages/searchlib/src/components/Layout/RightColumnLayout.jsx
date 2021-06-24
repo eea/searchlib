@@ -5,11 +5,7 @@ const RightColumnLayout = (props) => {
   const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
   return (
     <div>
-      <Container>
-        <div className="sui-layout-header">
-          <div className="sui-layout-header__inner">{header}</div>
-        </div>
-      </Container>
+      <Container className="layout-header">{header}</Container>
 
       <Grid columns={2} container stackable className="body-content">
         <Grid.Row>
