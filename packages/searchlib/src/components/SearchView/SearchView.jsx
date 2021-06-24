@@ -1,7 +1,6 @@
 import React from 'react';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import {
-  SearchBox,
   Results,
   Result,
   PagingInfo,
@@ -9,7 +8,12 @@ import {
   Paging,
   Sorting,
 } from '@elastic/react-search-ui';
-import { Facets, ViewSelector, FilterList } from '@eeacms/search/components';
+import {
+  Facets,
+  ViewSelector,
+  FilterList,
+  SearchBox,
+} from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 
@@ -86,15 +90,8 @@ export const SearchView = (props) => {
         header={
           <SearchBox
             autocompleteMinimumCharacters={3}
-            autocompleteResults={{
-              linkTarget: '_blank',
-              sectionTitle: 'Results',
-              titleField: 'title',
-              urlField: 'id',
-              shouldTrackClickThrough: true,
-              clickThroughTags: ['test'],
-            }}
-            autocompleteSuggestions={true}
+            autocompleteResults={appConfig.autocomplete.results}
+            autocompleteSuggestions={appConfig.autocomplete.suggestions}
           />
         }
         sideContent={

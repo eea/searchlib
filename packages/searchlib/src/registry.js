@@ -114,6 +114,31 @@ const config = {
 
       facets: [],
 
+      autocomplete: {
+        include_searchterm: true,
+        hint_min_words: 3,
+        results: {
+          titleField: 'title',
+          urlField: 'id',
+          sectionTitle: 'Results',
+          linkTarget: '_blank',
+        },
+        suggestions: {
+          didYouMean: {
+            sectionTitle: 'Did you mean...',
+          },
+        },
+
+        // {
+        //   linkTarget: '_blank',
+        //   sectionTitle: 'Results',
+        //   titleField: 'title',
+        //   urlField: 'id',
+        //   shouldTrackClickThrough: true,
+        //   clickThroughTags: ['test'],
+        // }
+      },
+
       resultViews: [
         {
           id: 'listing',
