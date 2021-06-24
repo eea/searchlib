@@ -10,7 +10,7 @@ export const histogramFacet = ({
     factory: 'HistogramFacet',
     label: label || field,
     // filterType,
-    height: '200px',
+    height: 200,
     isFilterable,
     ...params,
   };
