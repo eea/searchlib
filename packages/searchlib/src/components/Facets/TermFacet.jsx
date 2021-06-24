@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { helpers } from '@elastic/search-ui';
+// import { helpers } from '@elastic/search-ui';
 import { Input, Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort, Facet } from '@eeacms/search/components';

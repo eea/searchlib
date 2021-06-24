@@ -1,3 +1,21 @@
+export const histogramFacet = ({
+  field,
+  label,
+  // filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    field,
+    factory: 'HistogramFacet',
+    label: label || field,
+    // filterType,
+    height: '200px',
+    isFilterable,
+    ...params,
+  };
+};
+
 export const suiFacet = ({
   field,
   label,
@@ -42,23 +60,6 @@ export const multiTermFacet = ({
   return {
     field,
     factory: 'MultiTermFacet',
-    label: label || field,
-    // filterType,
-    isFilterable,
-    ...params,
-  };
-};
-
-export const histogramFacet = ({
-  field,
-  label,
-  // filterType = 'any',
-  isFilterable = false,
-  ...params
-}) => {
-  return {
-    field,
-    factory: 'HistogramFacet',
     label: label || field,
     // filterType,
     isFilterable,

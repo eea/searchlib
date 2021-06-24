@@ -12,6 +12,7 @@ if (env === 'es') {
     [
       '@babel/preset-env',
       {
+        targets: { node: 'current' },
         modules: ['esm', 'umd'].includes(env) ? false : 'commonjs',
       },
     ],
@@ -28,5 +29,15 @@ module.exports = {
      * - https://github.com/storybooks/storybook/issues/3346#issuecomment-423719241
      */
     '@babel/plugin-transform-modules-commonjs',
+    // [
+    //   '@babel/plugin-transform-runtime',
+    //   {
+    //     // absoluteRuntime: false,
+    //     // corejs: false,
+    //     // helpers: true,
+    //     regenerator: true,
+    //     // version: '7.0.0-beta.0',
+    //   },
+    // ],
   ],
 };

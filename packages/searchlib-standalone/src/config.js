@@ -1,16 +1,17 @@
 import {
+  histogramFacet,
   suiFacet,
   // suiRangeFacet,
-  histogramFacet,
   multiTermFacet,
   mergeConfig,
 } from '@eeacms/search';
-
 import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
+
+console.log('hf', histogramFacet);
 
 const demo_config = {
   title: 'Global search and catalogue',
@@ -83,58 +84,58 @@ const demo_config = {
   },
 
   facets: [
-    multiTermFacet({
-      field: 'topic',
-      isFilterable: true,
-      isMulti: true,
-      label: 'Topics',
-      // factory: 'sui.Facet',
-    }),
-    suiFacet({
-      field: 'spatial',
-      isFilterable: true,
-      isMulti: true,
-      label: 'Countries',
-      whitelist: spatialWhitelist,
-    }),
-    multiTermFacet({
-      field: 'places',
-      isFilterable: true,
-      isMulti: true,
-      label: 'Regions/Places/Cities/Seas...',
-      blacklist: placesBlacklist,
-    }),
-    suiFacet({
-      field: 'objectProvides',
-      isFilterable: false,
-      isMulti: true,
-      label: 'Content types',
-      whitelist: objectProvidesWhitelist,
-    }),
-    suiFacet({
-      field: 'organisation',
-      isFilterable: false,
-      isMulti: true,
-      label: 'Organisation involved',
-    }),
-    suiFacet({
-      field: 'cluster_name',
-      isFilterable: false,
-      isMulti: true,
-      label: 'Websites',
-    }),
+    // multiTermFacet({
+    //   field: 'topic',
+    //   isFilterable: true,
+    //   isMulti: true,
+    //   label: 'Topics',
+    //   // factory: 'sui.Facet',
+    // }),
+    // suiFacet({
+    //   field: 'spatial',
+    //   isFilterable: true,
+    //   isMulti: true,
+    //   label: 'Countries',
+    //   whitelist: spatialWhitelist,
+    // }),
+    // multiTermFacet({
+    //   field: 'places',
+    //   isFilterable: true,
+    //   isMulti: true,
+    //   label: 'Regions/Places/Cities/Seas...',
+    //   blacklist: placesBlacklist,
+    // }),
+    // suiFacet({
+    //   field: 'objectProvides',
+    //   isFilterable: false,
+    //   isMulti: true,
+    //   label: 'Content types',
+    //   whitelist: objectProvidesWhitelist,
+    // }),
+    // suiFacet({
+    //   field: 'organisation',
+    //   isFilterable: false,
+    //   isMulti: true,
+    //   label: 'Organisation involved',
+    // }),
+    // suiFacet({
+    //   field: 'cluster_name',
+    //   isFilterable: false,
+    //   isMulti: true,
+    //   label: 'Websites',
+    // }),
     histogramFacet({
       field: 'year',
-      isFilterable: false,
-      isMulti: true,
+      // isFilterable: false,
+      // isMulti: true,
       label: 'Year',
     }),
-    suiFacet({
-      field: 'language',
-      isFilterable: false,
-      isMulti: true,
-      label: 'Language',
-    }),
+    // suiFacet({
+    //   field: 'language',
+    //   isFilterable: false,
+    //   isMulti: true,
+    //   label: 'Language',
+    // }),
   ],
 
   resultViews: [

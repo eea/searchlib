@@ -60,9 +60,9 @@ const config = {
       component: HistogramFacet,
       buildRequest,
       buildFilter: getHistogramFilter,
-      getValue: getRangeFacet,
+      // getValue: getRangeFacet,
       // buildFilter: getHistogramFilter,
-      // getValue: getHistogramFacet,
+      getValue: getHistogramFacet,
     },
     'Item.Group': {
       component: Item.Group,
