@@ -72,6 +72,7 @@ export function makeRange(options) {
 
   if (includeOutlierStart) res.push({ to: normalRange[0] - 1 });
 
+  // TODO: check range increment (2010-2015, 2016-2020)
   for (
     let i = normalRange[0];
     i < normalRange[normalRange.length - 1];

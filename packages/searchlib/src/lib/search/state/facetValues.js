@@ -27,28 +27,7 @@ export function getValueFacet(aggregations, fieldName, whitelist, blacklist) {
 }
 
 export function getRangeFacet(aggregations, fieldName) {
-  if (aggregations?.[fieldName]?.buckets?.length > 0) {
-    return [
-      {
-        field: fieldName,
-        type: 'range',
-        data: aggregations[fieldName].buckets.map((bucket) => ({
-          // Boolean values and date values require using `key_as_string`
-          value: {
-            to: bucket.to,
-            from: bucket.from,
-            name: bucket.key,
-          },
-          count: bucket.doc_count,
-        })),
-      },
-    ];
-  }
-}
-
-export function getHistogramFacet(aggregations, fieldName) {
   // TODO: do normalization here;
-  // console.log('gethfc', aggregations, fieldName);
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
     return [
       {
@@ -69,3 +48,5 @@ export function getHistogramFacet(aggregations, fieldName) {
     ];
   }
 }
+
+export function getHistogramFacet(aggregations, fieldName) {}

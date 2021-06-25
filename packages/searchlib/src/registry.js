@@ -25,7 +25,7 @@ import {
   getValueFacet,
   getRangeFacet,
   getHistogramFilter,
-  getHistogramFacet,
+  // getHistogramFacet,
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
 } from '@eeacms/search/lib/search';
@@ -54,9 +54,9 @@ const config = {
       component: HistogramFacet,
       buildRequest: buildHistogramFacetAggregationRequest,
       buildFilter: getHistogramFilter,
-      // getValue: getRangeFacet,
+      getValue: getRangeFacet,
       // buildFilter: getHistogramFilter,
-      getValue: getHistogramFacet,
+      // getValue: getHistogramFacet,
     },
     'Item.Group': {
       component: Item.Group,
