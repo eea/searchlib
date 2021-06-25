@@ -27,6 +27,7 @@ import {
   getHistogramFilter,
   getHistogramFacet,
   buildTermFacetAggregationRequest,
+  buildHistogramFacetAggregationRequest,
 } from '@eeacms/search/lib/search';
 
 const config = {
@@ -51,7 +52,7 @@ const config = {
     },
     HistogramFacet: {
       component: HistogramFacet,
-      buildRequest: buildTermFacetAggregationRequest,
+      buildRequest: buildHistogramFacetAggregationRequest,
       buildFilter: getHistogramFilter,
       // getValue: getRangeFacet,
       // buildFilter: getHistogramFilter,

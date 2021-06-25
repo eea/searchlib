@@ -12,6 +12,7 @@ import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
 import Facet from './Facets/Facet';
 import SearchBox from './SearchBox/SearchBox';
+import RangeSlider from './UI/RangeSlider';
 
 export {
   CardItem,
@@ -27,4 +28,5 @@ export {
   ViewSelector,
   Facet,
   SearchBox,
+  RangeSlider,
 };

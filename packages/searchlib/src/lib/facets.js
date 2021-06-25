@@ -1,7 +1,11 @@
+/**
+ * "Factory" methods. These are simple helpers that return configuration
+ * objects for facet components
+ */
+
 export const histogramFacet = ({
   field,
   label,
-  // filterType = 'any',
   isFilterable = false,
   ...params
 }) => {
@@ -9,8 +13,7 @@ export const histogramFacet = ({
     field,
     factory: 'HistogramFacet',
     label: label || field,
-    // filterType,
-    height: 200,
+    height: 200, // default height of the histogram
     isFilterable,
     ...params,
   };

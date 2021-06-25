@@ -15,7 +15,7 @@ const FacetComponent = (props) => {
         {label}
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
-        <SUIFacet {...props} />
+        <SUIFacet {...props} active={isOpened} />
       </Accordion.Content>
     </Accordion>
   ) : (

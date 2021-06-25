@@ -9,17 +9,24 @@ import { withTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
 const tooltipStyles = {
   ...defaultStyles,
   minWidth: 60,
-  backgroundColor: 'rgba(0,0,0,0.9)',
+  backgroundColor: 'white',
   color: 'white',
+  boxShadow: '0px 0px 10px 0px rgb(0 0 0 / 50%)',
+  borderRadius: '0.3em',
+  padding: '1em',
 };
-const defaultMargin = { top: 40, left: 50, right: 40, bottom: 100 };
+
+// const defaultMargin = { top: 40, left: 50, right: 40, bottom: 100 };
+
+// TODO: implement active range
+// TODO: move styles to less classes
 
 export function HistogramChart(props) {
   const {
     onClick,
     data,
-    backgroundColor = 'teal',
-    barBackgroundColor = 'rgba(23, 233, 217, .5)',
+    backgroundColor = 'white',
+    barBackgroundColor = 'rgb(83, 147, 180)',
     verticalMargin = 20,
 
     // tooltip props
@@ -31,7 +38,6 @@ export function HistogramChart(props) {
     showTooltip,
   } = props;
 
-  console.log('props', props.tooltipOpen);
   const width = props.width || props.parentWidth;
   const height = props.height || props.parentHeight;
 
@@ -61,8 +67,9 @@ export function HistogramChart(props) {
   );
 
   // console.log(data, xMax, yMax);
+  // const margin = defaultMargin;
+
   const tooltipTimeout = React.useRef();
-  const margin = defaultMargin;
 
   return width < 10 ? null : (
     <>
@@ -106,7 +113,7 @@ export function HistogramChart(props) {
       </svg>
       {tooltipOpen && (
         <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
-          <div style={{ color: 'red' }}>
+          <div style={{ color: 'black' }}>
             <strong>{tooltipData.x}</strong>
           </div>
         </Tooltip>

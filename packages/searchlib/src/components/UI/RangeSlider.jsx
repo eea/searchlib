@@ -1,9 +1,9 @@
-// Copied from
-// https://raw.githubusercontent.com/iozbeyli/react-semantic-ui-range/master/lib/elements/slider.js
+// Copied from MIT-licensed https://github.com/iozbeyli/react-semantic-ui-range
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// import styles from './range.css.js';
+import styles from './range.css.js';
 import ReactDOM from 'react-dom';
 
 export default class Slider extends Component {

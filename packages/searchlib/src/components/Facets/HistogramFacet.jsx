@@ -1,10 +1,26 @@
 import React from 'react';
 import { ResponsiveHistogramChart } from '../Vis';
-import { Facet } from '@eeacms/search/components';
+import { Facet, RangeSlider } from '@eeacms/search/components';
 import { withSearch } from '@elastic/react-search-ui';
 
-const HistogramFacetComponent = (props) => {
-  console.log('props HFC', props);
+export const HistogramFacetComponent = (props) => {
+  const { data } = props;
+  const settings = {
+    // start: [2, 8],
+    min: 0,
+    max: 10,
+    step: 1,
+  };
+  return (
+    <div className="histogram-facet">
+      <ResponsiveHistogramChart {...props} data={data} />
+      <RangeSlider value={[2, 8]} multiple color="red" settings={settings} />
+    </div>
+  );
+};
+
+const HistogramFacet = (props) => {
+  // console.log('props HFC', props);
   const { facets, field, addFilter, removeFilter, filters } = props;
   // const filterValue = filters.find((f) => f.field === field);
 
@@ -17,6 +33,7 @@ const HistogramFacetComponent = (props) => {
     x: value.name,
     y: count,
   }));
+
   console.log('data', data);
 
   return (
@@ -24,7 +41,10 @@ const HistogramFacetComponent = (props) => {
       {...props}
       filterType="any"
       show={100000}
-      view={(props) => <ResponsiveHistogramChart {...props} data={data} />}
+      view={(props) =>
+        // only show facet when toggled, to allow rangeslider to work properly
+        props.active ? <HistogramFacetComponent {...props} data={data} /> : null
+      }
     />
   );
 };
@@ -38,4 +58,4 @@ export default withSearch(
     setFilter,
     a11yNotify,
   }),
-)(HistogramFacetComponent);
+)(HistogramFacet);
