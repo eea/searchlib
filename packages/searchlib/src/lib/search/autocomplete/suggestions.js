@@ -10,6 +10,14 @@ const clean = (text) =>
     })
     .join(' ');
 
+const getHighlight = (term, search_term) => {
+  // `${term.slice(0, search_term.length)}<strong>${term}</strong>`,
+  const start = term.indexOf(search_term);
+  return start > -1
+    ? `${search_term}<strong>${term.slice(start + search_term.length)}</strong>`
+    : term;
+};
+
 export function buildState(data, { searchTerm }, config) {
   console.log('hits', data);
 
@@ -50,7 +58,7 @@ export function buildState(data, { searchTerm }, config) {
   return {
     didYouMean: hints.map((term) => ({
       suggestion: term,
-      highlight: `${term} -> <strong>${term}</strong>`,
+      highlight: getHighlight(term, search_term),
       data: null,
     })),
   };

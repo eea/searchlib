@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from 'semantic-ui-react';
+// import { Input } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 
 // sui-search-box__wrapper
@@ -9,18 +9,14 @@ function SearchInput({
   getInputProps,
   onChange,
 }) {
+  const inputProps = getInputProps();
   return (
     <>
-      <Input
-        {...getInputProps()}
-        icon={
-          <>
-            <MicrophoneInput onChange={onChange} />
-            {getAutocomplete()}
-          </>
-        }
-        className=""
-      ></Input>
+      <div className="search-input">
+        <input {...inputProps} className="" />
+        <MicrophoneInput onChange={onChange} />
+      </div>
+      {getAutocomplete()}
     </>
   );
 }
