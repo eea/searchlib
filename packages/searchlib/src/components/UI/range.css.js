@@ -37,9 +37,9 @@ const styles = {
   invertedTrackFill: {
     backgroundColor: '#545454',
   },
-  thumb: {
+  knob: {
     position: 'absolute',
-    top: '0',
+    top: '0px',
     left: '0',
     height: '20px',
     width: '20px',
@@ -47,8 +47,8 @@ const styles = {
     background: '#fff -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
     background: '#fff -o-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
     background: '#fff -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.5))',
-    borderRadius: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    borderRadius: '6px',
+    backgroundColor: '#205c90',
     boxShadow:
       '0 1px 2px 0 rgba(34,36,38,.15),0 0 0 1px rgba(34,36,38,.15) inset',
   },

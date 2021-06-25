@@ -3,10 +3,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './range.css.js';
 import ReactDOM from 'react-dom';
+import { withParentSize } from '@visx/responsive';
 
-export default class Slider extends Component {
+import styles from './range.css.js';
+
+export class Slider extends Component {
   constructor(props) {
     super(props);
     let value = this.props.value
@@ -17,13 +19,14 @@ export default class Slider extends Component {
     this.state = {
       value: value,
       position: props.multiple ? [] : 0,
-      numberOfThumbs: props.multiple ? value.length : 1,
+      numberOfKnobs: props.multiple ? value.length : 1,
       offset: 10,
       precision: 0,
       mouseDown: false,
     };
     this.determinePosition = this.determinePosition.bind(this);
     this.rangeMouseUp = this.rangeMouseUp.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +34,12 @@ export default class Slider extends Component {
     const value = this.props.value ? this.props.value : this.state.value;
     this.setValuesAndPositions(value, false);
     window.addEventListener('mouseup', this.rangeMouseUp);
+    window.addEventListener('resize', this.refresh);
+  }
+
+  refresh() {
+    const value = this.props.value ? this.props.value : this.state.value;
+    this.setValuesAndPositions(value, false);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -56,6 +65,7 @@ export default class Slider extends Component {
     this.innerLeft = undefined;
     this.innerRight = undefined;
     window.removeEventListener('mouseup', this.rangeMouseUp);
+    window.removeEventListener('resize', this.refresh);
   }
 
   setValuesAndPositions(value, triggeredByUser) {
@@ -130,19 +140,19 @@ export default class Slider extends Component {
     return difference + this.props.settings.min;
   }
 
-  determineThumb(position, value) {
+  determineKnob(position, value) {
     if (!this.props.multiple) {
       return 0;
     }
     if (position <= this.state.position[0]) {
       return 0;
     }
-    if (position >= this.state.position[this.state.numberOfThumbs - 1]) {
-      return this.state.numberOfThumbs - 1;
+    if (position >= this.state.position[this.state.numberOfKnobs - 1]) {
+      return this.state.numberOfKnobs - 1;
     }
     let index = 0;
 
-    for (let i = 0; i < this.state.numberOfThumbs - 1; i++) {
+    for (let i = 0; i < this.state.numberOfKnobs - 1; i++) {
       if (
         position >= this.state.position[i] &&
         position < this.state.position[i + 1]
@@ -161,18 +171,18 @@ export default class Slider extends Component {
     return index;
   }
 
-  setValue(value, triggeredByUser, thumbIndex) {
+  setValue(value, triggeredByUser, knobIndex) {
     if (typeof triggeredByUser === 'undefined') {
       triggeredByUser = true;
     }
     const currentValue = this.props.multiple
-      ? this.state.value[thumbIndex]
+      ? this.state.value[knobIndex]
       : this.state.value;
     if (currentValue !== value) {
       let newValue = [];
       if (this.props.multiple) {
         newValue = [...this.state.value];
-        newValue[thumbIndex] = value;
+        newValue[knobIndex] = value;
         this.setState({
           value: newValue,
         });
@@ -190,11 +200,11 @@ export default class Slider extends Component {
     }
   }
 
-  setValuePosition(value, triggeredByUser, thumbIndex) {
+  setValuePosition(value, triggeredByUser, knobIndex) {
     if (this.props.multiple) {
       const positions = [...this.state.position];
-      positions[thumbIndex] = this.determinePosition(value);
-      this.setValue(value, triggeredByUser, thumbIndex);
+      positions[knobIndex] = this.determinePosition(value);
+      this.setValue(value, triggeredByUser, knobIndex);
       this.setState({
         position: positions,
       });
@@ -206,10 +216,10 @@ export default class Slider extends Component {
     }
   }
 
-  setPosition(position, thumbIndex) {
+  setPosition(position, knobIndex) {
     if (this.props.multiple) {
       const newPosition = [...this.state.position];
-      newPosition[thumbIndex] = position;
+      newPosition[knobIndex] = position;
       this.setState({
         position: newPosition,
       });
@@ -254,14 +264,14 @@ export default class Slider extends Component {
         value <= this.props.settings.max
       ) {
         const position = pageX - this.innerLeft - this.state.offset;
-        const thumbIndex = this.props.multiple
-          ? this.determineThumb(position)
+        const knobIndex = this.props.multiple
+          ? this.determineKnob(position)
           : undefined;
         if (this.props.discrete) {
-          this.setValuePosition(value, false, thumbIndex);
+          this.setValuePosition(value, false, knobIndex);
         } else {
-          this.setPosition(position, thumbIndex);
-          this.setValue(value, undefined, thumbIndex);
+          this.setPosition(position, knobIndex);
+          this.setValue(value, undefined, knobIndex);
         }
       }
     }
@@ -316,6 +326,7 @@ export default class Slider extends Component {
             }}
           >
             <div
+              className="slider-track"
               ref={(track) => {
                 this.track = track;
               }}
@@ -330,6 +341,7 @@ export default class Slider extends Component {
               }}
             />
             <div
+              className="slider-track-active"
               ref={(trackFill) => {
                 this.trackFill = trackFill;
               }}
@@ -357,7 +369,7 @@ export default class Slider extends Component {
                   ? {
                       left: this.state.position[0],
                       width:
-                        this.state.position[this.state.numberOfThumbs - 1] -
+                        this.state.position[this.state.numberOfKnobs - 1] -
                         this.state.position[0],
                     }
                   : {}),
@@ -367,12 +379,13 @@ export default class Slider extends Component {
             {this.props.multiple ? (
               this.state.position.map((pos, i) => (
                 <div
+                  className="slider-knob multiple"
                   key={i}
                   style={{
-                    ...styles.thumb,
+                    ...styles.knob,
                     ...(this.props.style
-                      ? this.props.style.thumb
-                        ? this.props.style.thumb
+                      ? this.props.style.knob
+                        ? this.props.style.knob
                         : {}
                       : {}),
                     ...{ left: pos + 'px' },
@@ -381,11 +394,12 @@ export default class Slider extends Component {
               ))
             ) : (
               <div
+                className="slider-knob single"
                 style={{
-                  ...styles.thumb,
+                  ...styles.knob,
                   ...(this.props.style
-                    ? this.props.style.thumb
-                      ? this.props.style.thumb
+                    ? this.props.style.knob
+                      ? this.props.style.knob
                       : {}
                     : {}),
                   ...{ left: this.state.position + 'px' },
@@ -426,3 +440,5 @@ Slider.propTypes = {
     onChange: PropTypes.func,
   }),
 };
+
+export default withParentSize(Slider);
