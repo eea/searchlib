@@ -13,7 +13,16 @@ function SearchInput({
   return (
     <>
       <div className="search-input">
-        <input {...inputProps} className="" />
+        <input
+          {...inputProps}
+          className=""
+          onKeyDown={(ev, data) => {
+            ev.nativeEvent.stopImmediatePropagation();
+            ev.stopPropagation();
+            console.log(ev, data);
+            inputProps.onKeyDown(ev, data);
+          }}
+        />
         <MicrophoneInput onChange={onChange} />
       </div>
       {getAutocomplete()}

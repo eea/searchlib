@@ -13,7 +13,6 @@ const MicrophoneInput = ({ onChange }) => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  console.log('listening', listening);
   const timeoutRef = React.useRef();
 
   React.useEffect(() => {
@@ -36,18 +35,19 @@ const MicrophoneInput = ({ onChange }) => {
   }
 
   return (
-    <Button
-      className={cx('microphone-input', { listening })}
-      icon={<Icon name={cx('microphone', { slash: listening })} />}
-      onClick={() => {
-        console.log('clicked');
-        if (!listening) {
-          SpeechRecognition.startListening();
-        } else {
-          SpeechRecognition.stopListening();
-        }
-      }}
-    ></Button>
+    <div className={cx('ui button compact microphone-input', { listening })}>
+      <Icon
+        name={cx('microphone', { slash: listening })}
+        role="button"
+        onClick={() => {
+          if (!listening) {
+            SpeechRecognition.startListening();
+          } else {
+            SpeechRecognition.stopListening();
+          }
+        }}
+      />
+    </div>
   );
 };
 

@@ -201,17 +201,33 @@ code {
     }
   }
 
-  .microphone-input.listening::before {
-    content: "";
-    width: 100px;
-    height: 100px;
-    background-color: #ffffff81;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.4);
-    border-radius: 50%;
-    animation: listening infinite 1.5s;
+  .microphone-input {
+    margin: 0;
+    padding: 0.6em !important;
+
+    i.icon {
+      margin: 0 !important;
+      padding: 0;
+    }
+
+    &.listening {
+      background-color: teal;
+      color: white !important;
+      fill: white !important;
+    }
+
+    &.listening::before {
+      content: "";
+      width: 100px;
+      height: 100px;
+      background-color: #ffffff81;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1.4);
+      border-radius: 50%;
+      animation: listening infinite 1.5s;
+    }
   }
 }
 
