@@ -86,3 +86,12 @@ export function makeRange(options) {
 
   return res;
 }
+
+export function getRangeStartEnd(ranges) {
+  if (!ranges) return {};
+
+  const start = ranges[0].from || ranges[0].to;
+  const end = ranges[ranges.length - 1].to || ranges[ranges.length - 1].from;
+
+  return { start, end };
+}
