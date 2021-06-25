@@ -7,7 +7,6 @@ import { withTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
 // import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
 
 // TODO: implement active range
-// TODO: move styles to less classes
 export function isPointActive(point, activeRange) {
   const { config } = point;
   return (
@@ -127,8 +126,8 @@ export function HistogramChart(props) {
                 onClick={() => onClick && onClick(d)}
                 onMouseLeave={() => {
                   tooltipTimeout.current = window.setTimeout(() => {
-                    // hideTooltip();
-                  }, 300);
+                    hideTooltip();
+                  }, 1000);
                 }}
                 onMouseMove={() => {
                   if (tooltipTimeout.current)
