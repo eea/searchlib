@@ -6,18 +6,6 @@ import { withParentSize } from '@visx/responsive';
 import { withTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
 // import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip';
 
-const tooltipStyles = {
-  ...defaultStyles,
-  minWidth: 60,
-  backgroundColor: 'white',
-  color: 'white',
-  boxShadow: '0px 0px 10px 0px rgb(0 0 0 / 50%)',
-  borderRadius: '0.3em',
-  padding: '1em',
-};
-
-// const defaultMargin = { top: 40, left: 50, right: 40, bottom: 100 };
-
 // TODO: implement active range
 // TODO: move styles to less classes
 export function isPointActive(point, activeRange) {
@@ -27,6 +15,37 @@ export function isPointActive(point, activeRange) {
     (config.to ?? config.from) <= activeRange[1]
   );
 }
+
+const DataTooltip = ({
+  tooltipLeft,
+  tooltipData,
+  tooltipTop,
+  fieldName,
+  ...rest
+}) => (
+  <Tooltip
+    top={tooltipTop}
+    left={tooltipLeft}
+    style={{
+      ...defaultStyles,
+      lineHeight: 'initial',
+      boxShadow: '',
+      fontSize: 'x-small',
+    }}
+  >
+    <div style={{ color: 'black' }}>
+      <strong>
+        {tooltipData.config.from ?? tooltipData.x}
+        {typeof tooltipData.config.to !== 'undefined' &&
+          ` to ${tooltipData.config.to}`}{' '}
+      </strong>
+      <br />
+      {fieldName}
+      <br />
+      {`${tooltipData.y} items`}
+    </div>
+  </Tooltip>
+);
 
 export function HistogramChart(props) {
   const {
@@ -41,9 +60,6 @@ export function HistogramChart(props) {
 
     // tooltip props
     tooltipOpen,
-    tooltipLeft,
-    tooltipTop,
-    tooltipData,
     hideTooltip,
     showTooltip,
   } = props;
@@ -97,6 +113,7 @@ export function HistogramChart(props) {
             const barX = xScale(d.x);
             const barY = yMax - barHeight;
             const isActive = activeRange ? isPointActive(d, activeRange) : true;
+
             return (
               <Bar
                 key={`bar-${d.x}`}
@@ -110,7 +127,7 @@ export function HistogramChart(props) {
                 onClick={() => onClick && onClick(d)}
                 onMouseLeave={() => {
                   tooltipTimeout.current = window.setTimeout(() => {
-                    hideTooltip();
+                    // hideTooltip();
                   }, 300);
                 }}
                 onMouseMove={() => {
@@ -129,13 +146,7 @@ export function HistogramChart(props) {
           })}
         </Group>
       </svg>
-      {tooltipOpen && (
-        <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
-          <div style={{ color: 'black' }}>
-            <strong>{tooltipData.x}</strong>
-          </div>
-        </Tooltip>
-      )}
+      {tooltipOpen && <DataTooltip {...props} fieldName={props.label} />}
     </>
   );
 }

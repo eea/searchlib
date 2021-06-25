@@ -129,7 +129,7 @@ const demo_config = {
       // isMulti: true,
       label: 'Year',
       // TODO: implement split in buckets
-      ranges: makeRange({ step: 5, normalRange: [2000, 2021] }),
+      ranges: makeRange({ step: 5, normalRange: [1970, 2021] }),
       step: 5,
       // [
       //   {
