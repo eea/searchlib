@@ -4,6 +4,7 @@ import {
   // suiRangeFacet,
   multiTermFacet,
   mergeConfig,
+  makeRange,
 } from '@eeacms/search';
 import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
@@ -129,20 +130,20 @@ const demo_config = {
       // isFilterable: false,
       // isMulti: true,
       label: 'Year',
-      ranges: [
-        {
-          to: 1900,
-        },
-        {
-          key: '2001-2010',
-          from: 2001,
-          to: 2010,
-        },
-        {
-          from: 2011,
-        },
-      ],
-
+      ranges: makeRange({ step: 5, normalRange: [2000, 2021] }),
+      // [
+      //   {
+      //     to: 1900,
+      //   },
+      //   {
+      //     key: '2001-2010',
+      //     from: 2001,
+      //     to: 2010,
+      //   },
+      //   {
+      //     from: 2011,
+      //   },
+      // ]
       // min_max_script:
       //   "def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 

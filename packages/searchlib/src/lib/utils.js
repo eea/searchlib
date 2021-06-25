@@ -60,3 +60,28 @@ export function applyConfigurationSchema(config) {
   });
   return config;
 }
+
+export function makeRange(options) {
+  const {
+    includeOutlierStart = true,
+    includeOutlierEnd = true,
+    normalRange,
+    step = 1,
+  } = options;
+  const res = [];
+
+  if (includeOutlierStart) res.push({ to: normalRange[0] - 1 });
+
+  for (
+    let i = normalRange[0];
+    i < normalRange[normalRange.length - 1];
+    i += step
+  ) {
+    res.push({ from: i, to: i + step });
+  }
+
+  if (includeOutlierEnd)
+    res.push({ from: normalRange[normalRange.length - 1] + 1 });
+
+  return res;
+}

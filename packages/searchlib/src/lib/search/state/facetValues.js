@@ -54,15 +54,17 @@ export function getHistogramFacet(aggregations, fieldName) {
       {
         field: fieldName,
         type: 'range',
-        data: aggregations[fieldName].buckets.map((bucket) => ({
-          // Boolean values and date values require using `key_as_string`
-          value: {
-            to: bucket.to,
-            from: bucket.from,
-            name: bucket.key,
-          },
-          count: bucket.doc_count,
-        })),
+        data: aggregations[fieldName].buckets.map(
+          ({ to, from, key, doc_count }) => ({
+            // Boolean values and date values require using `key_as_string`
+            value: {
+              to,
+              from,
+              name: key,
+            },
+            count: doc_count,
+          }),
+        ),
       },
     ];
   }

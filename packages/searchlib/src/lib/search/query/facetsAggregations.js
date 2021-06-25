@@ -10,6 +10,7 @@ export const buildHistogramFacetAggregationRequest = (facet) => {
   const qs = {
     range: { field: facet.field },
   };
+
   if (facet.aggs_script) {
     delete qs.range.field;
     qs.range.script = facet.aggs_script; // allow facet.aggs_script
@@ -18,8 +19,6 @@ export const buildHistogramFacetAggregationRequest = (facet) => {
   if (facet.ranges) {
     qs.range.ranges = facet.ranges;
   }
-  // qs.range.ranges =
-  console.log('hbf', qs);
 
   return {
     [facet.field]: qs,
