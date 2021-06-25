@@ -12,8 +12,6 @@ import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
 
-console.log('hf', histogramFacet);
-
 const demo_config = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
@@ -130,7 +128,9 @@ const demo_config = {
       // isFilterable: false,
       // isMulti: true,
       label: 'Year',
+      // TODO: implement split in buckets
       ranges: makeRange({ step: 5, normalRange: [2000, 2021] }),
+      step: 5,
       // [
       //   {
       //     to: 1900,

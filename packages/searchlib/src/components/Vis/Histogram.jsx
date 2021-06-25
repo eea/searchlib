@@ -20,6 +20,13 @@ const tooltipStyles = {
 
 // TODO: implement active range
 // TODO: move styles to less classes
+export function isPointActive(point, activeRange) {
+  const { config } = point;
+  return (
+    (config.from ?? config.to) >= activeRange[0] &&
+    (config.to ?? config.from) <= activeRange[1]
+  );
+}
 
 export function HistogramChart(props) {
   const {
@@ -27,7 +34,10 @@ export function HistogramChart(props) {
     data,
     backgroundColor = 'white',
     barBackgroundColor = 'rgb(83, 147, 180)',
+    inactiveBarBackgroundColor = 'gray',
     verticalMargin = 20,
+
+    activeRange, // show active range with a different color
 
     // tooltip props
     tooltipOpen,
@@ -37,6 +47,12 @@ export function HistogramChart(props) {
     hideTooltip,
     showTooltip,
   } = props;
+
+  const hist_data = data?.map(({ count, value, config }) => ({
+    x: value.name,
+    y: count,
+    config,
+  }));
 
   const width = props.width || props.parentWidth;
   const height = props.height || props.parentHeight;
@@ -51,19 +67,19 @@ export function HistogramChart(props) {
       scaleBand({
         range: [0, xMax],
         round: true,
-        domain: data.map((d) => d.x),
+        domain: hist_data.map((d) => d.x),
         padding: 0.4,
       }),
-    [xMax, data],
+    [xMax, hist_data],
   );
   const yScale = useMemo(
     () =>
       scaleLinear({
         range: [yMax, 0],
         round: true,
-        domain: [0, Math.max(...data.map((d) => d.y))],
+        domain: [0, Math.max(...hist_data.map((d) => d.y))],
       }),
-    [yMax, data],
+    [yMax, hist_data],
   );
 
   // console.log(data, xMax, yMax);
@@ -76,11 +92,13 @@ export function HistogramChart(props) {
       <svg width={width} height={height}>
         <rect width={width} height={height} fill={backgroundColor} />
         <Group top={verticalMargin / 2}>
-          {data.map((d) => {
+          {hist_data.map((d) => {
             const barWidth = xScale.bandwidth();
             const barHeight = yMax - yScale(d.y);
             const barX = xScale(d.x);
             const barY = yMax - barHeight;
+            const isActive = activeRange ? isPointActive(d, activeRange) : true;
+            console.log({ d, activeRange });
             return (
               <Bar
                 key={`bar-${d.x}`}
@@ -88,7 +106,9 @@ export function HistogramChart(props) {
                 y={barY}
                 width={barWidth}
                 height={barHeight}
-                fill={barBackgroundColor}
+                fill={
+                  isActive ? barBackgroundColor : inactiveBarBackgroundColor
+                }
                 onClick={() => onClick && onClick(d)}
                 onMouseLeave={() => {
                   tooltipTimeout.current = window.setTimeout(() => {

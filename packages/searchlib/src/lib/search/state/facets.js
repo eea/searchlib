@@ -13,12 +13,13 @@ export default function buildStateFacets(aggregations, config) {
     {},
     ...facets.map((facet) => {
       const { getValue } = facetsMap[facet.field];
-      const value = getValue(
+      const value = getValue({
         aggregations,
-        facet.field,
-        facet.whitelist,
-        facet.blacklist,
-      );
+        fieldName: facet.field,
+        whitelist: facet.whitelist,
+        blacklist: facet.blacklist,
+        config,
+      });
       return value ? { [facet.field]: value } : {};
     }),
   );

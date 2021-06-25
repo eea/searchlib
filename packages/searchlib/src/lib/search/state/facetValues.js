@@ -1,6 +1,11 @@
 // import { indexOf } from 'lodash';
 
-export function getValueFacet(aggregations, fieldName, whitelist, blacklist) {
+export function getValueFacet({
+  aggregations,
+  fieldName,
+  whitelist,
+  blacklist,
+}) {
   const bl = blacklist || [];
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
     const unfiltered_data = aggregations[fieldName].buckets.map((bucket) => ({
@@ -26,21 +31,25 @@ export function getValueFacet(aggregations, fieldName, whitelist, blacklist) {
   }
 }
 
-export function getRangeFacet(aggregations, fieldName) {
+export function getRangeFacet(options) {
+  const { aggregations, fieldName, config } = options;
   // TODO: do normalization here;
+  const facetConfig = config.facets.find(({ field }) => field === fieldName);
+
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
     return [
       {
         field: fieldName,
         type: 'range',
         data: aggregations[fieldName].buckets.map(
-          ({ to, from, key, doc_count }) => ({
+          ({ to, from, key, doc_count }, i) => ({
             // Boolean values and date values require using `key_as_string`
             value: {
               to,
               from,
               name: key,
             },
+            config: facetConfig.ranges[i],
             count: doc_count,
           }),
         ),

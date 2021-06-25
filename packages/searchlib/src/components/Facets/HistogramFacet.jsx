@@ -9,6 +9,7 @@ export const HistogramFacetComponent = (props) => {
   const { data, ranges } = props;
   const range = getRangeStartEnd(ranges);
   const { start = range.start, end = range.end, step = 1 } = props;
+
   const [rangeStart, setRangeStart] = React.useState(start);
   const [rangeEnd, setRangeEnd] = React.useState(end);
 
@@ -37,7 +38,11 @@ export const HistogramFacetComponent = (props) => {
         <Input value={rangeStart} onChange={(e, v) => setRangeStart(v)} />
         <Input value={rangeEnd} onChange={(e, v) => setRangeEnd(v)} />
       </div>
-      <ResponsiveHistogramChart {...props} data={data} />
+      <ResponsiveHistogramChart
+        {...props}
+        data={data}
+        activeRange={[rangeStart, rangeEnd]}
+      />
       <RangeSlider
         value={[rangeStart, rangeEnd]}
         multiple
@@ -58,12 +63,6 @@ const HistogramFacet = (props) => {
   // in future version, so instead of an array, there will only be one facet allowed per field.
   const facetsForField = facets[field];
   const facet = facetsForField?.[0] || {};
-  const data = facet?.data?.map(({ count, value }) => ({
-    x: value.name,
-    y: count,
-  }));
-
-  console.log('data', data);
 
   return (
     <Facet
@@ -72,8 +71,8 @@ const HistogramFacet = (props) => {
       show={100000}
       view={(props) =>
         // only show facet when toggled, to allow rangeslider to work properly
-        props.active && data ? (
-          <HistogramFacetComponent {...props} data={data} />
+        props.active && facet?.data ? (
+          <HistogramFacetComponent {...props} data={facet?.data} />
         ) : null
       }
     />
