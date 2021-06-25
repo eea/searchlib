@@ -76,5 +76,5 @@ export function getRangeFilter(filter) {
 
 export function getHistogramFilter(filter) {
   console.log('histogram filter', filter);
-  return {};
+  return getRangeFilter(filter);
 }

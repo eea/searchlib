@@ -6,7 +6,7 @@ import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
 
 export const HistogramFacetComponent = (props) => {
-  const { data, ranges } = props;
+  const { data, ranges, onChange } = props;
   const range = getRangeStartEnd(ranges);
   const { start = range.start, end = range.end, step = 1 } = props;
 
@@ -15,15 +15,19 @@ export const HistogramFacetComponent = (props) => {
 
   const timeoutRef = React.useRef();
 
-  const onChange = React.useCallback((value, { triggeredByUser }) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  const onChangeValue = React.useCallback(
+    (value, { triggeredByUser }) => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    timeoutRef.current = setTimeout(() => {
-      setRangeStart(value[0]);
-      setRangeEnd(value[1]);
-    }, 300);
-    return () => timeoutRef.current && clearTimeout(timeoutRef.current);
-  }, []);
+      timeoutRef.current = setTimeout(() => {
+        setRangeStart(value[0]);
+        setRangeEnd(value[1]);
+        onChange({ from: value[0], to: value[1] });
+      }, 300);
+      return () => timeoutRef.current && clearTimeout(timeoutRef.current);
+    },
+    [onChange],
+  );
 
   const settings = {
     min: start,
@@ -31,7 +35,6 @@ export const HistogramFacetComponent = (props) => {
     step,
   };
 
-  // console.log('props', { props, rangeStart, rangeEnd });
   return (
     <div className="histogram-facet">
       <div className="text-input">
@@ -47,15 +50,15 @@ export const HistogramFacetComponent = (props) => {
         value={[rangeStart, rangeEnd]}
         multiple
         color="red"
-        settings={{ ...settings, onChange }}
+        settings={{ ...settings, onChange: onChangeValue }}
       />
     </div>
   );
 };
 
 const HistogramFacet = (props) => {
-  // console.log('props HFC', props);
-  const { facets, field, addFilter, removeFilter, filters } = props;
+  const { facets, field, setFilter } = props;
+  console.log('props HFC', props);
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -72,7 +75,14 @@ const HistogramFacet = (props) => {
       view={(props) =>
         // only show facet when toggled, to allow rangeslider to work properly
         props.active && facet?.data ? (
-          <HistogramFacetComponent {...props} data={facet?.data} />
+          <HistogramFacetComponent
+            {...props}
+            data={facet?.data}
+            onChange={({ to, from }) => {
+              console.log(from, to);
+              setFilter(field, { to, from, type: 'range' });
+            }}
+          />
         ) : null
       }
     />
