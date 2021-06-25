@@ -82,7 +82,6 @@ export function HistogramChart(props) {
     [yMax, hist_data],
   );
 
-  // console.log(data, xMax, yMax);
   // const margin = defaultMargin;
 
   const tooltipTimeout = React.useRef();
@@ -98,7 +97,6 @@ export function HistogramChart(props) {
             const barX = xScale(d.x);
             const barY = yMax - barHeight;
             const isActive = activeRange ? isPointActive(d, activeRange) : true;
-            console.log({ d, activeRange });
             return (
               <Bar
                 key={`bar-${d.x}`}
