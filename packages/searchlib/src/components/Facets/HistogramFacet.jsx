@@ -58,7 +58,7 @@ export const HistogramFacetComponent = (props) => {
 
 const HistogramFacet = (props) => {
   const { facets, field, setFilter } = props;
-  console.log('props HFC', props);
+  // console.log('props HFC', props);
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -79,7 +79,7 @@ const HistogramFacet = (props) => {
             {...props}
             data={facet?.data}
             onChange={({ to, from }) => {
-              console.log(from, to);
+              // console.log(from, to);
               setFilter(field, { to, from, type: 'range' });
             }}
           />

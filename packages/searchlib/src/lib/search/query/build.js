@@ -35,16 +35,33 @@ function buildSort(sortDirection, sortField) {
 
 function buildMatch(searchTerm, config) {
   return searchTerm
-    ? {
-        multi_match: {
-          query: searchTerm,
-          fields: [
-            ...(config.extraQueryParams?.text_fields || [
-              'all_fields_for_freetext',
-            ]),
-          ],
-        },
-      }
+    ? Array.isArray(searchTerm)
+      ? {
+          intervals: {
+            all_fields_for_freetext: {
+              all_of: {
+                ordered: true,
+                intervals: searchTerm.map((phrase) => ({
+                  match: {
+                    query: phrase,
+                    max_gaps: 0,
+                    ordered: true,
+                  },
+                })),
+              },
+            },
+          },
+        }
+      : {
+          multi_match: {
+            query: searchTerm,
+            fields: [
+              ...(config.extraQueryParams?.text_fields || [
+                'all_fields_for_freetext',
+              ]),
+            ],
+          },
+        }
     : { match_all: {} };
 }
 
@@ -61,6 +78,7 @@ export default function buildRequest(state, config) {
     sortDirection,
     sortField,
   } = state;
+  console.log('buildRequest', state);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildMatch(searchTerm, config);

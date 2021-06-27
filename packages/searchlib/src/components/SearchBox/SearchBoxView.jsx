@@ -68,12 +68,6 @@ function SearchBoxView(props) {
           >
             <div className={cx('sui-search-box', className, autocompleteClass)}>
               <InputView
-                onChange={(newValue) => {
-                  // To avoid over dispatching
-                  if (value === newValue) return;
-                  onChange(newValue);
-                  rest.setSearchTerm(newValue);
-                }}
                 {...downshiftProps}
                 getInputProps={(additionalProps) => {
                   const { className, ...rest } = additionalProps || {};
@@ -108,6 +102,12 @@ function SearchBoxView(props) {
                   } else {
                     return null;
                   }
+                }}
+                onChange={(newValue) => {
+                  // To avoid over dispatching
+                  if (value === newValue) return;
+                  onChange(newValue);
+                  rest.setSearchTerm(newValue);
                 }}
               />
             </div>

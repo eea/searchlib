@@ -28,7 +28,7 @@ export const SearchView = (props) => {
     setCurrent,
     setSort,
   } = props;
-  const { defaultSearchText } = appConfig;
+  const { defaultSearchText = '' } = appConfig;
 
   const { driver } = React.useContext(SearchContext);
 
@@ -92,6 +92,7 @@ export const SearchView = (props) => {
             autocompleteMinimumCharacters={3}
             autocompleteResults={appConfig.autocomplete.results}
             autocompleteSuggestions={appConfig.autocomplete.suggestions}
+            shouldClearFilters={false}
           />
         }
         sideContent={
