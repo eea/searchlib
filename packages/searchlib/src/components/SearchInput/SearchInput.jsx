@@ -9,17 +9,18 @@ function SearchInput({
   getButtonProps,
   getInputProps,
   onChange,
+  setSearchTerm,
 }) {
   const inputProps = getInputProps();
+  // console.log(inputProps);
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
-  const { searchPhrases, setSearchPhrases } = useAppConfig();
 
-  // const searchPhrases = inputProps.value.split('|') || [];
-  console.log('input props', domProps.className);
+  const searchPhrases = inputProps.value.split('|') || [];
+  const currentTerm = searchPhrases.pop();
+
   const inpRef = React.useRef();
 
   React.useEffect(() => {
-    console.log('efffocus', inpRef.current);
     inpRef.current && inpRef.current.focus();
   }, []);
 
@@ -36,9 +37,7 @@ function SearchInput({
                   name="delete"
                   role="button"
                   onClick={() => {
-                    setSearchPhrases(
-                      searchPhrases.filter((ph) => ph !== phrase),
-                    );
+                    setSearchTerm([searchPhrases.join('|'), currentTerm]);
                   }}
                 />
               </Label>
@@ -47,36 +46,29 @@ function SearchInput({
 
         <input
           {...domProps}
+          value={currentTerm}
           ref={inpRef}
           className=""
-          onChange={(e) => {
-            inputProps.onChange(e);
-            // console.log('got value', value);
-            // const val = searchPhrases.join('|');
-            // // console.log('val', val);
-            // onChange(val);
-          }}
-          onBlur={() => {
-            console.log('blur?');
+          onChange={(event) => {
+            let {
+              target: { value },
+            } = event;
+            value = [...searchPhrases, value].join('|');
+            // console.log('value', value);
+            inputProps.onChange({ target: { value } });
           }}
           onKeyDown={(ev) => {
-            // inputProps.onKeyDown(ev, data);
-
             if (ev.key === 'Enter') {
-              const { value } = inputProps;
-              setSearchPhrases([...searchPhrases, value]);
-              // searchPhrases.push(value);
-              // debugger;
-              // addFilter('searchPhrases', searchPhrases, 'searchPhrases');
-              // console.log(searchPhrases);
-              // ev.nativeEvent.stopImmediatePropagation();
-              // ev.stopPropagation();
               setTimeout(() => {
                 inpRef.current && inpRef.current.focus();
-                console.log('focus');
+                // console.log('focus');
               }, 1000);
-              onChange('');
+              const value = `${[...searchPhrases, currentTerm].join('|')}|`;
+              inputProps.onChange({ target: { value } });
             }
+          }}
+          onBlur={() => {
+            // console.log('blur?');
           }}
         />
 
@@ -93,3 +85,17 @@ function SearchInput({
 }
 
 export default SearchInput;
+
+// console.log('got value', value);
+// const val = searchPhrases.join('|');
+// // console.log('val', val);
+// onChange(val);
+// inputProps.onKeyDown(ev, data);
+
+// setSearchPhrases([...searchPhrases, value]);
+// searchPhrases.push(value);
+// debugger;
+// addFilter('searchPhrases', searchPhrases, 'searchPhrases');
+// console.log(searchPhrases);
+// ev.nativeEvent.stopImmediatePropagation();
+// ev.stopPropagation();

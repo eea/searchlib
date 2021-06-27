@@ -166,9 +166,6 @@ export class SearchBoxContainer extends Component {
       onSubmit,
       searchTerm,
       view,
-      filters,
-      setFilter,
-      addFilter,
       ...rest
     } = this.props;
 
@@ -226,9 +223,6 @@ export class SearchBoxContainer extends Component {
           inputProps: {
             onFocus: this.handleFocus,
             onBlur: this.handleBlur,
-            filters,
-            setFilter,
-            addFilter,
             ...inputProps,
           },
           inputView,
@@ -246,17 +240,11 @@ export default withSearch(
     searchTerm,
     setSearchTerm,
     trackAutocompleteClickThrough,
-    filters,
-    setFilter,
-    addFilter,
   }) => ({
     autocompletedResults,
     autocompletedSuggestions,
     searchTerm,
     setSearchTerm,
     trackAutocompleteClickThrough,
-    filters,
-    setFilter,
-    addFilter,
   }),
 )(SearchBoxContainer);
