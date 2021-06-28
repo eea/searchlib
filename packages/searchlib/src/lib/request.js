@@ -29,7 +29,7 @@ export async function onSearch(state) {
   const config = this;
   const { resultsPerPage } = state;
   const requestBody = buildRequest(state, config);
-  console.log('onSearch', { requestBody, config, state });
+  // console.log('onSearch', { requestBody, config, state });
 
   // Note that this could be optimized by running all of these requests
   // at the same time. Kept simple here for clarity.
@@ -49,5 +49,7 @@ export async function onSearch(state) {
     config,
   );
 
-  return newState;
+  // console.log('state', state, newState);
+
+  return newState; //{ ...state, ...newState };
 }
