@@ -57,7 +57,7 @@ export function HistogramChart(props) {
     data,
     backgroundColor = 'white',
     barBackgroundColor = 'rgb(83, 147, 180)',
-    inactiveBarBackgroundColor = 'gray',
+    inactiveBarBackgroundColor = '#EEE',
     verticalMargin = 20,
 
     activeRange, // show active range with a different color

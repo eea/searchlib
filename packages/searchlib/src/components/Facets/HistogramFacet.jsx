@@ -102,6 +102,8 @@ const HistogramFacet = (props) => {
   const facetsForField = facets[field];
   const facet = facetsForField?.[0] || {};
 
+  console.log('ff', facet);
+
   return (
     <Facet
       {...props}
