@@ -6,7 +6,7 @@ import { EXACT_PHRASES } from '@eeacms/search/constants';
 export const ExactPhrasesFacetComponent = (props) => {
   // console.log('props', props);
 
-  const { setFilter, filters } = props;
+  const { setFilter, filters, removeFilter } = props;
   const filter = filters.find(({ field }) => field === EXACT_PHRASES);
   const value = filter ? filter.values[0] : false;
 
@@ -17,7 +17,11 @@ export const ExactPhrasesFacetComponent = (props) => {
         label="Exact phrases?"
         checked={value}
         onChange={(e, { checked }) => {
-          setFilter('exactPhrases', checked, 'phrase search settings');
+          if (checked) {
+            setFilter('exactPhrases', checked, 'phrase search settings');
+          } else {
+            removeFilter('exactPhrases');
+          }
         }}
       />
     </div>
