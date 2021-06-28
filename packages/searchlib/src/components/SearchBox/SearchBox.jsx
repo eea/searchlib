@@ -89,7 +89,7 @@ export class SearchBoxContainer extends Component {
     // console.log('handle submit', submittedSearchTerm, this.props.searchTerm);
     const { shouldClearFilters, setSearchTerm } = this.props;
     let searchTerm = submittedSearchTerm ?? this.props.searchTerm;
-    if (!searchTerm.endsWith('|')) searchTerm = `${searchTerm}|`;
+    if (searchTerm && !searchTerm.endsWith('|')) searchTerm = `${searchTerm}|`;
 
     e.preventDefault();
     setSearchTerm(searchTerm, {

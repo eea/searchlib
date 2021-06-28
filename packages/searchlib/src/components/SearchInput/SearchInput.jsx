@@ -25,6 +25,7 @@ function SearchInput({
   return (
     <>
       <div className="search-input">
+        <Icon name="search" size="large" color="grey" />
         {searchPhrases.map(
           (phrase, i) =>
             phrase &&
