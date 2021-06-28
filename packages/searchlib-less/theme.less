@@ -99,7 +99,7 @@ code {
   padding-bottom: 1em;
 }
 
-.search-body-header {
+.search-body-footer {
   display: flex;
   align-items: baseline;
 
@@ -322,8 +322,14 @@ code {
   text-align: center;
 }
 
-.filter-list {
-  padding: 1em 0em;
+.ui.inverted.segment.filter-list {
+  padding: 0.4rem;
+  background-color: #004b87;
+  border-radius: 0.5rem;
+
+  .filter-list-content {
+    padding: 0rem 1rem 1rem 1rem !important;
+  }
 
   .filter-list-item {
     display: flex;

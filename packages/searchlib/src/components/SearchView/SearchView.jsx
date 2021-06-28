@@ -100,12 +100,7 @@ export const SearchView = (props) => {
             <Facets />
           </>
         }
-        bodyHeader={
-          <div className="search-body-header">
-            <SUIPagingInfo view={PagingInfo} />
-            <ResultsPerPage />
-          </div>
-        }
+        bodyHeader={null}
         bodyContent={
           <>
             <h1>{appConfig.title}</h1>
@@ -135,7 +130,15 @@ export const SearchView = (props) => {
             />
           </>
         }
-        bodyFooter={<Paging />}
+        bodyFooter={
+          <>
+            <div className="search-body-footer">
+              <SUIPagingInfo view={PagingInfo} />
+              <ResultsPerPage />
+            </div>
+            <Paging />
+          </>
+        }
       />
     </div>
   );

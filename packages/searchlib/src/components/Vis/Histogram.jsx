@@ -59,6 +59,7 @@ export function HistogramChart(props) {
     barBackgroundColor = 'rgb(83, 147, 180)',
     inactiveBarBackgroundColor = '#EEE',
     verticalMargin = 20,
+    minBarHeight = 2,
 
     activeRange, // show active range with a different color
 
@@ -113,8 +114,7 @@ export function HistogramChart(props) {
         <Group top={verticalMargin / 2}>
           {hist_data.map((d) => {
             const barWidth = xScale.bandwidth();
-            const barHeight = yMax - yScale(d.y);
-            console.log('d', { d, barHeight });
+            const barHeight = Math.max(minBarHeight, yMax - yScale(d.y));
             const barX = xScale(d.x);
             const barY = yMax - barHeight;
             const isActive = activeRange ? isPointActive(d, activeRange) : true;

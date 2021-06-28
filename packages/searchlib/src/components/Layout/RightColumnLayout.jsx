@@ -9,7 +9,7 @@ const RightColumnLayout = (props) => {
 
       <Grid columns={2} container stackable className="body-content">
         <Grid.Row>
-          <Grid.Column widescreen="12">
+          <Grid.Column widescreen={12}>
             <div>{bodyHeader}</div>
             <div>{bodyContent}</div>
           </Grid.Column>
@@ -19,7 +19,9 @@ const RightColumnLayout = (props) => {
         </Grid.Row>
       </Grid>
       <Grid container className="body-footer">
-        <div>{bodyFooter}</div>
+        <Grid.Row>
+          <Grid.Column widescreen={12}>{bodyFooter}</Grid.Column>
+        </Grid.Row>
       </Grid>
     </div>
   );
