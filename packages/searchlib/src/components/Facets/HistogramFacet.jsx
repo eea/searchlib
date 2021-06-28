@@ -5,6 +5,27 @@ import { getRangeStartEnd } from '@eeacms/search/lib/utils';
 import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
 
+function toFloat(value) {
+  try {
+    return parseFloat(value);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn('Error in parsing float', value);
+    return value;
+  }
+}
+
+function extractNumeric(value) {
+  if (typeof value === 'string') {
+    return toFloat(value);
+  }
+  if (value && typeof value === 'object') {
+    return toFloat(value.value);
+  }
+
+  return value;
+}
+
 export const HistogramFacetComponent = (props) => {
   const { data, ranges, onChange } = props;
   const range = getRangeStartEnd(ranges);
@@ -20,9 +41,12 @@ export const HistogramFacetComponent = (props) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
       timeoutRef.current = setTimeout(() => {
-        setRangeStart(value[0]);
-        setRangeEnd(value[1]);
-        onChange({ from: value[0], to: value[1] });
+        const start = extractNumeric(value[0]);
+        const end = extractNumeric(value[1]);
+        setRangeStart(start);
+        setRangeEnd(end);
+        const val = { from: start, to: end };
+        onChange(val);
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
     },
@@ -38,8 +62,16 @@ export const HistogramFacetComponent = (props) => {
   return (
     <div className="histogram-facet">
       <div className="text-input">
-        <Input value={rangeStart} onChange={(e, v) => setRangeStart(v)} />
-        <Input value={rangeEnd} onChange={(e, v) => setRangeEnd(v)} />
+        <Input
+          type="number"
+          value={rangeStart}
+          onChange={(e, { value }) => setRangeStart(value)}
+        />
+        <Input
+          type="number"
+          value={rangeEnd}
+          onChange={(e, { value }) => setRangeEnd(value)}
+        />
       </div>
       <ResponsiveHistogramChart
         {...props}
@@ -47,7 +79,7 @@ export const HistogramFacetComponent = (props) => {
         activeRange={[rangeStart, rangeEnd]}
       />
       <RangeSlider
-        value={[rangeStart, rangeEnd]}
+        value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
         multiple
         color="red"
         settings={{ ...settings, onChange: onChangeValue }}
@@ -58,7 +90,6 @@ export const HistogramFacetComponent = (props) => {
 
 const HistogramFacet = (props) => {
   const { facets, field, setFilter } = props;
-  // console.log('props HFC', props);
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -79,7 +110,6 @@ const HistogramFacet = (props) => {
             {...props}
             data={facet?.data}
             onChange={({ to, from }) => {
-              // console.log(from, to);
               setFilter(field, { to, from, type: 'range' });
             }}
           />
