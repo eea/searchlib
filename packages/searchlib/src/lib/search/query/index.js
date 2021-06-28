@@ -50,7 +50,7 @@ export default function buildRequest(state, config) {
   // console.log('buildRequest', state);
 
   const sort = buildSort(sortDirection, sortField, config);
-  const match = buildFullTextMatch(searchTerm, config);
+  const match = buildFullTextMatch(searchTerm, filters, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
+import ExactPhrasesFacet from './ExactPhrasesFacet';
 
 function SearchInput({
   getAutocomplete,
@@ -101,6 +102,11 @@ function SearchInput({
       </div>
 
       {getAutocomplete()}
+
+      {searchPhrases.length > 0 &&
+        searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
+          <ExactPhrasesFacet />
+        )}
     </>
   );
 }
