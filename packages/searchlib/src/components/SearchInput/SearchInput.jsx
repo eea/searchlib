@@ -11,6 +11,7 @@ function SearchInput({
 }) {
   const inputProps = getInputProps();
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
+  const searchTerm = inputProps.value;
 
   const searchPhrases = inputProps.value.split('|') || []; //.filter((p) => !!p);
   const currentTerm = searchPhrases.pop();
@@ -19,7 +20,7 @@ function SearchInput({
 
   React.useEffect(() => {
     inpRef.current && inpRef.current.focus();
-  }, []);
+  }, [searchTerm]);
 
   return (
     <>
