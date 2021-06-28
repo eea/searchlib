@@ -18,9 +18,8 @@ export default function buildState(response, resultsPerPage, config) {
   const results = buildResults(response.hits.hits, config.field_filters);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
-  const facets = buildStateFacets(response.aggregations, config);
 
-  // console.log('response', results);
+  const facets = buildStateFacets(response.aggregations, config);
 
   return {
     results,

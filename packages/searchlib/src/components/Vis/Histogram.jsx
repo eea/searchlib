@@ -46,13 +46,18 @@ const DataTooltip = ({
   </Tooltip>
 );
 
+const defaultMargin = {
+  top: 10,
+  left: -10,
+};
+
 export function HistogramChart(props) {
   const {
     onClick,
     data,
     backgroundColor = 'white',
     barBackgroundColor = 'rgb(83, 147, 180)',
-    inactiveBarBackgroundColor = 'gray',
+    inactiveBarBackgroundColor = '#EEE',
     verticalMargin = 20,
 
     activeRange, // show active range with a different color
@@ -83,7 +88,7 @@ export function HistogramChart(props) {
         range: [0, xMax],
         round: true,
         domain: hist_data.map((d) => d.x),
-        padding: 0.4,
+        padding: 0.2,
       }),
     [xMax, hist_data],
   );
@@ -97,7 +102,7 @@ export function HistogramChart(props) {
     [yMax, hist_data],
   );
 
-  // const margin = defaultMargin;
+  const margin = defaultMargin;
 
   const tooltipTimeout = React.useRef();
 
@@ -132,8 +137,8 @@ export function HistogramChart(props) {
                 onMouseMove={() => {
                   if (tooltipTimeout.current)
                     clearTimeout(tooltipTimeout.current);
-                  const top = barY; //+ margin.top;
-                  const left = barX; //+ barWidth + margin.left;
+                  const top = barY + barHeight + margin.top;
+                  const left = barX - barWidth + margin.left;
                   showTooltip({
                     tooltipData: d,
                     tooltipTop: top,

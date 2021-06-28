@@ -65,22 +65,6 @@ function SearchInput({
             inputProps.onChange({ target: { value } });
           }}
           onKeyDown={(ev) => {
-            // const handled = inputProps.onKeyDown(ev);
-            // console.log('handled', handled);
-
-            // if (ev.key === 'Enter') {
-            //   setTimeout(() => {
-            //     inpRef.current && inpRef.current.focus();
-            //     // console.log('focus');
-            //   }, 1000);
-            //   inputProps.onChange({
-            //     target: {
-            //       value: `${[...searchPhrases, currentTerm].join('|')}|`,
-            //     },
-            //   });
-            //   return;
-            // }
-
             if (ev.key === 'Backspace') {
               if (currentTerm === '' && searchPhrases.length > 0) {
                 const fakeEvent = {
@@ -95,16 +79,22 @@ function SearchInput({
               }
             }
 
-            // return inputProps.onKeyDown(ev);
+            return inputProps.onKeyDown(ev);
           }}
           onBlur={() => {
             // console.log('blur?');
           }}
         />
 
-        <div className="ui button basic">
-          <Icon name="delete" role="button" onClick={() => onChange('')} />
-        </div>
+        {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && (
+          <div className="ui button basic">
+            <Icon
+              name="delete"
+              role="button"
+              onClick={(e) => onSubmit(e, '')}
+            />
+          </div>
+        )}
 
         <MicrophoneInput onChange={onChange} />
       </div>

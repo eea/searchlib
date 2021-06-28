@@ -45,6 +45,7 @@ export class Slider extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const isValueUnset =
       nextProps.value === null || nextProps.value === undefined;
+
     if (!isValueUnset && nextProps.value !== this.state.value) {
       if (this.props.multiple) {
         const different = this.isDifferentArrays(

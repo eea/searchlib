@@ -35,8 +35,13 @@ const config = {
   resolve: {
     'searchui.Facet': {
       component: Facet,
+      // the facet aggregation part
       buildRequest: buildTermFacetAggregationRequest,
+
+      // the query filter part
       buildFilter: getTermFilter,
+
+      // get the filter value based on query that was run
       getValue: getValueFacet,
     },
     'searchui.RangeFacet': {

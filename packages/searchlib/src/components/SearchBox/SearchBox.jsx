@@ -86,8 +86,10 @@ export class SearchBoxContainer extends Component {
   };
 
   handleSubmit = (e, submittedSearchTerm) => {
+    // console.log('handle submit', submittedSearchTerm, this.props.searchTerm);
     const { shouldClearFilters, setSearchTerm } = this.props;
-    const searchTerm = submittedSearchTerm ?? this.props.searchTerm;
+    let searchTerm = submittedSearchTerm ?? this.props.searchTerm;
+    if (!searchTerm.endsWith('|')) searchTerm = `${searchTerm}|`;
 
     e.preventDefault();
     setSearchTerm(searchTerm, {
