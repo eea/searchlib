@@ -1,7 +1,11 @@
 import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+// import { useAppConfig } from '@eeacms/search/lib/hocs';
+
+function getSearchValue(currentTerm, searchPhrases) {
+  return { target: { value: [...searchPhrases, currentTerm].join('|') } };
+}
 
 // sui-search-box__wrapper
 function SearchInput({
@@ -9,14 +13,16 @@ function SearchInput({
   getButtonProps,
   getInputProps,
   onChange,
-  setSearchTerm,
+  onSubmit,
+  // setSearchTerm,
 }) {
   const inputProps = getInputProps();
   // console.log(inputProps);
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
 
-  const searchPhrases = inputProps.value.split('|') || [];
+  const searchPhrases = inputProps.value.split('|') || []; //.filter((p) => !!p);
   const currentTerm = searchPhrases.pop();
+  // console.log('searchPhrases', searchPhrases);
 
   const inpRef = React.useRef();
 
@@ -36,8 +42,19 @@ function SearchInput({
                 <Icon
                   name="delete"
                   role="button"
-                  onClick={() => {
-                    setSearchTerm([searchPhrases.join('|'), currentTerm]);
+                  onClick={(e) => {
+                    onSubmit(
+                      e,
+                      [
+                        ...searchPhrases.filter((p) => p !== phrase),
+                        currentTerm,
+                      ].join('|'),
+                    );
+
+                    setTimeout(() => {
+                      inpRef.current && inpRef.current.focus();
+                      // console.log('focus');
+                    }, 500);
                   }}
                 />
               </Label>
@@ -50,6 +67,7 @@ function SearchInput({
           ref={inpRef}
           className=""
           onChange={(event) => {
+            // console.log('onchange', event);
             let {
               target: { value },
             } = event;
@@ -58,14 +76,37 @@ function SearchInput({
             inputProps.onChange({ target: { value } });
           }}
           onKeyDown={(ev) => {
-            if (ev.key === 'Enter') {
-              setTimeout(() => {
-                inpRef.current && inpRef.current.focus();
-                // console.log('focus');
-              }, 1000);
-              const value = `${[...searchPhrases, currentTerm].join('|')}|`;
-              inputProps.onChange({ target: { value } });
+            // const handled = inputProps.onKeyDown(ev);
+            // console.log('handled', handled);
+
+            // if (ev.key === 'Enter') {
+            //   setTimeout(() => {
+            //     inpRef.current && inpRef.current.focus();
+            //     // console.log('focus');
+            //   }, 1000);
+            //   inputProps.onChange({
+            //     target: {
+            //       value: `${[...searchPhrases, currentTerm].join('|')}|`,
+            //     },
+            //   });
+            //   return;
+            // }
+
+            if (ev.key === 'Backspace') {
+              if (currentTerm === '' && searchPhrases.length > 0) {
+                const fakeEvent = {
+                  target: {
+                    value: `${searchPhrases
+                      .slice(0, searchPhrases.length - 1)
+                      .join('|')}|`,
+                  },
+                };
+                inputProps.onChange(fakeEvent);
+                return;
+              }
             }
+
+            // return inputProps.onKeyDown(ev);
           }}
           onBlur={() => {
             // console.log('blur?');
@@ -85,17 +126,3 @@ function SearchInput({
 }
 
 export default SearchInput;
-
-// console.log('got value', value);
-// const val = searchPhrases.join('|');
-// // console.log('val', val);
-// onChange(val);
-// inputProps.onKeyDown(ev, data);
-
-// setSearchPhrases([...searchPhrases, value]);
-// searchPhrases.push(value);
-// debugger;
-// addFilter('searchPhrases', searchPhrases, 'searchPhrases');
-// console.log(searchPhrases);
-// ev.nativeEvent.stopImmediatePropagation();
-// ev.stopPropagation();

@@ -68,7 +68,9 @@ function SearchBoxView(props) {
           >
             <div className={cx('sui-search-box', className, autocompleteClass)}>
               <InputView
+                onSubmit={onSubmit}
                 onChange={(newValue) => {
+                  console.log('iiv onchange', newValue);
                   // To avoid over dispatching
                   if (value === newValue) return;
                   onChange(newValue);

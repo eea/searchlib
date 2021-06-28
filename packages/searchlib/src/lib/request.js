@@ -17,6 +17,8 @@ export function onAutocompleteResultClick() {
 export async function onAutocomplete(props) {
   const _config = this;
 
+  console.log('onautocomplete', props);
+
   return {
     autocompletedSuggestions: await getAutocompleteSuggestions(props, _config),
     autocompletedResults: [],

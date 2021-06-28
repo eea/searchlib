@@ -78,7 +78,7 @@ export default function buildRequest(state, config) {
     sortDirection,
     sortField,
   } = state;
-  console.log('buildRequest', state);
+  // console.log('buildRequest', state);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildMatch(searchTerm, config);

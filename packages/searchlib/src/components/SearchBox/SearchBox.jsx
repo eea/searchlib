@@ -73,15 +73,21 @@ export class SearchBoxContainer extends Component {
     });
   };
 
-  completeSuggestion = (searchTerm) => {
+  completeSuggestion = (suggestedTerm) => {
     const { shouldClearFilters, setSearchTerm } = this.props;
-    setSearchTerm(searchTerm, {
+
+    let searchPhrases = this.props.searchTerm.split('|');
+    searchPhrases.pop();
+    searchPhrases.push(suggestedTerm);
+
+    setSearchTerm(`${searchPhrases.join('|')}|`, {
       shouldClearFilters,
     });
   };
 
-  handleSubmit = (e) => {
-    const { shouldClearFilters, searchTerm, setSearchTerm } = this.props;
+  handleSubmit = (e, submittedSearchTerm) => {
+    const { shouldClearFilters, setSearchTerm } = this.props;
+    const searchTerm = submittedSearchTerm ?? this.props.searchTerm;
 
     e.preventDefault();
     setSearchTerm(searchTerm, {

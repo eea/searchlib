@@ -2,6 +2,8 @@ import runRequest from '@eeacms/search/lib/runRequest';
 
 import React from 'react';
 
+import uniq from 'lodash.uniq';
+
 const clean = (text) =>
   text
     .split(' ')
@@ -19,14 +21,15 @@ const getHighlight = (term, search_term) => {
 };
 
 export function buildState(data, { searchTerm }, config) {
-  console.log('hits', data);
+  // console.log('hits', data);
 
   const buckets_full = data.aggregations.autocomplete_full.buckets || [];
   const buckets_last = data.aggregations.autocomplete_last.buckets || [];
 
   const { autocomplete: settings = {} } = config;
 
-  const search_term = searchTerm;
+  const phrases = searchTerm.split('|');
+  const search_term = phrases[phrases.length - 1];
 
   const hints = buckets_full
     .map((h) => clean(h.key))
@@ -56,7 +59,7 @@ export function buildState(data, { searchTerm }, config) {
   }
 
   return {
-    didYouMean: hints.map((term) => ({
+    didYouMean: uniq(hints).map((term) => ({
       suggestion: term,
       highlight: getHighlight(term, search_term),
       data: null,
@@ -66,6 +69,10 @@ export function buildState(data, { searchTerm }, config) {
 
 export async function getAutocompleteSuggestions(props, config) {
   // console.log('onAutocomplete', { requestBody, props, config });
+  const { searchTerm } = props;
+  if (searchTerm.length > 1 && searchTerm[searchTerm.length - 1] === '|') {
+    Promise.resolve({});
+  }
 
   const requestBody = buildRequest(props, config);
   const json = await runRequest(requestBody, config);
@@ -74,8 +81,10 @@ export async function getAutocompleteSuggestions(props, config) {
 }
 
 export function buildRequest({ searchTerm }, config) {
-  let search_term = searchTerm,
-    previous_search_term;
+  const phrases = searchTerm.split('|');
+  let search_term = phrases[phrases.length - 1];
+
+  let previous_search_term;
 
   // const correct_search_term = search_term;
   //

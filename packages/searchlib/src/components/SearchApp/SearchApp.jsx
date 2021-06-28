@@ -20,14 +20,14 @@ export default function SearchApp(props) {
   );
   appConfig.debug = props.debug;
 
-  const [searchPhrases, setSearchPhrases] = React.useState([]);
+  // const [searchPhrases, setSearchPhrases] = React.useState([]);
   const appConfigContext = {
     appConfig,
     registry,
-    searchPhrases,
-    setSearchPhrases,
+    // searchPhrases,
+    // setSearchPhrases,
   };
-  console.log('searchPhrases', searchPhrases);
+  // console.log('searchPhrases', searchPhrases);
 
   return (
     <SearchProvider config={appConfig}>

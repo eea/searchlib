@@ -129,8 +129,8 @@ const demo_config = {
       // isMulti: true,
       label: 'Year',
       // TODO: implement split in buckets
-      ranges: makeRange({ step: 5, normalRange: [1970, 2021] }),
-      step: 5,
+      ranges: makeRange({ step: 10, normalRange: [1970, 2100] }),
+      step: 10,
       // [
       //   {
       //     to: 1900,
@@ -145,7 +145,8 @@ const demo_config = {
       //   },
       // ]
       // min_max_script:
-      //   "def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+      //
+      //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 
       aggs_script:
         "def vals = doc['year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
