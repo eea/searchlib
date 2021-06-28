@@ -69,13 +69,15 @@ function SearchInput({
           onKeyDown={(ev) => {
             if (ev.key === 'Backspace') {
               if (currentTerm === '' && searchPhrases.length > 0) {
+                const lastPhrase = searchPhrases[searchPhrases.length - 1];
                 const fakeEvent = {
                   target: {
                     value: `${searchPhrases
                       .slice(0, searchPhrases.length - 1)
-                      .join('|')}|`,
+                      .join('|')}|${lastPhrase}`,
                   },
                 };
+                ev.preventDefault();
                 inputProps.onChange(fakeEvent);
                 return;
               }
