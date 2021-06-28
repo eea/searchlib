@@ -184,42 +184,55 @@ code {
   }
 }
 
+.searchinput-boolean-facet {
+  padding-top: 0.3rem;
+  padding-right: 2em;
+  font-size: small;
+
+  .checked {
+    label {
+      &:before {
+        background-color: #5b91c3 !important;
+      }
+      &:after {
+        background-color: white !important;
+        left: 1.45rem;
+      }
+    }
+  }
+
+  label {
+    padding-left: 3rem !important;
+    color: white !important;
+    &:before {
+      height: 1rem !important;
+      width: 2.5rem;
+      background-color: gray !important;
+      top: 0.2rem;
+    }
+    &:after {
+      height: 1rem !important;
+      top: 0.2rem;
+      width: 1rem;
+    }
+  }
+}
+
 .sui-search-box {
-  padding: 2em 0;
-  margin-bottom: 1em;
+  padding: 4em 0em 0em 0em;
+  // margin-bottom: 1em;
   display: block;
 
   #exact-phrases-facet {
-    padding-top: 0.3rem;
-    font-size: small;
+    .searchinput-boolean-facet();
+  }
 
-    .checked {
-      label {
-        &:before {
-          background-color: #5b91c3 !important;
-        }
-        &:after {
-          background-color: white !important;
-          left: 1.45rem;
-        }
-      }
-    }
+  #archived-facet {
+    .searchinput-boolean-facet();
+  }
 
-    label {
-      padding-left: 3rem !important;
-      color: white !important;
-      &:before {
-        height: 1rem !important;
-        width: 2.5rem;
-        background-color: gray !important;
-        top: 0.2rem;
-      }
-      &:after {
-        height: 1rem !important;
-        top: 0.2rem;
-        width: 1rem;
-      }
-    }
+  .extra-facets {
+    display: flex;
   }
 
   .search-input {

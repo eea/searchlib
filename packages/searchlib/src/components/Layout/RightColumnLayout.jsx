@@ -5,7 +5,13 @@ const RightColumnLayout = (props) => {
   const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
   return (
     <div>
-      <Container className="layout-header">{header}</Container>
+      <Grid columns={1} container>
+        <Grid.Row>
+          <Grid.Column width={16} className="layout-header">
+            {header}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
 
       <Grid columns={2} container stackable className="body-content">
         <Grid.Row>

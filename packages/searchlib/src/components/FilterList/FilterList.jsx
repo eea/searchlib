@@ -69,6 +69,8 @@ const FilterList = (props) => {
           <Button
             floated="right"
             compact
+            basic
+            inverted
             size="mini"
             onClick={() => clearFilters()}
           >
