@@ -37,7 +37,7 @@ export function getRangeFacet(options) {
   const facetConfig = config.facets.find(({ field }) => field === fieldName);
 
   let aggs_data = aggregations[fieldName].buckets.map(
-    ({ to, from, key, doc_count }, i) => ({
+    ({ to, from, key, doc_count }) => ({
       // Boolean values and date values require using `key_as_string`
       value: {
         to,
@@ -47,8 +47,8 @@ export function getRangeFacet(options) {
       count: doc_count,
     }),
   );
-  let sorted_aggs_data = [];
   if (facetConfig !== undefined) {
+    let sorted_aggs_data = [];
     facetConfig.ranges.forEach(function (fixed_range) {
       let agg = aggs_data.filter(
         (agg) =>
