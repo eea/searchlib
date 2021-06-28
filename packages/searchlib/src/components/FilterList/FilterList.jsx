@@ -44,6 +44,7 @@ const Filter = (props) => {
 
 const FilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = props;
+  console.log('filters', filters);
   return (
     <div className="filter-list">
       <div className="filter-list-header">

@@ -1,28 +1,19 @@
 import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
-// import { useAppConfig } from '@eeacms/search/lib/hocs';
 
-function getSearchValue(currentTerm, searchPhrases) {
-  return { target: { value: [...searchPhrases, currentTerm].join('|') } };
-}
-
-// sui-search-box__wrapper
 function SearchInput({
   getAutocomplete,
   getButtonProps,
   getInputProps,
   onChange,
   onSubmit,
-  // setSearchTerm,
 }) {
   const inputProps = getInputProps();
-  // console.log(inputProps);
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
 
   const searchPhrases = inputProps.value.split('|') || []; //.filter((p) => !!p);
   const currentTerm = searchPhrases.pop();
-  // console.log('searchPhrases', searchPhrases);
 
   const inpRef = React.useRef();
 
@@ -53,7 +44,6 @@ function SearchInput({
 
                     setTimeout(() => {
                       inpRef.current && inpRef.current.focus();
-                      // console.log('focus');
                     }, 500);
                   }}
                 />
@@ -67,12 +57,10 @@ function SearchInput({
           ref={inpRef}
           className=""
           onChange={(event) => {
-            // console.log('onchange', event);
             let {
               target: { value },
             } = event;
             value = [...searchPhrases, value].join('|');
-            // console.log('value', value);
             inputProps.onChange({ target: { value } });
           }}
           onKeyDown={(ev) => {

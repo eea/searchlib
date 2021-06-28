@@ -3,16 +3,17 @@ import { withAppConfig } from '@eeacms/search/lib/hocs';
 import {
   Results,
   Result,
-  PagingInfo,
   ResultsPerPage,
   Paging,
   Sorting,
+  PagingInfo as SUIPagingInfo,
 } from '@elastic/react-search-ui';
 import {
   Facets,
   ViewSelector,
   FilterList,
   SearchBox,
+  PagingInfo,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
@@ -81,8 +82,6 @@ export const SearchView = (props) => {
     }),
   ];
 
-  // TODO: improve searchbox
-
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
@@ -103,7 +102,7 @@ export const SearchView = (props) => {
         }
         bodyHeader={
           <div className="search-body-header">
-            <PagingInfo />
+            <SUIPagingInfo view={PagingInfo} />
             <ResultsPerPage />
           </div>
         }

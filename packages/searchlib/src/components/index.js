@@ -13,6 +13,7 @@ import ToggleSort from './ToggleSort/ToggleSort';
 import Facet from './Facets/Facet';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
+import PagingInfo from './PagingInfo/PagingInfo';
 
 export {
   CardItem,
@@ -29,4 +30,5 @@ export {
   Facet,
   SearchBox,
   RangeSlider,
+  PagingInfo,
 };
