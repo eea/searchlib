@@ -83,7 +83,7 @@ export function HistogramChart(props) {
         range: [0, xMax],
         round: true,
         domain: hist_data.map((d) => d.x),
-        padding: 0.4,
+        padding: 0.2,
       }),
     [xMax, hist_data],
   );

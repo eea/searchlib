@@ -102,9 +102,11 @@ function SearchInput({
           }}
         />
 
-        <div className="ui button basic">
-          <Icon name="delete" role="button" onClick={() => onChange('')} />
-        </div>
+        {(searchPhrases.length > 0 || currentTerm) && (
+          <div className="ui button basic">
+            <Icon name="delete" role="button" onClick={() => onChange('')} />
+          </div>
+        )}
 
         <MicrophoneInput onChange={onChange} />
       </div>

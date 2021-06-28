@@ -66,11 +66,15 @@ export const HistogramFacetComponent = (props) => {
           type="number"
           value={rangeStart}
           onChange={(e, { value }) => setRangeStart(value)}
+          min={start}
+          max={end}
         />
         <Input
           type="number"
           value={rangeEnd}
           onChange={(e, { value }) => setRangeEnd(value)}
+          min={start}
+          max={end}
         />
       </div>
       <ResponsiveHistogramChart
