@@ -21,6 +21,7 @@
 import buildRequestFilter from './buildRequestFilter';
 
 import registry from '@eeacms/search/registry';
+import { buildFullTextMatch } from './fullText';
 
 function buildFrom(current, resultsPerPage) {
   if (!current || !resultsPerPage) return;
@@ -31,38 +32,6 @@ function buildSort(sortDirection, sortField) {
   if (sortDirection && sortField) {
     return [{ [`${sortField}`]: sortDirection }];
   }
-}
-
-function buildMatch(searchTerm, config) {
-  return searchTerm
-    ? Array.isArray(searchTerm)
-      ? {
-          intervals: {
-            all_fields_for_freetext: {
-              all_of: {
-                ordered: true,
-                intervals: searchTerm.map((phrase) => ({
-                  match: {
-                    query: phrase,
-                    max_gaps: 0,
-                    ordered: true,
-                  },
-                })),
-              },
-            },
-          },
-        }
-      : {
-          multi_match: {
-            query: searchTerm,
-            fields: [
-              ...(config.extraQueryParams?.text_fields || [
-                'all_fields_for_freetext',
-              ]),
-            ],
-          },
-        }
-    : { match_all: {} };
 }
 
 function boostFacets(filters, config) {
@@ -81,7 +50,7 @@ export default function buildRequest(state, config) {
   // console.log('buildRequest', state);
 
   const sort = buildSort(sortDirection, sortField, config);
-  const match = buildMatch(searchTerm, config);
+  const match = buildFullTextMatch(searchTerm, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
 
