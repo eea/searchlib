@@ -13,7 +13,7 @@ export const histogramFacet = ({
     field,
     factory: 'HistogramFacet',
     label: label || field,
-    height: 200, // default height of the histogram
+    height: 100, // default height of the histogram
     isFilterable,
     ...params,
   };

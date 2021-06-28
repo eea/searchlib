@@ -14,6 +14,7 @@ import Facet from './Facets/Facet';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
+import SortingDropdown from './Sorting/SortingDropdown';
 
 export {
   CardItem,
@@ -31,4 +32,5 @@ export {
   SearchBox,
   RangeSlider,
   PagingInfo,
+  SortingDropdown,
 };

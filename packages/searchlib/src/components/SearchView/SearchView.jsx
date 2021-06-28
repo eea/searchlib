@@ -14,6 +14,7 @@ import {
   FilterList,
   SearchBox,
   PagingInfo,
+  SortingDropdown,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
@@ -96,7 +97,6 @@ export const SearchView = (props) => {
         }
         sideContent={
           <>
-            <Sorting label={'Sort by'} sortOptions={sortOptions} />
             <Facets />
           </>
         }
@@ -110,11 +110,20 @@ export const SearchView = (props) => {
           <>
             <h1>{appConfig.title}</h1>
             <FilterList {...props} />
-            <ViewSelector
-              views={availableResultViews}
-              active={activeViewId}
-              onSetView={setActiveViewId}
-            />
+
+            <div className="above-results">
+              <ViewSelector
+                views={availableResultViews}
+                active={activeViewId}
+                onSetView={setActiveViewId}
+              />
+              <Sorting
+                label={'Order'}
+                sortOptions={sortOptions}
+                view={SortingDropdown}
+              />
+            </div>
+
             <Results
               shouldTrackClickThrough={true}
               view={({ children }) => {

@@ -1,14 +1,19 @@
 import React from 'react';
-import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
+import { withSearch } from '@elastic/react-search-ui';
 import { Radio } from 'semantic-ui-react';
 import { EXACT_PHRASES } from '@eeacms/search/constants';
 
-export const ExactPhrasesFacetComponent = (props) => {
-  // console.log('props', props);
+const truthy = (val) => {
+  if (typeof val === 'string') {
+    return val === 'true' ? true : false;
+  }
+  return val;
+};
 
+export const ExactPhrasesFacetComponent = (props) => {
   const { setFilter, filters, removeFilter } = props;
   const filter = filters.find(({ field }) => field === EXACT_PHRASES);
-  const value = filter ? filter.values[0] : false;
+  const value = filter ? truthy(filter.values[0]) : false;
 
   return (
     <div id="exact-phrases-facet">
@@ -18,7 +23,7 @@ export const ExactPhrasesFacetComponent = (props) => {
         checked={value}
         onChange={(e, { checked }) => {
           if (checked) {
-            setFilter('exactPhrases', checked, 'phrase search settings');
+            setFilter('exactPhrases', checked, 'none');
           } else {
             removeFilter('exactPhrases');
           }

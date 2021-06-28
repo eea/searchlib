@@ -114,6 +114,7 @@ export function HistogramChart(props) {
           {hist_data.map((d) => {
             const barWidth = xScale.bandwidth();
             const barHeight = yMax - yScale(d.y);
+            console.log('d', { d, barHeight });
             const barX = xScale(d.x);
             const barY = yMax - barHeight;
             const isActive = activeRange ? isPointActive(d, activeRange) : true;

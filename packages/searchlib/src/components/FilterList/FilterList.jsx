@@ -23,7 +23,9 @@ const Filter = (props) => {
 
   return (
     <div className="filter-list-item">
-      {`${field} (${type}):`}
+      <div className="filter-name">
+        {`${field} ${type !== 'none' ? `(${type})` : ''}:`}
+      </div>
       <Label.Group>
         {values?.map((v, index) => {
           return (
@@ -49,16 +51,7 @@ const FilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = props;
   return (
     <div className="filter-list">
-      <div className="filter-list-header">
-        {filters?.length ? (
-          <Button compact onClick={() => clearFilters()}>
-            <Icon name="delete" />
-            Clear filters
-          </Button>
-        ) : (
-          ''
-        )}
-      </div>
+      <div className="filter-list-header"></div>
       <div className="filter-list-content">
         {filters.map((filter, index) => {
           return (
@@ -76,7 +69,16 @@ const FilterList = (props) => {
           );
         })}
       </div>
-      <div className="filter-list-footer"></div>
+      <div className="filter-list-footer">
+        {filters?.length ? (
+          <Button compact size="mini" onClick={() => clearFilters()}>
+            <Icon name="delete" />
+            Clear filters
+          </Button>
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };
