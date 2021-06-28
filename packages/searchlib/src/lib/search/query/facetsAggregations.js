@@ -27,3 +27,14 @@ export const buildHistogramFacetAggregationRequest = (facet) => {
   // See
   // https://github.com/eea/eea.searchserver.js/blob/e3ba7c61cb8d23125b9d9ef240f0b9def790fae6/lib/framework/public/facetview/jquery.facetview.js#L7678-L7691
 };
+
+export const buildRangeFacetAggregationRequest = (facet) => {
+  let qs = {};
+  qs[facet.field] = {
+    range: {
+      field: facet.field,
+      ranges: facet.ranges,
+    },
+  };
+  return qs;
+};

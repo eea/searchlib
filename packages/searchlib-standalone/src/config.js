@@ -1,7 +1,7 @@
 import {
   histogramFacet,
   suiFacet,
-  // suiRangeFacet,
+  suiRangeFacet,
   multiTermFacet,
   mergeConfig,
   makeRange,
@@ -150,6 +150,19 @@ const demo_config = {
 
       aggs_script:
         "def vals = doc['year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+    }),
+
+    suiRangeFacet({
+      field: 'readingTime',
+      label: 'Reading time (minutes)',
+      rangeType: 'fixed',
+      ranges: [
+        { from: -1000, to: 1000, key: 'All' },
+        { from: 0, to: 4.99999, key: 'Short (<5 minutes)' },
+        { from: 5, to: 24.9999, key: 'Medium (5-25 minutes)' },
+        { from: 25, key: 'Large (25+ minutes) ' },
+        { to: -0.0001, key: 'Unknown' },
+      ],
     }),
     // suiFacet({
     //   field: 'language',

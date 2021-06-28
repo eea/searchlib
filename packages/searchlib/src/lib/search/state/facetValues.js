@@ -36,23 +36,37 @@ export function getRangeFacet(options) {
   // TODO: do normalization here;
   const facetConfig = config.facets.find(({ field }) => field === fieldName);
 
+  let aggs_data = aggregations[fieldName].buckets.map(
+    ({ to, from, key, doc_count }, i) => ({
+      // Boolean values and date values require using `key_as_string`
+      value: {
+        to,
+        from,
+        name: key,
+      },
+      count: doc_count,
+    }),
+  );
+  let sorted_aggs_data = [];
+  if (facetConfig !== undefined) {
+    facetConfig.ranges.forEach(function (fixed_range) {
+      let agg = aggs_data.filter(
+        (agg) =>
+          agg.value.from === fixed_range.from &&
+          agg.value.to === fixed_range.to,
+      );
+      agg[0].config = fixed_range;
+      agg[0].value.rangeType = facetConfig.rangeType;
+      sorted_aggs_data.push(agg[0]);
+    });
+    aggs_data = sorted_aggs_data;
+  }
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
     return [
       {
         field: fieldName,
         type: 'range',
-        data: aggregations[fieldName].buckets.map(
-          ({ to, from, key, doc_count }, i) => ({
-            // Boolean values and date values require using `key_as_string`
-            value: {
-              to,
-              from,
-              name: key,
-            },
-            config: facetConfig.ranges[i],
-            count: doc_count,
-          }),
-        ),
+        data: aggs_data,
       },
     ];
   }

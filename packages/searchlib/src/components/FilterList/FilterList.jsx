@@ -7,6 +7,9 @@ export const FilterValue = ({ value }) => {
     if (value.type === 'range') {
       return `${value.from} - ${value.to}`;
     }
+    if (value.rangeType === 'fixed') {
+      return `${value.name}`;
+    }
   }
 
   // eslint-disable-next-line no-console

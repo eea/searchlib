@@ -28,6 +28,7 @@ import {
   // getHistogramFacet,
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
+  buildRangeFacetAggregationRequest,
 } from '@eeacms/search/lib/search';
 
 const config = {
@@ -40,7 +41,7 @@ const config = {
     },
     'searchui.RangeFacet': {
       component: Facet,
-      buildRequest: buildTermFacetAggregationRequest,
+      buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
     },
