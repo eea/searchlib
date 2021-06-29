@@ -55,6 +55,27 @@ code {
 .ui.four.cards > .card.card-item {
   font-size: 0.8em;
 
+  &.hovered {
+    a.image {
+      height: 80px;
+    }
+    .content {
+      max-height: 14em;
+      .description {
+        max-height: 8em;
+      }
+    }
+    .controls {
+      display: block;
+    }
+  }
+  .controls {
+    display: none;
+    button {
+      font-size: xx-small;
+    }
+  }
+
   a.image {
     height: 180px;
     background-size: cover;
@@ -382,7 +403,7 @@ code {
 }
 
 .sorting {
-  font-size: smaller;
+  font-size: x-small;
 
   .visible.menu {
     display: block;

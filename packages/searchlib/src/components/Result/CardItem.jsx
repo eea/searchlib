@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Image, Label } from 'semantic-ui-react';
+import { Divider, Button, Grid, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import cx from 'classnames';
 
 const ExternalLink = (props) => {
   return (
@@ -39,8 +40,14 @@ const CardItemComponent = (props) => {
 
   const url = result.id?.raw;
 
+  const [hovered, setHovered] = React.useState(false);
+
   return (
-    <Card className="card-item">
+    <Card
+      className={cx('card-item', { hovered })}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <Label className="meta-type">
         <StringList value={result[props.metatypeField]?.raw} />
       </Label>
@@ -84,6 +91,16 @@ const CardItemComponent = (props) => {
       <Card.Content extra>
         <Card.Meta>
           <DateTime format="DATE_MED" value={result[props.issuedField]?.raw} />
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content extra className="controls">
+        <Card.Meta>
+          <Button compact floated="left" color="green" size="mini">
+            more like this
+          </Button>
+          <Button compact floated="right" color="red" size="mini">
+            less like this
+          </Button>
         </Card.Meta>
       </Card.Content>
     </Card>
