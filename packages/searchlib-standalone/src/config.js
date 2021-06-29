@@ -13,6 +13,37 @@ import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
 
+function getTodayWithTime() {
+  const d = new Date();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hour = d.getHours();
+  const minute = d.getMinutes();
+  const second = d.getSeconds();
+
+  const output = [
+    d.getFullYear(),
+    '-',
+    month < 10 ? '0' : '',
+    month,
+    '-',
+    day < 10 ? '0' : '',
+    day,
+    'T',
+    hour < 10 ? '0' : '',
+    hour,
+    ':',
+    minute < 10 ? '0' : '',
+    minute,
+    ':',
+    second < 10 ? '0' : '',
+    second,
+    'Z',
+  ].join('');
+  return output;
+}
+
+const today = getTodayWithTime();
 const demo_config = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
@@ -82,6 +113,21 @@ const demo_config = {
       },
     },
   },
+  permanentFilters: [
+    { term: { hasWorkflowState: 'published' } },
+    {
+      constant_score: {
+        filter: {
+          bool: {
+            should: [
+              { bool: { must_not: { exists: { field: 'issued' } } } },
+              { range: { 'issued.date': { lte: today } } },
+            ],
+          },
+        },
+      },
+    },
+  ],
 
   facets: [
     multiTermFacet({
@@ -174,10 +220,20 @@ const demo_config = {
       defaultValues: ['en'],
     }),
     booleanFacet({
-      field: 'no_field',
-      label: 'include archived?',
-      on: 'on_query',
-      off: 'off_query',
+      field: 'published',
+      label: 'hide archived?',
+      on: {
+        constant_score: {
+          filter: {
+            bool: {
+              should: [
+                { bool: { must_not: { exists: { field: 'expires' } } } },
+                { range: { expires: { gte: today } } },
+              ],
+            },
+          },
+        },
+      },
     }),
   ],
 

@@ -75,5 +75,5 @@ export function getRangeFacet(options) {
 export function getHistogramFacet(aggregations, fieldName) {}
 
 export function getBooleanFacet(options) {
-//  debugger;
+  return 'no_response_yet';
 }

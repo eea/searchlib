@@ -18,12 +18,13 @@ export function buildRequestFilter(filters, config) {
   );
 
   const appliedFilters = [];
-
   filters = filters.reduce((acc, filter) => {
     if (Object.keys(facetsMap).includes(filter.field)) {
-      const f = facetsMap[filter.field].buildFilter(filter);
-      appliedFilters.push(filter.field);
-      return [...acc, f];
+      const f = facetsMap[filter.field].buildFilter(filter, config);
+      if (f) {
+        appliedFilters.push(filter.field);
+        return [...acc, f];
+      }
     }
 
     if (Object.keys(config.filters).includes(filter.field)) {
@@ -50,6 +51,9 @@ export function buildRequestFilter(filters, config) {
 
   if (filters.length < 1) return;
 
+  if (config.permanentFilters.length > 0) {
+    filters = filters.concat(config.permanentFilters);
+  }
   return filters;
 }
 
@@ -91,7 +95,6 @@ export function getTermFilter(filter) {
 
 export function getRangeFilter(filter) {
   // Construct ES DSL query for range facets
-
   if (filter.type === 'any') {
     return {
       bool: {
@@ -126,6 +129,8 @@ export function getHistogramFilter(filter) {
   return getRangeFilter(filter);
 }
 
-export function getBooleanFilter(filter) {
-  //  debugger;
+export function getBooleanFilter(filter, config) {
+  const facet = config.facets.find(({ field }) => field === filter.field);
+
+  return facet.on;
 }

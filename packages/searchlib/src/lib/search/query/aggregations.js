@@ -57,5 +57,4 @@ export const buildRangeFacetAggregationRequest = (facet) => {
 };
 
 export const buildBooleanFacetRequest = (facet) => {
-//  debugger;
 };
