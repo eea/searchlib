@@ -29,10 +29,8 @@ export function buildRequestFilter(filters, config) {
     if (Object.keys(config.filters).includes(filter.field)) {
       appliedFilters.push(filter.field);
       const { registryConfig } = config.filters[filter.field].factories;
-      // console.log(registryConfig, registry.resolve[registryConfig]);
       const { buildFilter } = registry.resolve[registryConfig];
       const f = buildFilter(filter, config);
-      // console.log(f, config);
       return [...acc, f];
     }
 
@@ -40,7 +38,6 @@ export function buildRequestFilter(filters, config) {
   }, []);
 
   // apply default values from configured filters;
-  // console.log(config);
   config.facets.forEach((facet) => {
     if (!appliedFilters.includes(facet.field) && facet.defaultValues) {
       const filterValue = facetsMap[facet.field].buildFilter({
