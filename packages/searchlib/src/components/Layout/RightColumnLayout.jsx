@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 const RightColumnLayout = (props) => {
   const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;

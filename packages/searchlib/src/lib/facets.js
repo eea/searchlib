@@ -14,6 +14,7 @@ export const histogramFacet = ({
     factory: 'HistogramFacet',
     label: label || field,
     height: 100, // default height of the histogram
+    showInFacetsList: true,
     isFilterable,
     ...params,
   };
@@ -30,6 +31,7 @@ export const suiFacet = ({
     field,
     factory: 'searchui.Facet',
     label: label || field,
+    showInFacetsList: true,
     filterType,
     isFilterable,
     ...params,
@@ -47,6 +49,7 @@ export const suiRangeFacet = ({
     field,
     factory: 'searchui.RangeFacet',
     label: label || field,
+    showInFacetsList: true,
     filterType,
     isFilterable,
     ...params,
@@ -64,6 +67,7 @@ export const multiTermFacet = ({
     field,
     factory: 'MultiTermFacet',
     label: label || field,
+    showInFacetsList: true,
     // filterType,
     isFilterable,
     ...params,

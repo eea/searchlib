@@ -98,6 +98,7 @@ const CardItemComponent = (props) => {
           <Button compact floated="left" color="green" size="mini">
             more like this
           </Button>
+          {/* <Button compact size="mini" icon="globe"></Button> */}
           <Button compact floated="right" color="red" size="mini">
             less like this
           </Button>
