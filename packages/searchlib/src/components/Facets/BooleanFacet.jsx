@@ -10,7 +10,15 @@ const truthy = (val) => {
 };
 
 export const BooleanFacetComponent = (props) => {
-  const { setFilter, filters, removeFilter, label, field, ...domProps } = props;
+  const {
+    addFilter,
+    setFilter,
+    filters,
+    removeFilter,
+    label,
+    field,
+    ...domProps
+  } = props;
   const filter = filters.find((filter) => filter.field === field);
   const value = filter ? truthy(filter.values[0]) : false;
 

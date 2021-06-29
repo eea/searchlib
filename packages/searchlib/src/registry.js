@@ -8,6 +8,7 @@ import {
   RightColumnLayout,
   TableRowItem,
   TableView,
+  FilterResultEntry,
 } from '@eeacms/search/components';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import CardItem from '@eeacms/search/components/Result/CardItem';
@@ -29,6 +30,8 @@ import {
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
+  buildMLTFilter,
+  getMLTValue,
 } from '@eeacms/search/lib/search';
 
 const config = {
@@ -64,6 +67,11 @@ const config = {
       // buildFilter: getHistogramFilter,
       // getValue: getHistogramFacet,
     },
+    MoreLikeThis: {
+      // component: MoreLikeThis,
+      buildFilter: buildMLTFilter,
+      getValue: getMLTValue,
+    },
     'Item.Group': {
       component: Item.Group,
     },
@@ -98,6 +106,9 @@ const config = {
     RightColumnLayout: {
       component: RightColumnLayout,
     },
+    FilterResultEntry: {
+      component: FilterResultEntry,
+    },
   },
 
   searchui: {
@@ -124,6 +135,14 @@ const config = {
       },
 
       facets: [],
+
+      filters: {
+        moreLikeThis: {
+          factories: {
+            filterList: 'FilterResultEntry',
+          },
+        },
+      },
 
       autocomplete: {
         include_searchterm: true,

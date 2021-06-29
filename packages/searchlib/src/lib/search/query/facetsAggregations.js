@@ -1,3 +1,4 @@
+// TODO: exclude current aggregation field from request
 export const buildTermFacetAggregationRequest = (facet) => {
   return {
     [facet.field]: {

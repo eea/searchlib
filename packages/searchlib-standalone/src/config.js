@@ -83,13 +83,13 @@ const demo_config = {
   },
 
   facets: [
-    // multiTermFacet({
-    //   field: 'topic',
-    //   isFilterable: true,
-    //   isMulti: true,
-    //   label: 'Topics',
-    //   // factory: 'sui.Facet',
-    // }),
+    multiTermFacet({
+      field: 'topic',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Topics',
+      // factory: 'sui.Facet',
+    }),
     // suiFacet({
     //   field: 'spatial',
     //   isFilterable: true,

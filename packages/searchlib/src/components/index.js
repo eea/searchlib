@@ -15,6 +15,7 @@ import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
 import SortingDropdown from './Sorting/SortingDropdown';
+import FilterResultEntry from './FilterList/FilterResultEntry';
 
 export {
   CardItem,
@@ -33,4 +34,5 @@ export {
   RangeSlider,
   PagingInfo,
   SortingDropdown,
+  FilterResultEntry,
 };

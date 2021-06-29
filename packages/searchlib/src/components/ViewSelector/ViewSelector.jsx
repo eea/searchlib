@@ -5,7 +5,7 @@ const ViewSelector = (props) => {
   const { views, active, onSetView } = props;
   return (
     <Container className="view-selector">
-      <Button.Group size="tiny" compact color="teal">
+      <Button.Group size="tiny" compact color="olive">
         {views.map((view) => {
           const { render: Render, icon, title } = view;
           return Render ? (
@@ -16,7 +16,7 @@ const ViewSelector = (props) => {
               active={view.id === active}
               onClick={() => onSetView(view.id)}
             >
-              {icon ? <Icon color="white" title={title} name={icon} /> : title}
+              {icon ? <Icon color="black" title={title} name={icon} /> : title}
             </Button>
           );
         })}

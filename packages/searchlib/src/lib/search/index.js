@@ -9,11 +9,13 @@ export {
   getRangeFilter,
   getHistogramFilter,
 } from './query/filters';
-export * from './query/facetsAggregations';
 export {
   getValueFacet,
   getRangeFacet,
   getHistogramFacet,
 } from './state/facetValues';
-
 export { getAutocompleteSuggestions } from './autocomplete/suggestions';
+
+export * from './query/facetsAggregations';
+export * from './query/mltFilter';
+export * from './state/mltValue';

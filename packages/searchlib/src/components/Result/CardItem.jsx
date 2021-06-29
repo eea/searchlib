@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, Button, Grid, Card, Image, Label } from 'semantic-ui-react';
+import { withSearch } from '@elastic/react-search-ui';
+import { Button, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';
@@ -18,8 +19,11 @@ const ExternalLink = (props) => {
   );
 };
 
-const CardItemComponent = (props) => {
-  const { result } = props;
+const CardItemComponent = withSearch(({ setFilter }) => ({
+  setFilter,
+}))((props) => {
+  // console.log('props', props);
+  const { result, setFilter } = props;
   const { appConfig, registry } = useAppConfig();
   const days =
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
@@ -95,18 +99,34 @@ const CardItemComponent = (props) => {
       </Card.Content>
       <Card.Content extra className="controls">
         <Card.Meta>
-          <Button compact floated="left" color="green" size="mini">
+          <Button
+            compact
+            floated="left"
+            color="green"
+            size="mini"
+            onClick={() =>
+              setFilter('moreLikeThis', result._original._id, 'none')
+            }
+          >
             more like this
           </Button>
           {/* <Button compact size="mini" icon="globe"></Button> */}
-          <Button compact floated="right" color="red" size="mini">
+          <Button
+            compact
+            floated="right"
+            color="red"
+            size="mini"
+            onClick={() =>
+              setFilter('lessLikeThis', result._original._id, 'none')
+            }
+          >
             less like this
           </Button>
         </Card.Meta>
       </Card.Content>
     </Card>
   );
-};
+});
 
 const CardItem = (props) => <CardItemComponent {...props} />;
 
