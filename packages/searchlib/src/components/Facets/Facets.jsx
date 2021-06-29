@@ -6,18 +6,20 @@ const Facets = (props) => {
   const { facets = [] } = appConfig;
   return (
     <div className="facets">
-      {facets.map((info, i) => {
-        const { factory } = info;
-        const facet = registry.resolve[factory];
-        const FacetComponent = facet.component;
-        const props = {
-          ...info,
-          ...info.params,
-          ...facet,
-        };
-        // console.log('info', props);
-        return <FacetComponent key={i} {...props} />;
-      })}
+      {facets
+        .filter((f) => f.showInFacetsList)
+        .map((info, i) => {
+          const { factory } = info;
+          const facet = registry.resolve[factory];
+          const FacetComponent = facet.component;
+          const props = {
+            ...info,
+            ...info.params,
+            ...facet,
+          };
+          // console.log('info', props);
+          return <FacetComponent key={i} {...props} />;
+        })}
     </div>
   );
 };
