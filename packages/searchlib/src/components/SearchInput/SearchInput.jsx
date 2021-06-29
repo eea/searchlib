@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label, Icon } from 'semantic-ui-react';
+import { Button, Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
@@ -34,10 +34,9 @@ function SearchInput({
             phrase.trim() && (
               <Label key={i} className="search-phrase">
                 {phrase}{' '}
-                <Icon
-                  name="delete"
-                  role="button"
+                <Button
                   onClick={(e) => {
+                    e.preventDefault();
                     onSubmit(
                       e,
                       [
@@ -50,6 +49,9 @@ function SearchInput({
                       inpRef.current && inpRef.current.focus();
                     }, 500);
                   }}
+                  icon="trash"
+                  basic
+                  size="small"
                 />
               </Label>
             ),

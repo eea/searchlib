@@ -4,7 +4,7 @@ import { Button, Container } from 'semantic-ui-react';
 const ViewSelector = (props) => {
   const { views, active, onSetView } = props;
   return (
-    <Container className="viewSelector">
+    <Container className="view-selector">
       <Button.Group compact>
         {views.map((view) => {
           const { render: Render, icon: Icon, title } = view;

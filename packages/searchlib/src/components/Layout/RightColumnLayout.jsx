@@ -20,6 +20,7 @@ const RightColumnLayout = (props) => {
             <div>{bodyContent}</div>
           </Grid.Column>
           <Grid.Column widescreen="4">
+            <h3>Filter by</h3>
             <div>{sideContent}</div>
           </Grid.Column>
         </Grid.Row>
