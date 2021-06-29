@@ -23,7 +23,6 @@ export default function buildStateFacets(aggregations, config) {
       return value ? { [facet.field]: value } : {};
     }),
   );
-
   if (Object.keys(result).length > 0) {
     return result;
   }

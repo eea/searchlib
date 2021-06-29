@@ -6,11 +6,14 @@ import { Label, Icon } from 'semantic-ui-react';
 const Filter = (props) => {
   const { field, type, values, onClear, removeFilter } = props;
   const { appConfig, registry } = useAppConfig();
-
+  const facetField = field;
+  const { label } = appConfig.facets.find(
+    ({ field }) => field === facetField,
+  ) || { label: field.trim() };
   return (
     <div className="filter-list-item">
       <div className="filter-name">
-        {`${field} ${type !== 'none' ? `(${type})` : ''}:`}
+        {`${label}${type !== 'none' ? ` (${type})` : ''}:`}
       </div>
       <Label.Group>
         {values?.map((v, index) => {

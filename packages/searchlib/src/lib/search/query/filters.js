@@ -102,3 +102,7 @@ export function getRangeFilter(filter) {
 export function getHistogramFilter(filter) {
   return getRangeFilter(filter);
 }
+
+export function getBooleanFilter(filter) {
+//  debugger;
+}

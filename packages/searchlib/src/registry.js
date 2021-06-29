@@ -2,6 +2,7 @@ import React from 'react';
 // import { Facet } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
+import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import {
   Facet,
   LeftColumnLayout,
@@ -26,12 +27,15 @@ import {
   getValueFacet,
   getRangeFacet,
   getHistogramFilter,
+  getBooleanFilter,
+  getBooleanFacet,
   // getHistogramFacet,
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
   buildMLTFilter,
   getMLTValue,
+  buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 
 const config = {
@@ -52,6 +56,12 @@ const config = {
       buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
+    },
+    BooleanFacet: {
+      component: BooleanFacet,
+      buildRequest: buildBooleanFacetRequest,
+      buildFilter: getBooleanFilter,
+      getValue: getBooleanFacet,
     },
     MultiTermFacet: {
       component: MultiTermFacet,

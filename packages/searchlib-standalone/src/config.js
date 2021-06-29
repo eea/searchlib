@@ -5,6 +5,7 @@ import {
   multiTermFacet,
   mergeConfig,
   makeRange,
+  booleanFacet,
 } from '@eeacms/search';
 import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
@@ -126,7 +127,7 @@ const demo_config = {
     histogramFacet({
       field: 'year',
       // isFilterable: false,
-      // isMulti: true,
+      isMulti: true,
       label: 'Year',
       // TODO: implement split in buckets
       ranges: makeRange({ step: 10, normalRange: [1970, 2100] }),
@@ -156,6 +157,7 @@ const demo_config = {
       field: 'readingTime',
       label: 'Reading time (minutes)',
       rangeType: 'fixed',
+      isMulti: true,
       ranges: [
         { from: -1000, to: 1000, key: 'All' },
         { from: 0, to: 4.99999, key: 'Short (<5 minutes)' },
@@ -164,12 +166,19 @@ const demo_config = {
         { to: -0.0001, key: 'Unknown' },
       ],
     }),
-    // suiFacet({
-    //   field: 'language',
-    //   isFilterable: false,
-    //   isMulti: true,
-    //   label: 'Language',
-    // }),
+    suiFacet({
+      field: 'language',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Language',
+      defaultValues: ['en'],
+    }),
+    booleanFacet({
+      field: 'no_field',
+      label: 'include archived?',
+      on: 'on_query',
+      off: 'off_query',
+    }),
   ],
 
   resultViews: [

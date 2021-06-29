@@ -8,11 +8,13 @@ export {
   getTermFilter,
   getRangeFilter,
   getHistogramFilter,
+  getBooleanFilter,
 } from './query/filters';
 export {
   getValueFacet,
   getRangeFacet,
   getHistogramFacet,
+  getBooleanFacet,
 } from './state/facetValues';
 export { getAutocompleteSuggestions } from './autocomplete/suggestions';
 

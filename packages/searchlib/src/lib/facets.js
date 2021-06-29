@@ -73,3 +73,14 @@ export const multiTermFacet = ({
     ...params,
   };
 };
+
+export const booleanFacet = ({ field, label, on, off, ...params }) => {
+  return {
+    field,
+    label,
+    on,
+    off,
+    factory: 'BooleanFacet',
+    ...params,
+  };
+};

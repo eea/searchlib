@@ -73,3 +73,7 @@ export function getRangeFacet(options) {
 }
 
 export function getHistogramFacet(aggregations, fieldName) {}
+
+export function getBooleanFacet(options) {
+//  debugger;
+}
