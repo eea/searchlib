@@ -47,7 +47,7 @@ export function buildRequestFilter(filters, config) {
         ...facet,
         values: facet.defaultValues,
       });
-      filters.push(filterValue);
+      filterValue && filters.push(filterValue);
     }
   });
 
