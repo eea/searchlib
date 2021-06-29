@@ -4,3 +4,9 @@
 
 @primaryColor: #002f4e;
 // @pageBackground: red !important;
+//
+@mobileBreakpoint            : 320px;
+@tabletBreakpoint            : 768px;
+@computerBreakpoint          : 1366px;
+@largeMonitorBreakpoint      : 1536px;
+@widescreenMonitorBreakpoint : 1920px;
