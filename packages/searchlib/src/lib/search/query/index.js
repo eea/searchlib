@@ -18,10 +18,9 @@
   We then do similar things for searchTerm, filters, sort, etc.
 */
 
-import buildRequestFilter from './buildRequestFilter';
-
-import registry from '@eeacms/search/registry';
 import { buildFullTextMatch } from './fullText';
+import { buildRequestFilter } from './filters';
+import { buildAggregationsQuery } from './aggregations';
 
 function buildFrom(current, resultsPerPage) {
   if (!current || !resultsPerPage) return;
@@ -38,6 +37,14 @@ function boostFacets(filters, config) {
   return [];
 }
 
+/**
+ * Create a DSL query for ES. See the following pages for more info:
+ *
+ *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/full-text-queries.html
+ *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-sort.html
+ *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-from-size.html
+ *
+ */
 export default function buildRequest(state, config) {
   const {
     current,
@@ -53,46 +60,16 @@ export default function buildRequest(state, config) {
   const match = buildFullTextMatch(searchTerm, filters, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
-
   const filter = buildRequestFilter(filters, config);
+  const aggs = buildAggregationsQuery(config);
 
   // console.log({ sort, match, size, from, filter, filters });
-
-  const facets = config.facets;
-
-  const aggregations = Object.assign(
-    {},
-    ...facets.map((facet) => {
-      const { buildRequest } = registry.resolve[facet.factory];
-      return buildRequest(facet);
-    }),
-  );
 
   const { highlight } = config;
 
   const body = {
-    track_total_hits: true,
-
-    // Static query Configuration
-    // --------------------------
-    // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-highlighting.html
-    highlight,
-
-    //https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-source-filtering.html#search-request-source-filtering
-    // _source: [
-    //   // 'id',
-    //   // 'CodeCatalogue',
-    //   // 'Descriptors',
-    // ],
-
-    aggs: {
-      ...aggregations,
-    },
-
-    // Dynamic values based on current Search UI state
-    // --------------------------
-    // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/full-text-queries.html
     query: {
+      // Dynamic values based on current Search UI state
       function_score: {
         query: {
           bool: {
@@ -107,13 +84,12 @@ export default function buildRequest(state, config) {
         score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
     },
-
-    // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-sort.html
+    highlight,
+    aggs,
     ...(sort && { sort }),
-
-    // https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-from-size.html
     ...(size && { size }),
     ...(from && { from }),
+    track_total_hits: true,
   };
 
   return body;

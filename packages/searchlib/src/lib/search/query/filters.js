@@ -1,9 +1,34 @@
+import registry from '@eeacms/search/registry';
+
 /**
  * Construct the ES DSL filter query
  *
  * This will participate in the query part, filtering the result set.
  *
  */
+
+export function buildRequestFilter(filters, config) {
+  if (!filters) return;
+
+  const facetsMap = Object.assign(
+    {},
+    ...config.facets.map((facet) => {
+      return { [facet.field]: registry.resolve[facet.factory] };
+    }),
+  );
+
+  filters = filters.reduce((acc, filter) => {
+    if (Object.keys(facetsMap).includes(filter.field)) {
+      const f = facetsMap[filter.field].buildFilter(filter);
+      return [...acc, f];
+    }
+
+    return acc;
+  }, []);
+
+  if (filters.length < 1) return;
+  return filters;
+}
 
 export function getTermFilterValue(field, fieldValue) {
   // We do this because if the value is a boolean value, we need to apply

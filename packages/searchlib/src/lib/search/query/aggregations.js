@@ -1,3 +1,19 @@
+import registry from '@eeacms/search/registry';
+
+export const buildAggregationsQuery = (config) => {
+  const facets = config.facets;
+
+  const aggregations = Object.assign(
+    {},
+    ...facets.map((facet) => {
+      const { buildRequest } = registry.resolve[facet.factory];
+      return buildRequest(facet);
+    }),
+  );
+
+  return aggregations;
+};
+
 // TODO: exclude current aggregation field from request
 export const buildTermFacetAggregationRequest = (facet) => {
   return {

@@ -16,6 +16,6 @@ export {
 } from './state/facetValues';
 export { getAutocompleteSuggestions } from './autocomplete/suggestions';
 
-export * from './query/facetsAggregations';
+export * from './query/aggregations';
 export * from './query/mltFilter';
 export * from './state/mltValue';
