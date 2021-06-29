@@ -33,6 +33,7 @@ const CardItemComponent = (props) => {
   const thumbUrl = getThumb(
     result,
     appConfig,
+    // TODO: use a configured default
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 

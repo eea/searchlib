@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, Container } from 'semantic-ui-react';
+import { Button, Container, Icon } from 'semantic-ui-react';
 
 const ViewSelector = (props) => {
   const { views, active, onSetView } = props;
   return (
     <Container className="view-selector">
-      <Button.Group compact>
+      <Button.Group size="tiny" compact color="teal">
         {views.map((view) => {
-          const { render: Render, icon: Icon, title } = view;
+          const { render: Render, icon, title } = view;
           return Render ? (
             <Render {...props} />
           ) : (
@@ -16,7 +16,7 @@ const ViewSelector = (props) => {
               active={view.id === active}
               onClick={() => onSetView(view.id)}
             >
-              {Icon ? <Icon {...props} /> : title}
+              {icon ? <Icon color="white" title={title} name={icon} /> : title}
             </Button>
           );
         })}

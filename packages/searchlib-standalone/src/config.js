@@ -176,7 +176,7 @@ const demo_config = {
     {
       id: 'card',
       title: 'Cards',
-      icon: null,
+      icon: 'th',
       render: null,
       isDefault: true,
       factories: {
@@ -187,7 +187,7 @@ const demo_config = {
     {
       id: 'horizontalCard',
       title: 'Horizontal cards',
-      icon: null,
+      icon: 'bars',
       render: null,
       isDefault: false,
       factories: {
