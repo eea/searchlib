@@ -41,10 +41,13 @@ export function buildRequestFilter(filters, config) {
   // apply default values from configured filters;
   config.facets.forEach((facet) => {
     if (!appliedFilters.includes(facet.field) && facet.defaultValues) {
-      const filterValue = facetsMap[facet.field].buildFilter({
-        ...facet,
-        values: facet.defaultValues,
-      });
+      const filterValue = facetsMap[facet.field].buildFilter(
+        {
+          ...facet,
+          values: facet.defaultValues,
+        },
+        config,
+      );
       filterValue && filters.push(filterValue);
     }
   });

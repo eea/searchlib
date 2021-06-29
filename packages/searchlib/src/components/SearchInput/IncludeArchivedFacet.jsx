@@ -5,7 +5,7 @@ import { INCLUDE_ARCHIVED } from '@eeacms/search/constants';
 const IncludeArchivedFacet = (props) => (
   <BooleanFacet
     id="archived-facet"
-    label="Include archived?"
+    label="hide archived?"
     field={INCLUDE_ARCHIVED}
   />
 );

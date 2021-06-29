@@ -222,6 +222,8 @@ const demo_config = {
     booleanFacet({
       field: 'published',
       label: 'hide archived?',
+//      defaultValues: [true],
+      showInFacetsList: false,
       on: {
         constant_score: {
           filter: {
