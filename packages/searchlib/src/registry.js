@@ -74,13 +74,12 @@ const config = {
       buildRequest: buildHistogramFacetAggregationRequest,
       buildFilter: getHistogramFilter,
       getValue: getRangeFacet,
-      // buildFilter: getHistogramFilter,
-      // getValue: getHistogramFacet,
     },
     MoreLikeThis: {
-      // component: MoreLikeThis,
-      buildFilter: buildMLTFilter,
-      getValue: getMLTValue,
+      buildFilter: buildMLTFilter('like'),
+    },
+    LessLikeThis: {
+      buildFilter: buildMLTFilter('unlike'),
     },
     'Item.Group': {
       component: Item.Group,
@@ -148,11 +147,21 @@ const config = {
 
       filters: {
         moreLikeThis: {
+          enabled: true,
+          fields: ['title', 'text'],
           factories: {
             registryConfig: 'MoreLikeThis',
             filterList: 'FilterResultEntry',
           },
         },
+        // lessLikeThis: {
+        //   enabled: true,
+        //   fields: ['title', 'text'],
+        //   factories: {
+        //     registryConfig: 'LessLikeThis',
+        //     filterList: 'FilterResultEntry',
+        //   },
+        // },
       },
 
       autocomplete: {

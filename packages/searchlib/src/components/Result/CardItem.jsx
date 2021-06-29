@@ -19,11 +19,12 @@ const ExternalLink = (props) => {
   );
 };
 
-const CardItemComponent = withSearch(({ setFilter }) => ({
+const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   setFilter,
+  removeFilter,
 }))((props) => {
   // console.log('props', props);
-  const { result, setFilter } = props;
+  const { result, setFilter, removeFilter } = props;
   const { appConfig, registry } = useAppConfig();
   const days =
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
@@ -104,24 +105,34 @@ const CardItemComponent = withSearch(({ setFilter }) => ({
             floated="left"
             color="green"
             size="mini"
-            onClick={() =>
-              setFilter('moreLikeThis', result._original._id, 'none')
-            }
+            onClick={() => {
+              removeFilter('lessLikeThis');
+              setFilter('moreLikeThis', result._original._id, 'none');
+            }}
           >
             more like this
           </Button>
-          {/* <Button compact size="mini" icon="globe"></Button> */}
+          {/* <Button */}
+          {/*   compact */}
+          {/*   floated="right" */}
+          {/*   color="red" */}
+          {/*   size="mini" */}
+          {/*   onClick={() => { */}
+          {/*     removeFilter('moreLikeThis'); */}
+          {/*     setFilter('lessLikeThis', result._original._id, 'none'); */}
+          {/*   }} */}
+          {/* > */}
+          {/*   less like this */}
+          {/* </Button> */}
           <Button
-            compact
             floated="right"
-            color="red"
+            target="_blank"
+            as="a"
+            href={result.id.raw}
+            compact
             size="mini"
-            onClick={() =>
-              setFilter('lessLikeThis', result._original._id, 'none')
-            }
-          >
-            less like this
-          </Button>
+            icon="globe"
+          ></Button>
         </Card.Meta>
       </Card.Content>
     </Card>
