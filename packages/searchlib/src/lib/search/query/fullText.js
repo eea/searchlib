@@ -20,7 +20,7 @@ export function buildFullTextMatch(searchTerm, filters, config) {
                   intervals: searchTerm.map((phrase) => ({
                     match: {
                       query: phrase,
-                      max_gaps: isExact ? 0 : 5,
+                      max_gaps: isExact ? 1 : 50,
                       ordered: true,
                     },
                   })),

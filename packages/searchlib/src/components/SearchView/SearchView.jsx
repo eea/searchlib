@@ -132,12 +132,11 @@ export const SearchView = (props) => {
           </>
         }
         bodyFooter={
-          <>
-            <div className="search-body-footer">
-              <ResultsPerPage />
-            </div>
+          <div className="search-body-footer">
+            <div></div>
             <Paging />
-          </>
+            <ResultsPerPage />
+          </div>
         }
       />
     </div>
