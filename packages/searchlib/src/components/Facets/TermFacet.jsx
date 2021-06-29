@@ -1,17 +1,74 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-// import { helpers } from '@elastic/search-ui';
-import { Input, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort, Facet } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-// import { Table } from 'semantic-ui-react';
+import { Resizable } from 're-resizable';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+const CustomHandle = (props) => {
+  return (
+    <div
+      style={{
+        width: '100%',
+        padding: 0,
+        textAlign: 'center',
+      }}
+      {...props}
+    />
+  );
+};
+
+const BottomHandle = (props) => (
+  <CustomHandle>
+    <Icon name="window minimize" color="grey" size="small" />
+  </CustomHandle>
+);
+
+const FacetOptions = (props) => {
+  const { sortedOptions, label, onSelect, onRemove } = props;
+  return (
+    <div className="sui-multi-checkbox-facet">
+      {sortedOptions.map((option) => {
+        const checked = option.selected;
+        return (
+          <label
+            key={`${getFilterValueDisplay(option.value)}`}
+            htmlFor={`multiterm_facet_${label}${getFilterValueDisplay(
+              option.value,
+            )}`}
+            className="sui-multi-checkbox-facet__option-label"
+          >
+            <div className="sui-multi-checkbox-facet__option-input-wrapper">
+              <input
+                id={`multiterm_facet_${label}${getFilterValueDisplay(
+                  option.value,
+                )}`}
+                type="checkbox"
+                className="sui-multi-checkbox-facet__checkbox"
+                checked={checked}
+                onChange={() =>
+                  checked ? onRemove(option.value) : onSelect(option.value)
+                }
+              />
+              <span className="sui-multi-checkbox-facet__input-text">
+                {getFilterValueDisplay(option.value)}
+              </span>
+            </div>
+            <span className="sui-multi-checkbox-facet__option-count">
+              {option.count.toLocaleString('en')}
+            </span>
+          </label>
+        );
+      })}
+    </div>
+  );
+};
 
 const Select = ({ options, value, onChange, className }) => {
   const handler = (e) => onChange(e.target.value);
@@ -128,40 +185,32 @@ const ViewComponent = (props) => {
         </div>
       </div>
 
-      <div className="sui-multi-checkbox-facet">
-        {sortedOptions.map((option) => {
-          const checked = option.selected;
-          return (
-            <label
-              key={`${getFilterValueDisplay(option.value)}`}
-              htmlFor={`example_facet_${label}${getFilterValueDisplay(
-                option.value,
-              )}`}
-              className="sui-multi-checkbox-facet__option-label"
-            >
-              <div className="sui-multi-checkbox-facet__option-input-wrapper">
-                <input
-                  id={`example_facet_${label}${getFilterValueDisplay(
-                    option.value,
-                  )}`}
-                  type="checkbox"
-                  className="sui-multi-checkbox-facet__checkbox"
-                  checked={checked}
-                  onChange={() =>
-                    checked ? onRemove(option.value) : onSelect(option.value)
-                  }
-                />
-                <span className="sui-multi-checkbox-facet__input-text">
-                  {getFilterValueDisplay(option.value)}
-                </span>
-              </div>
-              <span className="sui-multi-checkbox-facet__option-count">
-                {option.count.toLocaleString('en')}
-              </span>
-            </label>
-          );
-        })}
-      </div>
+      <Resizable
+        defaultSize={{
+          height: 200,
+        }}
+        minHeight={60}
+        enable={{
+          top: false,
+          right: false,
+          bottom: true,
+          left: false,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
+        handleComponent={{
+          bottom: <BottomHandle />,
+        }}
+      >
+        <FacetOptions
+          sortedOptions={sortedOptions}
+          label={label}
+          onSelect={onSelect}
+          onRemove={onRemove}
+        />
+      </Resizable>
 
       {showMore && (
         <button
@@ -191,7 +240,6 @@ const MultiTypeFacetComponent = (props) => {
         <ViewComponent
           filterType={filterType}
           onChangeFilterType={(filterType) => {
-            console.log('onchange filtertype');
             if (!filterValue) {
               setFilterType(filterType);
               return;

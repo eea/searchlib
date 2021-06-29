@@ -314,6 +314,7 @@ importers:
       postcss-safe-parser: 5.0.2
       prettier: ^2.2.1
       prompts: 2.4.0
+      re-resizable: ^6.9.0
       react-app-polyfill: ^2.0.0
       react-dev-utils: ^11.0.3
       react-dom: ^17.0.2
@@ -357,6 +358,7 @@ importers:
       lodash.uniq: 4.5.0
       luxon: 1.27.0
       node-fetch: 2.6.1
+      re-resizable: 6.9.0_react-dom@17.0.2
       react-select: 4.3.1_db5e2d607c1fadad8a63f219e4a2b4e7
       react-speech-recognition: 3.8.2
       regenerator-runtime: 0.13.7
@@ -14162,6 +14164,10 @@ packages:
     resolution: {integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=}
     dev: true
 
+  /fast-memoize/2.5.2:
+    resolution: {integrity: sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==}
+    dev: false
+
   /fast-safe-stringify/2.0.7:
     resolution: {integrity: sha512-Utm6CdzT+6xsDk2m8S6uL8VHxNwI6Jub+e9NYTcAms28T84pTa25GJQV9j0CY0N1rM8hK4x6grpF2BQf+2qwVA==}
     dev: false
@@ -20276,6 +20282,16 @@ packages:
       classnames: 2.3.1
       prop-types: 15.7.2
       react-lifecycles-compat: 3.0.4
+    dev: false
+
+  /re-resizable/6.9.0_react-dom@17.0.2:
+    resolution: {integrity: sha512-3cUDG81ylyqI0Pdgle/RHwwRYq0ORZzsUaySOCO8IbEtNyaRtrIHYm/jMQ5pjcNiKCxR3vsSymIQZHwJq4gg2Q==}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0
+      react-dom: ^16.13.1 || ^17.0.0
+    dependencies:
+      fast-memoize: 2.5.2
+      react-dom: 17.0.2
     dev: false
 
   /react-app-polyfill/2.0.0:
