@@ -149,6 +149,7 @@ const config = {
       filters: {
         moreLikeThis: {
           factories: {
+            registryConfig: 'MoreLikeThis',
             filterList: 'FilterResultEntry',
           },
         },

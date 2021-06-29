@@ -48,6 +48,7 @@ export const SearchView = (props) => {
       if (state.sortField) {
         setSort(state.sortField, state.sortDirection);
       }
+      addFilter('language', 'en', 'any');
     }
   }, [
     wasSearched,

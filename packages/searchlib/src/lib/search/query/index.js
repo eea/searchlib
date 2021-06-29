@@ -33,6 +33,7 @@ function buildSort(sortDirection, sortField) {
   }
 }
 
+// TODO: implement boostFacets
 function boostFacets(filters, config) {
   return [];
 }
@@ -62,10 +63,9 @@ export default function buildRequest(state, config) {
   const from = buildFrom(current, resultsPerPage, config);
   const filter = buildRequestFilter(filters, config);
   const aggs = buildAggregationsQuery(config);
+  const { highlight } = config;
 
   // console.log({ sort, match, size, from, filter, filters });
-
-  const { highlight } = config;
 
   const body = {
     query: {

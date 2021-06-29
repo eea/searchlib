@@ -19,7 +19,6 @@ export const BooleanFacetComponent = (props) => {
     field,
     ...domProps
   } = props;
-  debugger;
   const filter = filters.find((filter) => filter.field === field);
   const value = filter ? truthy(filter.values[0]) : false;
   return (

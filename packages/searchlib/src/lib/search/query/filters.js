@@ -17,16 +17,42 @@ export function buildRequestFilter(filters, config) {
     }),
   );
 
+  const appliedFilters = [];
+
   filters = filters.reduce((acc, filter) => {
     if (Object.keys(facetsMap).includes(filter.field)) {
       const f = facetsMap[filter.field].buildFilter(filter);
+      appliedFilters.push(filter.field);
+      return [...acc, f];
+    }
+
+    if (Object.keys(config.filters).includes(filter.field)) {
+      appliedFilters.push(filter.field);
+      const { registryConfig } = config.filters[filter.field].factories;
+      // console.log(registryConfig, registry.resolve[registryConfig]);
+      const { buildFilter } = registry.resolve[registryConfig];
+      const f = buildFilter(filter, config);
+      // console.log(f, config);
       return [...acc, f];
     }
 
     return acc;
   }, []);
 
+  // apply default values from configured filters;
+  // console.log(config);
+  config.facets.forEach((facet) => {
+    if (!appliedFilters.includes(facet.field) && facet.defaultValues) {
+      const filterValue = facetsMap[facet.field].buildFilter({
+        ...facet,
+        values: facet.defaultValues,
+      });
+      filters.push(filterValue);
+    }
+  });
+
   if (filters.length < 1) return;
+
   return filters;
 }
 
@@ -104,5 +130,5 @@ export function getHistogramFilter(filter) {
 }
 
 export function getBooleanFilter(filter) {
-//  debugger;
+  //  debugger;
 }

@@ -81,6 +81,7 @@ export const booleanFacet = ({ field, label, on, off, ...params }) => {
     on,
     off,
     factory: 'BooleanFacet',
+    showInFacetsList: true,
     ...params,
   };
 };
