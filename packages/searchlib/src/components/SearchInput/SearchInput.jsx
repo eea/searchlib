@@ -98,7 +98,7 @@ function SearchInput({
             <Icon
               name="delete"
               role="button"
-              onClick={(e) => onSubmit(e, '')}
+              onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })}
             />
           </div>
         )}

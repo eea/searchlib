@@ -85,11 +85,30 @@ export class SearchBoxContainer extends Component {
     });
   };
 
-  handleSubmit = (e, submittedSearchTerm) => {
-    // console.log('handle submit', submittedSearchTerm, this.props.searchTerm);
+  handleSubmit = (e, submittedSearchTerm, options = {}) => {
     const { shouldClearFilters, setSearchTerm } = this.props;
-    let searchTerm = submittedSearchTerm ?? this.props.searchTerm;
-    if (searchTerm && !searchTerm.endsWith('|')) searchTerm = `${searchTerm}|`;
+    const { clearSearchTerm } = options;
+
+    // let searchTerm;
+    // if (submittedSearchTerm) {
+    //   searchTerm = this.props.searchTerm
+    //     ? [this.props.searchTerm, submittedSearchTerm].join('|')
+    //     : submittedSearchTerm;
+    // }
+    // if (!searchTerm) searchTerm = submittedSearchTerm || this.props.searchTerm;
+
+    let searchTerm = clearSearchTerm
+      ? ''
+      : submittedSearchTerm || this.props.searchTerm;
+
+    if (!!searchTerm && !searchTerm.endsWith('|'))
+      searchTerm = `${searchTerm}|`;
+
+    console.log(`handle submit`, {
+      submittedSearchTerm,
+      propsSearchTerm: this.props.searchTerm,
+      searchTerm,
+    });
 
     e.preventDefault();
     setSearchTerm(searchTerm, {
