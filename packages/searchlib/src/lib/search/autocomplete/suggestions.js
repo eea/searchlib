@@ -23,8 +23,8 @@ const getHighlight = (term, search_term) => {
 export function buildState(data, { searchTerm }, config) {
   // console.log('hits', data);
 
-  const buckets_full = data.aggregations.autocomplete_full.buckets || [];
-  const buckets_last = data.aggregations.autocomplete_last.buckets || [];
+  const buckets_full = data.aggregations?.autocomplete_full.buckets || [];
+  const buckets_last = data.aggregations?.autocomplete_last.buckets || [];
 
   const { autocomplete: settings = {} } = config;
 

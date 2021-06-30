@@ -34,7 +34,7 @@ function SearchInput({
             phrase.trim() && (
               <Label key={i} className="search-phrase">
                 {phrase}{' '}
-                <Button
+                <Icon
                   onClick={(e) => {
                     e.preventDefault();
                     onSubmit(
@@ -43,13 +43,16 @@ function SearchInput({
                         ...searchPhrases.filter((p) => p !== phrase),
                         currentTerm,
                       ].join('|'),
+                      {
+                        deleteOneTerm: true,
+                      },
                     );
 
                     setTimeout(() => {
                       inpRef.current && inpRef.current.focus();
                     }, 500);
                   }}
-                  icon="trash"
+                  name="trash"
                   basic
                   size="small"
                 />
