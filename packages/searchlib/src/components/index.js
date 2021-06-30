@@ -16,6 +16,7 @@ import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
 import SortingDropdown from './Sorting/SortingDropdown';
 import FilterResultEntry from './FilterList/FilterResultEntry';
+import Resizable from './UI/Resizable';
 
 export {
   CardItem,
@@ -35,4 +36,5 @@ export {
   PagingInfo,
   SortingDropdown,
   FilterResultEntry,
+  Resizable,
 };

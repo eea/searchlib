@@ -2,34 +2,14 @@ import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { ToggleSort, Facet } from '@eeacms/search/components';
+import { Resizable, ToggleSort, Facet } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Resizable } from 're-resizable';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
-const CustomHandle = (props) => {
-  return (
-    <div
-      style={{
-        width: '100%',
-        padding: 0,
-        textAlign: 'center',
-      }}
-      {...props}
-    />
-  );
-};
-
-const BottomHandle = (props) => (
-  <CustomHandle>
-    <Icon name="window minimize" color="grey" size="small" />
-  </CustomHandle>
-);
-
 const FacetOptions = (props) => {
   const { sortedOptions, label, onSelect, onRemove } = props;
   return (
@@ -184,26 +164,7 @@ const ViewComponent = (props) => {
           </span>
         </div>
       </div>
-
-      <Resizable
-        defaultSize={{
-          height: 200,
-        }}
-        minHeight={60}
-        enable={{
-          top: false,
-          right: false,
-          bottom: true,
-          left: false,
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false,
-        }}
-        handleComponent={{
-          bottom: <BottomHandle />,
-        }}
-      >
+      <Resizable>
         <FacetOptions
           sortedOptions={sortedOptions}
           label={label}
