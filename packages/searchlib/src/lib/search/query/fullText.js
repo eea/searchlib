@@ -1,7 +1,7 @@
 import { EXACT_PHRASES } from '@eeacms/search/constants';
 
 export function buildFullTextMatch(searchTerm, filters, config) {
-  const originalSearchTerm = searchTerm;
+  // const originalSearchTerm = searchTerm;
 
   const exactPhraseFilter = filters.find(
     ({ field }) => field === EXACT_PHRASES,
@@ -15,7 +15,7 @@ export function buildFullTextMatch(searchTerm, filters, config) {
     searchTerm = searchTerm.join(' ');
   }
 
-  console.log('search term', originalSearchTerm, searchTerm);
+  // console.log('search term', originalSearchTerm, searchTerm);
 
   return searchTerm
     ? Array.isArray(searchTerm)
