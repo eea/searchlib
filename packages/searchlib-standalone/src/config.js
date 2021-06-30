@@ -137,44 +137,44 @@ const demo_config = {
       label: 'Topics',
       // factory: 'sui.Facet',
     }),
-    // suiFacet({
-    //   field: 'spatial',
-    //   isFilterable: true,
-    //   isMulti: true,
-    //   label: 'Countries',
-    //   whitelist: spatialWhitelist,
-    // }),
-    // multiTermFacet({
-    //   field: 'places',
-    //   isFilterable: true,
-    //   isMulti: true,
-    //   label: 'Regions/Places/Cities/Seas...',
-    //   blacklist: placesBlacklist,
-    // }),
-    // suiFacet({
-    //   field: 'objectProvides',
-    //   isFilterable: false,
-    //   isMulti: true,
-    //   label: 'Content types',
-    //   whitelist: objectProvidesWhitelist,
-    // }),
-    // suiFacet({
-    //   field: 'organisation',
-    //   isFilterable: false,
-    //   isMulti: true,
-    //   label: 'Organisation involved',
-    // }),
-    // suiFacet({
-    //   field: 'cluster_name',
-    //   isFilterable: false,
-    //   isMulti: true,
-    //   label: 'Websites',
-    // }),
+    multiTermFacet({
+      field: 'spatial',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Countries',
+      whitelist: spatialWhitelist,
+    }),
+    multiTermFacet({
+      field: 'places',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Regions/Places/Cities/Seas...',
+      blacklist: placesBlacklist,
+    }),
+    multiTermFacet({
+      field: 'objectProvides',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Content types',
+      whitelist: objectProvidesWhitelist,
+    }),
+    suiFacet({
+      field: 'organisation',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Organisation involved',
+    }),
+    multiTermFacet({
+      field: 'cluster_name',
+      isFilterable: false,
+      isMulti: true,
+      label: 'Websites',
+    }),
     histogramFacet({
       field: 'year',
       // isFilterable: false,
       isMulti: true,
-      label: 'Year',
+      label: 'Publishing year',
       // TODO: implement split in buckets
       ranges: makeRange({ step: 10, normalRange: [1970, 2100] }),
       step: 10,
@@ -199,6 +199,36 @@ const demo_config = {
         "def vals = doc['year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 
+    histogramFacet({
+      field: 'time_coverage',
+      // isFilterable: false,
+      isMulti: true,
+      label: 'Time coverage',
+      // TODO: implement split in buckets
+      ranges: makeRange({ step: 10, normalRange: [1700, 2210] }),
+      step: 10,
+      // [
+      //   {
+      //     to: 1900,
+      //   },
+      //   {
+      //     key: '2001-2010',
+      //     from: 2001,
+      //     to: 2010,
+      //   },
+      //   {
+      //     from: 2011,
+      //   },
+      // ]
+      // min_max_script:
+      //
+      //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+
+      aggs_script:
+        "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+    }),
+
+
     suiRangeFacet({
       field: 'readingTime',
       label: 'Reading time (minutes)',
@@ -212,7 +242,7 @@ const demo_config = {
         { to: -0.0001, key: 'Unknown' },
       ],
     }),
-    suiFacet({
+    multiTermFacet({
       field: 'language',
       isFilterable: false,
       isMulti: true,
@@ -222,7 +252,7 @@ const demo_config = {
     booleanFacet({
       field: 'published',
       label: 'hide archived?',
-//      defaultValues: [true],
+      //      defaultValues: [true],
       showInFacetsList: false,
       on: {
         constant_score: {
