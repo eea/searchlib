@@ -3,6 +3,7 @@ import React from 'react';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
+import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
 import {
   Facet,
   LeftColumnLayout,
@@ -53,6 +54,12 @@ const config = {
     },
     'searchui.RangeFacet': {
       component: MultiTermFacet,
+      buildRequest: buildRangeFacetAggregationRequest,
+      buildFilter: getRangeFilter,
+      getValue: getRangeFacet,
+    },
+    FixedRangeFacet: {
+      component: FixedRangeFacet,
       buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,

@@ -84,3 +84,21 @@ export const booleanFacet = ({ field, label, on, ...params }) => {
     ...params,
   };
 };
+
+export const fixedRangeFacet = ({
+  field,
+  label,
+  filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    field,
+    factory: 'FixedRangeFacet',
+    label: label || field,
+    showInFacetsList: true,
+    filterType,
+    isFilterable,
+    ...params,
+  };
+};

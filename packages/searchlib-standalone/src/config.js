@@ -6,6 +6,7 @@ import {
   mergeConfig,
   makeRange,
   booleanFacet,
+  fixedRangeFacet,
 } from '@eeacms/search';
 import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
@@ -229,7 +230,7 @@ const demo_config = {
     }),
 */
 
-    suiRangeFacet({
+    fixedRangeFacet({
       field: 'readingTime',
       label: 'Reading time (minutes)',
       rangeType: 'fixed',
