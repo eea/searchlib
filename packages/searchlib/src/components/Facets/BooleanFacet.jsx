@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Radio } from 'semantic-ui-react';
+import { Checkbox } from 'semantic-ui-react';
 
 const truthy = (val) => {
   if (typeof val === 'string') {
@@ -23,8 +23,7 @@ export const BooleanFacetComponent = (props) => {
   const value = filter ? truthy(filter.values[0]) : false;
   return (
     <div className="boolean-facet" {...domProps}>
-      <Radio
-        toggle
+      <Checkbox
         label={label}
         checked={value}
         onChange={(e, { checked }) => {

@@ -52,7 +52,7 @@ const config = {
       getValue: getValueFacet,
     },
     'searchui.RangeFacet': {
-      component: Facet,
+      component: MultiTermFacet,
       buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,

@@ -8,7 +8,25 @@ import registry from '@eeacms/search/registry';
  */
 
 export function buildRequestFilter(filters, config) {
-  if (!filters) return;
+  let boolFilters = [];
+  config.facets.forEach((facet) => {
+    if (facet.factory === 'BooleanFacet') {
+      let shouldAdd = true;
+      filters.forEach((filter) => {
+        if (filter.field === facet.field) {
+          shouldAdd = false;
+        }
+      });
+      if (shouldAdd) {
+        boolFilters.push({
+          field: facet.field,
+          values: [false],
+        });
+      }
+    }
+  });
+
+  if (!filters && !config.permanentFilters && !boolFilters) return;
 
   const facetsMap = Object.assign(
     {},
@@ -37,7 +55,6 @@ export function buildRequestFilter(filters, config) {
 
     return acc;
   }, []);
-
   // apply default values from configured filters;
   config.facets.forEach((facet) => {
     if (!appliedFilters.includes(facet.field) && facet.defaultValues) {
@@ -57,6 +74,13 @@ export function buildRequestFilter(filters, config) {
   if (config.permanentFilters.length > 0) {
     filters = filters.concat(config.permanentFilters);
   }
+  if (boolFilters.length > 0) {
+    boolFilters.forEach((filter) => {
+      const f = facetsMap[filter.field].buildFilter(filter, config);
+      filters.push(f);
+    });
+  }
+
   return filters;
 }
 
@@ -134,6 +158,5 @@ export function getHistogramFilter(filter) {
 
 export function getBooleanFilter(filter, config) {
   const facet = config.facets.find(({ field }) => field === filter.field);
-
-  return facet.on;
+  return filter.values[0] ? facet.on : facet.off;
 }

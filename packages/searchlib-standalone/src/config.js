@@ -130,7 +130,7 @@ const demo_config = {
   ],
 
   facets: [
-    multiTermFacet({
+    /*    multiTermFacet({
       field: 'topic',
       isFilterable: true,
       isMulti: true,
@@ -227,7 +227,7 @@ const demo_config = {
       aggs_script:
         "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
-
+*/
 
     suiRangeFacet({
       field: 'readingTime',
@@ -250,11 +250,10 @@ const demo_config = {
       defaultValues: ['en'],
     }),
     booleanFacet({
-      field: 'published',
-      label: 'hide archived?',
-      //      defaultValues: [true],
+      field: 'Include archived content',
+      label: 'Include archived content',
       showInFacetsList: false,
-      on: {
+      off: {
         constant_score: {
           filter: {
             bool: {
