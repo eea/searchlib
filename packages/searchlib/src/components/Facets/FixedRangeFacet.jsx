@@ -1,20 +1,19 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, Facet } from '@eeacms/search/components';
-import { useSort } from '@eeacms/search/lib/hocs';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
 const FacetOptions = (props) => {
-  const { sortedOptions, label, onSelect, onRemove } = props;
+  const { options, label, onSelect, onRemove } = props;
   return (
     <div className="sui-multi-checkbox-facet">
-      {sortedOptions.map((option) => {
+      {options.map((option) => {
         const checked = option.selected;
         return (
           <label
@@ -29,12 +28,19 @@ const FacetOptions = (props) => {
                 id={`multiterm_facet_${label}${getFilterValueDisplay(
                   option.value,
                 )}`}
+                name={`multiterm_facet_${label}`}
                 type="radio"
                 className="sui-multi-checkbox-facet__checkbox"
                 checked={checked}
-                onChange={() =>
-                  checked ? onRemove(option.value) : onSelect(option.value)
-                }
+                onChange={() => {
+                  options.forEach((opt) => {
+                    if (opt.value === option.value) {
+                      onSelect(opt.value);
+                    } else {
+                      onRemove(opt.value);
+                    }
+                  });
+                }}
               />
               <span className="sui-multi-checkbox-facet__input-text">
                 {getFilterValueDisplay(option.value)}
@@ -50,48 +56,8 @@ const FacetOptions = (props) => {
   );
 };
 
-const Select = ({ options, value, onChange, className }) => {
-  const handler = (e) => onChange(e.target.value);
-  // console.log('value', value);
-
-  return (
-    <select
-      onBlur={handler}
-      onChange={handler}
-      value={value}
-      className={className}
-    >
-      {options.map((opt) => (
-        <option value={opt.value} key={opt.key}>
-          {opt.text}
-        </option>
-      ))}
-    </select>
-  );
-};
-
 const ViewComponent = (props) => {
-  const {
-    className,
-    label,
-    onMoreClick,
-    onRemove,
-    onSelect,
-    options,
-    showMore,
-  } = props;
-
-  // const sortedOptions = sorted(options, sortOn, sortOrder);
-
-  const {
-    sortedValues: sortedOptions,
-    toggleSort,
-    sorting,
-  } = useSort(options, ['value', 'count'], {
-    defaultSortOn: 'count',
-    defaultSortOrder: 'descending',
-  });
-
+  const { className, label, onRemove, onSelect, options, facets } = props;
   return (
     <fieldset className={cx('sui-facet searchlib-fixedrange-facet', className)}>
       <legend className="sui-facet__title">{label}</legend>
@@ -100,8 +66,9 @@ const ViewComponent = (props) => {
 
       <Resizable>
         <FacetOptions
-          sortedOptions={sortedOptions}
+          options={options}
           label={label}
+          facets={facets}
           onSelect={onSelect}
           onRemove={onRemove}
         />
@@ -111,31 +78,11 @@ const ViewComponent = (props) => {
 };
 
 const FixedRangeFacetComponent = (props) => {
-  // console.log('facet props', props);
-  const { field, addFilter, removeFilter, filters } = props;
-  const [filterType, setFilterType] = React.useState('any');
-  const filterValue = filters.find((f) => f.field === field);
   return (
     <Facet
       {...props}
-      filterType={filterType}
-      show={100000}
       view={(props) => (
-        <ViewComponent
-          filterType={filterType}
-          onChangeFilterType={(filterType) => {
-            if (!filterValue) {
-              setFilterType(filterType);
-              return;
-            }
-            removeFilter(field);
-            filterValue?.values?.forEach((v) => {
-              addFilter(filterValue.field, v, filterType);
-            });
-            setFilterType(filterType);
-          }}
-          {...props}
-        />
+        <ViewComponent {...props} /* onSelect={onRadioSelect} */ />
       )}
     />
   );
