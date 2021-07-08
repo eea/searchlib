@@ -78,14 +78,7 @@ const ViewComponent = (props) => {
 };
 
 const FixedRangeFacetComponent = (props) => {
-  return (
-    <Facet
-      {...props}
-      view={(props) => (
-        <ViewComponent {...props} /* onSelect={onRadioSelect} */ />
-      )}
-    />
-  );
+  return <Facet {...props} view={(props) => <ViewComponent {...props} />} />;
 };
 
 export default withSearch(
