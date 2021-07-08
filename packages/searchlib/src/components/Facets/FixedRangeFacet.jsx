@@ -34,7 +34,7 @@ const FacetOptions = (props) => {
                 checked={checked}
                 onChange={() => {
                   options.forEach((opt) => {
-                    if (opt.value === option.value) {
+                    if (opt.value.name === option.value.name) {
                       onSelect(opt.value);
                     } else {
                       onRemove(opt.value);

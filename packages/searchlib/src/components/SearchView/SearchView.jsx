@@ -49,6 +49,7 @@ export const SearchView = (props) => {
         setSort(state.sortField, state.sortDirection);
       }
       addFilter('language', 'en', 'any');
+      addFilter('readingTime', { name: 'All', rangeType: 'fixed' }, 'any');
     }
   }, [
     wasSearched,
