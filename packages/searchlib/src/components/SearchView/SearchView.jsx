@@ -48,8 +48,13 @@ export const SearchView = (props) => {
       if (state.sortField) {
         setSort(state.sortField, state.sortDirection);
       }
-      addFilter('language', 'en', 'any');
-      addFilter('readingTime', { name: 'All', rangeType: 'fixed' }, 'any');
+      const presetFilters = state?.filters?.map((filter) => filter.field);
+      if (!presetFilters || presetFilters?.indexOf('language') === -1) {
+        addFilter('language', 'en', 'any');
+      }
+      if (!presetFilters || presetFilters?.indexOf('readingTime') === -1) {
+        addFilter('readingTime', { name: 'All', rangeType: 'fixed' }, 'any');
+      }
     }
   }, [
     wasSearched,
