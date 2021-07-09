@@ -229,7 +229,6 @@ const demo_config = {
         "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 */
-
     fixedRangeFacet({
       field: 'readingTime',
       label: 'Reading time (minutes)',
@@ -478,14 +477,14 @@ export default function install(config) {
 
   config.searchui.globalsearch = {
     ...mergeConfig(envConfig, config.searchui.default),
-    elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
-    host: process.env.RAZZLE_ES_HOST || '',
+    elastic_index: 'es',
+    host: process.env.RAZZLE_ES_PROXY_ADDR,
   };
 
   config.searchui.standalone = {
     ...mergeConfig(envConfig, config.searchui.default),
-    host: process.env.RAZZLE_ES_HOST || '',
-    elastic_index: process.env.RAZZLE_ES_INDEX || '_all',
+    host: process.env.RAZZLE_ES_PROXY_ADDR,
+    elastic_index: 'es',
     facets: [],
     highlight: {},
     sortOptions: [],

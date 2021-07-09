@@ -3,7 +3,8 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+//import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createESMiddleware } from '@eeacms/search/ESMiddleware';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -27,7 +28,7 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = '') => {
     : '';
 };
 
-const esProxyWhitelist = {
+/* const esProxyWhitelist = {
   GET: [
     '^/_aliases',
     '^/_all',
@@ -54,12 +55,22 @@ const esproxy = createProxyMiddleware(filterRequests, {
   logLevel: 'debug',
 });
 esproxy.id = 'esproxy';
+ */
+const es_proxy = createESMiddleware({
+  host: process.env.PROXY_ELASTIC_HOST,
+  port: process.env.PROXY_ELASTIC_PORT,
+  user: process.env.PROXY_ELASTIC_USER,
+  pwd: process.env.PROXY_ELASTIC_PASSWORD,
+  index: process.env.PROXY_ELASTIC_INDEX,
+});
 
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
-  .use([esproxy])
+  .use(express.json())
+  .use([es_proxy])
+  //  .use([esproxy])
   .get('/*', (req, res) => {
     const context = {};
     const markup = renderToString(
