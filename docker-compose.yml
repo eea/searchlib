@@ -6,7 +6,14 @@ services:
     ports:
       - 3000:3000
     environment:
-      - ELASTIC_URL=http://localhost:9200
-      - RAZZLE_ES_INDEX=global-search
       - RAZZLE_APP_NAME=globalsearch
+
+      - PROXY_ELASTIC_HOST=
+      - PROXY_ELASTIC_PORT=
+      - PROXY_ELASTIC_USER=
+      - PROXY_ELASTIC_PWD=
+      - PROXY_ELASTIC_INDEX=global-search_prod
+
+      - RAZZLE_ES_PROXY_ADDR=http://localhost:3000
+
     # entrypoint: sh -c "tail -f /dev/null"
