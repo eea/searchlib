@@ -3,8 +3,8 @@
 module.exports = {
   title: 'EEA Semantic Search Service',
   tagline: 'Semantic Search Service powered by ElasticSearch',
-  url: 'https://eea.europa.eu',
-  baseUrl: '/',
+  url: 'https://eea.github.io/',
+  baseUrl: '/searchlib/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
