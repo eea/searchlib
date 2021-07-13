@@ -48,7 +48,7 @@ pnpm standalone
 To connect the standalone version with EEA Global Search configuration, run it with:
 
 ```
-env RAZZLE_ES_INDEX=global-search RAZZLE_APP_NAME=globalsearch pnpm run start
+env PROXY_ELASTIC_INDEX=global-search RAZZLE_APP_NAME=globalsearch pnpm run start
 ```
 
 ## Indexing and other related projects

@@ -30,11 +30,13 @@ to run it.
 
 The production runtime can be configured via environment variables:
 
-- `ELASTIC_URL`: this is the internally accessible address of the ElasticSearch
-  server. Setting this allows the searchlib-standalone to expose ES through a
-  proxy, to aid with CORS issues.
-- `RAZZLE_ES_INDEX`: this variable is exposed in the frontend application and
-  should match the ElasticSeach index that needs to be queried.
 - `RAZZLE_APP_NAME`: this is the name of the "branch" of the configuration
   registry that should be used in configuring the searchlib-powered
   application.
+- `PROXY_ELASTIC_HOST`, `PROXY_ELASTIC_PORT`: this is the internally accessible host and port number of the ElasticSearch
+  server. Setting this allows the searchlib-standalone to expose ES through a
+  proxy, to aid with CORS issues. If not specified, 'localhost' and '9200' will be used.
+- `PROXY_ELASTIC_USER`, `PROXY_ELASTIC_PWD`: if specified, these credentials will be used to create the connection for ElasticSearch
+- `PROXY_ELASTIC_INDEX`: The name of the index what will be made available via the proxy. Other indices will not be accessible.
+- `RAZZLE_ES_PROXY_ADDR`: The address of the proxy. It defaults to http://localhost:3000, but can be different if the proxy is running 
+  independently of the application
