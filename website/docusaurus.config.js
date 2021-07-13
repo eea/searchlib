@@ -61,10 +61,10 @@ module.exports = {
         {
           title: 'Docs',
           items: [
-            {
-              label: 'Searchlib UI',
-              to: '/docs/intro',
-            },
+            // {
+            //   label: 'Searchlib UI',
+            //   to: 'searchlib-ui',
+            // },
           ],
         },
         {
