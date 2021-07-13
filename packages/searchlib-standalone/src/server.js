@@ -57,8 +57,8 @@ const esproxy = createProxyMiddleware(filterRequests, {
 esproxy.id = 'esproxy';
  */
 const es_proxy = createESMiddleware({
-  host: process.env.PROXY_ELASTIC_HOST,
-  port: process.env.PROXY_ELASTIC_PORT,
+  host: process.env.PROXY_ELASTIC_HOST || 'localhost',
+  port: process.env.PROXY_ELASTIC_PORT || '9200',
   user: process.env.PROXY_ELASTIC_USER,
   pwd: process.env.PROXY_ELASTIC_PASSWORD,
   index: process.env.PROXY_ELASTIC_INDEX,

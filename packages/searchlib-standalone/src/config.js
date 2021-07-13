@@ -478,7 +478,7 @@ export default function install(config) {
   config.searchui.globalsearch = {
     ...mergeConfig(envConfig, config.searchui.default),
     elastic_index: 'es',
-    host: process.env.RAZZLE_ES_PROXY_ADDR,
+    host: process.env.RAZZLE_ES_PROXY_ADDR || 'http://localhost:3000',
   };
 
   config.searchui.standalone = {
