@@ -22,16 +22,18 @@ export const createESMiddleware = (config) => {
       const searchData = JSON.stringify(req.body);
 
       const searchOptions = {
-        host: config.host,
-        port: config.port,
+        host: config.host || 'localhost',
+        port: config.port || '9200',
         path: config.index + '/_search',
         method: 'POST',
-        auth: config.user + ':' + config.password,
+        // auth: config.user + ':' + config.password,
         headers: {
           'Content-Type': 'application/json',
           'Content-Length': lengthInBytes(searchData),
         },
       };
+
+      console.log(searchOptions);
       var searchRequest = http.request(searchOptions, (rsp) => {
         res.status(rsp.statusCode);
         res.set(rsp.headers);
@@ -47,6 +49,7 @@ export const createESMiddleware = (config) => {
         console.log('Error when performing search query', e.message);
         res.status(500).send({ error: e.message });
       });
+
       searchRequest.write(searchData);
       searchRequest.end();
     } else {
