@@ -4,7 +4,7 @@ import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
 //import { createProxyMiddleware } from 'http-proxy-middleware';
-import { createESMiddleware } from '@eeacms/search/ESMiddleware';
+import { createESMiddleware } from '@eeacms/search';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
