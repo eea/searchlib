@@ -3,7 +3,6 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
-//import { createProxyMiddleware } from 'http-proxy-middleware';
 import { createESMiddleware } from '@eeacms/search';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
@@ -28,34 +27,6 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = '') => {
     : '';
 };
 
-/* const esProxyWhitelist = {
-  GET: [
-    '^/_aliases',
-    '^/_all',
-    ...(process.env.RAZZLE_ES_INDEX
-      ? [`^/${process.env.RAZZLE_ES_INDEX}/_search`]
-      : []),
-  ],
-  POST: ['^/_search', /^\/[\w\d.-]+\/_search/],
-};
-
-function filterRequests(pathname, req) {
-  const tomatch = esProxyWhitelist[req.method] || [];
-  const matches = tomatch.filter((m) => pathname.match(m)).length;
-  return matches > 0;
-}
-
-const target =
-  process.env.RAZZLE_ELASTIC_URL ||
-  process.env.ELASTIC_URL ||
-  'http://localhost:9200';
-
-const esproxy = createProxyMiddleware(filterRequests, {
-  target,
-  logLevel: 'debug',
-});
-esproxy.id = 'esproxy';
- */
 const es_proxy = createESMiddleware({
   host: process.env.PROXY_ELASTIC_HOST || 'localhost',
   port: process.env.PROXY_ELASTIC_PORT || '9200',

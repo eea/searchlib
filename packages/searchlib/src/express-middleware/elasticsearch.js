@@ -57,3 +57,33 @@ export const createESMiddleware = (config) => {
     }
   };
 };
+
+//import { createProxyMiddleware } from 'http-proxy-middleware';
+/* const esProxyWhitelist = {
+  GET: [
+    '^/_aliases',
+    '^/_all',
+    ...(process.env.RAZZLE_ES_INDEX
+      ? [`^/${process.env.RAZZLE_ES_INDEX}/_search`]
+      : []),
+  ],
+  POST: ['^/_search', /^\/[\w\d.-]+\/_search/],
+};
+
+function filterRequests(pathname, req) {
+  const tomatch = esProxyWhitelist[req.method] || [];
+  const matches = tomatch.filter((m) => pathname.match(m)).length;
+  return matches > 0;
+}
+
+const target =
+  process.env.RAZZLE_ELASTIC_URL ||
+  process.env.ELASTIC_URL ||
+  'http://localhost:9200';
+
+const esproxy = createProxyMiddleware(filterRequests, {
+  target,
+  logLevel: 'debug',
+});
+esproxy.id = 'esproxy';
+ */
