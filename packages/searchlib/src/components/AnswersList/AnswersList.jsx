@@ -102,8 +102,9 @@ const withAnswers = (WrappedComponent) =>
     _withAnswers(WrappedComponent),
   );
 
-const AnswersList = (props) => {
+const AnswersList = React.memo((props) => {
   const { answers = [] } = props;
+  if (answers) console.log('ans', answers);
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -124,15 +125,19 @@ score: 6.118757247924805
         {answers.map((item) => (
           <li>
             {item.context.slice(0, item.offset_start)}
-            <strong>
-              <em>{item.context.slice(item.offset_start, item.offset_end)}</em>
-            </strong>
+            <a href={item.document_id}>
+              <strong>
+                <em>
+                  {item.context.slice(item.offset_start, item.offset_end)}
+                </em>
+              </strong>
+            </a>
             {item.context.slice(item.offset_end, item.context.length)}
           </li>
         ))}
       </ul>
     </div>
   );
-};
+});
 
 export default withAnswers(AnswersList);
