@@ -1,5 +1,6 @@
 packages:
-  - 'packages/searchlib'
+  - 'packages/searchlib-middleware'
   - 'packages/searchlib-less'
+  - 'packages/searchlib'
   - 'packages/searchlib-standalone'
   - 'packages/demo'

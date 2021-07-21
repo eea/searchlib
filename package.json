@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/searchlib",
     "packages/searchlib-less",
+    "packages/searchlib-middleware",
     "packages/demo"
   ],
   "devDependencies": {

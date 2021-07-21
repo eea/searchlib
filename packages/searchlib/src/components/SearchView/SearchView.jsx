@@ -15,6 +15,7 @@ import {
   SearchBox,
   PagingInfo,
   SortingDropdown,
+  AnswersList,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
@@ -125,6 +126,8 @@ export const SearchView = (props) => {
                 view={SortingDropdown}
               />
             </div>
+
+            <AnswersList />
 
             <Results
               shouldTrackClickThrough={true}

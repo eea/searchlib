@@ -3,7 +3,7 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
-import { createESMiddleware } from '@eeacms/search';
+import { createESMiddleware } from '@eeacms/search-middleware';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -34,6 +34,8 @@ const es_proxy = createESMiddleware({
   pwd: process.env.PROXY_ELASTIC_PASSWORD,
   index: process.env.PROXY_ELASTIC_INDEX,
 });
+
+console.log('esproxy', es_proxy);
 
 const server = express();
 server

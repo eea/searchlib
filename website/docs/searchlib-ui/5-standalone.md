@@ -43,6 +43,9 @@ environment variables:
   `window.location.hostname`, but can be different if the proxy is running
   independently of the application
 
+**NOTE:** Whatever way you connect the searchlib to ElasticSearch, it should
+be aware of NLP capabilities.
+
 ### Running with embedded proxy
 
 To avoid CORS issues, we have the option of running an embedded proxy.

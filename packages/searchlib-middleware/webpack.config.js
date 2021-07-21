@@ -1,7 +1,8 @@
 const pkg = require('./package.json');
+
 const path = require('path');
 
-// const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals');
 
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -18,8 +19,8 @@ module.exports = {
   plugins,
   entry: {
     index: `${__dirname}/src/index.js`,
-    server: `${__dirname}/src/server.js`,
   },
+  target: 'node',
   output: {
     library: pkg.name,
     libraryTarget: 'commonjs2',
@@ -29,12 +30,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@eeacms/search': path.resolve('./src'),
+      // '@eeacms/search': path.resolve('./src'),
     },
     // mainFields: ['main', 'module'], // https://github.com/webpack/webpack/issues/5756#issuecomment-405468106
   },
   devtool: 'source-map',
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -49,7 +50,7 @@ module.exports = {
       },
     ],
   },
-  externals: ['react', 'react-dom', 'semantic-ui-react'],
+  externals: [nodeExternals()],
 };
 
 // "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
