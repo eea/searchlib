@@ -29,7 +29,7 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = '') => {
 
 const es_proxy = createESMiddleware({
   es: process.env.PROXY_ES_DSN || 'http://localhost:9200/_all',
-  qa: process.env.PROXY_QA_DSN || 'http://localhost:8000/qa/query',
+  qa: process.env.PROXY_QA_DSN || 'http://localhost:8000/api/qa/query',
 });
 
 const server = express()

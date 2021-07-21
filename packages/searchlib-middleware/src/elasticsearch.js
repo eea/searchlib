@@ -24,6 +24,21 @@ function filterRequests(req) {
 //   return found_obj;
 // }
 
+// const multi_match = findObjectByKey(body, 'multi_match')
+// if (multi_match){
+//   const search_term = findObjectByKey(multi_match, 'query')
+//   console.log("SEARCH TERM:", search_term);
+// }
+// const url = `http://${es.user}:${es.pwd}@${es.host}:${es.port}/${es.index}/_search`;
+//
+// {
+//   "query": "biggest threats",
+//   "filters": {
+//   },
+//   "top_k_retriever":100,
+//   "top_k_reader": 3
+// }
+
 export const createESMiddleware = (config) => {
   const superagent = require('superagent');
   const { qa, es } = config;
@@ -31,26 +46,34 @@ export const createESMiddleware = (config) => {
   return function (req, res, next) {
     if (filterRequests(req)) {
       const body = req.body;
-      console.log('body', body);
-      if (body.isQuestion) {
-        delete body.isQuestion;
+      if (body.question) {
+        const { question } = body;
+        delete body.question;
+        const qaBody = {
+          query: question,
+          custom_query: JSON.stringify(body),
+          top_k_retriever: 100,
+          top_k_reader: 4,
+        };
+        console.log('qa req', qa, question, qaBody);
+        superagent
+          .post(qa)
+          .send(qaBody)
+          .set('accept', 'application/json')
+          .end((err, resp) => {
+            console.log(err, resp);
+            res.send(resp.body);
+          });
+      } else {
+        const url = `${es}/_search`;
+        superagent
+          .post(url)
+          .send(body)
+          .set('accept', 'application/json')
+          .end((err, resp) => {
+            res.send(resp.body);
+          });
       }
-
-      // const multi_match = findObjectByKey(body, 'multi_match')
-      // if (multi_match){
-      //   const search_term = findObjectByKey(multi_match, 'query')
-      //   console.log("SEARCH TERM:", search_term);
-      // }
-
-      // const url = `http://${es.user}:${es.pwd}@${es.host}:${es.port}/${es.index}/_search`;
-      const url = `${es}/_search`;
-      superagent.post(url)
-        .send(body)
-        .set('accept', 'application/json')
-        .end((err, resp) => {
-          res.send(resp.body)
-        });
-
     } else {
       next();
     }
