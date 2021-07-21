@@ -6,5 +6,5 @@
       "@eeacms/search-middleware": ["../../searchlib-middleware/src"]
     }
   },
-  "include": ["src", "../../searchlib/src"]
+  "include": ["src", "../../searchlib/src", "../../searchlib-middleware/src"]
 }

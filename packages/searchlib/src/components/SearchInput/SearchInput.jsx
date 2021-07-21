@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Label, Icon } from 'semantic-ui-react';
+import { Label, Icon } from 'semantic-ui-react'; // Button,
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';

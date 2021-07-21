@@ -49,7 +49,5 @@ export async function onSearch(state) {
     config,
   );
 
-  // console.log('state', state, newState);
-
   return newState; //{ ...state, ...newState };
 }

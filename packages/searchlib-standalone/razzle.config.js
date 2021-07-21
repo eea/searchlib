@@ -15,6 +15,7 @@ module.exports = {
     // };
     webpackOptions.babelRule.include = webpackOptions.babelRule.include.concat([
       /@eeacms\/search/,
+      /@eeacms\/search-middleware/,
     ]);
     return webpackOptions;
   },

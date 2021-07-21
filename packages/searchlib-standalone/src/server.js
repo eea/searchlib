@@ -28,17 +28,11 @@ const jsScriptTagsFromAssets = (assets, entrypoint, extra = '') => {
 };
 
 const es_proxy = createESMiddleware({
-  host: process.env.PROXY_ELASTIC_HOST || 'localhost',
-  port: process.env.PROXY_ELASTIC_PORT || '9200',
-  user: process.env.PROXY_ELASTIC_USER,
-  pwd: process.env.PROXY_ELASTIC_PWD,
-  index: process.env.PROXY_ELASTIC_INDEX,
+  es: process.env.PROXY_ES_DSN || 'http://localhost:9200/_all',
+  qa: process.env.PROXY_QA_DSN || 'http://localhost:8000/qa/query',
 });
 
-console.log('esproxy', es_proxy);
-
-const server = express();
-server
+const server = express()
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(express.json())

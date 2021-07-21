@@ -8,34 +8,42 @@ function filterRequests(req) {
   return matches > 0;
 }
 
-function findObjectByKey(obj, key){
-  let found_obj;
-  if (typeof(obj) === 'object'){
-      Object.keys(obj).forEach(function(obj_key){
-          let obj_val = obj[obj_key];
-          if (obj_key === key){
-              found_obj = obj_val;
-          }
-          if (found_obj === undefined){
-              found_obj = findObjectByKey(obj_val, key);
-          }
-      });
-  }
-  return found_obj;
-}
+// function findObjectByKey(obj, key){
+//   let found_obj;
+//   if (typeof(obj) === 'object'){
+//       Object.keys(obj).forEach(function(obj_key){
+//           let obj_val = obj[obj_key];
+//           if (obj_key === key){
+//               found_obj = obj_val;
+//           }
+//           if (found_obj === undefined){
+//               found_obj = findObjectByKey(obj_val, key);
+//           }
+//       });
+//   }
+//   return found_obj;
+// }
 
 export const createESMiddleware = (config) => {
   const superagent = require('superagent');
-  const {user, pwd, host, port, index} = config;
-  const url = `http://${user}:${pwd}@${host}:${port}/${index}/_search`;
+  const { qa, es } = config;
+
   return function (req, res, next) {
     if (filterRequests(req)) {
       const body = req.body;
-      const multi_match = findObjectByKey(body, 'multi_match')
-      if (multi_match){
-        const search_term = findObjectByKey(multi_match, 'query')
-        console.log("SEARCH TERM:", search_term);
+      console.log('body', body);
+      if (body.isQuestion) {
+        delete body.isQuestion;
       }
+
+      // const multi_match = findObjectByKey(body, 'multi_match')
+      // if (multi_match){
+      //   const search_term = findObjectByKey(multi_match, 'query')
+      //   console.log("SEARCH TERM:", search_term);
+      // }
+
+      // const url = `http://${es.user}:${es.pwd}@${es.host}:${es.port}/${es.index}/_search`;
+      const url = `${es}/_search`;
       superagent.post(url)
         .send(body)
         .set('accept', 'application/json')
