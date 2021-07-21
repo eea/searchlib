@@ -33,8 +33,7 @@
 
 // const http = require('http');
 
-import superagent from 'superagent'
-//const superagent = require('superagent');
+// import superagent from 'superagent'
 const esProxyWhitelist = {
   GET: ['/es/_search'],
   POST: ['/es/_search'],
@@ -46,25 +45,27 @@ function filterRequests(req) {
   return matches > 0;
 }
 
-function lengthInBytes(str) {
-  var specialCharacters = encodeURIComponent(str).match(/%[89ABab]/g);
-  return str.length + (specialCharacters ? specialCharacters.length : 0);
-}
+// function lengthInBytes(str) {
+//   var specialCharacters = encodeURIComponent(str).match(/%[89ABab]/g);
+//   return str.length + (specialCharacters ? specialCharacters.length : 0);
+// }
 
 export const createESMiddleware = (config) => {
-  console.log('middleware', superagent);
+  const superagent = require('superagent');
 
-  return async function (req, res, next) {
-    if (filterRequests(req)) { 
-      const url = '<url>/global-search_prod/_search';
+  return function (req, res, next) {
+    if (filterRequests(req)) {
+      const url = 'http://localhost:9200/global-search_prod/_search';
       const body = req.body;
-      console.log('here', req.body);
-      const resp = await superagent
-        .set('accept', 'application/json')
+      // console.log('middleware', superagent);
+      // console.log('here', req.body);
+      superagent.post(url)
         .send(body)
-        .post(url);
+        .set('accept', 'application/json')
+        .end((err, resp) => {
+          res.send(resp.body)
+        });
 
-      return resp;
     } else {
       next();
     }
