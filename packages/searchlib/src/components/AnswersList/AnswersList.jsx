@@ -127,7 +127,7 @@ score: 6.118757247924805
             <strong>
               <em>{item.context.slice(item.offset_start, item.offset_end)}</em>
             </strong>
-            {item.context.slice(item.offset_start - 1, item.context.length)}
+            {item.context.slice(item.offset_end, item.context.length)}
           </li>
         ))}
       </ul>
