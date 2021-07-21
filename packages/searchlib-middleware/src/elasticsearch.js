@@ -1,7 +1,3 @@
-// import superagent from 'superagent';
-// const http = require('http');
-//
-// const superagent = require('superagent');
 import { createProxyMiddleware } from 'http-proxy-middleware';
 const esProxyWhitelist = {
   GET: [
@@ -17,6 +13,7 @@ const esProxyWhitelist = {
 function filterRequests(pathname, req) {
   const tomatch = esProxyWhitelist[req.method] || [];
   const matches = tomatch.filter((m) => pathname.match(m)).length;
+  console.log('filterRequest', pathname, matches);
   return matches > 0;
 }
 
@@ -34,6 +31,10 @@ export const createESMiddleware = (config) => {
   return esproxy;
 };
 
+// import superagent from 'superagent';
+// const http = require('http');
+//
+// const superagent = require('superagent');
 // const esProxyWhitelist = {
 //   GET: ['/es/*'],
 //   POST: ['/es/*'],
