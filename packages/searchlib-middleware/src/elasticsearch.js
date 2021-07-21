@@ -33,10 +33,11 @@
 
 // const http = require('http');
 
-const superagent = require('superagent');
+import superagent from 'superagent'
+//const superagent = require('superagent');
 const esProxyWhitelist = {
-  GET: ['/es/*'],
-  POST: ['/es/*'],
+  GET: ['/es/_search'],
+  POST: ['/es/_search'],
   //POST: ['^/_search', /^\/[\w\d.-]+\/_search/],
 };
 function filterRequests(req) {
@@ -54,8 +55,8 @@ export const createESMiddleware = (config) => {
   console.log('middleware', superagent);
 
   return async function (req, res, next) {
-    if (filterRequests(req)) {
-      const url = 'http://localhost:9200';
+    if (filterRequests(req)) { 
+      const url = '<url>/global-search_prod/_search';
       const body = req.body;
       console.log('here', req.body);
       const resp = await superagent
