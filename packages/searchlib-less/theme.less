@@ -230,10 +230,32 @@ code {
   padding-right: 2em;
   font-size: small;
 
-  
+  .checked {
+    label {
+      &:before {
+        background-color: #5b91c3 !important;
+      }
+      &:after {
+        background-color: white !important;
+        left: 1.45rem;
+      }
+    }
+  }
+
   label {
-    padding-left: 1.5rem !important;
+    padding-left: 3rem !important;
     color: white !important;
+    &:before {
+      height: 1rem !important;
+      width: 2.5rem;
+      background-color: gray !important;
+      top: 0.2rem;
+    }
+    &:after {
+      height: 1rem !important;
+      top: 0.2rem;
+      width: 1rem;
+    }
   }
 }
 
