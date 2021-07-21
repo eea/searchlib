@@ -7,13 +7,23 @@ const useBackendSearch = async (query) => {
   return resp;
 };
 
-// const withAnswers = withSearch((context) => context)((WrappedComponent) => {
-//   // const { appConfig } = useAppConfig();
-//   // const query = '';
-//   // const search = useBackendSearch(query);
-//   const answers = [];
-//   return (props) => <WrappedComponent answers={answers} {...props} />;
-// });
+const _withAnswers = (WrappedComponent) => {
+  const WithSearchComponent = (props) => {
+    const { searchContext } = props;
+    const answers = [];
+    const { appConfig } = useAppConfig();
+    console.log({ appConfig, searchContext });
+    // const query = '';
+    // const search = useBackendSearch(query);
+    return <WrappedComponent answers={answers} {...props} />;
+  };
+  return WithSearchComponent;
+};
+
+const withAnswers = (WrappedComponent) =>
+  withSearch((context) => ({ searchContext: context }))(
+    _withAnswers(WrappedComponent),
+  );
 
 const AnswersList = (props) => {
   console.log('answers', props);
@@ -30,4 +40,4 @@ const AnswersList = (props) => {
   );
 };
 
-export default AnswersList;
+export default withAnswers(AnswersList);
