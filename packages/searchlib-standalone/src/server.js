@@ -43,7 +43,6 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(express.json())
   .use([es_proxy])
-  //  .use([esproxy])
   .get('/*', (req, res) => {
     const context = {};
     const markup = renderToString(
