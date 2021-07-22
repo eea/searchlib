@@ -355,6 +355,21 @@ const demo_config = {
       whitelist: typesWhitelist,
     },
   },
+
+  download_fields: [
+    {
+      field: 'field1',
+      label: 'Field 1',
+      blacklist: [],
+      whitelist: [],
+    },
+    {
+      field: 'field2',
+      label: 'Field 2',
+      blacklist: [],
+      whitelist: [],
+    },
+  ],
 };
 
 // const demo_config = {

@@ -1,9 +1,16 @@
+import download from './download';
+
 const esProxyWhitelist = {
   GET: ['/es/_search'],
   POST: ['/es/_search'],
 };
-function filterRequests(req) {
-  const tomatch = esProxyWhitelist[req.method] || [];
+
+const esDownloadWhitelist = {
+  GET: ['/es/_download'],
+};
+
+function filterRequests(req, whitelist) {
+  const tomatch = whitelist[req.method] || [];
   const matches = tomatch.filter((m) => req.url.match(m)).length;
   return matches > 0;
 }
@@ -44,7 +51,7 @@ export const createESMiddleware = (config) => {
   const { qa, es } = config;
 
   return function (req, res, next) {
-    if (filterRequests(req)) {
+    if (filterRequests(req, esProxyWhitelist)) {
       const body = req.body;
       if (body.question) {
         const { question } = body;
@@ -55,7 +62,7 @@ export const createESMiddleware = (config) => {
           top_k_retriever: 100,
           top_k_reader: 4,
         };
-        console.log('qa req', qa, question, qaBody);
+        //console.log('qa req', qa, question, qaBody);
         superagent
           .post(qa)
           .send(qaBody)
@@ -75,7 +82,11 @@ export const createESMiddleware = (config) => {
           });
       }
     } else {
-      next();
+      if (filterRequests(req, esDownloadWhitelist)) {
+        download(es, req, res);
+      } else {
+        next();
+      }
     }
   };
 };
