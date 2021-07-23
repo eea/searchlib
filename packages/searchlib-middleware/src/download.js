@@ -4,10 +4,18 @@ const stringify = require('csv-stringify');
 const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
-const download = (es_config, req, res) => {
+const download = (es_config, app_config, req, res) => {
+console.log(app_config)
+
+  const es_url = new URL(es_config);
+  const es_path_parts = es_url.pathname.split('/');
+
+  const es_index = es_path_parts.pop();
+  es_url.pathname = es_path_parts.join();
+
+  const es_host = es_url.href;
+
   /*TODO*/
-  const es_host = '';
-  const es_index = '';
   const download_mapping = [];
   /*TODO*/
 
