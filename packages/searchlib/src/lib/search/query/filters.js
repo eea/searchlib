@@ -128,8 +128,8 @@ export function getRangeFilter(filter) {
         should: filter.values.map((filterValue) => ({
           range: {
             [filter.field]: {
-              ...(filterValue.to && { lt: filterValue.to }),
-              ...(filterValue.to && { gt: filterValue.from }),
+              ...(filterValue.to && { to: filterValue.to }),
+              ...(filterValue.to && { from: filterValue.from }),
             },
           },
         })),
@@ -142,8 +142,8 @@ export function getRangeFilter(filter) {
         filter: filter.values.map((filterValue) => ({
           range: {
             [filter.field]: {
-              ...(filterValue.to && { lt: filterValue.to }),
-              ...(filterValue.to && { gt: filterValue.from }),
+              ...(filterValue.to && { to: filterValue.to }),
+              ...(filterValue.to && { from: filterValue.from }),
             },
           },
         })),
