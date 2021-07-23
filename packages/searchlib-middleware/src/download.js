@@ -6,7 +6,6 @@ const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
 const download = (es_config, appConfig, req, res) => {
-
   const es_url = new URL(es_config);
   const es_path_parts = es_url.pathname.split('/');
 
@@ -67,11 +66,14 @@ const download = (es_config, appConfig, req, res) => {
       scroll: SCROLL_TIME, // keep the search results "scrollable" for the time specified in SCROLL_TIME constant
       body: dataQuery,
     },
+
     function getMoreUntilDone(error, data) {
       if (error || data === undefined || data.hits === undefined) {
         if (error) {
+          // eslint-disable-next-line
           console.log('Error while downloading:', error);
         } else {
+          // eslint-disable-next-line
           console.log('Error in data while downloading:', data);
         }
         res.destroy();
@@ -82,8 +84,10 @@ const download = (es_config, appConfig, req, res) => {
       }
       let total = 0;
       total = data.hits.total.value;
+
       if (total > offset) {
         var chunk = '';
+
         for (var i = 0; i < data.hits.hits.length; i++) {
           const row = data.hits.hits[i];
           let csv_row = [];
