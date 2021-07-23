@@ -18,6 +18,7 @@ import SortingDropdown from './Sorting/SortingDropdown';
 import FilterResultEntry from './FilterList/FilterResultEntry';
 import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
+import DownloadButton from './DownloadButton/DownloadButton';
 
 export {
   CardItem,
@@ -39,4 +40,5 @@ export {
   FilterResultEntry,
   Resizable,
   AnswersList,
+  DownloadButton,
 };

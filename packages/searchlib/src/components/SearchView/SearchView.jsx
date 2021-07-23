@@ -16,6 +16,7 @@ import {
   PagingInfo,
   SortingDropdown,
   AnswersList,
+  DownloadButton,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
@@ -138,6 +139,8 @@ export const SearchView = (props) => {
                 <Result {...props} {...itemViewProps} view={Item} />
               )}
             />
+
+            <DownloadButton />
           </>
         }
         bodyFooter={

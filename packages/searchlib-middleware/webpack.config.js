@@ -30,7 +30,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      // '@eeacms/search': path.resolve('./src'),
+      '@eeacms/search': path.resolve('./../searchlib/src'),
     },
     // mainFields: ['main', 'module'], // https://github.com/webpack/webpack/issues/5756#issuecomment-405468106
   },

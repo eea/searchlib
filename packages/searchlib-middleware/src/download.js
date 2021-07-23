@@ -1,8 +1,11 @@
+const searchlib = require('@eeacms/search');
 const es = require('elasticsearch');
 const stringify = require('csv-stringify');
 
 const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
+
+console.log(searchlib.buildRequest);
 
 const download = (es_config, req, res, appConfig) => {
   console.log(appConfig);
