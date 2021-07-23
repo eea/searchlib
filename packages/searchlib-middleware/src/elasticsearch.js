@@ -46,9 +46,9 @@ function filterRequests(req, whitelist) {
 //   "top_k_reader": 3
 // }
 
-export const createESMiddleware = (config) => {
+export const createESMiddleware = (options) => {
   const superagent = require('superagent');
-  const { qa, es } = config;
+  const { qa, es, appConfig } = options;
 
   return function (req, res, next) {
     if (filterRequests(req, esProxyWhitelist)) {
@@ -83,7 +83,7 @@ export const createESMiddleware = (config) => {
       }
     } else {
       if (filterRequests(req, esDownloadWhitelist)) {
-        download(es, req, res);
+        download(es, req, res, appConfig);
       } else {
         next();
       }

@@ -4,8 +4,8 @@ const stringify = require('csv-stringify');
 const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
-const download = (es_config, app_config, req, res) => {
-console.log(app_config)
+const download = (es_config, req, res, appConfig) => {
+  console.log(appConfig);
 
   const es_url = new URL(es_config);
   const es_path_parts = es_url.pathname.split('/');
