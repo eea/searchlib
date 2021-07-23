@@ -140,7 +140,7 @@ export const SearchView = (props) => {
               )}
             />
 
-            <DownloadButton />
+            <DownloadButton appConfig={appConfig} />
           </>
         }
         bodyFooter={

@@ -358,16 +358,20 @@ const demo_config = {
 
   download_fields: [
     {
-      field: 'field1',
-      label: 'Field 1',
-      blacklist: [],
-      whitelist: [],
+      field: 'about',
+      name: 'About',
     },
     {
-      field: 'field2',
-      label: 'Field 2',
-      blacklist: [],
-      whitelist: [],
+      field: 'description',
+      name: 'Description',
+    },
+    {
+      field: 'subject',
+      name: 'Subject',
+    },
+    {
+      field: 'issued',
+      name: 'Issued',
     },
   ],
 };

@@ -1,14 +1,11 @@
-const searchlib = require('@eeacms/search');
-const es = require('elasticsearch');
-const stringify = require('csv-stringify');
+import { buildRequest } from '@eeacms/search';
+import stringify from 'csv-stringify';
+import es from 'elasticsearch';
 
 const SCROLL_TIME = '5m';
 const SCROLL_SIZE = 2000;
 
-console.log(searchlib.buildRequest);
-
-const download = (es_config, req, res, appConfig) => {
-  console.log(appConfig);
+const download = (es_config, appConfig, req, res) => {
 
   const es_url = new URL(es_config);
   const es_path_parts = es_url.pathname.split('/');
@@ -18,13 +15,23 @@ const download = (es_config, req, res, appConfig) => {
 
   const es_host = es_url.href;
 
-  /*TODO*/
-  const download_mapping = [];
-  /*TODO*/
+  const download_mapping = appConfig.download_fields;
 
-  const dataQueryStr = req.query.download_query.split('?source=')[1];
-  const dataQuery = JSON.parse(dataQueryStr);
+  const { filters, searchTerm } = JSON.parse(req.body.query);
 
+  const dataQuery = buildRequest(
+    {
+      current: 1,
+      filters: filters,
+      resultsPerPage: SCROLL_SIZE,
+      searchTerm: searchTerm,
+      sortDirection: '',
+      sortField: '',
+    },
+    appConfig,
+  );
+  delete dataQuery.highlight;
+  delete dataQuery.aggs;
   const linebreak = '\n';
   const delimiter = ',';
 

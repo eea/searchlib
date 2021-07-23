@@ -1,18 +1,21 @@
 import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import { withSearch } from '@elastic/react-search-ui';
+import path from 'path';
 
 const DownloadButton = (props) => {
   const { searchTerm, filters } = props.searchContext;
+  const { host, elastic_index } = props.appConfig;
+  const es_url = new URL(host);
+  es_url.pathname = path.join(elastic_index, '_download');
   return (
-    <Form>
+    <Form action={es_url.href} method="post">
       <input
         type="hidden"
         name="query"
         value={JSON.stringify({ searchTerm, filters })}
       />
-
-      <Button>Download</Button>
+      <Button type="submit">Download</Button>
     </Form>
   );
 };

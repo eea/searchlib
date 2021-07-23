@@ -6,7 +6,7 @@ const esProxyWhitelist = {
 };
 
 const esDownloadWhitelist = {
-  GET: ['/es/_download'],
+  POST: ['/es/_download'],
 };
 
 function filterRequests(req, whitelist) {
@@ -83,7 +83,7 @@ export const createESMiddleware = (options) => {
       }
     } else {
       if (filterRequests(req, esDownloadWhitelist)) {
-        download(es, req, res, appConfig);
+        download(es, appConfig, req, res);
       } else {
         next();
       }
