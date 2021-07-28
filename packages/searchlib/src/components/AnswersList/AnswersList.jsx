@@ -3,6 +3,7 @@ import { withSearch } from '@elastic/react-search-ui';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 import { buildRequestFilter } from '@eeacms/search/lib/search/query/filters';
 import runRequest from '@eeacms/search/lib/runRequest';
+import { Image, Dimmer, Loader, Segment } from 'semantic-ui-react';
 // import { buildFullTextMatch } from '@eeacms/search/lib/search/query/fullText';
 
 const buildQuestionRequest = (state, config) => {
@@ -60,39 +61,52 @@ const buildQuestionRequest = (state, config) => {
     isQuestion: true,
   };
 
-  // console.log('a body', body);
-
   return body;
 };
 
 const _withAnswers = (WrappedComponent) => {
   const WithSearchComponent = (props) => {
     const { searchContext } = props;
+    const { searchTerm = '' } = searchContext;
     const { appConfig } = useAppConfig();
 
     const timeoutRef = React.useRef();
-    const [answers, setAnswers] = React.useState([]);
+    const [answers, setAnswers] = React.useState({});
+    const [loading, setLoading] = React.useState(false);
+    const [loaded, setLoaded] = React.useState(false);
+    const [searchedTerm, setSearchedTerm] = React.useState();
 
     React.useEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
-      const { searchTerm = '' } = searchContext;
       if (searchTerm && searchTerm.trim().indexOf(' ') > -1) {
         timeoutRef.current = setTimeout(() => {
           const requestBody = buildQuestionRequest(searchContext, appConfig);
+          setSearchedTerm(searchTerm);
+          setLoading(true);
+          setLoaded(false);
           runRequest(requestBody, appConfig).then((response) => {
             const { body } = response;
-            // console.log('response', response);
             setAnswers(body.answers || []);
+            setLoading(false);
+            setLoaded(true);
           });
         }, 1000);
       }
 
       return () => timeoutRefCurrent && clearInterval(timeoutRefCurrent);
-    }, [appConfig, searchContext]);
+    }, [appConfig, searchContext, searchTerm]);
 
-    return <WrappedComponent answers={answers} {...props} />;
+    return (
+      <WrappedComponent
+        answers={answers}
+        loading={loading}
+        loaded={loaded}
+        searchedTerm={searchedTerm}
+        {...props}
+      />
+    );
   };
   return WithSearchComponent;
 };
@@ -103,8 +117,9 @@ const withAnswers = (WrappedComponent) =>
   );
 
 const AnswersList = React.memo((props) => {
-  const { answers = [] } = props;
-  if (answers) console.log('ans', answers);
+  const { answers = [], loading, loaded, searchedTerm } = props;
+  const { searchContext } = props;
+  const { searchTerm = '' } = searchContext;
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -118,26 +133,45 @@ probability: 0.752453625202179
 question: null
 score: 6.118757247924805
 */
+  //
+  const showLoader = loading && !loaded;
   return (
-    <div>
-      <h4>Answers</h4>
-      <ul>
-        {answers.map((item) => (
-          <li>
-            {item.context.slice(0, item.offset_start)}
-            <a href={item.document_id}>
-              <strong>
-                <em>
-                  {item.context.slice(item.offset_start, item.offset_end)}
-                </em>
-              </strong>
-            </a>
-            {item.context.slice(item.offset_end, item.context.length)}
-          </li>
-        ))}
-      </ul>
+    <div className="answers-list">
+      {showLoader ? (
+        <Segment loading={true}>
+          <div className="loading-tip">Looking for semantic answers...</div>
+        </Segment>
+      ) : searchTerm && searchedTerm === searchTerm && answers.length ? (
+        <>
+          <h4>Semantic results for your query</h4>
+          <ul>
+            {answers.map((item) => (
+              <li>
+                {item.context.slice(0, item.offset_start)}
+                <a href={item.document_id}>
+                  <strong>
+                    <em>
+                      {item.context.slice(item.offset_start, item.offset_end)}
+                    </em>
+                  </strong>
+                </a>
+                {item.context.slice(item.offset_end, item.context.length)}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        ''
+      )}
+      }
     </div>
   );
 });
 
 export default withAnswers(AnswersList);
+
+/*
+      {loaded && (
+        <Segment></Segment>
+      )}
+      */
