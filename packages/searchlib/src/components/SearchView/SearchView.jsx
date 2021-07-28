@@ -17,6 +17,7 @@ import {
   SortingDropdown,
   AnswersList,
   DownloadButton,
+  AppInfo,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
@@ -144,10 +145,13 @@ export const SearchView = (props) => {
           </>
         }
         bodyFooter={
-          <div className="search-body-footer">
-            <div></div>
-            <Paging />
-            <ResultsPerPage />
+          <div className="row">
+            <div className="search-body-footer">
+              <div></div>
+              <Paging />
+              <ResultsPerPage />
+            </div>
+            <AppInfo appConfig={appConfig} />
           </div>
         }
       />

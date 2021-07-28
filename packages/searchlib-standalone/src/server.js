@@ -42,6 +42,8 @@ const es_proxy = createESMiddleware({
   appConfig,
 });
 
+const hostname = process.env.HOSTNAME;
+
 const server = express()
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
@@ -70,6 +72,7 @@ const server = express()
         ${cssLinksFromAssets(assets, 'client')}
     </head>
     <body>
+        <script> var runtimeConfig = {HOSTNAME: '${hostname}'};</script>
         <div id="root">${markup}</div>
         ${jsScriptTagsFromAssets(assets, 'client', ' defer crossorigin')}
     </body>

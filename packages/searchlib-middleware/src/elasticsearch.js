@@ -9,6 +9,10 @@ const esDownloadWhitelist = {
   POST: ['/es/_download'],
 };
 
+const esSettingsWhitelist = {
+  GET: ['/es/_settings'],
+};
+
 function filterRequests(req, whitelist) {
   const tomatch = whitelist[req.method] || [];
   const matches = tomatch.filter((m) => req.url.match(m)).length;
@@ -82,10 +86,17 @@ export const createESMiddleware = (options) => {
           });
       }
     } else {
-      if (filterRequests(req, esDownloadWhitelist)) {
-        download(es, appConfig, req, res);
+      if (filterRequests(req, esSettingsWhitelist)) {
+        const url = `${es}/_settings`;
+        superagent.get(url).end((err, resp) => {
+          res.send(resp.body);
+        });
       } else {
-        next();
+        if (filterRequests(req, esDownloadWhitelist)) {
+          download(es, appConfig, req, res);
+        } else {
+          next();
+        }
       }
     }
   };

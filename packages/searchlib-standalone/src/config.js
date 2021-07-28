@@ -489,10 +489,13 @@ const demo_config = {
 
 export default function install(config) {
   // console.log(process.env.RAZZLE_ENV_CONFIG);
-
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : demo_config;
+
+  const pjson = require('../package.json');
+  envConfig.app_name = pjson.name;
+  envConfig.app_version = pjson.version;
 
   config.searchui.globalsearch = {
     ...mergeConfig(envConfig, config.searchui.default),
