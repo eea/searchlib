@@ -139,13 +139,13 @@ export const SearchView = (props) => {
                 <Result {...props} {...itemViewProps} view={Item} />
               )}
             />
-
-            <DownloadButton appConfig={appConfig} />
           </>
         }
         bodyFooter={
           <div className="search-body-footer">
-            <div></div>
+            <div>
+              <DownloadButton appConfig={appConfig} />
+            </div>
             <Paging />
             <ResultsPerPage />
           </div>
