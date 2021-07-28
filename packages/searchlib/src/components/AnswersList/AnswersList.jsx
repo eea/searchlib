@@ -3,8 +3,7 @@ import { withSearch } from '@elastic/react-search-ui';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 import { buildRequestFilter } from '@eeacms/search/lib/search/query/filters';
 import runRequest from '@eeacms/search/lib/runRequest';
-import { Image, Dimmer, Loader, Segment } from 'semantic-ui-react';
-// import { buildFullTextMatch } from '@eeacms/search/lib/search/query/fullText';
+import { Segment } from 'semantic-ui-react';
 
 const buildQuestionRequest = (state, config) => {
   const {
@@ -169,9 +168,3 @@ score: 6.118757247924805
 });
 
 export default withAnswers(AnswersList);
-
-/*
-      {loaded && (
-        <Segment></Segment>
-      )}
-      */
