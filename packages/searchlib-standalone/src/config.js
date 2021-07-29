@@ -348,7 +348,13 @@ const demo_config = {
   },
 
   tableViewParams: {
-    enabled: false,
+    enabled: true,
+    columns: [
+      {
+        title: 'Title',
+        field: 'title',
+      },
+    ],
   },
 
   field_filters: {

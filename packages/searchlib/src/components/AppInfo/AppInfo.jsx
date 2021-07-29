@@ -5,7 +5,9 @@ import dateFormat from 'dateformat';
 //async function getInfo(appConfig) {
 const getInfo = async (appConfig) => {
   const info = await getIndexInfo(appConfig);
+  console.log('info', info);
   const index = Object.keys(info);
+  if (!index.length) return '';
   const creation_ts = info[index].settings.index.creation_date;
   let creation_date = new Date(0);
   creation_date.setUTCSeconds(creation_ts.substring(0, creation_ts.length - 3));
