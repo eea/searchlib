@@ -131,7 +131,7 @@ const demo_config = {
   ],
 
   facets: [
-    /*    multiTermFacet({
+    multiTermFacet({
       field: 'topic',
       isFilterable: true,
       isMulti: true,
@@ -228,7 +228,7 @@ const demo_config = {
       aggs_script:
         "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
-*/
+
     fixedRangeFacet({
       field: 'readingTime',
       label: 'Reading time (minutes)',
@@ -324,7 +324,7 @@ const demo_config = {
 
   cardViewParams: {
     titleField: 'title',
-    metatypeField: 'type',
+    metatypeField: 'objectProvides',
     descriptionField: 'description',
     tagsField: 'topic',
     issuedField: 'issued',
@@ -353,6 +353,9 @@ const demo_config = {
   field_filters: {
     type: {
       whitelist: typesWhitelist,
+    },
+    objectProvides: {
+      whitelist: objectProvidesWhitelist,
     },
   },
 
