@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Card, Image, Label } from 'semantic-ui-react';
+import { Grid, Button, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';
@@ -72,43 +72,49 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       onMouseLeave={() => setHovered(false)}
     >
       <Card.Content>
-        <Image
-          className="horizontal-card-thumbnail"
-          src={thumbUrl}
-          wrapped
-          ui={false}
-          luid
-          centered
-          style={{ backgroundImage: `url('${thumbUrl}')` }}
-          as={ExternalLink}
-          href={url}
-          target="_blank"
-          rel="noreferrer"
-          label={
-            days < 30 && (
-              <Label color="yellow" ribbon="right">
-                New
-              </Label>
-            )
-          }
-        />
-        <Card.Content className="details">
-          <Card.Header>
-            <ExternalLink href={url}>
-              {result[props.titleField]?.raw}
-            </ExternalLink>
-          </Card.Header>
-          <Card.Meta>
-            <DateTime
-              format="DATE_MED"
-              value={result[props.issuedField]?.raw}
+        <Grid responsive columns={16}>
+          <Grid.Column width={4}>
+            <Image
+              className="horizontal-card-thumbnail"
+              src={thumbUrl}
+              wrapped
+              ui={false}
+              fluid
+              centered
+              style={{ backgroundImage: `url('${thumbUrl}')` }}
+              as={ExternalLink}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              label={
+                days < 30 && (
+                  <Label color="yellow" ribbon="right">
+                    New
+                  </Label>
+                )
+              }
             />
-          </Card.Meta>
-          <Card.Meta>
-            <StringList value={result[props.tagsField]?.raw} />
-          </Card.Meta>
-          <Card.Description>{description}</Card.Description>
-        </Card.Content>
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <Card.Content className="details">
+              <Card.Header>
+                <ExternalLink href={url}>
+                  {result[props.titleField]?.raw}
+                </ExternalLink>
+              </Card.Header>
+              <Card.Meta>
+                <DateTime
+                  format="DATE_MED"
+                  value={result[props.issuedField]?.raw}
+                />
+              </Card.Meta>
+              <Card.Meta>
+                <StringList value={result[props.tagsField]?.raw} />
+              </Card.Meta>
+              <Card.Description>{description}</Card.Description>
+            </Card.Content>
+          </Grid.Column>
+        </Grid>
       </Card.Content>
       <Card.Content extra className="controls">
         <Card.Meta>
