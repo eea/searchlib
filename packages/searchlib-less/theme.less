@@ -438,29 +438,37 @@ code {
 
 .card-item .card-icon,
 .horizontal-card-item .card-icon {
-  width:30px;
-  height:30px;
+  width: 30px;
+  height: 30px;
   background: #fff no-repeat center;
   background-size: 100%;
   border-radius: 50%;
 }
 
 a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
-  padding:3px;
+  padding: 3px;
 }
 
 .horizontal-card-thumbnail {
-  display:block;
-  float:left;
-  margin-right:0.6em;
+  display: block;
+  float: left;
+  margin-right: 0.6em;
+  height: 100%;
+  min-height: 10em;
+  background-size: cover;
+  background-position: center;
+  img {
+    width: 100%;
+    visibility: hidden;
+  }
 }
 
 .horizontal-card-item .content.details .header a {
   font-size: 18px;
   font-weight: 700;
-  color: #004B87;
-}
+  color: #004b87;
 
-.horizontal-card-item .content.details .header a:hover {
-  color: #8e004d;
+  &:hover {
+    color: #8e004d;
+  }
 }
