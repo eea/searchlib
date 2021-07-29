@@ -355,6 +355,38 @@ const demo_config = {
         title: 'Title',
         field: 'title',
       },
+      {
+        title: 'Description',
+        field: 'description',
+      },
+      {
+        title: 'Countries',
+        field: 'spatial',
+      },
+      {
+        title: 'Regions/Places/Cities/Seas...',
+        field: 'places',
+      },
+      {
+        title: 'Content types',
+        field: 'objectProvides',
+      },
+      {
+        title: 'Topics',
+        field: 'topic',
+      },
+      {
+        title: 'Issued',
+        field: 'issued',
+      },
+      {
+        title: 'Time coverage',
+        field: 'time_coverage',
+      },
+      {
+        title: 'Format',
+        field: 'format',
+      },
     ],
   },
 
@@ -364,6 +396,12 @@ const demo_config = {
     },
     objectProvides: {
       whitelist: objectProvidesWhitelist,
+    },
+    spatial: {
+      whitelist: spatialWhitelist,
+    },
+    places: {
+      blacklist: placesBlacklist,
     },
   },
 
