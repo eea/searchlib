@@ -1,52 +1,151 @@
 import React from 'react';
-
-import { Card, Image, Label } from 'semantic-ui-react';
+import { withSearch } from '@elastic/react-search-ui';
+import { Button, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+import cx from 'classnames';
 
-const CardItem = (props) => {
-  const { result } = props;
-  // console.log('hcard props', props);
+const normalizeStr = (str) => {
+  let tmp = document.createElement('DIV');
+  tmp.innerHTML = str;
+  str = tmp.textContent || tmp.innerText || '';
+  return str;
+};
+
+const ExternalLink = (props) => {
   return (
-    <Card className="horizontal-card-item">
-      <Label color="green" className="meta-type">
-        <StringList value={result[props.metatypeField]?.raw} />
-      </Label>
+    <a
+      className={props.className}
+      href={props.href}
+      target="_blank"
+      rel="noreferrer"
+      style={props.style}
+    >
+      {props.children}
+    </a>
+  );
+};
 
-      <Image
-        src="https://react.semantic-ui.com/images/wireframe/white-image.png"
-        wrapped
-        ui={false}
-        size="tiny"
-        as="a"
-        href={result.id?.raw}
-        label={
-          <>
-            <Label color="yellow" ribbon="right">
-              New
-            </Label>
-          </>
-        }
-      />
+const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
+  setFilter,
+  removeFilter,
+}))((props) => {
+  // console.log('props', props);
+  const { result, setFilter, removeFilter } = props;
+  const { appConfig, registry } = useAppConfig();
+  const days =
+    (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
+  // console.log('card props', props, appConfig);
 
+  const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
+
+  const getThumb =
+    registry.resolve[thumbFactoryName] ||
+    ((result, config, fallback) => fallback);
+
+  const iconFactoryName = appConfig.cardViewParams.getIconUrl;
+  const getIcon =
+    registry.resolve[iconFactoryName] ||
+    ((result, config, fallback) => fallback);
+
+  const thumbUrl = getThumb(
+    result,
+    appConfig,
+    // TODO: use a configured default
+    'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  );
+
+  const iconUrl = getIcon(
+    result,
+    appConfig,
+    // TODO: use a configured default
+    'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  );
+  const url = result.id?.raw;
+
+  const [hovered, setHovered] = React.useState(false);
+  const description = normalizeStr(result[props.descriptionField]?.raw || '');
+  return (
+    <Card
+      className={cx('horizontal-card-item', { hovered })}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <Card.Content>
-        <Card.Meta>{result.id?.raw}</Card.Meta>
-        <Card.Header>{result[props.titleField]?.raw}</Card.Header>
-        <Card.Description>
-          {result[props.descriptionField]?.raw}
-        </Card.Description>
+        <Image
+          className="horizontal-card-thumbnail"
+          src={thumbUrl}
+          wrapped
+          ui={false}
+          luid
+          centered
+          style={{ backgroundImage: `url('${thumbUrl}')` }}
+          as={ExternalLink}
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          label={
+            days < 30 && (
+              <Label color="yellow" ribbon="right">
+                New
+              </Label>
+            )
+          }
+        />
+        <Card.Content className="details">
+          <Card.Header>
+            <ExternalLink href={url}>
+              {result[props.titleField]?.raw}
+            </ExternalLink>
+          </Card.Header>
+          <Card.Meta>
+            <DateTime
+              format="DATE_MED"
+              value={result[props.issuedField]?.raw}
+            />
+          </Card.Meta>
+          <Card.Meta>
+            <StringList value={result[props.tagsField]?.raw} />
+          </Card.Meta>
+          <Card.Description>{description}</Card.Description>
+        </Card.Content>
       </Card.Content>
-      <Card.Content extra>
+      <Card.Content extra className="controls">
         <Card.Meta>
-          <StringList value={result[props.tagsField]?.raw} />
-        </Card.Meta>
-      </Card.Content>
-      <Card.Content extra>
-        <Card.Meta>
-          <DateTime format="DATE_MED" value={result[props.issuedField]?.raw} />
+          <Button
+            compact
+            floated="left"
+            color="green"
+            size="mini"
+            onClick={() => {
+              removeFilter('lessLikeThis');
+              setFilter('moreLikeThis', result._original._id, 'none');
+            }}
+          >
+            more like this
+          </Button>
+          <Button
+            className="metaButton"
+            floated="right"
+            target="_blank"
+            as="a"
+            href={result.id.raw}
+            circular
+            size="mini"
+            compact
+            icon={
+              <div
+                className="card-icon"
+                style={{ backgroundImage: `url('${iconUrl}')` }}
+              ></div>
+            }
+          ></Button>
         </Card.Meta>
       </Card.Content>
     </Card>
   );
-};
+});
+
+const CardItem = (props) => <CardItemComponent {...props} />;
 
 export default CardItem;

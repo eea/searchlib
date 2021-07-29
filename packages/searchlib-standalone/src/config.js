@@ -335,12 +335,13 @@ const demo_config = {
 
   horizontalCardViewParams: {
     titleField: 'title',
-    metatypeField: 'type',
+    metatypeField: 'objectProvides',
     descriptionField: 'description',
     tagsField: 'topic',
     issuedField: 'issued',
     enabled: true,
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
+    getIconUrl: 'getGlobalsearchIconUrl',
   },
 
   listingViewParams: {

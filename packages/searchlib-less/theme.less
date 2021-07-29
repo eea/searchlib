@@ -436,15 +436,31 @@ code {
   }
 }
 
-.card-item .card-icon {
+.card-item .card-icon,
+.horizontal-card-item .card-icon {
   width:30px;
   height:30px;
   background: #fff no-repeat center;
   background-size: 100%;
   border-radius: 50%;
-
 }
 
 a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
   padding:3px;
+}
+
+.horizontal-card-thumbnail {
+  display:block;
+  float:left;
+  margin-right:0.6em;
+}
+
+.horizontal-card-item .content.details .header a {
+  font-size: 18px;
+  font-weight: 700;
+  color: #004B87;
+}
+
+.horizontal-card-item .content.details .header a:hover {
+  color: #8e004d;
 }

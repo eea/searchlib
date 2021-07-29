@@ -5,6 +5,13 @@ import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';
 
+const normalizeStr = (str) => {
+  let tmp = document.createElement('DIV');
+  tmp.innerHTML = str;
+  str = tmp.textContent || tmp.innerText || '';
+  return str;
+};
+
 const ExternalLink = (props) => {
   return (
     <a
@@ -57,7 +64,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const url = result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
-
+  const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
     <Card
       className={cx('card-item', { hovered })}
@@ -95,9 +102,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             {result[props.titleField]?.raw}
           </ExternalLink>
         </Card.Header>
-        <Card.Description>
-          {result[props.descriptionField]?.raw}
-        </Card.Description>
+        <Card.Description>{description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
