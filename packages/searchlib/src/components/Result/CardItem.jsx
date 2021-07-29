@@ -36,6 +36,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     registry.resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
 
+  const iconFactoryName = appConfig.cardViewParams.getIconUrl;
+  const getIcon =
+    registry.resolve[iconFactoryName] ||
+    ((result, config, fallback) => fallback);
+
   const thumbUrl = getThumb(
     result,
     appConfig,
@@ -43,6 +48,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
+  const iconUrl = getIcon(
+    result,
+    appConfig,
+    // TODO: use a configured default
+    'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  );
   const url = result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
@@ -96,6 +107,14 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       <Card.Content extra>
         <Card.Meta>
           <DateTime format="DATE_MED" value={result[props.issuedField]?.raw} />
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content extra>
+        <Card.Meta>
+          <div
+            className="card-icon"
+            style={{ backgroundImage: `url('${iconUrl}')` }}
+          ></div>
         </Card.Meta>
       </Card.Content>
       <Card.Content extra className="controls">
