@@ -109,14 +109,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           <DateTime format="DATE_MED" value={result[props.issuedField]?.raw} />
         </Card.Meta>
       </Card.Content>
-      <Card.Content extra>
-        <Card.Meta>
-          <div
-            className="card-icon"
-            style={{ backgroundImage: `url('${iconUrl}')` }}
-          ></div>
-        </Card.Meta>
-      </Card.Content>
       <Card.Content extra className="controls">
         <Card.Meta>
           <Button
@@ -143,14 +135,22 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           {/* > */}
           {/*   less like this */}
           {/* </Button> */}
+
           <Button
+            className="metaButton"
             floated="right"
             target="_blank"
             as="a"
             href={result.id.raw}
-            compact
+            circular
             size="mini"
-            icon="globe"
+            compact
+            icon={
+              <div
+                className="card-icon"
+                style={{ backgroundImage: `url('${iconUrl}')` }}
+              ></div>
+            }
           ></Button>
         </Card.Meta>
       </Card.Content>
