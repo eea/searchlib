@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@eeacms/search": ["node_modules/@eeacms/search/src"]
+    }
+  },
+  "include": []
+}

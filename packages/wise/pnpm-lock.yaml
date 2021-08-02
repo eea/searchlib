@@ -1,0 +1,7 @@
+lockfileVersion: 5.3
+
+specifiers:
+  '@eeacms/search': link:.yalc/@eeacms/search
+
+dependencies:
+  '@eeacms/search': link:node_modules/@eeacms/search
