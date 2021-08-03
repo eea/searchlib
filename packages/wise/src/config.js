@@ -46,7 +46,7 @@ const wise_config = {
   },
   listingViewParams: {
     titleField: 'Measure_name',
-    // urlField: 'CodeCatalogue',
+    urlField: 'CodeCatalogue',
     extraFields: [
       {
         field: 'Origin_of_the_measure',

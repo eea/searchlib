@@ -15,7 +15,7 @@ function getHighlight(hit, fieldName) {
   return hit.highlight[fieldName][0];
 }
 
-export default function buildResults(hits, field_filters) {
+export default function buildResults(hits, field_filters = {}) {
   const addEachKeyValueToObject = (acc, [key, value]) => ({
     ...acc,
     [key]: value,

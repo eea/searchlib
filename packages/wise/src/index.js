@@ -6,7 +6,7 @@ import installConfig from './config';
 
 import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
-// import './semantic-ui.less';
+import './semantic-ui.less';
 
 // ++resource++measures-catalogue/
 // import './index.css';

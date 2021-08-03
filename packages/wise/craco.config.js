@@ -29,6 +29,8 @@ module.exports = {
     },
 
     { plugin: cracoExtendScope, options: { path: searchlibPath} },
+    { plugin: cracoExtendScope, options: { path: 'node_modules/@eeacms/search/src'} },
+
 
     {
       plugin: CracoAlias,

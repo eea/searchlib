@@ -1,4 +1,13 @@
 import { suiFacet, mergeConfig } from '@eeacms/search';
+// "TypeError: Cannot read property 'CodeCatalogue' of undefined
+//     at toObject (http://localhost:3000/static/js/main.chunk.js:12180:61)
+//         at http://localhost:3000/static/js/main.chunk.js:12206:93
+//             at Array.map (<anonymous>)
+//                 at http://localhost:3000/static/js/main.chunk.js:12206:48
+//                     at Array.map (<anonymous>)
+//                         at buildResults (http://localhost:3000/static/js/main.chunk.js:12205:15)
+//                             at buildState (http://localhost:3000/static/js/main.chunk.js:11957:75)
+//                                 at Object.onSearch (http://localhost:3000/static/js/main.chunk.js:9967:78)"
 
 const wise_config = {
   facets: [
