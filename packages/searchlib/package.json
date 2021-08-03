@@ -1,7 +1,6 @@
 {
   "name": "@eeacms/search",
   "version": "0.2.0",
-  "private": false,
   "main": "dist/index.js",
   "module": "src/index.js",
   "directories": {
