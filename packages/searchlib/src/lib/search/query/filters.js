@@ -9,7 +9,7 @@ import registry from '@eeacms/search/registry';
 
 export function buildRequestFilter(filters, config) {
   let boolFilters = [];
-  config.facets.forEach((facet) => {
+  config.facets?.forEach((facet) => {
     if (facet.factory === 'BooleanFacet') {
       let shouldAdd = true;
       filters.forEach((filter) => {
@@ -71,7 +71,7 @@ export function buildRequestFilter(filters, config) {
 
   if (filters.length < 1) return;
 
-  if (config.permanentFilters.length > 0) {
+  if (config.permanentFilters?.length > 0) {
     filters = filters.concat(config.permanentFilters);
   }
   if (boolFilters.length > 0) {

@@ -12,6 +12,9 @@ import {
   TableView,
   FilterResultEntry,
 } from '@eeacms/search/components';
+
+import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
+import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
@@ -30,12 +33,12 @@ import {
   getHistogramFilter,
   getBooleanFilter,
   getBooleanFacet,
-  // getHistogramFacet,
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
   buildMLTFilter,
-  getMLTValue,
+  // getHistogramFacet,
+  // getMLTValue,
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 
@@ -125,6 +128,12 @@ const config = {
     FilterResultEntry: {
       component: FilterResultEntry,
     },
+    SimpleSearchInput: {
+      component: SimpleSearchInput,
+    },
+    DefaultSearchInput: {
+      component: SearchInput,
+    },
   },
 
   searchui: {
@@ -137,6 +146,8 @@ const config = {
       onAutocompleteResultClick,
       onAutocomplete,
       onSearch,
+
+      searchBoxComponent: 'DefaultSearchInput',
 
       // visually layout the search components (header, side, etc)
       layoutComponent: 'LeftColumnLayout',

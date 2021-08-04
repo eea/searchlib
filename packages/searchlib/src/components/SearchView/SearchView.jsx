@@ -93,6 +93,8 @@ export const SearchView = (props) => {
     }),
   ];
 
+  console.log('appConfig', appConfig);
+
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
@@ -103,13 +105,14 @@ export const SearchView = (props) => {
             autocompleteResults={appConfig.autocomplete.results}
             autocompleteSuggestions={appConfig.autocomplete.suggestions}
             shouldClearFilters={false}
+            inputView={
+              appConfig.searchBoxComponent
+                ? registry.resolve[appConfig.searchBoxComponent].component
+                : undefined
+            }
           />
         }
-        sideContent={
-          <>
-            <Facets />
-          </>
-        }
+        sideContent={<Facets />}
         bodyHeader={<SUIPagingInfo view={PagingInfo} />}
         bodyContent={
           <>
