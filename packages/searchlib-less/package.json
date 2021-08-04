@@ -6,6 +6,10 @@
   "homepage": "https://github.com/eea/searchlib",
   "license": "MIT",
   "main": "dist/main.js",
+  "exports": {
+    ".": "./dist/main.js",
+    "./main.css": "./dist/main.css"
+  },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
   },
