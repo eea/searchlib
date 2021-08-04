@@ -1,7 +1,7 @@
 const pkg = require('./package.json');
 const path = require('path');
 
-const nodeExternals = require('webpack-node-externals');
+// const nodeExternals = require('webpack-node-externals');
 
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;

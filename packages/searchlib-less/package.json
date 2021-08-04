@@ -7,8 +7,16 @@
   "license": "MIT",
   "main": "dist/main.js",
   "exports": {
-    ".": "./dist/main.js",
-    "./main.css": "./dist/main.css"
+    ".": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "directories": {
+    "dist": "dist"
   },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
