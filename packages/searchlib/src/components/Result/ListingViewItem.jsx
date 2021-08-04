@@ -2,24 +2,39 @@ import React from 'react';
 import { Modal, Item } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
+const String = ({ val }) => {
+  return typeof val === 'string' ? val : JSON.stringify(val);
+};
+
 export const ListingViewDetails = (props) => {
   const { result, appConfig } = props;
   const { listingViewParams } = appConfig;
   const { details } = listingViewParams;
   return (
     <div className="listing-view-details">
-      {/* {JSON.stringify(props.result)} */}
       {details.sections?.map((section, index) => (
         <div className="listing-view-details-section" key={index}>
-          {section.title ? <h4>{section.title}</h4> : ''}
-          {section.titleField ? <h5>{result[section.titleField]?.raw}</h5> : ''}
+          {section.title ? (
+            <h4>
+              <String val={section.title} />
+            </h4>
+          ) : (
+            ''
+          )}
+          {section.titleField ? (
+            <h5>
+              <String val={result[section.titleField]?.raw} />
+            </h5>
+          ) : (
+            ''
+          )}
           {section.fields?.map((field, index) => (
             <div className="details-field" key={index}>
               <div className="details-field-label">
-                {field.label || field.field}
+                <String val={field.label || field.field} />
               </div>
               <div className="details-field-value">
-                {result[field.field]?.raw}
+                <String val={result[field.field]?.raw} />
               </div>
             </div>
           ))}
@@ -37,7 +52,6 @@ export const Header = (props) => {
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id?.raw;
-  // console.log({ url, title, result });
 
   return (
     <>
@@ -48,7 +62,11 @@ export const Header = (props) => {
           <Item.Header
             className="listing-view-item"
             as="a"
-            onClick={() => setShowModal(true)}
+            onClick={(e) => {
+              setShowModal(true);
+              e.preventDefault();
+              e.stopPropagation();
+            }}
             onKeyDown={() => setShowModal(true)}
           >
             {title}
