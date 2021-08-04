@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/search-less",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common LESS files for @eeacms/search",
   "author": "Tiberiu Ichim <tiberiu.ichim@gmail.com>",
   "homepage": "https://github.com/eea/searchlib",
@@ -17,9 +17,6 @@
   ],
   "directories": {
     "dist": "dist"
-  },
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
   },
   "repository": {
     "type": "git",
