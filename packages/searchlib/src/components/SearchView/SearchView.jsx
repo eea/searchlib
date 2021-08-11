@@ -37,8 +37,45 @@ export const SearchView = (props) => {
 
   const { driver } = React.useContext(SearchContext);
 
+  // console.log('was searched', wasSearched);
+
+  const { sortOptions, resultViews } = appConfig;
+  const defaultViewId =
+    resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
+  const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
+
+  const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
+
+  const Item = registry.resolve[listingViewDef.factories.item].component;
+  const ResultViewComponent =
+    registry.resolve[listingViewDef.factories.view].component;
+
+  const InitialViewComponent =
+    appConfig.initialView?.factory &&
+    registry.resolve[appConfig.initialView.factory].component;
+  console.log('initial', InitialViewComponent);
+
+  const NoResultsComponent =
+    appConfig.noResultsView?.factory &&
+    registry.resolve[appConfig.noResultsView?.factory].component;
+
+  // const itemViewProps = listingViewDef.params;
+  const itemViewProps = appConfig[`${activeViewId}ViewParams`];
+  const Layout = registry.resolve[appConfig.layoutComponent].component;
+
+  const availableResultViews = [
+    ...resultViews.filter(({ id }) => {
+      const paramsPropId = `${id}ViewParams`;
+      return Object.keys(appConfig).includes(paramsPropId)
+        ? appConfig[paramsPropId].enabled
+        : true;
+    }),
+  ];
+
+  console.log('appConfig', appConfig);
+
   React.useEffect(() => {
-    if (!wasSearched) {
+    if (!wasSearched && !InitialViewComponent) {
       setSearchTerm(defaultSearchText);
 
       const state = driver.URLManager.getStateFromURL();
@@ -67,33 +104,8 @@ export const SearchView = (props) => {
     addFilter,
     setCurrent,
     setSort,
+    InitialViewComponent,
   ]);
-
-  const { sortOptions, resultViews } = appConfig;
-  const defaultViewId =
-    resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
-  const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
-
-  const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
-
-  const Item = registry.resolve[listingViewDef.factories.item].component;
-  const ResultViewComponent =
-    registry.resolve[listingViewDef.factories.view].component;
-
-  // const itemViewProps = listingViewDef.params;
-  const itemViewProps = appConfig[`${activeViewId}ViewParams`];
-  const Layout = registry.resolve[appConfig.layoutComponent].component;
-
-  const availableResultViews = [
-    ...resultViews.filter(({ id }) => {
-      const paramsPropId = `${id}ViewParams`;
-      return Object.keys(appConfig).includes(paramsPropId)
-        ? appConfig[paramsPropId].enabled
-        : true;
-    }),
-  ];
-
-  console.log('appConfig', appConfig);
 
   return (
     <div className={`searchapp searchapp-${appName}`}>
@@ -137,7 +149,21 @@ export const SearchView = (props) => {
             <Results
               shouldTrackClickThrough={true}
               view={({ children }) => {
-                return <ResultViewComponent>{children}</ResultViewComponent>;
+                return wasSearched ? (
+                  NoResultsComponent ? (
+                    children ? (
+                      <ResultViewComponent>{children}</ResultViewComponent>
+                    ) : (
+                      <NoResultsComponent />
+                    )
+                  ) : (
+                    <ResultViewComponent>{children}</ResultViewComponent>
+                  )
+                ) : InitialViewComponent ? (
+                  <InitialViewComponent />
+                ) : (
+                  <ResultViewComponent>{children}</ResultViewComponent>
+                );
               }}
               resultView={(props) => (
                 <Result {...props} {...itemViewProps} view={Item} />

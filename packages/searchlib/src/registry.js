@@ -207,6 +207,12 @@ const config = {
         // }
       },
 
+      initialView: {
+        factory: null,
+      },
+      noResultView: {
+        factory: null,
+      },
       resultViews: [
         {
           id: 'listing',
