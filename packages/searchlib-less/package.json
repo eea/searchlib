@@ -51,6 +51,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
+    "autoprefixer": "9",
     "mini-css-extract-plugin": "^1.6.0",
     "semantic-ui-less": "^2.4.1",
     "webpack": "4",

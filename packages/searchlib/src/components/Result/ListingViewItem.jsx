@@ -3,7 +3,16 @@ import { Modal, Item } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
 const String = ({ val }) => {
-  return typeof val === 'string' ? val : JSON.stringify(val);
+  console.log('String', val);
+  return typeof val === 'string'
+    ? val
+    : Array.isArray(val)
+    ? val.map((item, i) => (
+        <span key={i} className="array-string-item">
+          <String val={item} key={i} />
+        </span>
+      ))
+    : JSON.stringify(val);
 };
 
 export const ListingViewDetails = (props) => {
@@ -102,7 +111,7 @@ const Inner = (props) => {
         <Item.Extra>
           {listingViewParams?.extraFields?.map(({ field, label }, i) => (
             <div className="simple-item-extra" key={i}>
-              <em>{label}:</em> {result[field]?.raw}
+              <em>{label}:</em> <String val={result[field]?.raw} />
             </div>
           ))}
         </Item.Extra>
