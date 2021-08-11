@@ -23,7 +23,8 @@
     "url": "git+https://github.com/eea/searchlib.git"
   },
   "scripts": {
-    "build": "webpack build"
+    "build": "webpack build",
+    "watch": "webpack watch"
   },
   "bugs": {
     "url": "https://github.com/eea/searchlib/issues"
