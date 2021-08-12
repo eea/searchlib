@@ -1,7 +1,7 @@
 import {
   histogramFacet,
   suiFacet,
-  suiRangeFacet,
+  // suiRangeFacet,
   multiTermFacet,
   mergeConfig,
   makeRange,
@@ -13,38 +13,12 @@ import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
+import {
+  getTodayWithTime,
+  getGlobalsearchThumbUrl,
+  getGlobalsearchIconUrl,
+} from './utils';
 
-function getTodayWithTime() {
-  const d = new Date();
-  const month = d.getMonth() + 1;
-  const day = d.getDate();
-  const hour = d.getHours();
-  const minute = d.getMinutes();
-  const second = d.getSeconds();
-
-  const output = [
-    d.getFullYear(),
-    '-',
-    month < 10 ? '0' : '',
-    month,
-    '-',
-    day < 10 ? '0' : '',
-    day,
-    'T',
-    hour < 10 ? '0' : '',
-    hour,
-    ':',
-    minute < 10 ? '0' : '',
-    minute,
-    ':',
-    second < 10 ? '0' : '',
-    second,
-    'Z',
-  ].join('');
-  return output;
-}
-
-const today = getTodayWithTime();
 const demo_config = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
@@ -116,18 +90,18 @@ const demo_config = {
   },
   permanentFilters: [
     { term: { hasWorkflowState: 'published' } },
-    {
+    () => ({
       constant_score: {
         filter: {
           bool: {
             should: [
               { bool: { must_not: { exists: { field: 'issued' } } } },
-              { range: { 'issued.date': { lte: today } } },
+              { range: { 'issued.date': { lte: getTodayWithTime() } } },
             ],
           },
         },
       },
-    },
+    }),
   ],
   defaultFilters: {
     language: {
@@ -259,7 +233,7 @@ const demo_config = {
       label: 'Language',
       defaultValues: ['en'],
     }),
-    booleanFacet({
+    booleanFacet(() => ({
       field: 'Include archived content',
       label: 'Include archived content',
       showInFacetsList: false,
@@ -269,13 +243,13 @@ const demo_config = {
             bool: {
               should: [
                 { bool: { must_not: { exists: { field: 'expires' } } } },
-                { range: { expires: { gte: today } } },
+                { range: { expires: { gte: getTodayWithTime() } } },
               ],
             },
           },
         },
       },
-    }),
+    })),
   ],
 
   resultViews: [
@@ -435,117 +409,6 @@ const demo_config = {
   ],
 };
 
-// const demo_config = {
-//   facets: [
-//     suiFacet({ field: 'Country', isFilterable: true, isMulti: true }),
-//     suiFacet({ field: 'Sector', isMulti: true }),
-//     suiFacet({ field: 'Use_or_activity', label: 'Use or activity' }),
-//     suiFacet({ field: 'Status' }),
-//     suiFacet({
-//       field: 'Origin_of_the_measure',
-//       label: 'Origin of the measure',
-//     }),
-//     suiFacet({
-//       field: 'Nature_of_the_measure',
-//       label: 'Nature of the measure',
-//     }),
-//     suiFacet({ field: 'Water_body_category', label: 'Water body category' }),
-//     suiFacet({ field: 'Spatial_scope', label: 'Spatial scope' }),
-//     suiFacet({ field: 'Measure_Impacts_to', label: 'Measure impacts' }),
-//     suiFacet({ field: 'Descriptors' }),
-//   ],
-//
-//   highlight: {
-//     fields: {
-//       Measure_name: {},
-//     },
-//   },
-//
-//   sortOptions: [
-//     {
-//       name: 'Title',
-//       value: 'Measure_name',
-//       direction: 'asc',
-//     },
-//   ],
-//
-//   tableViewParams: {
-//     columns: [
-//       {
-//         title: 'Measure name',
-//         field: 'Measure_name',
-//       },
-//       {
-//         title: 'Origin of the measure',
-//         field: 'Origin_of_the_measure',
-//       },
-//     ],
-//   },
-//
-//   listingViewParams: {
-//     titleField: 'Measure_name',
-//     // urlField: 'CodeCatalogue',
-//     extraFields: [
-//       {
-//         field: 'Origin_of_the_measure',
-//         label: 'Origin of the measure',
-//       },
-//       {
-//         field: 'Nature_of_the_measure',
-//         label: 'Nature of the measure',
-//       },
-//       {
-//         field: 'Spatial_scope',
-//         label: 'Spatial scope',
-//       },
-//     ],
-//     details: {
-//       titleField: 'Measure_name',
-//       extraFields: [
-//         {
-//           field: 'Origin_of_the_measure',
-//           label: 'Origin of the measure',
-//         },
-//         {
-//           field: 'Nature_of_the_measure',
-//           label: 'Nature of the measure',
-//         },
-//         {
-//           field: 'Spatial_scope',
-//           label: 'Spatial scope',
-//         },
-//       ],
-//       sections: [
-//         {
-//           fields: [
-//             {
-//               field: 'Use_or_activity',
-//               label: 'Use or activity',
-//             },
-//             {
-//               field: 'Measure_Impacts_to',
-//               label: 'Measure impacts',
-//             },
-//           ],
-//         },
-//         {
-//           title: 'Main',
-//           fields: [
-//             {
-//               field: 'Origin_of_the_measure',
-//               label: 'Origin of the measure',
-//             },
-//             {
-//               field: 'Nature_of_the_measure',
-//               label: 'Nature of the measure',
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   },
-// };
-
 export default function install(config) {
   // console.log(process.env.RAZZLE_ENV_CONFIG);
   const envConfig = process.env.RAZZLE_ENV_CONFIG
@@ -588,110 +451,10 @@ export default function install(config) {
     },
   };
 
-  config.resolve.getGlobalsearchThumbUrl = (result, config, fallback) => {
-    let image = fallback;
-    let has_img = false;
-    if (
-      result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')
-    ) {
-      image = 'https://www.eea.europa.eu/portal_depiction/term/image_preview';
-      has_img = true;
-    }
-    if (result.objectProvides.raw.indexOf('Country profile') !== -1) {
-      image =
-        'https://www.eea.europa.eu/portal_depiction/country-profile/image_preview';
-      has_img = true;
-    }
-    if (result.about.raw.indexOf('://land.copernicus.eu') !== -1) {
-      image = result.about.raw + '/image_preview';
-      has_img = true;
-    }
-    if (result.about.raw.startsWith('http://www.eea.europa.eu')) {
-      image = result.about.raw + '/image_preview';
-      has_img = true;
-    } else {
-      if (!has_img) {
-        let contentTypes = contentTypeNormalize;
-        let _type;
-        let _typeClass;
-        let _contentType = 'generic';
-        if (!Array.isArray(result.objectProvides.raw)) {
-          result.objectProvides.raw = [result.objectProvides.raw];
-        }
-        if (result.objectProvides.raw.length > 0) {
-          var pos = result.objectProvides.raw.length - 1;
-          while (true) {
-            _type = result.objectProvides.raw[pos];
-            _typeClass = _type.toLowerCase().replace(/\s/g, '-');
-            if (contentTypes[_typeClass]) {
-              _contentType = contentTypes[_typeClass];
-              break;
-            }
-            pos--;
-            if (pos < 0) {
-              break;
-            }
-          }
-        }
-        image =
-          'https://www.eea.europa.eu/portal_depiction/' +
-          _contentType +
-          '/image_preview';
-      }
-    }
-
-    return image;
-  };
-  config.resolve.getGlobalsearchIconUrl = (result, config, fallback) => {
-    let image = fallback;
-    let has_img = false;
-    if (
-      result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')
-    ) {
-      image = 'https://www.eea.europa.eu/portal_depiction/term/image_thumb';
-      has_img = true;
-    }
-    if (result.objectProvides.raw.indexOf('Country profile') !== -1) {
-      image =
-        'https://www.eea.europa.eu/portal_depiction/country-profile/image_thumb';
-      has_img = true;
-    }
-    if (result.about.raw.indexOf('://land.copernicus.eu') !== -1) {
-      image = 'https://www.eea.europa.eu/portal_depiction/data/image_thumb';
-      has_img = true;
-    } else {
-      if (!has_img) {
-        let contentTypes = contentTypeNormalize;
-        let _type;
-        let _typeClass;
-        let _contentType = 'generic';
-        if (!Array.isArray(result.objectProvides.raw)) {
-          result.objectProvides.raw = [result.objectProvides.raw];
-        }
-        if (result.objectProvides.raw.length > 0) {
-          var pos = result.objectProvides.raw.length - 1;
-          while (true) {
-            _type = result.objectProvides.raw[pos];
-            _typeClass = _type.toLowerCase().replace(/\s/g, '-');
-            if (contentTypes[_typeClass]) {
-              _contentType = contentTypes[_typeClass];
-              break;
-            }
-            pos--;
-            if (pos < 0) {
-              break;
-            }
-          }
-        }
-        image =
-          'https://www.eea.europa.eu/portal_depiction/' +
-          _contentType +
-          '/image_thumb';
-      }
-    }
-
-    return image;
-  };
+  config.resolve.getGlobalsearchIconUrl =
+    getGlobalsearchIconUrl(contentTypeNormalize);
+  config.resolve.getGlobalsearchThumbUrl =
+    getGlobalsearchThumbUrl(contentTypeNormalize);
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [

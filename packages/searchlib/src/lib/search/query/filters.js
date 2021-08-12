@@ -1,12 +1,17 @@
 import registry from '@eeacms/search/registry';
 
+const isFunction = (value) =>
+  value &&
+  (Object.prototype.toString.call(value) === '[object Function]' ||
+    'function' === typeof value ||
+    value instanceof Function);
+
 /**
  * Construct the ES DSL filter query
  *
  * This will participate in the query part, filtering the result set.
  *
  */
-
 export function buildRequestFilter(filters, config) {
   let boolFilters = [];
   config.facets?.forEach((facet) => {
@@ -72,7 +77,9 @@ export function buildRequestFilter(filters, config) {
   if (filters.length < 1) return;
 
   if (config.permanentFilters?.length > 0) {
-    filters = filters.concat(config.permanentFilters);
+    filters = filters.concat(
+      config.permanentFilters.map((f) => (isFunction(f) ? f() : f)),
+    );
   }
   if (boolFilters.length > 0) {
     boolFilters.forEach((filter) => {
