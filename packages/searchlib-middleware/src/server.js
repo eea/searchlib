@@ -1,5 +1,5 @@
 import express from 'express';
-import { createESMiddleware } from '@eeacms/search-middleware';
+import { createESMiddleware } from './elasticsearch';
 
 // import installConfig from './config';
 // import { registry } from '@eeacms/search';
