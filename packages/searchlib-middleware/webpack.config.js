@@ -19,6 +19,7 @@ module.exports = {
   plugins,
   entry: {
     index: `${__dirname}/src/index.js`,
+    server: `${__dirname}/src/server.js`,
   },
   target: 'node',
   output: {
