@@ -18,7 +18,7 @@ const makeServer = (appConfig) => {
   });
   const server = express()
     .disable('x-powered-by')
-    .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+    // .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
     .use(express.urlencoded())
     .use(express.json())
     .use([es_proxy]);
