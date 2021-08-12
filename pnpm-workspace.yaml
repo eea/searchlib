@@ -1,7 +1,8 @@
 packages:
-  - 'packages/searchlib-middleware'
-  - 'packages/searchlib-less'
   - 'packages/searchlib'
+  - 'packages/searchlib-middleware'
+  - 'packages/searchlib-proxy'
+  - 'packages/searchlib-less'
   - 'packages/searchlib-standalone'
   - 'packages/demo'
   - 'packages/wise'

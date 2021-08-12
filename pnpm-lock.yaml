@@ -661,6 +661,9 @@ importers:
       webpack-manifest-plugin: 2.2.0_webpack@4.44.2
       workbox-webpack-plugin: 5.1.4_webpack@4.44.2
 
+  packages/searchlib-proxy:
+    specifiers: {}
+
   packages/searchlib-standalone:
     specifiers:
       '@babel/eslint-parser': ^7.14.3
@@ -9990,7 +9993,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.7.0_webpack@4.46.0
+      webpack-cli: 4.7.0
 
   /@webpack-cli/serve/1.4.0_9930b48f97fc6c2f231530b534a67c62:
     resolution: {integrity: sha512-xgT/HqJ+uLWGX+Mzufusl3cgjAcnqYYskaB7o0vRcwOEfuu6hMzSILQpnIzFMGsTaeaX4Nnekl+6fadLbl1/Vg==}
@@ -10014,7 +10017,7 @@ packages:
       webpack-dev-server:
         optional: true
     dependencies:
-      webpack-cli: 4.7.0_webpack@4.46.0
+      webpack-cli: 4.7.0
 
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
