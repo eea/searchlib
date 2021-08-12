@@ -129,6 +129,16 @@ const demo_config = {
       },
     },
   ],
+  defaultFilters: {
+    language: {
+      value: 'en',
+      type: 'any',
+    },
+    readingTime: {
+      value: { name: 'All', rangeType: 'fixed' },
+      type: 'any',
+    },
+  },
 
   facets: [
     multiTermFacet({

@@ -22,16 +22,24 @@ import {
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 
+// const isInteracted = (state, appConfig) => {
+//   const res =
+//     Object.keys(state).filter((k) => k !== 'resultsPerPage').length !== 0;
+//   return res;
+// };
+
 export const SearchView = (props) => {
   // console.log('searchview props', props);
   const {
-    wasSearched,
-    setSearchTerm,
     addFilter,
     appConfig,
     appName,
+    filters,
+    searchTerm,
     setCurrent,
+    setSearchTerm,
     setSort,
+    wasSearched,
   } = props;
   const { defaultSearchText = '' } = appConfig;
 
@@ -53,7 +61,7 @@ export const SearchView = (props) => {
   const InitialViewComponent =
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
-  console.log('initial', InitialViewComponent);
+  // console.log('initial', InitialViewComponent);
 
   const NoResultsComponent =
     appConfig.noResultsView?.factory &&
@@ -71,14 +79,14 @@ export const SearchView = (props) => {
         : true;
     }),
   ];
-
-  console.log('appConfig', appConfig);
+  const { defaultFilters } = appConfig;
+  const wasInteracted = filters.length > 0 || searchTerm;
 
   React.useEffect(() => {
-    if (!wasSearched && !InitialViewComponent) {
-      setSearchTerm(defaultSearchText);
-
+    if (!wasSearched) {
+      //&& !InitialViewComponent
       const state = driver.URLManager.getStateFromURL();
+      setSearchTerm(defaultSearchText);
 
       state.filters?.forEach((f) => addFilter(f.field, f.values, f.type));
 
@@ -88,15 +96,19 @@ export const SearchView = (props) => {
       if (state.sortField) {
         setSort(state.sortField, state.sortDirection);
       }
-      const presetFilters = state?.filters?.map((filter) => filter.field);
-      if (!presetFilters || presetFilters?.indexOf('language') === -1) {
-        addFilter('language', 'en', 'any');
-      }
-      if (!presetFilters || presetFilters?.indexOf('readingTime') === -1) {
-        addFilter('readingTime', { name: 'All', rangeType: 'fixed' }, 'any');
+
+      if (defaultFilters) {
+        const presetFilters = state?.filters?.map((filter) => filter.field);
+        Object.keys(defaultFilters).forEach((k) => {
+          const { value, type = 'any' } = defaultFilters[k];
+          if (!presetFilters || presetFilters?.indexOf(k) === -1) {
+            addFilter(k, value, type);
+          }
+        });
       }
     }
   }, [
+    appConfig,
     wasSearched,
     setSearchTerm,
     defaultSearchText,
@@ -105,6 +117,7 @@ export const SearchView = (props) => {
     setCurrent,
     setSort,
     InitialViewComponent,
+    defaultFilters,
   ]);
 
   return (
@@ -149,18 +162,18 @@ export const SearchView = (props) => {
             <Results
               shouldTrackClickThrough={true}
               view={({ children }) => {
-                return wasSearched ? (
+                return wasInteracted ? (
                   NoResultsComponent ? (
                     children ? (
                       <ResultViewComponent>{children}</ResultViewComponent>
                     ) : (
-                      <NoResultsComponent />
+                      <NoResultsComponent {...props} />
                     )
                   ) : (
                     <ResultViewComponent>{children}</ResultViewComponent>
                   )
                 ) : InitialViewComponent ? (
-                  <InitialViewComponent />
+                  <InitialViewComponent {...props} />
                 ) : (
                   <ResultViewComponent>{children}</ResultViewComponent>
                 );

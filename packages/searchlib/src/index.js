@@ -6,6 +6,7 @@ export * from './lib/facets';
 export * from './lib/utils';
 export * from './lib/hocs';
 export * from './lib/search';
+export runRequest from './lib/runRequest';
 
 export { default as SearchApp } from './components/SearchApp/SearchApp';
 export { default as SearchView } from './components/SearchView/SearchView';

@@ -26,6 +26,7 @@ export async function onAutocomplete(props) {
 }
 
 export async function onSearch(state) {
+  console.log('onsearch');
   const config = this;
   const { resultsPerPage } = state;
   const requestBody = buildRequest(state, config);

@@ -1,9 +1,10 @@
 import superagent from 'superagent';
 
-export default async function runRequest(body, config) {
+export default async function runRequest(body, config, url) {
   const { host, elastic_index } = config;
 
-  const url = `${host}/${elastic_index}/_search`;
+  url = url || `${host}/${elastic_index}/_search`;
+
   let resp;
   try {
     resp = await superagent
