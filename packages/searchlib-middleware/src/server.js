@@ -1,5 +1,6 @@
 import express from 'express';
 import { createESMiddleware } from './elasticsearch';
+import cors from 'cors';
 
 // import installConfig from './config';
 // import { registry } from '@eeacms/search';
@@ -18,6 +19,9 @@ const makeServer = (appConfig) => {
   });
   const server = express()
     .disable('x-powered-by')
+    .options('*', cors())
+    .use(cors({ origin: '*' }))
+
     // .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
     .use(express.urlencoded())
     .use(express.json())
