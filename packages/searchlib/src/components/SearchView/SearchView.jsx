@@ -22,14 +22,7 @@ import {
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 
-// const isInteracted = (state, appConfig) => {
-//   const res =
-//     Object.keys(state).filter((k) => k !== 'resultsPerPage').length !== 0;
-//   return res;
-// };
-
 export const SearchView = (props) => {
-  // console.log('searchview props', props);
   const {
     addFilter,
     appConfig,
@@ -45,8 +38,6 @@ export const SearchView = (props) => {
 
   const { driver } = React.useContext(SearchContext);
 
-  // console.log('was searched', wasSearched);
-
   const { sortOptions, resultViews } = appConfig;
   const defaultViewId =
     resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
@@ -61,7 +52,6 @@ export const SearchView = (props) => {
   const InitialViewComponent =
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
-  // console.log('initial', InitialViewComponent);
 
   const NoResultsComponent =
     appConfig.noResultsView?.factory &&
@@ -84,7 +74,6 @@ export const SearchView = (props) => {
 
   React.useEffect(() => {
     if (!wasSearched) {
-      //&& !InitialViewComponent
       const state = driver.URLManager.getStateFromURL();
       setSearchTerm(defaultSearchText);
 
@@ -130,7 +119,13 @@ export const SearchView = (props) => {
             autocompleteResults={appConfig.autocomplete.results}
             autocompleteSuggestions={appConfig.autocomplete.suggestions}
             shouldClearFilters={false}
+            useSearchPhrases={appConfig.useSearchPhrases}
             inputView={
+              appConfig.searchBoxInputComponent
+                ? registry.resolve[appConfig.searchBoxInputComponent].component
+                : undefined
+            }
+            view={
               appConfig.searchBoxComponent
                 ? registry.resolve[appConfig.searchBoxComponent].component
                 : undefined

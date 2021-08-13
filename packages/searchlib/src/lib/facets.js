@@ -2,6 +2,7 @@
  * "Factory" methods. These are simple helpers that return configuration
  * objects for facet components
  */
+
 import { isFunction } from '@eeacms/search/utils';
 
 export const histogramFacet = ({

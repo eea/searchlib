@@ -1,3 +1,6 @@
+/**
+ * A simple search input. A copy of the searchui search input
+ */
 import PropTypes from 'prop-types';
 import React from 'react';
 

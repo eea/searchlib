@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Facet } from '@elastic/react-search-ui';
+import { SearchBox } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
@@ -134,6 +134,9 @@ const config = {
     DefaultSearchInput: {
       component: SearchInput,
     },
+    'searchui.SearchBox': {
+      component: SearchBox,
+    },
   },
 
   searchui: {
@@ -147,10 +150,12 @@ const config = {
       onAutocomplete,
       onSearch,
 
-      searchBoxComponent: 'DefaultSearchInput',
-
       // visually layout the search components (header, side, etc)
       layoutComponent: 'LeftColumnLayout',
+
+      useSearchPhrases: true,
+      // the SearchBox is a wrapper over the SearcBoxInput component
+      searchBoxInputComponent: 'DefaultSearchInput',
 
       // when entering in search view, use this to search
       defaultSearchText: '',
