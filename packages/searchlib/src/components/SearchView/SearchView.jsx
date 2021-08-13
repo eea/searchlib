@@ -142,40 +142,71 @@ export const SearchView = (props) => {
         bodyContent={
           <>
             <h1>{appConfig.title}</h1>
-            <FilterList {...props} />
-
-            <div className="above-results">
-              <ViewSelector
-                views={availableResultViews}
-                active={activeViewId}
-                onSetView={setActiveViewId}
-              />
-              <Sorting
-                label={'Order'}
-                sortOptions={sortOptions}
-                view={SortingDropdown}
-              />
-            </div>
-
-            <AnswersList />
-
             <Results
               shouldTrackClickThrough={true}
               view={({ children }) => {
                 return wasInteracted ? (
                   NoResultsComponent ? (
                     children ? (
-                      <ResultViewComponent>{children}</ResultViewComponent>
+                      <>
+                        <FilterList {...props} />
+                        <div className="above-results">
+                          <ViewSelector
+                            views={availableResultViews}
+                            active={activeViewId}
+                            onSetView={setActiveViewId}
+                          />
+                          <Sorting
+                            label={'Order'}
+                            sortOptions={sortOptions}
+                            view={SortingDropdown}
+                          />
+                        </div>
+                        <AnswersList />
+                        <ResultViewComponent>{children}</ResultViewComponent>
+                      </>
                     ) : (
                       <NoResultsComponent {...props} />
                     )
                   ) : (
-                    <ResultViewComponent>{children}</ResultViewComponent>
+                    <>
+                      <FilterList {...props} />
+                      <div className="above-results">
+                        <ViewSelector
+                          views={availableResultViews}
+                          active={activeViewId}
+                          onSetView={setActiveViewId}
+                        />
+                        <Sorting
+                          label={'Order'}
+                          sortOptions={sortOptions}
+                          view={SortingDropdown}
+                        />
+                      </div>
+                      <AnswersList />
+                      <ResultViewComponent>{children}</ResultViewComponent>
+                    </>
                   )
                 ) : InitialViewComponent ? (
                   <InitialViewComponent {...props} />
                 ) : (
-                  <ResultViewComponent>{children}</ResultViewComponent>
+                  <>
+                    <FilterList {...props} />
+                    <div className="above-results">
+                      <ViewSelector
+                        views={availableResultViews}
+                        active={activeViewId}
+                        onSetView={setActiveViewId}
+                      />
+                      <Sorting
+                        label={'Order'}
+                        sortOptions={sortOptions}
+                        view={SortingDropdown}
+                      />
+                    </div>
+                    <AnswersList />
+                    <ResultViewComponent>{children}</ResultViewComponent>
+                  </>
                 );
               }}
               resultView={(props) => (
