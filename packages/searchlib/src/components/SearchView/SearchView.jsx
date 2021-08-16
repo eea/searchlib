@@ -34,6 +34,7 @@ export const SearchView = (props) => {
     setSort,
     wasSearched,
   } = props;
+  console.log(props);
   const { defaultSearchText = '' } = appConfig;
 
   const { driver } = React.useContext(SearchContext);
