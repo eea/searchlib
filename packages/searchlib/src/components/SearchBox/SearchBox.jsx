@@ -76,13 +76,19 @@ export class SearchBoxContainer extends Component {
   completeSuggestion = (suggestedTerm) => {
     const { shouldClearFilters, setSearchTerm } = this.props;
 
-    let searchPhrases = this.props.searchTerm.split('|');
-    searchPhrases.pop();
-    searchPhrases.push(suggestedTerm);
+    if (this.props.useSearchPhrases) {
+      let searchPhrases = this.props.searchTerm.split('|');
+      searchPhrases.pop();
+      searchPhrases.push(suggestedTerm);
 
-    setSearchTerm(`${searchPhrases.join('|')}|`, {
-      shouldClearFilters,
-    });
+      setSearchTerm(`${searchPhrases.join('|')}|`, {
+        shouldClearFilters,
+      });
+    } else {
+      setSearchTerm(suggestedTerm, {
+        shouldClearFilters,
+      });
+    }
   };
 
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
@@ -104,8 +110,10 @@ export class SearchBoxContainer extends Component {
       searchTerm = submittedSearchTerm ?? this.props.searchTerm;
     }
 
-    if (!!searchTerm && !searchTerm.endsWith('|'))
-      searchTerm = `${searchTerm}|`;
+    if (this.props.useSearchPhrases) {
+      if (!!searchTerm && !searchTerm.endsWith('|'))
+        searchTerm = `${searchTerm}|`;
+    }
 
     console.log(`handle submit`, {
       submittedSearchTerm,

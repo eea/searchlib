@@ -1,3 +1,4 @@
+// @import "~./semantic-ui";
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -16,10 +17,12 @@ code {
     monospace;
 }
 
-.simple-item {
-  .simple-item-extra {
-    font-size: 80%;
-  }
+.simple-item-extra {
+  font-size: 90%;
+}
+
+.array-string-item {
+  padding-right: 0.6em;
 }
 
 .listing-view-item.header {
@@ -32,16 +35,22 @@ code {
 
     .details-field {
       display: flex;
+      font-size: medium;
+      border-bottom: 1px solid #ccc;
+
       .details-field-label {
-        width: 20%;
+        width: 25%;
         font-weight: bold;
         border-right: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
         padding: 0.3em 1em 0.3em 0.3em;
+        background: #ddd;
       }
+
       .details-field-value {
-        width: 80%;
+        white-space: pre-wrap;
+        width: 75%;
         padding: 0.3em 0.3em 0.3em 1em;
+        background: #f9f9f9;
       }
     }
   }

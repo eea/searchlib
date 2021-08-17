@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Facet } from '@elastic/react-search-ui';
+import { SearchBox } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
@@ -12,6 +12,9 @@ import {
   TableView,
   FilterResultEntry,
 } from '@eeacms/search/components';
+
+import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
+import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
@@ -30,12 +33,12 @@ import {
   getHistogramFilter,
   getBooleanFilter,
   getBooleanFacet,
-  // getHistogramFacet,
   buildTermFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
   buildMLTFilter,
-  getMLTValue,
+  // getHistogramFacet,
+  // getMLTValue,
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 
@@ -125,6 +128,15 @@ const config = {
     FilterResultEntry: {
       component: FilterResultEntry,
     },
+    SimpleSearchInput: {
+      component: SimpleSearchInput,
+    },
+    DefaultSearchInput: {
+      component: SearchInput,
+    },
+    'searchui.SearchBox': {
+      component: SearchBox,
+    },
   },
 
   searchui: {
@@ -140,6 +152,10 @@ const config = {
 
       // visually layout the search components (header, side, etc)
       layoutComponent: 'LeftColumnLayout',
+
+      useSearchPhrases: true,
+      // the SearchBox is a wrapper over the SearcBoxInput component
+      searchBoxInputComponent: 'DefaultSearchInput',
 
       // when entering in search view, use this to search
       defaultSearchText: '',
@@ -196,6 +212,12 @@ const config = {
         // }
       },
 
+      initialView: {
+        factory: null,
+      },
+      noResultView: {
+        factory: null,
+      },
       resultViews: [
         {
           id: 'listing',

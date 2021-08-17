@@ -1,6 +1,9 @@
 packages:
+  - 'packages/searchlib'
   - 'packages/searchlib-middleware'
   - 'packages/searchlib-less'
-  - 'packages/searchlib'
   - 'packages/searchlib-standalone'
   - 'packages/demo'
+  - 'packages/wise'
+link-workspace-packages: true
+prefer-workspace-packages: true

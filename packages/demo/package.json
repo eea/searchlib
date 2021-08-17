@@ -114,7 +114,7 @@
   },
   "dependencies": {
     "@eeacms/search": "*",
-    "@eeacms/search-less": "workspace:^1.0.0",
+    "@eeacms/search-less": "workspace:*0",
     "@elastic/react-search-ui": "^1.5.1",
     "@elastic/react-search-ui-views": "^1.5.1",
     "@elastic/search-ui": "^1.5.1",

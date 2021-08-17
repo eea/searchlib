@@ -18,16 +18,9 @@ export default function SearchApp(props) {
     () => applyConfigurationSchema(rebind(registry.searchui[appName])),
     [appName, registry],
   );
-  appConfig.debug = props.debug;
+  appConfig.debug = props.debug || true;
 
-  // const [searchPhrases, setSearchPhrases] = React.useState([]);
-  const appConfigContext = {
-    appConfig,
-    registry,
-    // searchPhrases,
-    // setSearchPhrases,
-  };
-  // console.log('searchPhrases', searchPhrases);
+  const appConfigContext = { appConfig, registry };
 
   return (
     <SearchProvider config={appConfig}>

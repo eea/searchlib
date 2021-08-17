@@ -60,11 +60,11 @@ const download = (es_config, appConfig, req, res) => {
 
   var offset = 0;
   dataQuery.size = SCROLL_SIZE;
-  console.log("here")
-  console.log(es_host)
-  console.log(es_index)
-  console.log(SCROLL_TIME)
-  console.log(JSON.stringify(dataQuery))
+  console.log('here');
+  console.log(es_host);
+  console.log(es_index);
+  console.log(SCROLL_TIME);
+  console.log(JSON.stringify(dataQuery));
   client.search(
     {
       index: es_index,

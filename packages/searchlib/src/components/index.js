@@ -20,6 +20,8 @@ import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
+// import SimpleSearchInput from './SearchInput/SimpleSearchInput';
+// import SearchInput from './SearchInput/SearchInput';
 
 export {
   CardItem,
@@ -43,4 +45,6 @@ export {
   AnswersList,
   DownloadButton,
   AppInfo,
+  // SimpleSearchInput,
+  // SearchInput,
 };

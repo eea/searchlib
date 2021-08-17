@@ -19,37 +19,6 @@ function filterRequests(req, whitelist) {
   return matches > 0;
 }
 
-// function findObjectByKey(obj, key){
-//   let found_obj;
-//   if (typeof(obj) === 'object'){
-//       Object.keys(obj).forEach(function(obj_key){
-//           let obj_val = obj[obj_key];
-//           if (obj_key === key){
-//               found_obj = obj_val;
-//           }
-//           if (found_obj === undefined){
-//               found_obj = findObjectByKey(obj_val, key);
-//           }
-//       });
-//   }
-//   return found_obj;
-// }
-
-// const multi_match = findObjectByKey(body, 'multi_match')
-// if (multi_match){
-//   const search_term = findObjectByKey(multi_match, 'query')
-//   console.log("SEARCH TERM:", search_term);
-// }
-// const url = `http://${es.user}:${es.pwd}@${es.host}:${es.port}/${es.index}/_search`;
-//
-// {
-//   "query": "biggest threats",
-//   "filters": {
-//   },
-//   "top_k_retriever":100,
-//   "top_k_reader": 3
-// }
-
 export const createESMiddleware = (options) => {
   const superagent = require('superagent');
   const { qa, es, appConfig } = options;
@@ -101,3 +70,34 @@ export const createESMiddleware = (options) => {
     }
   };
 };
+
+// function findObjectByKey(obj, key){
+//   let found_obj;
+//   if (typeof(obj) === 'object'){
+//       Object.keys(obj).forEach(function(obj_key){
+//           let obj_val = obj[obj_key];
+//           if (obj_key === key){
+//               found_obj = obj_val;
+//           }
+//           if (found_obj === undefined){
+//               found_obj = findObjectByKey(obj_val, key);
+//           }
+//       });
+//   }
+//   return found_obj;
+// }
+
+// const multi_match = findObjectByKey(body, 'multi_match')
+// if (multi_match){
+//   const search_term = findObjectByKey(multi_match, 'query')
+//   console.log("SEARCH TERM:", search_term);
+// }
+// const url = `http://${es.user}:${es.pwd}@${es.host}:${es.port}/${es.index}/_search`;
+//
+// {
+//   "query": "biggest threats",
+//   "filters": {
+//   },
+//   "top_k_retriever":100,
+//   "top_k_reader": 3
+// }

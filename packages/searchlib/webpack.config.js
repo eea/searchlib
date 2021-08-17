@@ -1,7 +1,7 @@
 const pkg = require('./package.json');
 const path = require('path');
 
-const nodeExternals = require('webpack-node-externals');
+// const nodeExternals = require('webpack-node-externals');
 
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -48,7 +48,7 @@ module.exports = {
       },
     ],
   },
-  externals: ['react', 'react-dom', 'semantic-ui-react'], //nodeExternals()
+  externals: ['react', 'react-dom'], //nodeExternals()    // , 'semantic-ui-react'
 };
 
 // "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",

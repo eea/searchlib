@@ -42,6 +42,9 @@ function customizer(objValue, srcValue) {
   if (isString(objValue) || isString(srcValue)) {
     return objValue;
   }
+  if (typeof objValue === 'boolean' || typeof srcValue === 'boolean') {
+    return objValue;
+  }
 }
 
 export function mergeConfig(object, ...sources) {

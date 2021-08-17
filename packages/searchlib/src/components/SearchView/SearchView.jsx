@@ -23,51 +23,21 @@ import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 
 export const SearchView = (props) => {
-  // console.log('searchview props', props);
   const {
-    wasSearched,
-    setSearchTerm,
     addFilter,
     appConfig,
     appName,
+    filters,
+    searchTerm,
     setCurrent,
+    setSearchTerm,
     setSort,
+    wasSearched,
   } = props;
+  console.log(props);
   const { defaultSearchText = '' } = appConfig;
 
   const { driver } = React.useContext(SearchContext);
-
-  React.useEffect(() => {
-    if (!wasSearched) {
-      setSearchTerm(defaultSearchText);
-
-      const state = driver.URLManager.getStateFromURL();
-
-      state.filters?.forEach((f) => addFilter(f.field, f.values, f.type));
-
-      if (state.current) {
-        setCurrent(state.current);
-      }
-      if (state.sortField) {
-        setSort(state.sortField, state.sortDirection);
-      }
-      const presetFilters = state?.filters?.map((filter) => filter.field);
-      if (!presetFilters || presetFilters?.indexOf('language') === -1) {
-        addFilter('language', 'en', 'any');
-      }
-      if (!presetFilters || presetFilters?.indexOf('readingTime') === -1) {
-        addFilter('readingTime', { name: 'All', rangeType: 'fixed' }, 'any');
-      }
-    }
-  }, [
-    wasSearched,
-    setSearchTerm,
-    defaultSearchText,
-    driver,
-    addFilter,
-    setCurrent,
-    setSort,
-  ]);
 
   const { sortOptions, resultViews } = appConfig;
   const defaultViewId =
@@ -79,6 +49,14 @@ export const SearchView = (props) => {
   const Item = registry.resolve[listingViewDef.factories.item].component;
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
+
+  const InitialViewComponent =
+    appConfig.initialView?.factory &&
+    registry.resolve[appConfig.initialView.factory].component;
+
+  const NoResultsComponent =
+    appConfig.noResultsView?.factory &&
+    registry.resolve[appConfig.noResultsView?.factory].component;
 
   // const itemViewProps = listingViewDef.params;
   const itemViewProps = appConfig[`${activeViewId}ViewParams`];
@@ -92,6 +70,45 @@ export const SearchView = (props) => {
         : true;
     }),
   ];
+  const { defaultFilters } = appConfig;
+  const wasInteracted = filters.length > 0 || searchTerm;
+
+  React.useEffect(() => {
+    if (!wasSearched) {
+      const state = driver.URLManager.getStateFromURL();
+      setSearchTerm(defaultSearchText);
+
+      state.filters?.forEach((f) => addFilter(f.field, f.values, f.type));
+
+      if (state.current) {
+        setCurrent(state.current);
+      }
+      if (state.sortField) {
+        setSort(state.sortField, state.sortDirection);
+      }
+
+      if (defaultFilters) {
+        const presetFilters = state?.filters?.map((filter) => filter.field);
+        Object.keys(defaultFilters).forEach((k) => {
+          const { value, type = 'any' } = defaultFilters[k];
+          if (!presetFilters || presetFilters?.indexOf(k) === -1) {
+            addFilter(k, value, type);
+          }
+        });
+      }
+    }
+  }, [
+    appConfig,
+    wasSearched,
+    setSearchTerm,
+    defaultSearchText,
+    driver,
+    addFilter,
+    setCurrent,
+    setSort,
+    InitialViewComponent,
+    defaultFilters,
+  ]);
 
   return (
     <div className={`searchapp searchapp-${appName}`}>
@@ -103,38 +120,90 @@ export const SearchView = (props) => {
             autocompleteResults={appConfig.autocomplete.results}
             autocompleteSuggestions={appConfig.autocomplete.suggestions}
             shouldClearFilters={false}
+            useSearchPhrases={appConfig.useSearchPhrases}
+            inputView={
+              appConfig.searchBoxInputComponent
+                ? registry.resolve[appConfig.searchBoxInputComponent].component
+                : undefined
+            }
+            view={
+              appConfig.searchBoxComponent
+                ? registry.resolve[appConfig.searchBoxComponent].component
+                : undefined
+            }
           />
         }
-        sideContent={
-          <>
-            <Facets />
-          </>
-        }
+        sideContent={<Facets />}
         bodyHeader={<SUIPagingInfo view={PagingInfo} />}
         bodyContent={
           <>
             <h1>{appConfig.title}</h1>
-            <FilterList {...props} />
-
-            <div className="above-results">
-              <ViewSelector
-                views={availableResultViews}
-                active={activeViewId}
-                onSetView={setActiveViewId}
-              />
-              <Sorting
-                label={'Order'}
-                sortOptions={sortOptions}
-                view={SortingDropdown}
-              />
-            </div>
-
-            <AnswersList />
-
             <Results
               shouldTrackClickThrough={true}
               view={({ children }) => {
-                return <ResultViewComponent>{children}</ResultViewComponent>;
+                return wasInteracted ? (
+                  NoResultsComponent ? (
+                    children ? (
+                      <>
+                        <FilterList {...props} />
+                        <div className="above-results">
+                          <ViewSelector
+                            views={availableResultViews}
+                            active={activeViewId}
+                            onSetView={setActiveViewId}
+                          />
+                          <Sorting
+                            label={'Order'}
+                            sortOptions={sortOptions}
+                            view={SortingDropdown}
+                          />
+                        </div>
+                        <AnswersList />
+                        <ResultViewComponent>{children}</ResultViewComponent>
+                      </>
+                    ) : (
+                      <NoResultsComponent {...props} />
+                    )
+                  ) : (
+                    <>
+                      <FilterList {...props} />
+                      <div className="above-results">
+                        <ViewSelector
+                          views={availableResultViews}
+                          active={activeViewId}
+                          onSetView={setActiveViewId}
+                        />
+                        <Sorting
+                          label={'Order'}
+                          sortOptions={sortOptions}
+                          view={SortingDropdown}
+                        />
+                      </div>
+                      <AnswersList />
+                      <ResultViewComponent>{children}</ResultViewComponent>
+                    </>
+                  )
+                ) : InitialViewComponent ? (
+                  <InitialViewComponent {...props} />
+                ) : (
+                  <>
+                    <FilterList {...props} />
+                    <div className="above-results">
+                      <ViewSelector
+                        views={availableResultViews}
+                        active={activeViewId}
+                        onSetView={setActiveViewId}
+                      />
+                      <Sorting
+                        label={'Order'}
+                        sortOptions={sortOptions}
+                        view={SortingDropdown}
+                      />
+                    </div>
+                    <AnswersList />
+                    <ResultViewComponent>{children}</ResultViewComponent>
+                  </>
+                );
               }}
               resultView={(props) => (
                 <Result {...props} {...itemViewProps} view={Item} />

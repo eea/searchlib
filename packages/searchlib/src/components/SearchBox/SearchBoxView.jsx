@@ -6,10 +6,6 @@ import SearchInput from '../SearchInput/SearchInput';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
-// import { Suggestion } from './types';
-// import { appendClassName } from './view-helpers';
-// import SearchInput from './SearchInput';
-
 function SearchBoxView(props) {
   const {
     className,
@@ -70,7 +66,6 @@ function SearchBoxView(props) {
               <InputView
                 onSubmit={onSubmit}
                 onChange={(newValue) => {
-                  console.log('iiv onchange', newValue);
                   // To avoid over dispatching
                   if (value === newValue) return;
                   onChange(newValue);
