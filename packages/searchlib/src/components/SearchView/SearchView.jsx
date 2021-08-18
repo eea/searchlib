@@ -165,7 +165,7 @@ export const SearchView = (props) => {
           />
         }
         sideContent={<Facets />}
-        bodyHeader={<SUIPagingInfo view={PagingInfo} />}
+        bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
         bodyContent={
           <>
             <h1>{appConfig.title}</h1>
