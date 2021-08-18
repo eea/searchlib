@@ -35,7 +35,7 @@ export function buildRequestFilter(filters, config) {
 
   const facetsMap = Object.assign(
     {},
-    ...config.facets.map((facet) => {
+    ...config.facets?.map((facet) => {
       return { [facet.field]: registry.resolve[facet.factory] };
     }),
   );
@@ -78,7 +78,7 @@ export function buildRequestFilter(filters, config) {
 
   if (config.permanentFilters?.length > 0) {
     filters = filters.concat(
-      config.permanentFilters.map((f) => (isFunction(f) ? f() : f)),
+      config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
     );
   }
   if (boolFilters.length > 0) {
