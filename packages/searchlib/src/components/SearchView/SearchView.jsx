@@ -34,7 +34,7 @@ export const SearchView = (props) => {
     setSort,
     wasSearched,
   } = props;
-  console.log(props);
+  // console.log(props);
   const { defaultSearchText = '' } = appConfig;
 
   const { driver } = React.useContext(SearchContext);
@@ -110,6 +110,37 @@ export const SearchView = (props) => {
     defaultFilters,
   ]);
 
+  const DefaultView = ({ children }) => (
+    <>
+      <FilterList {...props} />
+      <div className="above-results">
+        <ViewSelector
+          views={availableResultViews}
+          active={activeViewId}
+          onSetView={setActiveViewId}
+        />
+        <Sorting
+          label={'Order'}
+          sortOptions={sortOptions}
+          view={SortingDropdown}
+        />
+      </div>
+      <AnswersList />
+      <ResultViewComponent>{children}</ResultViewComponent>
+      <div className="row">
+        <div>
+          <DownloadButton appConfig={appConfig} />
+        </div>
+        <div className="search-body-footer">
+          <div></div>
+          <Paging />
+          <ResultsPerPage />
+        </div>
+        <AppInfo appConfig={appConfig} />
+      </div>
+    </>
+  );
+
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
@@ -134,7 +165,7 @@ export const SearchView = (props) => {
           />
         }
         sideContent={<Facets />}
-        bodyHeader={<SUIPagingInfo view={PagingInfo} />}
+        bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
         bodyContent={
           <>
             <h1>{appConfig.title}</h1>
@@ -144,44 +175,12 @@ export const SearchView = (props) => {
                 return wasInteracted ? (
                   NoResultsComponent ? (
                     children ? (
-                      <>
-                        <FilterList {...props} />
-                        <div className="above-results">
-                          <ViewSelector
-                            views={availableResultViews}
-                            active={activeViewId}
-                            onSetView={setActiveViewId}
-                          />
-                          <Sorting
-                            label={'Order'}
-                            sortOptions={sortOptions}
-                            view={SortingDropdown}
-                          />
-                        </div>
-                        <AnswersList />
-                        <ResultViewComponent>{children}</ResultViewComponent>
-                      </>
+                      <DefaultView>{children}</DefaultView>
                     ) : (
                       <NoResultsComponent {...props} />
                     )
                   ) : (
-                    <>
-                      <FilterList {...props} />
-                      <div className="above-results">
-                        <ViewSelector
-                          views={availableResultViews}
-                          active={activeViewId}
-                          onSetView={setActiveViewId}
-                        />
-                        <Sorting
-                          label={'Order'}
-                          sortOptions={sortOptions}
-                          view={SortingDropdown}
-                        />
-                      </div>
-                      <AnswersList />
-                      <ResultViewComponent>{children}</ResultViewComponent>
-                    </>
+                    <DefaultView>{children}</DefaultView>
                   )
                 ) : InitialViewComponent ? (
                   <InitialViewComponent {...props} />
@@ -211,19 +210,7 @@ export const SearchView = (props) => {
             />
           </>
         }
-        bodyFooter={
-          <div className="row">
-            <div>
-              <DownloadButton appConfig={appConfig} />
-            </div>
-            <div className="search-body-footer">
-              <div></div>
-              <Paging />
-              <ResultsPerPage />
-            </div>
-            <AppInfo appConfig={appConfig} />
-          </div>
-        }
+        bodyFooter={() => <></>}
       />
     </div>
   );
