@@ -5,7 +5,7 @@ import path from 'path';
 
 const DownloadButton = (props) => {
   const { searchTerm, filters } = props.searchContext;
-  const { host, elastic_index } = props.appConfig;
+  const { host = 'http://0.0.0.0:9200', elastic_index } = props.appConfig;
   const es_url = new URL(host);
   es_url.pathname = path.join(elastic_index, '_download');
   return (
