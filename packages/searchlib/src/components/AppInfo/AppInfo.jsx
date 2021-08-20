@@ -1,6 +1,7 @@
 import React from 'react';
 import getIndexInfo from '@eeacms/search/lib/getIndexInfo';
 import { DateTime } from 'luxon';
+import useIsMounted from '@eeacms/search/lib/hocs/useIsMounted';
 
 //async function getInfo(appConfig) {
 const getInfo = async (appConfig) => {
@@ -21,12 +22,13 @@ function AppInfo({ appConfig, ...rest }) {
   const { app_name, app_version } = appConfig;
   const hostname = window.runtimeConfig?.HOSTNAME || 'localhost';
   const [crt, setCrt] = React.useState([]);
+  const isMounted = useIsMounted();
 
   React.useEffect(() => {
     getInfo(appConfig).then((response) => {
-      setCrt(response || '');
+      if (isMounted.current) setCrt(response || '');
     });
-  }, [appConfig]);
+  }, [appConfig, isMounted]);
 
   return (
     <div {...rest} className="sui-app-info">

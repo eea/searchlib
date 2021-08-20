@@ -2,15 +2,6 @@ import express from 'express';
 import { createESMiddleware } from './elasticsearch';
 import cors from 'cors';
 
-// import installConfig from './config';
-// import { registry } from '@eeacms/search';
-//
-// const localRegistry = installConfig(registry);
-//
-// // TODO: may need to do applyConfigurationSchema
-// const appConfig =
-//   localRegistry.searchui[process.env.RAZZLE_APP_NAME || 'standalone'];
-
 const makeServer = (appConfig) => {
   const es_proxy = createESMiddleware({
     es: process.env.PROXY_ES_DSN || 'http://localhost:9200/_all',
@@ -30,3 +21,23 @@ const makeServer = (appConfig) => {
 };
 
 export default makeServer;
+
+/** Here's how a minimal server.js may look like:
+ *
+import runtime from 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
+
+import { registry } from '@eeacms/search';
+import { makeServer } from '@eeacms/search-middleware';
+import installConfig from './config';
+
+console.log('runtime', runtime);
+const configRegistry = installConfig(registry);
+
+const app = makeServer(configRegistry.searchui.wise);
+const port = process.env.PORT || '7000';
+
+app.listen(port, () => {
+  console.log(`ES Proxy app running on http://localhost:${port}`);
+});
+
+*/
