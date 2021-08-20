@@ -1,0 +1,37 @@
+.tile {
+    display:block;
+    float:left;
+}
+.tile.countries {
+    background: #1c65a4 url("./img/countries-bg.png") no-repeat center center;
+    color:white;
+}
+.tile.content_types {
+    background:#b3548d url("./img/content-types-bg.png") no-repeat 85% 55%;
+    color:white;
+}
+.tile.picture {
+    background: #00918D url("./img/search-album-slideshow-bg.png") no-repeat center center;
+    color:white;
+}
+.tile.topics {
+    background: #fbaf33 url("./img/topics-bg.png") no-repeat 85% 25%;
+    color:white;
+}
+.tile.time_coverage {
+    background: #b0c649;
+    color:white;
+}
+.tile.organisations {
+    background: #babbdb url("./img/organisations-bg.png") no-repeat 85px 100px;
+    color:white;
+}
+
+.tile.available_content h2,
+.tile.available_content h3 {
+    color: #115c57
+}
+
+.tile.available_content span {
+    color: #1b928f
+}
