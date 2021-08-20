@@ -267,7 +267,7 @@ export const SearchView = (props) => {
             />
           </>
         }
-        bodyFooter={() => <></>}
+        bodyFooter={null}
       />
     </div>
   );
