@@ -59,7 +59,6 @@ function SearchInput({
                     }, 500);
                   }}
                   name="trash"
-                  basic
                   size="small"
                 />
               </Label>
