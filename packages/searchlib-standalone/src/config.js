@@ -18,7 +18,7 @@ import {
   getGlobalsearchThumbUrl,
   getGlobalsearchIconUrl,
 } from './utils';
-
+import LandingPage from './components/LandingPage';
 const demo_config = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
@@ -327,7 +327,9 @@ const demo_config = {
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
   },
-
+  initialView: {
+    factory: 'LandingPage',
+  },
   listingViewParams: {
     enabled: false,
   },
@@ -455,6 +457,8 @@ export default function install(config) {
     getGlobalsearchIconUrl(contentTypeNormalize);
   config.resolve.getGlobalsearchThumbUrl =
     getGlobalsearchThumbUrl(contentTypeNormalize);
+
+  config.resolve.LandingPage = {component: LandingPage};
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [
