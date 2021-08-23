@@ -7,7 +7,7 @@ export const buildAggregationsQuery = (config) => {
     {},
     ...facets.map((facet) => {
       const { buildRequest } = registry.resolve[facet.factory];
-      return buildRequest(facet);
+      return buildRequest(facet, config);
     }),
   );
 
@@ -18,7 +18,11 @@ export const buildAggregationsQuery = (config) => {
 export const buildTermFacetAggregationRequest = (facet) => {
   return {
     [facet.field]: {
-      terms: { field: facet.field, size: 1000000 },
+      terms: {
+        field: facet.field,
+        size: 1000000,
+        // order: { _key: 'asc' },
+      },
     },
   };
 };
@@ -56,5 +60,4 @@ export const buildRangeFacetAggregationRequest = (facet) => {
   return qs;
 };
 
-export const buildBooleanFacetRequest = (facet) => {
-};
+export const buildBooleanFacetRequest = (facet) => {};

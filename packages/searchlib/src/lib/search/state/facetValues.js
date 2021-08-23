@@ -5,6 +5,7 @@ export function getValueFacet({
   fieldName,
   whitelist,
   blacklist,
+  config,
 }) {
   const bl = blacklist || [];
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
