@@ -166,9 +166,12 @@ const config = {
         fields: {},
       },
 
-      facets: [],
+      facets: [], // interactive filtering components (facets)
+      defaultFilters: {}, // filters that are applied by default
+      enableNLP: true, // enables NLP capabilities
 
       filters: {
+        // registration of filter options
         moreLikeThis: {
           enabled: true,
           fields: ['title', 'text'],
