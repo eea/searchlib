@@ -1,30 +1,74 @@
-.tile {
-    display:block;
-    float:left;
+@media only screen and (min-width: 1536px) {
+    .ui.container.stackable.two.column.grid.body-content {
+        width:100% !important;
+        margin:0;
+    }
+    .ui.container.one.column.grid {
+        width:100% !important;
+        margin:0;
+    }
 }
+
+.tile{
+    padding:18px;
+    margin:0 12px 12px 0;
+    width:340px;
+}
+
+.tile h2{
+    font-size: 200%;
+    border-bottom: 1px solid white;
+    margin-bottom: 0;
+    font-weight: bold;
+    line-height: 1.3;
+    margin: 0 0 1em 0;
+}
+.tile span{
+    font-size:250%;
+    font-weight:bold;
+}
+.tile.available_content{
+    height:434px;
+}
+.tile.available_content h2{
+    border-bottom: 1px solid #115c57;
+    font-size: 260%;
+}
+
 .tile.countries {
     background: #1c65a4 url("./img/countries-bg.png") no-repeat center center;
+    background-position-y: 0;
     color:white;
+    height:434px;
+}
+.tile.countries h2{
+    padding-top:180px;
 }
 .tile.content_types {
     background:#b3548d url("./img/content-types-bg.png") no-repeat 85% 55%;
     color:white;
+    height:300px;
 }
 .tile.picture {
-    background: #00918D url("./img/search-album-slideshow-bg.png") no-repeat center center;
+    background: #1b928f url("./img/search-album-slideshow-bg.png") no-repeat center center;
     color:white;
+    height:434px;
+
 }
 .tile.topics {
     background: #fbaf33 url("./img/topics-bg.png") no-repeat 85% 25%;
     color:white;
+    height:300px;
 }
 .tile.time_coverage {
     background: #b0c649;
     color:white;
+    height:300px;
 }
 .tile.organisations {
     background: #babbdb url("./img/organisations-bg.png") no-repeat 85px 100px;
     color:white;
+    height:300px;
 }
 
 .tile.available_content h2,
@@ -34,4 +78,12 @@
 
 .tile.available_content span {
     color: #1b928f
+}
+
+.tile.time_coverage p{
+    text-align: right;
+}
+.tile.time_coverage p span.label{
+    font-size:150%;
+    font-weight: normal;
 }

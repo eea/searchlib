@@ -1,4 +1,6 @@
 import React from 'react';
+import Masonry from 'react-masonry-component';
+
 import { runRequest } from '@eeacms/search';
 
 import objectProvidesWhitelist from '../json/objectProvidesWhitelist.json';
@@ -83,6 +85,7 @@ const LandingPage = (props) => {
         ).length;
         return (
             <div className="landing-page">
+                <Masonry>
                 <div className="tile available_content">
                     <h2>
                         Instantly search over 20 years of environmental knowledge by EEA
@@ -112,18 +115,18 @@ const LandingPage = (props) => {
                         Time coverage
                     </h2>
                     <p>
-                        <span>
+                        <span className="label">
                             from
                         </span>
-                        <span>
+                        <span className="value">
                             {min_time_coverage}
                         </span>
                     </p>
                     <p>
-                        <span>
+                        <span className="label">
                             to
                         </span>
-                        <span>
+                        <span className="value">
                             {max_time_coverage}
                         </span>
                     </p>
@@ -149,6 +152,7 @@ const LandingPage = (props) => {
                     </h2>
                     <span>{countries}</span>
                 </div>
+                </Masonry>
             </div>
         )
     }
