@@ -6,9 +6,95 @@ import { runRequest } from '@eeacms/search';
 import objectProvidesWhitelist from '../json/objectProvidesWhitelist.json';
 import spatialWhitelist from '../json/spatialWhitelist.json';
 
-import './styles.css'
+import {
+  getTodayWithTime,
+} from '../utils';
 
-const REQUEST = {
+import './styles.css'
+const RES_REQUEST = {
+  "query": {
+      "function_score": {
+        "query": {
+          "bool": {
+            "must": [
+              {
+                "match_all": {}
+              }
+            ],
+            "filter": [
+              {
+                "term": {
+                  "hasWorkflowState": "published"
+                }
+              },
+              {
+                "constant_score": {
+                  "filter": {
+                    "bool": {
+                      "should": [
+                        {
+                          "bool": {
+                            "must_not": {
+                              "exists": {
+                                "field": "issued"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "range": {
+                            "issued.date": {
+                              "lte": getTodayWithTime()
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "constant_score": {
+                  "filter": {
+                    "bool": {
+                      "should": [
+                        {
+                          "bool": {
+                            "must_not": {
+                              "exists": {
+                                "field": "expires"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "range": {
+                            "expires": {
+                              "gte": getTodayWithTime()
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "sort": [
+      {
+        "issued.index": {
+          "order": "desc"
+        }
+      }
+    ],
+    "size": 3,
+}
+
+const AGGS_REQUEST = {
     "aggs": {
       "languages": {
         "terms": {
@@ -54,35 +140,44 @@ const REQUEST = {
     "size": 0,
     "track_total_hits": true
   };
+
 const LandingPage = (props) => {
     const { appConfig } = props;
-    const [landingData, setLandingData] = React.useState();
-
+    const [landingDataAggs, setLandingDataAggs] = React.useState();
+    const [landingDataRes, setLandingDataRes] = React.useState();
     React.useEffect(() => {
         let alreadyRequested = false;
 
-        async function fetchData() {
-        const resp = await runRequest(REQUEST, appConfig);
-        if (!alreadyRequested) setLandingData(resp.body);
+        async function fetchDataAggs() {
+          const resp = await runRequest(AGGS_REQUEST, appConfig);
+          if (!alreadyRequested) setLandingDataAggs(resp.body);
         }
-        fetchData();
+        console.log(RES_REQUEST);
+        async function fetchDataRes() {
+          const resp = await runRequest(RES_REQUEST, appConfig);
+          if (!alreadyRequested) setLandingDataRes(resp.body);
+        }
+
+        fetchDataAggs();
+        fetchDataRes();
         return () => {
-        alreadyRequested = true;
+          alreadyRequested = true;
         };
     }, [appConfig]);
-    if (landingData){
-        const total = landingData.hits.total.value;
-        const min_time_coverage = landingData.aggregations.min_timecoverage.value;
-        const max_time_coverage = landingData.aggregations.max_timecoverage.value;
-        const organisations = landingData.aggregations.organisations.buckets.length;
-        const topics = landingData.aggregations.topics.buckets.length;
-        const languages = landingData.aggregations.languages.buckets.length;
-        const content_types = landingData.aggregations.content_types.buckets.filter(
+    if (landingDataAggs){
+        const total = landingDataAggs.hits.total.value;
+        const min_time_coverage = landingDataAggs.aggregations.min_timecoverage.value;
+        const max_time_coverage = landingDataAggs.aggregations.max_timecoverage.value;
+        const organisations = landingDataAggs.aggregations.organisations.buckets.length;
+        const topics = landingDataAggs.aggregations.topics.buckets.length;
+        const languages = landingDataAggs.aggregations.languages.buckets.length;
+        const content_types = landingDataAggs.aggregations.content_types.buckets.filter(
             (bucket) => objectProvidesWhitelist.indexOf(bucket.key) !== -1,
         ).length;
-        const countries = landingData.aggregations.countries.buckets.filter(
+        const countries = landingDataAggs.aggregations.countries.buckets.filter(
             (bucket) => spatialWhitelist.indexOf(bucket.key) !== -1,
         ).length;
+        const elements = landingDataRes.hits.hits;
         return (
             <div className="landing-page">
                 <Masonry>
@@ -132,6 +227,29 @@ const LandingPage = (props) => {
                     </p>
                 </div>
 
+                <div className="tile countries">
+                    <h2>
+                        Countries
+                    </h2>
+                    <span>{countries}</span>
+                </div>
+                <div className="tile latest">
+                    <h2>
+                        Recently added
+                    </h2>
+                    <ul>
+                      {elements.map((element, i) => {
+                        const { about, title, issued } = element._source;
+                        return (
+                          <li key={i}>
+                            <a href={about}>{title}</a>
+                            <span>Published on </span>
+                            <span>{issued}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                </div>
                 <div className="tile organisations">
                     <h2>
                         Organisations
@@ -146,12 +264,6 @@ const LandingPage = (props) => {
                     <span>{content_types}</span>
                 </div>
 
-                <div className="tile countries">
-                    <h2>
-                        Countries
-                    </h2>
-                    <span>{countries}</span>
-                </div>
                 </Masonry>
             </div>
         )

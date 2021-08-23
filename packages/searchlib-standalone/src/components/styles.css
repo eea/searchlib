@@ -12,7 +12,7 @@
 .tile{
     padding:18px;
     margin:0 12px 12px 0;
-    width:340px;
+    width:330px;
 }
 
 .tile h2{
@@ -32,7 +32,7 @@
 }
 .tile.available_content h2{
     border-bottom: 1px solid #115c57;
-    font-size: 260%;
+    font-size: 250%;
 }
 
 .tile.countries {
@@ -86,4 +86,33 @@
 .tile.time_coverage p span.label{
     font-size:150%;
     font-weight: normal;
+}
+
+.tile.latest{
+    height:434px;
+}
+.tile.latest h2{
+    border-bottom: 1px solid #1b928f;
+    font-size: 250%;
+    color: #1b928f;
+}
+
+.tile.latest ul{
+    list-style-type: none;
+    padding-left:0;
+}
+.tile.latest li{
+    margin-bottom: 1em;
+}
+
+.tile.latest li span{
+    font-size:12px;
+    font-weight: normal;
+}
+
+.tile.latest li a {
+    font-size:12px;
+    font-weight: bold;
+    color: #1b928f;
+    display:block;
 }
