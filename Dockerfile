@@ -15,7 +15,7 @@ RUN npm install -g pnpm
 
 COPY . /opt/frontend
 
-#RUN chown -R node /opt/frontend
+RUN chown -R node /opt/frontend
 
 ENV CYPRESS_INSTALL_BINARY=0
 
