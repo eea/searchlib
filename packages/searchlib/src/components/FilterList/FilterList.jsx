@@ -1,17 +1,10 @@
 import React from 'react';
 import Filter from './Filter';
-import {
-  Divider,
-  Segment,
-  Accordion,
-  Button,
-  Label,
-  Icon,
-} from 'semantic-ui-react';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { Divider, Segment, Accordion, Button, Icon } from 'semantic-ui-react';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const FilterList = (props) => {
-  const { filters, clearFilters, setFilter, removeFilter } = props;
+  const { filters, clearFilters, setFilter, removeFilter } = useSearchContext();
   const [isOpened, setIsOpened] = React.useState(false);
 
   return filters.length ? (

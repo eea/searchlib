@@ -156,7 +156,7 @@ const LandingPage = (props) => {
       }
     }
 
-    console.log('request config: ', RES_REQUEST);
+    // console.log('request config: ', RES_REQUEST);
     async function fetchDataRes() {
       if (!alreadyRequested.current) {
         const resp = await runRequest(RES_REQUEST, appConfig);
@@ -194,8 +194,7 @@ const LandingPage = (props) => {
     const elements = landingDataRes.hits.hits;
     return (
       <div className="landing-page">
-        <Masonry
-          options={{"horizontalOrder":true}}>
+        <Masonry options={{ horizontalOrder: true }}>
           <div className="tile available_content">
             <h2>
               Instantly search over 20 years of environmental knowledge by EEA
@@ -252,7 +251,6 @@ const LandingPage = (props) => {
               })}
             </ul>
           </div>
-          
         </Masonry>
       </div>
     );
