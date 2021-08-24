@@ -11,9 +11,9 @@ const getInfo = async (appConfig) => {
 
   const info = await getIndexInfo(appConfig);
   const indexes = Object.keys(info);
-  if (!indexes.length || indexes.indexOf(elastic_index) === -1) return '';
+  if (indexes.length < 1) return '';
 
-  const creation_ts = info[elastic_index].settings.index.creation_date;
+  const creation_ts = info[indexes[0]].settings.index.creation_date;
   const dt = DateTime.fromMillis(parseInt(creation_ts));
   return dt.toLocaleString(DateTime.DATETIME_FULL);
 };

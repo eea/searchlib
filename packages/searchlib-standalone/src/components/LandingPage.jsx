@@ -10,7 +10,7 @@ import {
   getTodayWithTime,
 } from '../utils';
 
-import './styles.css'
+import './styles.less'
 const RES_REQUEST = {
   "query": {
       "function_score": {
