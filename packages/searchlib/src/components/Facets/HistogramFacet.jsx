@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResponsiveHistogramChart } from '../Vis';
-import { Facet, RangeSlider } from '@eeacms/search/components';
+import { FacetWrapper, RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
 import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
@@ -106,7 +106,7 @@ const HistogramFacet = (props) => {
   // console.log('ff', facet, filters);
 
   return (
-    <Facet
+    <FacetWrapper
       {...props}
       filterType="any"
       show={100000}

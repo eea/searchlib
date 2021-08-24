@@ -2,7 +2,7 @@ import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { Resizable, ToggleSort, Facet } from '@eeacms/search/components';
+import { Resizable, ToggleSort, FacetWrapper } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 
 function getFilterValueDisplay(filterValue) {
@@ -193,7 +193,7 @@ const MultiTypeFacetComponent = (props) => {
   const [filterType, setFilterType] = React.useState('any');
   const filterValue = filters.find((f) => f.field === field);
   return (
-    <Facet
+    <FacetWrapper
       {...props}
       filterType={filterType}
       show={100000}

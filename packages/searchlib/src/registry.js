@@ -5,7 +5,7 @@ import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
 import {
-  Facet,
+  FacetWrapper,
   LeftColumnLayout,
   RightColumnLayout,
   TableRowItem,
@@ -45,7 +45,7 @@ import {
 const config = {
   resolve: {
     'searchui.Facet': {
-      component: Facet,
+      component: FacetWrapper,
       // the facet aggregation part
       buildRequest: buildTermFacetAggregationRequest,
 

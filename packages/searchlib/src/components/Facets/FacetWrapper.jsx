@@ -3,7 +3,7 @@ import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Accordion, Icon } from 'semantic-ui-react';
 import MultiCheckboxFacet from './MultiCheckboxFacet';
 
-const FacetComponent = (props) => {
+const FacetWrapperComponent = (props) => {
   const { collapsable = true, filters = [], field, label } = props;
   const hasFilter = !!filters.find((filter) => field === filter.field);
   const [isOpened, setIsOpened] = React.useState(hasFilter);
@@ -14,7 +14,11 @@ const FacetComponent = (props) => {
         {label}
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
-        <SUIFacet {...props} active={isOpened} view={MultiCheckboxFacet} />
+        <SUIFacet
+          {...props}
+          active={isOpened}
+          view={props.view || MultiCheckboxFacet}
+        />
       </Accordion.Content>
     </Accordion>
   ) : (
@@ -22,7 +26,7 @@ const FacetComponent = (props) => {
   );
 };
 
-const Facet = withSearch(
+const FacetWrapper = withSearch(
   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
     filters,
     facets,
@@ -31,6 +35,6 @@ const Facet = withSearch(
     setFilter,
     a11yNotify,
   }),
-)(FacetComponent);
+)(FacetWrapperComponent);
 
-export default Facet;
+export default FacetWrapper;

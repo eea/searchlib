@@ -9,7 +9,7 @@ import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
-import Facet from './Facets/Facet';
+import FacetWrapper from './Facets/FacetWrapper';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
@@ -32,7 +32,7 @@ export {
   TableView,
   ToggleSort,
   ViewSelector,
-  Facet,
+  FacetWrapper,
   SearchBox,
   RangeSlider,
   PagingInfo,
