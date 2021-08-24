@@ -146,28 +146,35 @@ const LandingPage = (props) => {
   const { appConfig } = props;
   const [landingDataAggs, setLandingDataAggs] = React.useState();
   const [landingDataRes, setLandingDataRes] = React.useState();
+  const alreadyRequested = React.useRef(false);
 
   React.useEffect(() => {
-    let alreadyRequested = false;
-
     async function fetchDataAggs() {
-      const resp = await runRequest(AGGS_REQUEST, appConfig);
-      if (!alreadyRequested) setLandingDataAggs(resp.body);
+      if (!alreadyRequested.current) {
+        const resp = await runRequest(AGGS_REQUEST, appConfig);
+        setLandingDataAggs(resp.body);
+      }
     }
+
     console.log('request config: ', RES_REQUEST);
     async function fetchDataRes() {
-      const resp = await runRequest(RES_REQUEST, appConfig);
-      if (!alreadyRequested) setLandingDataRes(resp.body);
+      if (!alreadyRequested.current) {
+        const resp = await runRequest(RES_REQUEST, appConfig);
+        setLandingDataRes(resp.body);
+      }
     }
 
-    fetchDataAggs();
-    fetchDataRes();
+    Promise.all([fetchDataAggs(), fetchDataRes()]).then(() => {
+      alreadyRequested.current = true;
+    });
+
     return () => {
-      alreadyRequested = true;
+      alreadyRequested.current = true;
     };
   }, [appConfig]);
 
-  if (landingDataAggs) {
+  console.log(landingDataAggs, landingDataRes);
+  if (landingDataAggs && landingDataRes) {
     const total = landingDataAggs.hits.total.value;
     const min_time_coverage =
       landingDataAggs.aggregations.min_timecoverage.value;
