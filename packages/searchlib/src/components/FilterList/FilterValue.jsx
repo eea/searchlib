@@ -17,6 +17,9 @@ const FilterValue = (props) => {
       return `${value.name}`;
     }
   }
+  if (typeof value === 'boolean') {
+    return value;
+  }
 
   // eslint-disable-next-line no-console
   console.warn('Unknown value type', value);
