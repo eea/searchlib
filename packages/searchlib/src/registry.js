@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
-import MultiTermFacet from '@eeacms/search/components/Facets/TermFacet';
+import MultiTermFacet from '@eeacms/search/components/Facets/MultiTermFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';

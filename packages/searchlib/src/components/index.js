@@ -1,4 +1,3 @@
-// export { default as DebugConfig } from './DebugConfig/DebugConfig';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
@@ -20,8 +19,6 @@ import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
-// import SimpleSearchInput from './SearchInput/SimpleSearchInput';
-// import SearchInput from './SearchInput/SearchInput';
 
 export {
   CardItem,
@@ -45,6 +42,10 @@ export {
   AnswersList,
   DownloadButton,
   AppInfo,
-  // SimpleSearchInput,
-  // SearchInput,
 };
+
+// SimpleSearchInput,
+// SearchInput,
+// import SimpleSearchInput from './SearchInput/SimpleSearchInput';
+// import SearchInput from './SearchInput/SearchInput';
+// export { default as DebugConfig } from './DebugConfig/DebugConfig';
