@@ -2,7 +2,6 @@ import { atom } from 'jotai';
 import { atomFamily, atomWithReducer } from 'jotai/utils';
 
 const requestReducer = (prev, action) => {
-  console.log('reducer', { prev, action });
   switch (action.type) {
     case 'loading':
       return {
