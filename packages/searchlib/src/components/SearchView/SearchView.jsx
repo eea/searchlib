@@ -75,6 +75,8 @@ export const SearchView = (props) => {
   //const wasInteracted = filters.length > 0 || searchTerm;
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
 
+  // console.log('appconfig', appConfig);
+  // console.log('registry', registry);
   React.useEffect(() => {
     if (!wasSearched) {
       const state = driver.URLManager.getStateFromURL();

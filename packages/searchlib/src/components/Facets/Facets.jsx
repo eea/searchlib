@@ -17,7 +17,6 @@ const Facets = (props) => {
             ...info.params,
             ...facet,
           };
-          // console.log('info', props);
           return <FacetComponent key={i} {...props} />;
         })}
     </div>

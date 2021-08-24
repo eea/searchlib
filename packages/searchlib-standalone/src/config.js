@@ -19,7 +19,8 @@ import {
   getGlobalsearchIconUrl,
 } from './utils';
 import LandingPage from './components/LandingPage';
-const demo_config = {
+
+const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
 
@@ -415,7 +416,7 @@ export default function install(config) {
   // console.log(process.env.RAZZLE_ENV_CONFIG);
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
-    : demo_config;
+    : globalSearchConfig;
 
   const pjson = require('../package.json');
   envConfig.app_name = pjson.name;
@@ -458,7 +459,7 @@ export default function install(config) {
   config.resolve.getGlobalsearchThumbUrl =
     getGlobalsearchThumbUrl(contentTypeNormalize);
 
-  config.resolve.LandingPage = {component: LandingPage};
+  config.resolve.LandingPage = { component: LandingPage };
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [

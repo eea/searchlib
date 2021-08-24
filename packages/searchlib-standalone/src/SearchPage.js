@@ -7,6 +7,7 @@ const localRegistry = installConfig(registry);
 
 class SearchPage extends React.Component {
   render() {
+    console.log('localRegistry', localRegistry);
     return (
       <SearchApp
         registry={localRegistry}

@@ -17,7 +17,7 @@ const remapValues = (options, facetValues) => {
     {},
     ...options.map((opt) => ({ [opt.value]: opt })),
   );
-  return facetValues.map((f) => valueMap[f.value]);
+  return facetValues.map((f) => valueMap[f.value]).filter((o) => !!o);
 };
 
 function MultiCheckboxFacet({
@@ -33,7 +33,6 @@ function MultiCheckboxFacet({
   searchPlaceholder,
   facetValues,
 }) {
-
   return (
     <fieldset className={cx('sui-facet', className)}>
       <legend className="sui-facet__title">{label}</legend>
