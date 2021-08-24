@@ -138,7 +138,6 @@ export const SearchView = (props) => {
           <Paging />
           <ResultsPerPage />
         </div>
-        <AppInfo appConfig={appConfig} />
       </div>
     </>
   );
@@ -212,7 +211,7 @@ export const SearchView = (props) => {
             />
           </>
         }
-        bodyFooter={null}
+        bodyFooter={<AppInfo appConfig={appConfig} />}
       />
     </div>
   );
