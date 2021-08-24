@@ -236,7 +236,7 @@ const config = {
         {
           id: 'table',
           title: 'Table',
-          icon: null,
+          icon: 'table',
           render: null,
           isDefault: false,
           factories: {

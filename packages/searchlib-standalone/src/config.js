@@ -336,6 +336,8 @@ const globalSearchConfig = {
   },
 
   tableViewParams: {
+    titleField: 'title',
+    urlField: 'about',
     enabled: true,
     columns: [
       {
