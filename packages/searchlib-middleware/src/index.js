@@ -1,2 +1,2 @@
 export * from './elasticsearch';
-export { makeServer } from './server';
+export { default as makeServer } from './server';
