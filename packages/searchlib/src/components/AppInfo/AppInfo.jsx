@@ -1,7 +1,7 @@
 import React from 'react';
 import getIndexInfo from '@eeacms/search/lib/getIndexInfo';
 import { DateTime } from 'luxon';
-import useIsMounted from '@eeacms/search/lib/hocs/useIsMounted';
+import { useIsMounted } from '@eeacms/search/lib/hocs';
 
 //async function getInfo(appConfig) {
 const getInfo = async (appConfig) => {

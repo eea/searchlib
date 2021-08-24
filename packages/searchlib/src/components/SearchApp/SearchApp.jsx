@@ -1,11 +1,7 @@
 import React from 'react';
 
-import {
-  ErrorBoundary,
-  SearchProvider,
-  WithSearch,
-} from '@elastic/react-search-ui';
-import { AppConfigContext } from '@eeacms/search/lib/hocs';
+import { SearchProvider, WithSearch } from '@elastic/react-search-ui'; // ErrorBoundary,
+import { AppConfigContext, SearchContext } from '@eeacms/search/lib/hocs';
 import { SearchView } from '@eeacms/search/components/SearchView/SearchView';
 import { rebind, applyConfigurationSchema } from '@eeacms/search/lib/utils';
 
@@ -21,23 +17,22 @@ export default function SearchApp(props) {
 
   const appConfigContext = { appConfig, registry };
 
+  // <ErrorBoundary>
+  // </ErrorBoundary>
+
   return (
     <SearchProvider config={appConfig}>
-      <WithSearch
-        mapContextToProps={(context) => {
-          return context;
-        }}
-      >
+      <WithSearch mapContextToProps={(context) => context}>
         {(params) => {
           return (
             <AppConfigContext.Provider value={appConfigContext}>
-              <ErrorBoundary>
+              <SearchContext.Provider value={params}>
                 <SearchView
                   {...params}
                   appName={appName}
                   appConfig={appConfig}
                 />
-              </ErrorBoundary>
+              </SearchContext.Provider>
             </AppConfigContext.Provider>
           );
         }}

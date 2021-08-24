@@ -1,62 +1,83 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
-import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import runRequest from '@eeacms/search/lib/runRequest';
 import buildQuestionRequest from './buildQuestionRequest';
 
-const _withAnswers = (WrappedComponent) => {
-  const WithSearchComponent = (props) => {
-    const { searchContext } = props;
-    const { searchTerm = '' } = searchContext;
-    const { appConfig } = useAppConfig();
+// import { WithSearch } from '@elastic/react-search-ui'; // withSearch,
+// import { SearchContext } from '@elastic/react-search-ui';
 
-    const timeoutRef = React.useRef();
-    const [answers, setAnswers] = React.useState();
-    const [loading, setLoading] = React.useState(false);
-    const [loaded, setLoaded] = React.useState(false);
-    const [searchedTerm, setSearchedTerm] = React.useState();
+const SearchAnswersImpl = ({ view, wrappedProps }) => {
+  const searchContext = useSearchContext();
+  // const searchContext = React.useContext(SearchContext);
+  console.log('searchContext', searchContext);
 
-    React.useEffect(() => {
-      const timeoutRefCurrent = timeoutRef.current;
-      if (timeoutRefCurrent) clearInterval(timeoutRef.current);
+  const { searchTerm = '' } = searchContext;
+  const { appConfig } = useAppConfig();
 
-      if (searchTerm && searchTerm.trim().indexOf(' ') > -1) {
-        timeoutRef.current = setTimeout(() => {
-          const requestBody = buildQuestionRequest(searchContext, appConfig);
+  const timeoutRef = React.useRef();
+  const [answers, setAnswers] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+  const [searchedTerm, setSearchedTerm] = React.useState();
 
-          setSearchedTerm(searchTerm);
-          setLoading(true);
-          setLoaded(false);
+  React.useEffect(() => {
+    const timeoutRefCurrent = timeoutRef.current;
+    if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
-          runRequest(requestBody, appConfig).then((response) => {
-            const { body } = response;
-            console.log('aset answers', body.answers);
-            setAnswers(body.answers);
-            setLoading(false);
-            setLoaded(true);
-          });
-        }, 1000);
-      }
+    if (searchTerm && searchTerm.trim().indexOf(' ') > -1) {
+      timeoutRef.current = setTimeout(() => {
+        const requestBody = buildQuestionRequest(searchContext, appConfig);
 
-      return () => timeoutRefCurrent && clearInterval(timeoutRefCurrent);
-    }, [appConfig, searchContext, searchTerm]);
+        setSearchedTerm(searchTerm);
+        setLoading(true);
+        setLoaded(false);
 
-    return (
-      <WrappedComponent
-        answers={answers}
-        loading={loading}
-        loaded={loaded}
-        searchedTerm={searchedTerm}
-        {...props}
-      />
-    );
-  };
-  return WithSearchComponent;
+        runRequest(requestBody, appConfig).then((response) => {
+          const { body } = response;
+          console.log('aset answers', body.answers);
+          setAnswers(body.answers);
+          setLoading(false);
+          setLoaded(true);
+        });
+      }, 1000);
+    }
+
+    return () => {
+      console.log('unmount');
+      return timeoutRefCurrent && clearInterval(timeoutRefCurrent);
+    };
+  }, [appConfig, searchContext, searchTerm]);
+
+  const View = view;
+
+  return (
+    <View
+      {...wrappedProps}
+      answers={answers}
+      loading={loading}
+      loaded={loaded}
+      searchedTerm={searchedTerm}
+      searchContext={searchContext}
+    />
+  );
 };
 
-const withAnswers = (WrappedComponent) =>
-  withSearch((context) => ({ searchContext: context }))(
-    _withAnswers(WrappedComponent),
+const _withAnswers = (WrappedComponent) => {
+  return (props) => (
+    <SearchAnswersImpl view={WrappedComponent} wrappedProps={props} />
   );
+};
 
-export default withAnswers;
+// const withAnswers = (WrappedComponent) =>
+//   withSearch((context) => ({ searchContext: context }))(
+//     _withAnswers(WrappedComponent),
+//   );
+//
+//  <WithSearch mapContextToProps={(context) => ({ searchContext: context })}>
+//    {(searchProps) => {
+//      console.log('searchProps', searchProps);
+//      return <SearchAnswersImpl view={WrappedComponent} {...searchProps} />;
+//    }}
+//  </WithSearch>
+
+export default _withAnswers;

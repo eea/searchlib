@@ -173,7 +173,7 @@ const LandingPage = (props) => {
     };
   }, [appConfig]);
 
-  console.log(landingDataAggs, landingDataRes);
+  // console.log(landingDataAggs, landingDataRes);
   if (landingDataAggs && landingDataRes) {
     const total = landingDataAggs.hits.total.value;
     const min_time_coverage =

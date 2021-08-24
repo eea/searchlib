@@ -111,34 +111,69 @@ export const SearchView = (props) => {
     defaultFilters,
   ]);
 
-  const DefaultView = ({ children }) => (
-    <>
-      <FilterList {...props} />
-      <div className="above-results">
-        <ViewSelector
-          views={availableResultViews}
-          active={activeViewId}
-          onSetView={setActiveViewId}
-        />
-        <Sorting
-          label={'Order'}
-          sortOptions={sortOptions}
-          view={SortingDropdown}
-        />
-      </div>
-      <AnswersList />
-      <ResultViewComponent>{children}</ResultViewComponent>
-      <div className="row">
-        <div>
-          <DownloadButton appConfig={appConfig} />
+  const DefaultView = React.useCallback(
+    ({ children }) => (
+      <>
+        <FilterList {...props} />
+        <div className="above-results">
+          <ViewSelector
+            views={availableResultViews}
+            active={activeViewId}
+            onSetView={setActiveViewId}
+          />
+          <Sorting
+            label={'Order'}
+            sortOptions={sortOptions}
+            view={SortingDropdown}
+          />
         </div>
-        <div className="search-body-footer">
-          <div></div>
-          <Paging />
-          <ResultsPerPage />
+        <AnswersList />
+        <ResultViewComponent>{children}</ResultViewComponent>
+        <div className="row">
+          <div>
+            <DownloadButton appConfig={appConfig} />
+          </div>
+          <div className="search-body-footer">
+            <div></div>
+            <Paging />
+            <ResultsPerPage />
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    ),
+    [],
+  );
+
+  const BodyContent = React.useCallback(
+    (props) => (
+      <>
+        <h1>{appConfig.title}</h1>
+        <Results
+          shouldTrackClickThrough={true}
+          view={({ children }) => {
+            return wasInteracted ? (
+              NoResultsComponent ? (
+                children ? (
+                  <DefaultView>{children}</DefaultView>
+                ) : (
+                  <NoResultsComponent {...props} />
+                )
+              ) : (
+                <DefaultView>{children}</DefaultView>
+              )
+            ) : InitialViewComponent ? (
+              <InitialViewComponent {...props} />
+            ) : (
+              <DefaultView>{children}</DefaultView>
+            );
+          }}
+          resultView={(props) => (
+            <Result {...props} {...itemViewProps} view={Item} />
+          )}
+        />
+      </>
+    ),
+    [],
   );
 
   return (
@@ -166,50 +201,7 @@ export const SearchView = (props) => {
         }
         sideContent={<Facets />}
         bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
-        bodyContent={
-          <>
-            <h1>{appConfig.title}</h1>
-            <Results
-              shouldTrackClickThrough={true}
-              view={({ children }) => {
-                return wasInteracted ? (
-                  NoResultsComponent ? (
-                    children ? (
-                      <DefaultView>{children}</DefaultView>
-                    ) : (
-                      <NoResultsComponent {...props} />
-                    )
-                  ) : (
-                    <DefaultView>{children}</DefaultView>
-                  )
-                ) : InitialViewComponent ? (
-                  <InitialViewComponent {...props} />
-                ) : (
-                  <>
-                    <FilterList {...props} />
-                    <div className="above-results">
-                      <ViewSelector
-                        views={availableResultViews}
-                        active={activeViewId}
-                        onSetView={setActiveViewId}
-                      />
-                      <Sorting
-                        label={'Order'}
-                        sortOptions={sortOptions}
-                        view={SortingDropdown}
-                      />
-                    </div>
-                    <AnswersList />
-                    <ResultViewComponent>{children}</ResultViewComponent>
-                  </>
-                );
-              }}
-              resultView={(props) => (
-                <Result {...props} {...itemViewProps} view={Item} />
-              )}
-            />
-          </>
-        }
+        bodyContent={<BodyContent {...props} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}
       />
     </div>

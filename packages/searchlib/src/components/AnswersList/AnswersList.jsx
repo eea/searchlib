@@ -21,7 +21,7 @@ score: 6.118757247924805
 */
   //
   const showLoader = loading && !loaded;
-  console.log('answeers', answers, showLoader);
+  console.log('answeers', answers, showLoader, searchedTerm, searchedTerm);
   return (
     <div className="answers-list">
       {showLoader ? (
