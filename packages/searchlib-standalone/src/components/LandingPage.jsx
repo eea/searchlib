@@ -194,7 +194,8 @@ const LandingPage = (props) => {
     const elements = landingDataRes.hits.hits;
     return (
       <div className="landing-page">
-        <Masonry>
+        <Masonry
+          options={{"horizontalOrder":true}}>
           <div className="tile available_content">
             <h2>
               Instantly search over 20 years of environmental knowledge by EEA
@@ -223,7 +224,15 @@ const LandingPage = (props) => {
               <span className="value">{max_time_coverage}</span>
             </p>
           </div>
+          <div className="tile organisations">
+            <h2>Organisations</h2>
+            <span>{organisations}</span>
+          </div>
 
+          <div className="tile content_types">
+            <h2>Content Types</h2>
+            <span>{content_types}</span>
+          </div>
           <div className="tile countries">
             <h2>Countries</h2>
             <span>{countries}</span>
@@ -243,15 +252,7 @@ const LandingPage = (props) => {
               })}
             </ul>
           </div>
-          <div className="tile organisations">
-            <h2>Organisations</h2>
-            <span>{organisations}</span>
-          </div>
-
-          <div className="tile content_types">
-            <h2>Content Types</h2>
-            <span>{content_types}</span>
-          </div>
+          
         </Masonry>
       </div>
     );
