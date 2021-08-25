@@ -414,6 +414,13 @@ const globalSearchConfig = {
   ],
 };
 
+const getClientProxyAddress = () => {
+  const url = new URL(window.location);
+  url.pathname = '';
+  url.search = '';
+  return url.toString();
+};
+
 export default function install(config) {
   // console.log(process.env.RAZZLE_ENV_CONFIG);
   const envConfig = process.env.RAZZLE_ENV_CONFIG
@@ -429,6 +436,11 @@ export default function install(config) {
     elastic_index: 'es',
     host: process.env.RAZZLE_ES_PROXY_ADDR || 'http://localhost:3000',
   };
+
+  if (typeof window !== 'undefined') {
+    config.searchui.globalsearch.host =
+      process.env.RAZZLE_ES_PROXY_ADDR || getClientProxyAddress();
+  }
 
   config.searchui.standalone = {
     ...mergeConfig(envConfig, config.searchui.default),
