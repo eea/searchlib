@@ -10,6 +10,13 @@ const getInfo = async (appConfig) => {
   if (elastic_index === '_all') return ''; // we don't support _all
 
   const info = await getIndexInfo(appConfig);
+
+  if (info.error) {
+    // eslint-disable-next-line
+    console.warn('Error in retrieving index info', info);
+    return '';
+  }
+
   const indexes = Object.keys(info);
   if (indexes.length < 1) return '';
 

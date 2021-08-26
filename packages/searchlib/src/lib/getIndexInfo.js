@@ -9,6 +9,6 @@ export default async function getIndexInfo(config) {
     const resp = await superagent.get(url).set('accept', 'application/json');
     return resp.body || {};
   } catch (e) {
-    return { statusCode: 500, body: `An error occurred: ${e}` };
+    return { error: true, statusCode: 500, body: `An error occurred: ${e}` };
   }
 }
