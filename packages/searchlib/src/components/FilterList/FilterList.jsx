@@ -15,8 +15,11 @@ const FilterList = (props) => {
           active={isOpened}
           onClick={() => setIsOpened(!isOpened)}
         >
+          <div>
+            <Icon name="dropdown" />
+            Current filters applied: {filters.length}
+          </div>
           <Button
-            floated="right"
             compact
             basic
             inverted
@@ -26,10 +29,6 @@ const FilterList = (props) => {
             <Icon name="eraser" />
             Clear filters
           </Button>
-          <div>
-            <Icon name="dropdown" />
-            Current filters applied: {filters.length}
-          </div>
         </Accordion.Title>
         <Accordion.Content className="filter-list-content" active={isOpened}>
           <Divider inverted />
