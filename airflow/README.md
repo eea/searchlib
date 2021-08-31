@@ -1,4 +1,4 @@
-# Airflow config
+# Airflow development repo for EEA-Crawler
 
 For development (easier access to dag files) use the following:
 
@@ -9,15 +9,14 @@ sudo chown -R 50000:50000 data
 sudo chown -R 1000:1000 data/es
 ```
 
-The Airflow DAGs are hosted at https://github.com/eea/eea-crawler/ and are
-linked here as a Git submodule.
+## Airflow deployment architecture
 
-The image for Airflow is hosted at https://github.com/eea/eea.docker.airflow/
-and it's linked as a Git submodule. We need this custom image, because we
-have our custom requirements.txt
+We use and link here several custom docker images
 
-The image for Logstash is hosted at https://github.com/eea/eea.docker.logstash/
-and it's linked as a Git submodule. We need it to define our customizations.
+- **Airflow custom docker image**, linked from https://github.com/eea/eea.docker.airflow/
+  It loads needed Python libraries with a custom requirements.txt
+- **Airflow DAGs**, linked from https://github.com/eea/eea-crawler/
+- **Logstash configuration**, linked from https://github.com/eea/eea.docker.logstash/
 
 To bring them here, make sure to run:
 ```
