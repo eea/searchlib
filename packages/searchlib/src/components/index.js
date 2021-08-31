@@ -19,6 +19,8 @@ import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
+import String from './Result/String';
+import { Header } from './Result/ResultModal';
 
 export {
   CardItem,
@@ -42,6 +44,8 @@ export {
   AnswersList,
   DownloadButton,
   AppInfo,
+  Header,
+  String,
 };
 
 // SimpleSearchInput,
