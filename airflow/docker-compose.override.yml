@@ -7,17 +7,17 @@ services:
       AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
       SENTRY_DSN: ''
       DEV_ENV: "true"
-
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
       - ./data/logs:/opt/airflow/logs:z
+    # entrypoint: sh -c "tail -f /dev/null"
+
   airflow-scheduler:
     build: ./eea.docker.airflow
     environment:
       AIRFLOW_VAR_INDEXED_WEBSITES: '["https://biodiversity.europa.eu"]'
       SENTRY_DSN: ''
       DEV_ENV: "true"
-
     volumes:
       - ./eea-crawler/dags:/opt/airflow/dags
       - ./data/logs:/opt/airflow/logs:z
