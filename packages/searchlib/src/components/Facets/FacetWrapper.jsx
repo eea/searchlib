@@ -4,31 +4,45 @@ import { Accordion, Icon } from 'semantic-ui-react';
 import MultiCheckboxFacet from './MultiCheckboxFacet';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from './state';
+import { useUpdateAtom } from 'jotai/utils';
 
 const FacetWrapperComponent = (props) => {
   const { collapsable = true, filters = [], field, label } = props;
   const hasFilter = !!filters.find((filter) => field === filter.field);
-  const [openFacets, updateOpenFacets] = useAtom(openFacetsAtom);
+  const [openFacets] = useAtom(openFacetsAtom);
+  const updateOpenFacets = useUpdateAtom(openFacetsAtom);
 
   React.useEffect(() => {
-    if (hasFilter && !openFacets.includes(field)) {
-      updateOpenFacets([...openFacets, field]);
+    let temp = openFacets;
+    if (hasFilter && !(field in openFacets)) {
+      temp[field] = { opened: true };
+    } else {
+      if (!(field in openFacets)) {
+        temp[field] = { opened: false };
+      }
     }
+    updateOpenFacets(temp);
   }, [hasFilter, field, openFacets, updateOpenFacets]);
 
-  const isOpened = openFacets.indexOf(field) > -1;
+  let isOpened = openFacets[field]?.opened || false;
+  const [counter, setCounter] = React.useState(0);
 
   return collapsable ? (
     <Accordion>
       <Accordion.Title
         active={isOpened}
-        onClick={() =>
-          updateOpenFacets(
-            isOpened
-              ? openFacets.filter((f) => f !== field)
-              : [...openFacets, field],
-          )
-        }
+        onClick={() => {
+          setCounter(counter + 1); // Force render
+          let temp = openFacets;
+          if (isOpened) {
+            temp[field] = { opened: false };
+            isOpened = false;
+          } else {
+            temp[field] = { opened: true };
+            isOpened = true;
+          }
+          updateOpenFacets(temp);
+        }}
       >
         <Icon name="dropdown" />
         {label}
