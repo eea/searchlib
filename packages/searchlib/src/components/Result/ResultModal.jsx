@@ -53,6 +53,14 @@ export const Header = (props) => {
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id?.raw;
 
+  React.useEffect(() => {
+    console.log('Item id: ', result.id?.raw);
+    if (window.location.search.includes('showitem=' + result.id?.raw)) {
+      setShowModal(true);
+      let modalHref = `${window.location.href}&showitem=${result.id?.raw}`;
+    }
+  });
+
   return (
     <>
       <Level>
@@ -87,6 +95,16 @@ export const Header = (props) => {
           <ListingViewDetails result={result} appConfig={appConfig} />
         </Modal.Content>
         <Modal.Actions>
+          <button
+            style={{ marginRight: 14 + 'px' }}
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${window.location.href}&showitem=${result.id?.raw}`,
+              );
+            }}
+          >
+            Copy permalink
+          </button>
           <button onClick={() => setShowModal(false)}>Close</button>
         </Modal.Actions>
       </Modal>
