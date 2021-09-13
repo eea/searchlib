@@ -61,6 +61,8 @@ const baseConfig = {
     ],
   },
   externals: [
+    'react',
+    'react-dom',
     nodeExternals({
       allowlist: [
         /\.(eot|woff|woff2|ttf|otf)$/,
@@ -69,7 +71,7 @@ const baseConfig = {
         /\.(css|scss|sass|sss|less)$/,
       ],
     }),
-  ],
+  ], //  ['react', 'react-dom']
 };
 module.exports = lessPlugin(baseConfig);
 

@@ -2,15 +2,15 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PostCssFlexBugFixes = require('postcss-flexbugs-fixes');
-// const postcssLoadConfig = require('postcss-load-config');
-//
-// const hasPostCssConfig = () => {
-//   try {
-//     return !!postcssLoadConfig.sync();
-//   } catch (_error) {
-//     return false;
-//   }
-// };
+const postcssLoadConfig = require('postcss-load-config');
+
+const hasPostCssConfig = () => {
+  try {
+    return !!postcssLoadConfig.sync();
+  } catch (_error) {
+    return false;
+  }
+};
 
 const defaultOptions = {
   postcss: {
@@ -22,12 +22,12 @@ const defaultOptions = {
       sourceMap: false,
       ident: 'postcss',
     },
-    // plugins: [
-    //   PostCssFlexBugFixes,
-    //   autoprefixer({
-    //     flexbox: 'no-2009',
-    //   }),
-    // ],
+    plugins: [
+      PostCssFlexBugFixes,
+      autoprefixer({
+        flexbox: 'no-2009',
+      }),
+    ],
   },
   less: {
     development: {
@@ -62,13 +62,13 @@ module.exports = (config) => {
   console.log('config', config);
   const options = defaultOptions;
   const constantEnv = config.mode; // development
-  // const dev = constantEnv === 'development';
-  // const isServer = false;
-  //
-  // const styleLoader = {
-  //   loader: require.resolve('style-loader'),
-  //   options: options.style,
-  // };
+  const dev = constantEnv === 'development';
+  const isServer = false;
+
+  const styleLoader = {
+    loader: require.resolve('style-loader'),
+    options: options.style,
+  };
 
   const cssLoader = {
     loader: require.resolve('css-loader'),
@@ -85,10 +85,13 @@ module.exports = (config) => {
 
   const postCssLoader = {
     loader: require.resolve('postcss-loader'),
-    // options: Object.assign({}, options.postcss[constantEnv], {
-    //   // plugins: () => options.postcss.plugins,
-    // }),
+    options: hasPostCssConfig()
+    ? undefined
+    : Object.assign({}, options.postcss[constantEnv], {
+      plugins: () => options.postcss.plugins,
+    }),
   };
+  console.log('pos', postCssLoader);
 
   const lessLoader = {
     loader: require.resolve('less-loader'),
@@ -100,17 +103,26 @@ module.exports = (config) => {
     {
       test: /\.less$/,
       include: [
+        path.resolve('./../demo'),
+        path.resolve('./../demo/theme'),
+        path.resolve('./../searchlib-less'),
         path.resolve('./src'),
         /node_modules\/@plone\/volto\/theme/,
         /plone\.volto\/theme/,
         /node_modules\/semantic-ui-less/,
         // ...Object.values(registry.getResolveAliases()),
       ],
-      use: [MiniCssExtractPlugin.loader, cssLoader, postCssLoader, lessLoader],
+      use: [
+        MiniCssExtractPlugin.loader,
+        cssLoader,
+        postCssLoader,
+        lessLoader,
+      ]
     },
   ];
 
   config.plugins.push(new MiniCssExtractPlugin());
 
   return config;
-};
+
+}
