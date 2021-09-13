@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "main": "dist/index.js",
   "browser": {
-    "./dist/index.js": "./dist/client.js"
+    "./dist/index.js": "./dist/index.js"
   },
   "directories": {
     "test": "__tests__"
