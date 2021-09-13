@@ -1,7 +1,7 @@
 import React from 'react';
 import { SearchApp, registry } from '@eeacms/search';
 
-import installConfig from './config';
+import installConfig from '@eeacms/globalsearch';
 
 const localRegistry = installConfig(registry);
 

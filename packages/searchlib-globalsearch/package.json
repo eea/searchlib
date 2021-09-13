@@ -1,13 +1,8 @@
 {
-  "name": "@eeacms/search-standalone",
+  "name": "@eeacms/globalsearch",
   "version": "1.0.0",
   "license": "MIT",
-  "scripts": {
-    "start": "razzle start",
-    "build": "razzle build --noninteractive",
-    "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production NODE_PATH=./node_modules node build/server.js"
-  },
+  "scripts": {},
   "dependencies": {
     "@eeacms/search": "workspace:*",
     "@eeacms/search-middleware": "workspace:*",

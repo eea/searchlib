@@ -5,7 +5,7 @@ import express from 'express';
 import { renderToString } from 'react-dom/server';
 import { createESMiddleware } from '@eeacms/search-middleware';
 
-import installConfig from './config';
+import installConfig from '@eeacms/globalsearch';
 import { registry } from '@eeacms/search';
 
 const localRegistry = installConfig(registry);
