@@ -102,8 +102,6 @@ module.exports = {
           },
     };
 
-    console.log(postCssLoader);
-
     const lessLoader = {
       loader: require.resolve('less-loader'),
       options: Object.assign({}, options.less[constantEnv]),

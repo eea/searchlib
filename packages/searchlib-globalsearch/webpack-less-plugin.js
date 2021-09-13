@@ -59,9 +59,10 @@ const defaultOptions = {
 };
 
 module.exports = (config) => {
-  console.log('config', config);
+  // console.log('config', config);
   const options = defaultOptions;
   const constantEnv = config.mode; // development
+
   const dev = constantEnv === 'development';
   const isServer = false;
 
@@ -86,12 +87,11 @@ module.exports = (config) => {
   const postCssLoader = {
     loader: require.resolve('postcss-loader'),
     options: hasPostCssConfig()
-    ? undefined
-    : Object.assign({}, options.postcss[constantEnv], {
-      plugins: () => options.postcss.plugins,
-    }),
+      ? undefined
+      : Object.assign({}, options.postcss[constantEnv], {
+          plugins: () => options.postcss.plugins,
+        }),
   };
-  console.log('pos', postCssLoader);
 
   const lessLoader = {
     loader: require.resolve('less-loader'),
@@ -114,15 +114,22 @@ module.exports = (config) => {
       ],
       use: [
         MiniCssExtractPlugin.loader,
-        cssLoader,
+        // cssLoader,
+        {
+          loader: require.resolve('css-loader'),
+          options: Object.assign({}, options.css['production'], {
+            // constantEnv
+            // onlyLocals: true,
+          }),
+        },
+
         postCssLoader,
         lessLoader,
-      ]
+      ],
     },
   ];
 
   config.plugins.push(new MiniCssExtractPlugin());
 
   return config;
-
-}
+};

@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { hydrate } from 'react-dom';
 
+import '@eeacms/globalsearch/dist/index.css';
+
 hydrate(
   <BrowserRouter>
     <App />
