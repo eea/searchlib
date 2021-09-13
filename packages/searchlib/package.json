@@ -2,6 +2,9 @@
   "name": "@eeacms/search",
   "version": "0.2.1",
   "main": "dist/index.js",
+  "browser": {
+    "./dist/index.js": "./dist/client.js"
+  },
   "directories": {
     "test": "__tests__"
   },
