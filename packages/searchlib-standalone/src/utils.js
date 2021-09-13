@@ -37,12 +37,18 @@ export const getGlobalsearchIconUrl =
       image = 'https://www.eea.europa.eu/portal_depiction/term/image_thumb';
       has_img = true;
     }
-    if (result.objectProvides.raw.indexOf('Country profile') !== -1) {
+    if (
+      result.objectProvides &&
+      result.objectProvides.raw.indexOf('Country profile') !== -1
+    ) {
       image =
         'https://www.eea.europa.eu/portal_depiction/country-profile/image_thumb';
       has_img = true;
     }
-    if (result.about.raw.indexOf('://land.copernicus.eu') !== -1) {
+    if (
+      result.about &&
+      result.about.raw.indexOf('://land.copernicus.eu') !== -1
+    ) {
       image = 'https://www.eea.europa.eu/portal_depiction/data/image_thumb';
       has_img = true;
     } else {
