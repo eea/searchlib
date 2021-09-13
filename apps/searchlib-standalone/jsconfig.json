@@ -2,9 +2,15 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@eeacms/search": ["../../searchlib/src"],
-      "@eeacms/search-middleware": ["../../searchlib-middleware/src"]
+      "@eeacms/search": ["../../../packages/searchlib/src"],
+      "@eeacms/search-middleware": [
+        "../../../packages/searchlib-middleware/src"
+      ]
     }
   },
-  "include": ["src", "../../searchlib/src", "../../searchlib-middleware/src"]
+  "include": [
+    "src",
+    "../../../packages/searchlib/src",
+    "../../../packages/searchlib-middleware/src"
+  ]
 }

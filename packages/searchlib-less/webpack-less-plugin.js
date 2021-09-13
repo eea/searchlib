@@ -91,6 +91,7 @@ module.exports = (config) => {
       plugins: () => options.postcss.plugins,
     }),
   };
+  console.log('pos', postCssLoader);
 
   const lessLoader = {
     loader: require.resolve('less-loader'),
