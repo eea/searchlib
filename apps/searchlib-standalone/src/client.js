@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';

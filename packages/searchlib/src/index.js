@@ -1,4 +1,4 @@
-import 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
+// import 'regenerator-runtime/runtime'; // compatibility with react-speech-recognition
 // See https://github.com/JamesBrill/react-speech-recognition#regeneratorruntime-is-not-defined
 
 export * from './components';
