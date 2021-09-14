@@ -48,7 +48,16 @@ module.exports = {
       },
     ],
   },
-  externals: ['react', 'react-dom', nodeExternals()], //nodeExternals()    // , 'semantic-ui-react'
+  externals: [
+    'react',
+    'react-dom',
+    'regenerator-runtime',
+    'luxon',
+    'superagent',
+    'react-select',
+    'semantic-ui-react',
+    // 'downshift',
+  ], //nodeExternals()    // , 'semantic-ui-react'
 };
 
 // "build": "yarn build-csj && yarn build-es && yarn build-esm && yarn build-umd",
