@@ -52,14 +52,14 @@ export const Header = (props) => {
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id?.raw;
+  const modalHref = `${window.location.href}&showitem=${result.id?.raw}`;
 
   React.useEffect(() => {
-    console.log('Item id: ', result.id?.raw);
     if (window.location.search.includes('showitem=' + result.id?.raw)) {
+      // TODO: set url = modalHref
       setShowModal(true);
-      let modalHref = `${window.location.href}&showitem=${result.id?.raw}`;
     }
-  });
+  }, [result.id.raw]);
 
   return (
     <>
