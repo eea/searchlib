@@ -52,12 +52,21 @@ export const Header = (props) => {
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id?.raw;
-  const modalHref = `${window.location.href}&showitem=${result.id?.raw}`;
+  const modalHash = `showitem${result.id?.raw}`;
+
+  const closeModal = () => {
+    window.location.hash = '';
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+    window.location.hash = modalHash;
+  };
 
   React.useEffect(() => {
-    if (window.location.search.includes('showitem=' + result.id?.raw)) {
-      // TODO: set url = modalHref
-      setShowModal(true);
+    if (window.location.hash.includes('showitem' + result.id?.raw)) {
+      openModal();
     }
   }, [result.id.raw]);
 
@@ -71,11 +80,11 @@ export const Header = (props) => {
             className="listing-view-item"
             as="a"
             onClick={(e) => {
-              setShowModal(true);
+              openModal(true);
               e.preventDefault();
               e.stopPropagation();
             }}
-            onKeyDown={() => setShowModal(true)}
+            onKeyDown={() => openModal(true)}
           >
             {title}
           </Item.Header>
@@ -83,8 +92,8 @@ export const Header = (props) => {
       </Level>
       <Modal
         open={showModal}
-        onClose={() => setShowModal(false)}
-        onOpen={() => setShowModal(true)}
+        onClose={() => closeModal(false)}
+        onOpen={() => openModal(true)}
         closeOnDimmerClick={true}
         closeOnDocumentClick={true}
       >
@@ -98,14 +107,12 @@ export const Header = (props) => {
           <button
             style={{ marginRight: 14 + 'px' }}
             onClick={() => {
-              navigator.clipboard.writeText(
-                `${window.location.href}&showitem=${result.id?.raw}`,
-              );
+              navigator.clipboard.writeText(`${window.location.href}`);
             }}
           >
             Copy permalink
           </button>
-          <button onClick={() => setShowModal(false)}>Close</button>
+          <button onClick={() => closeModal(false)}>Close</button>
         </Modal.Actions>
       </Modal>
     </>
