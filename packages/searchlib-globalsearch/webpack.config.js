@@ -64,6 +64,10 @@ const baseConfig = {
     'react',
     'react-dom',
     'regenerator-runtime',
+    'luxon',
+    'superagent',
+    'react-select',
+    'semantic-ui-react',
     // nodeExternals({
     //   allowlist: [
     //     /\.(eot|woff|woff2|ttf|otf)$/,
