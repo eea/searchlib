@@ -63,14 +63,15 @@ const baseConfig = {
   externals: [
     'react',
     'react-dom',
-    nodeExternals({
-      allowlist: [
-        /\.(eot|woff|woff2|ttf|otf)$/,
-        /\.(svg|png|jpg|jpeg|gif|ico)$/,
-        /\.(mp4|mp3|ogg|swf|webp)$/,
-        /\.(css|scss|sass|sss|less)$/,
-      ],
-    }),
+    'regenerator-runtime',
+    // nodeExternals({
+    //   allowlist: [
+    //     /\.(eot|woff|woff2|ttf|otf)$/,
+    //     /\.(svg|png|jpg|jpeg|gif|ico)$/,
+    //     /\.(mp4|mp3|ogg|swf|webp)$/,
+    //     /\.(css|scss|sass|sss|less)$/,
+    //   ],
+    // }),
   ], //  ['react', 'react-dom']
 };
 module.exports = lessPlugin(baseConfig);
