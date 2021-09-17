@@ -41,6 +41,7 @@ export const createESMiddleware = (options) => {
           .send(qaBody)
           .set('accept', 'application/json')
           .end((err, resp) => {
+            // eslint-disable-next-line
             console.log(err, resp);
             res.send(resp.body);
           });
