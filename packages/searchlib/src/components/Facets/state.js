@@ -1,3 +1,3 @@
 import { atom } from 'jotai';
 
-export const openFacetsAtom = atom([]);
+export const openFacetsAtom = atom({});
