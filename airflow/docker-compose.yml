@@ -2,10 +2,9 @@ version: "2"
 
 services:
   airflow-webserver:
-    image: eeacms/airflow:0.0.1
+    image: eeacms/airflow:0.0.6
     volumes:
       - crawler-config-volume:/custom_config
-    # user: "50000:50000"
     depends_on:
       - redis
       - postgres
@@ -30,10 +29,9 @@ services:
     restart: always
 
   airflow-scheduler:
-    image: eeacms/airflow:0.0.1
+    image: eeacms/airflow:0.0.6
     volumes:
       - crawler-config-volume:/custom_config
-    # user: "50000:50000"
     depends_on:
       - redis
       - postgres
@@ -55,10 +53,9 @@ services:
     restart: always
 
   airflow-worker:
-    image: eeacms/airflow:0.0.1
+    image: eeacms/airflow:0.0.6
     volumes:
       - crawler-config-volume:/custom_config
-    # user: "50000:50000"
     depends_on:
       - redis
       - postgres
@@ -80,10 +77,9 @@ services:
     restart: always
 
   airflow-init:
-    image: eeacms/airflow:0.0.1
+    image: eeacms/airflow:0.0.6
     volumes:
       - crawler-config-volume:/custom_config
-    # user: "50000:50000"
     depends_on:
       - redis
       - postgres
@@ -108,10 +104,9 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: airflow
 
   flower:
-    image: eeacms/airflow:0.0.1
+    image: eeacms/airflow:0.0.6
     volumes:
       - crawler-config-volume:/custom_config
-    # user: "50000:50000"
     depends_on:
       - redis
       - postgres

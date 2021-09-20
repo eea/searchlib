@@ -64,12 +64,22 @@ services:
     volumes:
       - ./data/rabbitmq:/var/lib/rabbitmq:z
 
+  eea-crawler-config:
+    build: ./eea-crawler
+    environment:
+      github_repo: https://github.com/eea/eea-crawler
+      DEV_ENV: "false"
+      TZ: Europe/Copenhagen
+    volumes:
+      - crawler-config-volume:/custom_config
+
   logstash:
     build: ./eea.docker.logstash
     environment:
-      DEV_ENV: "true"
+      DEV_ENV: "false"
+#    entrypoint: sh -c "tail -f /dev/null"
 
     volumes:
-      - ./eea-crawler/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./eea-crawler/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./eea-crawler:/custom_config
+
 
