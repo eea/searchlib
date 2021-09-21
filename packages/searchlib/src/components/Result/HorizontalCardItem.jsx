@@ -66,89 +66,71 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
-    <Card
-      className={cx('horizontal-card-item', { hovered })}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <Card.Content>
-        <Grid responsive columns={16}>
-          <Grid.Column width={4}>
-            <Image
-              className="horizontal-card-thumbnail"
-              src={thumbUrl}
-              wrapped
-              ui={false}
-              fluid
-              centered
-              style={{ backgroundImage: `url('${thumbUrl}')` }}
-              as={ExternalLink}
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              label={
-                days < 30 && (
-                  <Label color="yellow" ribbon="right">
-                    New
-                  </Label>
-                )
-              }
-            />
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <Card.Content className="details">
-              <Card.Header>
-                <ExternalLink href={url}>
-                  {result[props.titleField]?.raw}
-                </ExternalLink>
-              </Card.Header>
-              <Card.Meta>
-                <DateTime
-                  format="DATE_MED"
-                  value={result[props.issuedField]?.raw}
-                />
-              </Card.Meta>
-              <Card.Meta>
-                <StringList value={result[props.tagsField]?.raw} />
-              </Card.Meta>
-              <Card.Description>{description}</Card.Description>
-            </Card.Content>
-          </Grid.Column>
-        </Grid>
-      </Card.Content>
-      <Card.Content extra className="controls">
-        <Card.Meta>
-          <Button
-            compact
-            floated="left"
-            color="green"
-            size="mini"
-            onClick={() => {
-              removeFilter('lessLikeThis');
-              setFilter('moreLikeThis', result._original._id, 'none');
-            }}
-          >
-            more like this
-          </Button>
-          <Button
-            className="metaButton"
-            floated="right"
+    <>
+      <div
+        className={cx('search-result', { hovered })}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className="col-left">
+          <Image
+            className="img-thumbnail"
+            src={thumbUrl}
+            wrapped
+            ui={false}
+            fluid
+            centered
+            style={{ backgroundImage: `url('${thumbUrl}')` }}
+            as={ExternalLink}
+            href={url}
             target="_blank"
-            as="a"
-            href={result.id.raw}
-            circular
-            size="mini"
-            compact
-            icon={
-              <div
-                className="card-icon"
-                style={{ backgroundImage: `url('${iconUrl}')` }}
-              ></div>
+            rel="noreferrer"
+            label={
+              days < 30 && (
+                <Label color="yellow" ribbon="right">
+                  New
+                </Label>
+              )
             }
-          ></Button>
-        </Card.Meta>
-      </Card.Content>
-    </Card>
+          />
+        </div>
+        <div className="col-right">
+          <div className="details">
+            <h4>
+              <ExternalLink href={url}>
+                {result[props.titleField]?.raw}
+              </ExternalLink>
+            </h4>
+            <p>
+              <DateTime
+                format="DATE_MED"
+                value={result[props.issuedField]?.raw}
+              />
+            </p>
+            <p>
+              <StringList value={result[props.tagsField]?.raw} />
+            </p>
+            <p>{description}</p>
+          </div>
+          <div className="controls">
+            <div>
+              <Button
+                compact
+                floated="left"
+                color="green"
+                size="mini"
+                onClick={() => {
+                  removeFilter('lessLikeThis');
+                  setFilter('moreLikeThis', result._original._id, 'none');
+                }}
+              >
+                more like this
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 });
 
