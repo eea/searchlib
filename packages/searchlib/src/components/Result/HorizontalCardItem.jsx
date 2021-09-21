@@ -106,8 +106,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 format="DATE_MED"
                 value={result[props.issuedField]?.raw}
               />
-            </p>
-            <p>
+              &nbsp;|&nbsp;
               <StringList value={result[props.tagsField]?.raw} />
             </p>
             <p>{description}</p>
@@ -117,7 +116,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <Button
                 compact
                 floated="left"
-                color="green"
                 size="mini"
                 onClick={() => {
                   removeFilter('lessLikeThis');
