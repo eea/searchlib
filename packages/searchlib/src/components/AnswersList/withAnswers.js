@@ -30,6 +30,7 @@ const withAnswers = (WrappedComponent) => {
           if (!(loading || loaded)) {
             const requestBody = buildQuestionRequest(searchContext, appConfig);
 
+            console.log('run asnwers request', requestBody);
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
               const { body } = response;

@@ -255,25 +255,25 @@ const globalSearchConfig = {
 
   resultViews: [
     {
-      id: 'card',
-      title: 'Cards',
-      icon: 'th',
-      render: null,
-      isDefault: true,
-      factories: {
-        view: 'Card.Group',
-        item: 'CardItem',
-      },
-    },
-    {
       id: 'horizontalCard',
       title: 'Horizontal cards',
       icon: 'bars',
       render: null,
-      isDefault: false,
+      isDefault: true,
       factories: {
         view: 'HorizontalCard.Group',
         item: 'HorizontalCardItem',
+      },
+    },
+    {
+      id: 'card',
+      title: 'Cards',
+      icon: 'th',
+      render: null,
+      isDefault: false,
+      factories: {
+        view: 'Card.Group',
+        item: 'CardItem',
       },
     },
   ],
@@ -468,10 +468,12 @@ export default function install(config) {
     },
   };
 
-  config.resolve.getGlobalsearchIconUrl =
-    getGlobalsearchIconUrl(contentTypeNormalize);
-  config.resolve.getGlobalsearchThumbUrl =
-    getGlobalsearchThumbUrl(contentTypeNormalize);
+  config.resolve.getGlobalsearchIconUrl = getGlobalsearchIconUrl(
+    contentTypeNormalize,
+  );
+  config.resolve.getGlobalsearchThumbUrl = getGlobalsearchThumbUrl(
+    contentTypeNormalize,
+  );
 
   config.resolve.LandingPage = { component: LandingPage };
 
