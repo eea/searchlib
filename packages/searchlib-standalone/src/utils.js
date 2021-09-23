@@ -104,7 +104,7 @@ export const getGlobalsearchThumbUrl =
       image = result.about.raw + '/image_preview';
       has_img = true;
     }
-    if (result.about.raw.startsWith('http://www.eea.europa.eu')) {
+    if ((result.about.raw.startsWith('http://www.eea.europa.eu')) || (result.about.raw.startsWith('https://www.eea.europa.eu'))){
       image = result.about.raw + '/image_preview';
       has_img = true;
     } else {

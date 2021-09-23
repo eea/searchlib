@@ -157,6 +157,7 @@ const globalSearchConfig = {
       label: 'Websites',
     }),
     histogramFacet({
+      rangeType: 'closed',
       field: 'year',
       // isFilterable: false,
       isMulti: true,
@@ -186,6 +187,7 @@ const globalSearchConfig = {
     }),
 
     histogramFacet({
+      rangeType: 'closed',
       field: 'time_coverage',
       // isFilterable: false,
       isMulti: true,
