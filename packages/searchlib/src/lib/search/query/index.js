@@ -46,7 +46,7 @@ function boostFacets(filters, config) {
  *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-from-size.html
  *
  */
-export default function buildRequest(state, config) {
+export default function buildRequest(state, config, includeAggs = false) {
   const {
     current,
     filters,
@@ -62,7 +62,7 @@ export default function buildRequest(state, config) {
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
   const filter = buildRequestFilter(filters, config);
-  const aggs = buildAggregationsQuery(config);
+  const aggs = includeAggs ? buildAggregationsQuery(config) : {};
   const { highlight } = config;
 
   // console.log({ sort, match, size, from, filter, filters });

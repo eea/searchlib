@@ -168,7 +168,16 @@ const config = {
 
       facets: [], // interactive filtering components (facets)
       defaultFilters: {}, // filters that are applied by default
+
       enableNLP: true, // enables NLP capabilities
+      nlp: {
+        classifyQuestion: {
+          servicePath: 'api/question-classifier',
+        },
+        qa: {
+          servicePath: 'api/query',
+        },
+      },
 
       filters: {
         // registration of filter options

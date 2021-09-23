@@ -28,9 +28,10 @@ score: 6.118757247924805
         <Segment loading={true}>
           <div className="loading-tip">Looking for semantic answers...</div>
         </Segment>
-      ) : searchTerm && searchedTerm === searchTerm && answers.length ? (
+      ) : searchTerm && searchedTerm === searchTerm && answers?.length ? (
         <>
-          <h4>Semantic results for your query</h4>
+          {/* <h4>Semantic results for your query</h4> */}
+          <hr />
           <ul>
             {answers.map((item) => (
               <li>
@@ -46,6 +47,7 @@ score: 6.118757247924805
               </li>
             ))}
           </ul>
+          <hr />
         </>
       ) : (
         ''

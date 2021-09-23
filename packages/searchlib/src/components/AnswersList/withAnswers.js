@@ -7,6 +7,24 @@ import { useAtom } from 'jotai';
 
 const timeoutRef = {};
 
+const buildClassifyQuestionRequest = (state, appConfig) => {
+  const { searchTerm } = state;
+
+  let query = searchTerm;
+  if (query.indexOf('|') > -1) {
+    query = query.split('|').filter((p) => !!p.trim());
+  }
+  if (Array.isArray(query)) {
+    query = query.join(' ');
+  }
+
+  return {
+    requestType: 'nlp',
+    endpoint: appConfig.nlp.classifyQuestion.servicePath,
+    query,
+  };
+};
+
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
@@ -25,9 +43,16 @@ const withAnswers = (WrappedComponent) => {
       const shouldRunSearch = searchTerm && searchTerm.trim().indexOf(' ') > -1;
 
       if (shouldRunSearch) {
-        timeoutRef.current = setTimeout(() => {
+        timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
           if (!(loading || loaded)) {
+            const classifyQuestionBody = buildClassifyQuestionRequest(
+              searchContext,
+              appConfig,
+            );
+            const resp = await runRequest(classifyQuestionBody, appConfig);
+            console.log('classify resp', { classifyQuestionBody, resp });
+
             const requestBody = buildQuestionRequest(searchContext, appConfig);
 
             console.log('run asnwers request', requestBody);

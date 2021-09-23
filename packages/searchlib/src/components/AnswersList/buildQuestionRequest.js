@@ -21,6 +21,7 @@ const buildQuestionRequest = (state, config) => {
   const filter = buildRequestFilter(filters, config);
 
   const body = {
+    requestType: 'question',
     question,
     query: {
       // Dynamic values based on current Search UI state

@@ -44,7 +44,7 @@ async function getDisjunctiveFacetCounts(state, config) {
     // clarity.
     config.disjunctiveFacets.map((facetName) => {
       let newState = removeFilterByName(state, facetName);
-      let body = buildRequest(newState, config);
+      let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
       return runRequest(body, config);
