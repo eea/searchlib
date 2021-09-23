@@ -23,7 +23,7 @@ const RES_REQUEST = {
           filter: [
             {
               term: {
-                hasWorkflowState: 'published',
+                'meta.hasWorkflowState': 'published',
               },
             },
             {
@@ -35,14 +35,14 @@ const RES_REQUEST = {
                         bool: {
                           must_not: {
                             exists: {
-                              field: 'issued',
+                              field: 'meta.issued',
                             },
                           },
                         },
                       },
                       {
                         range: {
-                          'issued.date': {
+                          'meta.issued.date': {
                             lte: getTodayWithTime(),
                           },
                         },
@@ -61,14 +61,14 @@ const RES_REQUEST = {
                         bool: {
                           must_not: {
                             exists: {
-                              field: 'expires',
+                              field: 'meta.expires',
                             },
                           },
                         },
                       },
                       {
                         range: {
-                          expires: {
+                          'meta.expires': {
                             gte: getTodayWithTime(),
                           },
                         },
@@ -85,7 +85,7 @@ const RES_REQUEST = {
   },
   sort: [
     {
-      'issued.index': {
+      'meta.issued.index': {
         order: 'desc',
       },
     },
@@ -97,44 +97,44 @@ const AGGS_REQUEST = {
   aggs: {
     languages: {
       terms: {
-        field: 'language',
+        field: 'meta.language',
         size: 1000000,
       },
     },
     topics: {
       terms: {
-        field: 'topic',
+        field: 'meta.topic',
         size: 1000000,
       },
     },
     organisations: {
       terms: {
-        field: 'organisation',
+        field: 'meta.organisation',
         size: 1000000,
       },
     },
     content_types: {
       terms: {
-        field: 'objectProvides',
+        field: 'meta.objectProvides',
         size: 1000000,
       },
     },
     countries: {
       terms: {
-        field: 'spatial',
+        field: 'meta.spatial',
         size: 1000000,
       },
     },
     max_timecoverage: {
       max: {
         script:
-          "def vals = doc['time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+          "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
       },
     },
     min_timecoverage: {
       min: {
         script:
-          "def vals = doc['time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+          "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
       },
     },
   },
@@ -240,7 +240,7 @@ const LandingPage = (props) => {
             <h2>Recently added</h2>
             <ul>
               {elements.map((element, i) => {
-                const { about, title, issued } = element._source;
+                const { about, title, issued } = element._source.meta;
                 return (
                   <li key={i}>
                     <a href={about}>{title}</a>

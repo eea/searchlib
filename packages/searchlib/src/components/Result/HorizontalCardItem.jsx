@@ -64,7 +64,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const url = result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
-  const description = normalizeStr(result[props.descriptionField]?.raw || '');
+  const description = normalizeStr(result.meta.raw[props.descriptionField] || '');
   return (
     <Card
       className={cx('horizontal-card-item', { hovered })}
@@ -99,17 +99,17 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             <Card.Content className="details">
               <Card.Header>
                 <ExternalLink href={url}>
-                  {result[props.titleField]?.raw}
+                  {result.meta.raw[props.titleField] || ''}
                 </ExternalLink>
               </Card.Header>
               <Card.Meta>
                 <DateTime
                   format="DATE_MED"
-                  value={result[props.issuedField]?.raw}
+                  value={result.meta.raw[props.issuedField] || ''}
                 />
               </Card.Meta>
               <Card.Meta>
-                <StringList value={result[props.tagsField]?.raw} />
+                <StringList value={result.meta.raw[props.tagsField] || ''} />
               </Card.Meta>
               <Card.Description>{description}</Card.Description>
             </Card.Content>
