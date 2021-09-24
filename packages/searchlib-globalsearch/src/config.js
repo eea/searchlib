@@ -27,22 +27,22 @@ const globalSearchConfig = {
 
   extraQueryParams: {
     text_fields: [
-      'title^2',
-      'subject^1.5',
-      'description^1.5',
-      'searchable_spatial^1.2',
-      'searchable_places^1.2',
-      'searchable_objectProvides^1.4',
-      'searchable_topics^1.2',
-      'searchable_time_coverage^10',
-      'searchable_organisation^2',
-      'label',
-      'all_fields_for_freetext',
+      'meta.title^2',
+      'meta.subject^1.5',
+      'meta.description^1.5',
+      'meta.searchable_spatial^1.2',
+      'meta.searchable_places^1.2',
+      'meta.searchable_objectProvides^1.4',
+      'meta.searchable_topics^1.2',
+      'meta.searchable_time_coverage^10',
+      'meta.searchable_organisation^2',
+      'meta.label',
+      'meta.all_fields_for_freetext',
     ],
     functions: [
       {
         exp: {
-          'issued.date': {
+          'meta.issued.date': {
             offset: '30d',
             scale: '1800d',
           },
@@ -50,7 +50,7 @@ const globalSearchConfig = {
       },
       {
         script_score: {
-          script: "doc['items_count_references'].value*0.01",
+          script: "doc['meta.items_count_references'].value*0.01",
         },
       },
     ],
@@ -58,7 +58,7 @@ const globalSearchConfig = {
     facet_boost_functions: {
       topic: {
         linear: {
-          items_count_topic: {
+          'meta.items_count_topic': {
             scale: 1,
             origin: 0,
           },
@@ -66,7 +66,7 @@ const globalSearchConfig = {
       },
       spatial: {
         linear: {
-          items_count_spatial: {
+          'meta.items_count_spatial': {
             scale: 1,
             origin: 0,
           },
@@ -74,7 +74,7 @@ const globalSearchConfig = {
       },
       places: {
         linear: {
-          items_count_places: {
+          'meta.items_count_places': {
             scale: 1,
             origin: 0,
           },
@@ -82,7 +82,7 @@ const globalSearchConfig = {
       },
       organisation: {
         linear: {
-          items_count_organisation: {
+          'meta.items_count_organisation': {
             scale: 1,
             origin: 0,
           },
@@ -91,14 +91,14 @@ const globalSearchConfig = {
     },
   },
   permanentFilters: [
-    { term: { hasWorkflowState: 'published' } },
+    { term: { 'meta.hasWorkflowState': 'published' } },
     () => ({
       constant_score: {
         filter: {
           bool: {
             should: [
-              { bool: { must_not: { exists: { field: 'issued' } } } },
-              { range: { 'issued.date': { lte: getTodayWithTime() } } },
+              { bool: { must_not: { exists: { field: 'meta.issued' } } } },
+              { range: { 'meta.issued.date': { lte: getTodayWithTime() } } },
             ],
           },
         },
@@ -106,11 +106,11 @@ const globalSearchConfig = {
     }),
   ],
   defaultFilters: {
-    language: {
+    'meta.language': {
       value: 'en',
       type: 'any',
     },
-    readingTime: {
+    'meta.readingTime': {
       value: { name: 'All', rangeType: 'fixed' },
       type: 'any',
     },
@@ -118,48 +118,48 @@ const globalSearchConfig = {
 
   facets: [
     multiTermFacet({
-      field: 'topic',
+      field: 'meta.topic',
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
       // factory: 'sui.Facet',
     }),
     multiTermFacet({
-      field: 'spatial',
+      field: 'meta.spatial',
       isFilterable: true,
       isMulti: true,
       label: 'Countries',
       whitelist: spatialWhitelist,
     }),
     multiTermFacet({
-      field: 'places',
+      field: 'meta.places',
       isFilterable: true,
       isMulti: true,
       label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
     }),
     multiTermFacet({
-      field: 'objectProvides',
+      field: 'meta.objectProvides',
       isFilterable: false,
       isMulti: true,
       label: 'Content types',
       whitelist: objectProvidesWhitelist,
     }),
     suiFacet({
-      field: 'organisation',
+      field: 'meta.organisation',
       isFilterable: false,
       isMulti: true,
       label: 'Organisation involved',
     }),
     multiTermFacet({
-      field: 'cluster_name',
+      field: 'meta.cluster_name',
       isFilterable: false,
       isMulti: true,
       label: 'Websites',
     }),
     histogramFacet({
       rangeType: 'closed',
-      field: 'year',
+      field: 'meta.year',
       // isFilterable: false,
       isMulti: true,
       label: 'Publishing year',
@@ -184,12 +184,12 @@ const globalSearchConfig = {
       //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 
       aggs_script:
-        "def vals = doc['year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+        "def vals = doc['meta.year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 
     histogramFacet({
       rangeType: 'closed',
-      field: 'time_coverage',
+      field: 'meta.time_coverage',
       // isFilterable: false,
       isMulti: true,
       label: 'Time coverage',
@@ -214,11 +214,11 @@ const globalSearchConfig = {
       //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 
       aggs_script:
-        "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+        "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 
     fixedRangeFacet({
-      field: 'readingTime',
+      field: 'meta.readingTime',
       label: 'Reading time (minutes)',
       rangeType: 'fixed',
       isMulti: true,
@@ -231,7 +231,7 @@ const globalSearchConfig = {
       ],
     }),
     multiTermFacet({
-      field: 'language',
+      field: 'meta.language',
       isFilterable: false,
       isMulti: true,
       label: 'Language',
@@ -246,7 +246,7 @@ const globalSearchConfig = {
           filter: {
             bool: {
               should: [
-                { bool: { must_not: { exists: { field: 'expires' } } } },
+                { bool: { must_not: { exists: { field: 'meta.expires' } } } },
                 { range: { expires: { gte: getTodayWithTime() } } },
               ],
             },
@@ -290,22 +290,22 @@ const globalSearchConfig = {
   sortOptions: [
     {
       name: 'Title a-z',
-      value: 'title',
+      value: 'meta.title',
       direction: 'asc',
     },
     {
       name: 'Title z-a',
-      value: 'title',
+      value: 'meta.title',
       direction: 'desc',
     },
     {
       name: 'Oldest',
-      value: 'issued.date',
+      value: 'meta.issued.date',
       direction: 'asc',
     },
     {
       name: 'Newest',
-      value: 'issued.date',
+      value: 'meta.issued.date',
       direction: 'desc',
     },
   ],
@@ -383,35 +383,35 @@ const globalSearchConfig = {
   },
 
   field_filters: {
-    type: {
+    'meta.type': {
       whitelist: typesWhitelist,
     },
-    objectProvides: {
+    'meta.objectProvides': {
       whitelist: objectProvidesWhitelist,
     },
-    spatial: {
+    'meta.spatial': {
       whitelist: spatialWhitelist,
     },
-    places: {
+    'meta.places': {
       blacklist: placesBlacklist,
     },
   },
 
   download_fields: [
     {
-      field: 'about',
+      field: 'meta.about',
       name: 'About',
     },
     {
-      field: 'description',
+      field: 'meta.description',
       name: 'Description',
     },
     {
-      field: 'subject',
+      field: 'meta.subject',
       name: 'Subject',
     },
     {
-      field: 'issued',
+      field: 'meta.issued',
       name: 'Issued',
     },
   ],

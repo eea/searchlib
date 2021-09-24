@@ -81,5 +81,6 @@ services:
 
     volumes:
       - ./eea-crawler:/custom_config
-
-
+      - ./eea-crawler/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./eea-crawler/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./eea-crawler/logstash/pipeline:/usr/share/logstash/pipeline

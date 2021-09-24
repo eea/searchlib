@@ -34,7 +34,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const { result, setFilter, removeFilter } = props;
   const { appConfig, registry } = useAppConfig();
   const days =
-    (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
+    (Date.now() - Date.parse(result.meta?.raw?.['issued'])) /
+    1000 /
+    60 /
+    60 /
+    24;
   // console.log('card props', props, appConfig);
 
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
@@ -64,7 +68,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const url = result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
-  const description = normalizeStr(result[props.descriptionField]?.raw || '');
+  const description = normalizeStr(
+    result.meta.raw[props.descriptionField] || '',
+  );
   return (
     <>
       <div
@@ -98,16 +104,16 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           <div className="details">
             <h4>
               <ExternalLink href={url}>
-                {result[props.titleField]?.raw}
+                {result.meta?.raw?.[props.titleField]}
               </ExternalLink>
             </h4>
             <p>
               <DateTime
                 format="DATE_MED"
-                value={result[props.issuedField]?.raw}
+                value={result.meta?.raw?.[props.issuedField]}
               />
               &nbsp;|&nbsp;
-              <StringList value={result[props.tagsField]?.raw} />
+              <StringList value={result.meta?.raw?.[props.tagsField]} />
             </p>
             <p>{description}</p>
           </div>

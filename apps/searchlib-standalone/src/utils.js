@@ -32,22 +32,22 @@ export const getGlobalsearchIconUrl =
     let image = fallback;
     let has_img = false;
     if (
-      result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')
+      result.meta.raw.about.startsWith('http://www.eea.europa.eu/help/glossary/')
     ) {
       image = 'https://www.eea.europa.eu/portal_depiction/term/image_thumb';
       has_img = true;
     }
     if (
-      result.objectProvides &&
-      result.objectProvides.raw.indexOf('Country profile') !== -1
+      result.meta.raw.objectProvides &&
+      result.meta.raw.objectProvides.indexOf('Country profile') !== -1
     ) {
       image =
         'https://www.eea.europa.eu/portal_depiction/country-profile/image_thumb';
       has_img = true;
     }
     if (
-      result.about &&
-      result.about.raw.indexOf('://land.copernicus.eu') !== -1
+      result.meta.raw.about &&
+      result.meta.raw.about.indexOf('://land.copernicus.eu') !== -1
     ) {
       image = 'https://www.eea.europa.eu/portal_depiction/data/image_thumb';
       has_img = true;
@@ -57,13 +57,13 @@ export const getGlobalsearchIconUrl =
         let _type;
         let _typeClass;
         let _contentType = 'generic';
-        if (!Array.isArray(result.objectProvides.raw)) {
-          result.objectProvides.raw = [result.objectProvides.raw];
+        if (!Array.isArray(result.meta.raw.objectProvides)) {
+          result.meta.raw.objectProvides = [result.meta.raw.objectProvides];
         }
-        if (result.objectProvides.raw.length > 0) {
-          var pos = result.objectProvides.raw.length - 1;
+        if (result.meta.raw.objectProvides.length > 0) {
+          var pos = result.meta.raw.objectProvides.length - 1;
           while (true) {
-            _type = result.objectProvides.raw[pos];
+            _type = result.meta.raw.objectProvides[pos];
             _typeClass = _type.toLowerCase().replace(/\s/g, '-');
             if (contentTypes[_typeClass]) {
               _contentType = contentTypes[_typeClass];
@@ -90,22 +90,22 @@ export const getGlobalsearchThumbUrl =
     let image = fallback;
     let has_img = false;
     if (
-      result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')
+      result.meta.raw.about.startsWith('http://www.eea.europa.eu/help/glossary/')
     ) {
       image = 'https://www.eea.europa.eu/portal_depiction/term/image_preview';
       has_img = true;
     }
-    if (result.objectProvides.raw.indexOf('Country profile') !== -1) {
+    if (result.meta.raw.objectProvides.indexOf('Country profile') !== -1) {
       image =
         'https://www.eea.europa.eu/portal_depiction/country-profile/image_preview';
       has_img = true;
     }
-    if (result.about.raw.indexOf('://land.copernicus.eu') !== -1) {
-      image = result.about.raw + '/image_preview';
+    if (result.meta.raw.about.indexOf('://land.copernicus.eu') !== -1) {
+      image = result.meta.raw.about + '/image_preview';
       has_img = true;
     }
-    if ((result.about.raw.startsWith('http://www.eea.europa.eu')) || (result.about.raw.startsWith('https://www.eea.europa.eu'))){
-      image = result.about.raw + '/image_preview';
+    if ((result.meta.raw.about.startsWith('http://www.eea.europa.eu')) || (result.meta.raw.about.startsWith('https://www.eea.europa.eu'))){
+      image = result.meta.raw.about + '/image_preview';
       has_img = true;
     } else {
       if (!has_img) {
@@ -113,13 +113,13 @@ export const getGlobalsearchThumbUrl =
         let _type;
         let _typeClass;
         let _contentType = 'generic';
-        if (!Array.isArray(result.objectProvides.raw)) {
-          result.objectProvides.raw = [result.objectProvides.raw];
+        if (!Array.isArray(result.meta.raw.objectProvides)) {
+          result.meta.raw.objectProvides = [result.meta.raw.objectProvides];
         }
-        if (result.objectProvides.raw.length > 0) {
-          var pos = result.objectProvides.raw.length - 1;
+        if (result.meta.raw.objectProvides.length > 0) {
+          var pos = result.meta.raw.objectProvides.length - 1;
           while (true) {
-            _type = result.objectProvides.raw[pos];
+            _type = result.meta.raw.objectProvides[pos];
             _typeClass = _type.toLowerCase().replace(/\s/g, '-');
             if (contentTypes[_typeClass]) {
               _contentType = contentTypes[_typeClass];
