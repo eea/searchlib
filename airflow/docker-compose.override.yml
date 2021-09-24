@@ -70,6 +70,6 @@ services:
       DEV_ENV: "true"
 
     volumes:
-      - ./eea-crawler/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./eea-crawler/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-
+      - ./eea-crawler/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./eea-crawler/logstash/pipeline:/usr/share/logstash/pipeline

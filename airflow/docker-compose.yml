@@ -161,6 +161,8 @@ services:
     image: eeacms/logstash
     volumes:
       - crawler-config-volume:/custom_config
+    ports:
+      - 9600:9600
 
   eea-crawler-config:
     image: eeacms/eea-crawler:0.0.1
