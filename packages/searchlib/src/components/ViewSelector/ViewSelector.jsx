@@ -5,7 +5,7 @@ const ViewSelector = (props) => {
   const { views, active, onSetView } = props;
   return (
     <Container className="view-selector">
-      <Button.Group size="tiny" compact color="olive">
+      <Button.Group size="tiny" compact>
         {views.map((view) => {
           const { render: Render, icon, title } = view;
           return Render ? (
