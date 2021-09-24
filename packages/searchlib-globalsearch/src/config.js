@@ -23,6 +23,7 @@ import LandingPage from './components/LandingPage';
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'RightColumnLayout',
+  enableNLP: true, // enables NLP capabilities
 
   extraQueryParams: {
     text_fields: [
