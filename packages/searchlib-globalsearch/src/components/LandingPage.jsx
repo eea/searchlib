@@ -23,7 +23,7 @@ const RES_REQUEST = {
           filter: [
             {
               term: {
-                'meta.hasWorkflowState': 'published',
+                hasWorkflowState: 'published',
               },
             },
             {
@@ -35,14 +35,14 @@ const RES_REQUEST = {
                         bool: {
                           must_not: {
                             exists: {
-                              field: 'meta.issued',
+                              field: 'issued',
                             },
                           },
                         },
                       },
                       {
                         range: {
-                          'meta.issued.date': {
+                          'issued.date': {
                             lte: getTodayWithTime(),
                           },
                         },
@@ -61,14 +61,14 @@ const RES_REQUEST = {
                         bool: {
                           must_not: {
                             exists: {
-                              field: 'meta.expires',
+                              field: 'expires',
                             },
                           },
                         },
                       },
                       {
                         range: {
-                          'meta.expires': {
+                          expires: {
                             gte: getTodayWithTime(),
                           },
                         },
@@ -85,7 +85,7 @@ const RES_REQUEST = {
   },
   sort: [
     {
-      'meta.issued.index': {
+      'issued.index': {
         order: 'desc',
       },
     },
@@ -97,44 +97,44 @@ const AGGS_REQUEST = {
   aggs: {
     languages: {
       terms: {
-        field: 'meta.language',
+        field: 'language',
         size: 1000000,
       },
     },
     topics: {
       terms: {
-        field: 'meta.topic',
+        field: 'topic',
         size: 1000000,
       },
     },
     organisations: {
       terms: {
-        field: 'meta.organisation',
+        field: 'organisation',
         size: 1000000,
       },
     },
     content_types: {
       terms: {
-        field: 'meta.objectProvides',
+        field: 'objectProvides',
         size: 1000000,
       },
     },
     countries: {
       terms: {
-        field: 'meta.spatial',
+        field: 'spatial',
         size: 1000000,
       },
     },
     max_timecoverage: {
       max: {
         script:
-          "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+          "def vals = doc['time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
       },
     },
     min_timecoverage: {
       min: {
         script:
-          "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
+          "def vals = doc['time_coverage']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
       },
     },
   },
@@ -184,10 +184,9 @@ const LandingPage = (props) => {
       landingDataAggs.aggregations.organisations.buckets.length;
     const topics = landingDataAggs.aggregations.topics.buckets.length;
     const languages = landingDataAggs.aggregations.languages.buckets.length;
-    const content_types =
-      landingDataAggs.aggregations.content_types.buckets.filter(
-        (bucket) => objectProvidesWhitelist.indexOf(bucket.key) !== -1,
-      ).length;
+    const content_types = landingDataAggs.aggregations.content_types.buckets.filter(
+      (bucket) => objectProvidesWhitelist.indexOf(bucket.key) !== -1,
+    ).length;
     const countries = landingDataAggs.aggregations.countries.buckets.filter(
       (bucket) => spatialWhitelist.indexOf(bucket.key) !== -1,
     ).length;
@@ -240,7 +239,7 @@ const LandingPage = (props) => {
             <h2>Recently added</h2>
             <ul>
               {elements.map((element, i) => {
-                const { about, title, issued } = element._source.meta;
+                const { about, title, issued } = element._source;
                 return (
                   <li key={i}>
                     <a href={about}>{title}</a>

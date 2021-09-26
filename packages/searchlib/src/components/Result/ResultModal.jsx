@@ -22,7 +22,7 @@ export const ListingViewDetails = (props) => {
             )}
             {section.titleField ? (
               <h5>
-                <String val={result.meta.raw[section.titleField]} />
+                <String val={result[section.titleField]?.raw} />
               </h5>
             ) : (
               ''
@@ -34,7 +34,7 @@ export const ListingViewDetails = (props) => {
                 </div>
                 <div className="details-field-value">
                   <String
-                    val={result.meta.raw[field.field] ?? result.meta.raw[field.field]}
+                    val={result[field.field]?.raw ?? result[field.field]?.raw}
                   />
                 </div>
               </div>
@@ -50,8 +50,8 @@ export const Header = (props) => {
   const [showModal, setShowModal] = React.useState(false);
   const { result, appConfig, details } = props;
   const { Level = 'h4', urlField, titleField } = props;
-  const url = result.meta.raw[urlField];
-  const title = result.meta.raw[titleField] || result.id?.raw;
+  const url = result[urlField]?.raw;
+  const title = result[titleField]?.raw || result.id?.raw;
   const modalHash = `showitem${result.id?.raw}`;
 
   const closeModal = () => {
@@ -59,16 +59,16 @@ export const Header = (props) => {
     setShowModal(false);
   };
 
-  const openModal = () => {
+  const openModal = React.useCallback(() => {
     setShowModal(true);
     window.location.hash = modalHash;
-  };
+  }, [modalHash]);
 
   React.useEffect(() => {
     if (window.location.hash.includes('showitem' + result.id?.raw)) {
       openModal();
     }
-  }, [result.id.raw]);
+  }, [result.id.raw, openModal, result.id?.raw]);
 
   return (
     <>
@@ -98,7 +98,7 @@ export const Header = (props) => {
         closeOnDocumentClick={true}
       >
         <Modal.Header>
-          {details?.titleField ? result.meta.raw[details.titleField] : 'Details:'}
+          {details?.titleField ? result[details.titleField]?.raw : 'Details:'}
         </Modal.Header>
         <Modal.Content scrolling>
           <ListingViewDetails result={result} appConfig={appConfig} />

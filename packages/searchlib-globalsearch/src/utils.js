@@ -34,21 +34,22 @@ export const getGlobalsearchIconUrl = (contentTypeNormalize) => (
 ) => {
   let image = fallback;
   let has_img = false;
-  console.log('result', result);
-  if (
-    result.meta?.raw?.about?.startsWith(
-      'http://www.eea.europa.eu/help/glossary/',
-    )
-  ) {
+  if (result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')) {
     image = 'https://www.eea.europa.eu/portal_depiction/term/image_thumb';
     has_img = true;
   }
-  if (result.meta?.raw?.objectProvides?.indexOf('Country profile') !== -1) {
+  if (
+    result.objectProvides &&
+    result.objectProvides.raw.indexOf('Country profile') !== -1
+  ) {
     image =
       'https://www.eea.europa.eu/portal_depiction/country-profile/image_thumb';
     has_img = true;
   }
-  if (result.meta?.raw?.about.indexOf('://land.copernicus.eu') !== -1) {
+  if (
+    result.about &&
+    result.about.raw.indexOf('://land.copernicus.eu') !== -1
+  ) {
     image = 'https://www.eea.europa.eu/portal_depiction/data/image_thumb';
     has_img = true;
   } else {
@@ -56,31 +57,30 @@ export const getGlobalsearchIconUrl = (contentTypeNormalize) => (
       let contentTypes = contentTypeNormalize;
       let _type;
       let _typeClass;
-      // TODO: fix it
       let _contentType = 'generic';
 
-      // if (!result.meta?.raw?.objectProvides) {
-      //   return image;
-      // }
-      //
-      // if (!Array.isArray(result.meta?.raw?.objectProvidesraw)) {
-      //   result.meta.raw.objectProvides = [result.meta.raw.objectProvides];
-      // }
-      // if (result.meta?.raw?.objectProvides?.length > 0) {
-      //   var pos = result.meta?.raw?.objectProvides?.length - 1;
-      //   while (true) {
-      //     _type = result.meta?.raw?.objectProvides[pos];
-      //     _typeClass = _type.toLowerCase().replace(/\s/g, '-');
-      //     if (contentTypes[_typeClass]) {
-      //       _contentType = contentTypes[_typeClass];
-      //       break;
-      //     }
-      //     pos--;
-      //     if (pos < 0) {
-      //       break;
-      //     }
-      //   }
-      // }
+      if (!result.objectProvides) {
+        return image;
+      }
+
+      if (!Array.isArray(result.objectProvides?.raw)) {
+        result.objectProvides.raw = [result.objectProvides.raw];
+      }
+      if (result.objectProvides?.raw?.length > 0) {
+        var pos = result.objectProvides.raw.length - 1;
+        while (true) {
+          _type = result.objectProvides.raw[pos];
+          _typeClass = _type.toLowerCase().replace(/\s/g, '-');
+          if (contentTypes[_typeClass]) {
+            _contentType = contentTypes[_typeClass];
+            break;
+          }
+          pos--;
+          if (pos < 0) {
+            break;
+          }
+        }
+      }
       image =
         'https://www.eea.europa.eu/portal_depiction/' +
         _contentType +
@@ -99,24 +99,22 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
   let image = fallback;
   let has_img = false;
   if (
-    result.meta?.raw?.about?.startsWith(
-      'http://www.eea.europa.eu/help/glossary/',
-    )
+    result.about?.raw?.startsWith('http://www.eea.europa.eu/help/glossary/')
   ) {
     image = 'https://www.eea.europa.eu/portal_depiction/term/image_preview';
     has_img = true;
   }
-  if (result.meta?.raw?.objectProvides?.indexOf('Country profile') !== -1) {
+  if (result.objectProvides?.raw?.indexOf('Country profile') !== -1) {
     image =
       'https://www.eea.europa.eu/portal_depiction/country-profile/image_preview';
     has_img = true;
   }
-  if (result.meta?.raw?.about?.indexOf('://land.copernicus.eu') !== -1) {
-    image = result.meta.raw.about + '/image_preview';
+  if (result.about?.raw?.indexOf('://land.copernicus.eu') !== -1) {
+    image = result.about.raw + '/image_preview';
     has_img = true;
   }
-  if (result.meta?.raw?.about?.startsWith('http://www.eea.europa.eu')) {
-    image = result.meta.raw.about + '/image_preview';
+  if (result.about?.raw?.startsWith('http://www.eea.europa.eu')) {
+    image = result.about.raw + '/image_preview';
     has_img = true;
   } else {
     if (!has_img) {
@@ -124,26 +122,24 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
       let _type;
       let _typeClass;
       let _contentType = 'generic';
-      // TODO: fix it
-      console.log(result);
-      // if (!Array.isArray(result.meta?.raw?.objectProvides)) {
-      //   result.meta.raw.objectProvides = [result.meta.raw.objectProvides];
-      // }
-      // if (result.meta.raw.objectProvides.length > 0) {
-      //   var pos = result.meta.raw.objectProvides.length - 1;
-      //   while (true) {
-      //     _type = result.meta.raw.objectProvides[pos];
-      //     _typeClass = _type.toLowerCase().replace(/\s/g, '-');
-      //     if (contentTypes[_typeClass]) {
-      //       _contentType = contentTypes[_typeClass];
-      //       break;
-      //     }
-      //     pos--;
-      //     if (pos < 0) {
-      //       break;
-      //     }
-      //   }
-      // }
+      if (!Array.isArray(result.objectProvides?.raw)) {
+        result.objectProvides.raw = [result.objectProvides.raw];
+      }
+      if (result.objectProvides.raw.length > 0) {
+        var pos = result.objectProvides.raw.length - 1;
+        while (true) {
+          _type = result.objectProvides.raw[pos];
+          _typeClass = _type.toLowerCase().replace(/\s/g, '-');
+          if (contentTypes[_typeClass]) {
+            _contentType = contentTypes[_typeClass];
+            break;
+          }
+          pos--;
+          if (pos < 0) {
+            break;
+          }
+        }
+      }
       image =
         'https://www.eea.europa.eu/portal_depiction/' +
         _contentType +

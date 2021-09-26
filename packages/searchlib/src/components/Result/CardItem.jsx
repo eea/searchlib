@@ -64,7 +64,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const url = result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
-  const description = normalizeStr(result.meta.raw[props.descriptionField] || '');
+  const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
     <Card
       className={cx('card-item', { hovered })}
@@ -72,7 +72,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       onMouseLeave={() => setHovered(false)}
     >
       <Label className="meta-type">
-        <StringList value={result.meta.raw[props.metatypeField] || ''} />
+        <StringList value={result[props.metatypeField]?.raw || ''} />
       </Label>
 
       <Image
@@ -99,19 +99,22 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <Card.Meta>{url}</Card.Meta>
         <Card.Header>
           <ExternalLink href={url}>
-            {result.meta.raw[props.titleField] || ''}
+            {result[props.titleField]?.raw || ''}
           </ExternalLink>
         </Card.Header>
         <Card.Description>{description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
-          <StringList value={result.meta.raw[props.tagsField]} />
+          <StringList value={result[props.tagsField]?.raw} />
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
-          <DateTime format="DATE_MED" value={result.meta.raw[props.issuedField] || ''} />
+          <DateTime
+            format="DATE_MED"
+            value={result[props.issuedField]?.raw || ''}
+          />
         </Card.Meta>
       </Card.Content>
       <Card.Content extra className="controls">

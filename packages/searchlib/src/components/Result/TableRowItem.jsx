@@ -25,9 +25,9 @@ const WrappedRowItem = (props) => {
             </div>
           ) : (
             normalizeStr(
-              Array.isArray(result.meta.raw[col.field])
-                ? result.meta.raw[col.field].sort().join(', ')
-                : result.meta.raw[col.field] || '',
+              Array.isArray(result[col.field]?.raw)
+                ? result[col.field]?.raw.sort().join(', ')
+                : result[col.field]?.raw || '',
             )
           )}
         </Table.Cell>
