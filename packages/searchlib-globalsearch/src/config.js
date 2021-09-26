@@ -27,38 +27,38 @@ const globalSearchConfig = {
 
   extraQueryParams: {
     text_fields: [
-      'meta.title^2',
-      'meta.subject^1.5',
-      'meta.description^1.5',
-      'meta.searchable_spatial^1.2',
-      'meta.searchable_places^1.2',
-      'meta.searchable_objectProvides^1.4',
-      'meta.searchable_topics^1.2',
-      'meta.searchable_time_coverage^10',
-      'meta.searchable_organisation^2',
-      'meta.label',
-      'meta.all_fields_for_freetext',
+      'title^2',
+      'subject^1.5',
+      'description^1.5',
+      'searchable_spatial^1.2',
+      'searchable_places^1.2',
+      'searchable_objectProvides^1.4',
+      'searchable_topics^1.2',
+      'searchable_time_coverage^10',
+      'searchable_organisation^2',
+      'label',
+      'all_fields_for_freetext',
     ],
     functions: [
-      {
-        exp: {
-          'meta.issued.date': {
-            offset: '30d',
-            scale: '1800d',
-          },
-        },
-      },
-      {
-        script_score: {
-          script: "doc['meta.items_count_references'].value*0.01",
-        },
-      },
+      // {
+      //   exp: {
+      //     'issued.date': {
+      //       offset: '30d',
+      //       scale: '1800d',
+      //     },
+      //   },
+      // },
+      // {
+      //   script_score: {
+      //     script: "doc['items_count_references'].value*0.01",
+      //   },
+      // },
     ],
     score_mode: 'sum',
     facet_boost_functions: {
       topic: {
         linear: {
-          'meta.items_count_topic': {
+          items_count_topic: {
             scale: 1,
             origin: 0,
           },
@@ -66,7 +66,7 @@ const globalSearchConfig = {
       },
       spatial: {
         linear: {
-          'meta.items_count_spatial': {
+          items_count_spatial: {
             scale: 1,
             origin: 0,
           },
@@ -74,7 +74,7 @@ const globalSearchConfig = {
       },
       places: {
         linear: {
-          'meta.items_count_places': {
+          items_count_places: {
             scale: 1,
             origin: 0,
           },
@@ -82,7 +82,7 @@ const globalSearchConfig = {
       },
       organisation: {
         linear: {
-          'meta.items_count_organisation': {
+          items_count_organisation: {
             scale: 1,
             origin: 0,
           },
@@ -91,26 +91,26 @@ const globalSearchConfig = {
     },
   },
   permanentFilters: [
-    { term: { 'meta.hasWorkflowState': 'published' } },
-    () => ({
-      constant_score: {
-        filter: {
-          bool: {
-            should: [
-              { bool: { must_not: { exists: { field: 'meta.issued' } } } },
-              { range: { 'meta.issued.date': { lte: getTodayWithTime() } } },
-            ],
-          },
-        },
-      },
-    }),
+    { term: { hasWorkflowState: 'published' } },
+    // () => ({
+    //   constant_score: {
+    //     filter: {
+    //       bool: {
+    //         should: [
+    //           { bool: { must_not: { exists: { field: 'issued' } } } },
+    //           { range: { 'issued.date': { lte: getTodayWithTime() } } },
+    //         ],
+    //       },
+    //     },
+    //   },
+    // }),
   ],
   defaultFilters: {
-    'meta.language': {
+    language: {
       value: 'en',
       type: 'any',
     },
-    'meta.readingTime': {
+    readingTime: {
       value: { name: 'All', rangeType: 'fixed' },
       type: 'any',
     },
@@ -118,48 +118,48 @@ const globalSearchConfig = {
 
   facets: [
     multiTermFacet({
-      field: 'meta.topic',
+      field: 'topic',
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
       // factory: 'sui.Facet',
     }),
     multiTermFacet({
-      field: 'meta.spatial',
+      field: 'spatial',
       isFilterable: true,
       isMulti: true,
       label: 'Countries',
       whitelist: spatialWhitelist,
     }),
     multiTermFacet({
-      field: 'meta.places',
+      field: 'places',
       isFilterable: true,
       isMulti: true,
       label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
     }),
     multiTermFacet({
-      field: 'meta.objectProvides',
+      field: 'objectProvides',
       isFilterable: false,
       isMulti: true,
       label: 'Content types',
       whitelist: objectProvidesWhitelist,
     }),
     suiFacet({
-      field: 'meta.organisation',
+      field: 'organisation',
       isFilterable: false,
       isMulti: true,
       label: 'Organisation involved',
     }),
     multiTermFacet({
-      field: 'meta.cluster_name',
+      field: 'cluster_name',
       isFilterable: false,
       isMulti: true,
       label: 'Websites',
     }),
     histogramFacet({
       rangeType: 'closed',
-      field: 'meta.year',
+      field: 'year',
       // isFilterable: false,
       isMulti: true,
       label: 'Publishing year',
@@ -184,12 +184,12 @@ const globalSearchConfig = {
       //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 
       aggs_script:
-        "def vals = doc['meta.year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+        "def vals = doc['year']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 
     histogramFacet({
       rangeType: 'closed',
-      field: 'meta.time_coverage',
+      field: 'time_coverage',
       // isFilterable: false,
       isMulti: true,
       label: 'Time coverage',
@@ -214,11 +214,11 @@ const globalSearchConfig = {
       //"def vals = doc['year']; if (vals.length == 0){return 2000} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2000);}return ret;}",
 
       aggs_script:
-        "def vals = doc['meta.time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
+        "def vals = doc['time_coverage']; if (vals.length == 0){return 2500} else {def ret = [];for (val in vals){def tmp_val = val.substring(0,4);ret.add(tmp_val.toLowerCase() == tmp_val.toUpperCase() ? Integer.parseInt(tmp_val) : 2500);}return ret;}",
     }),
 
     fixedRangeFacet({
-      field: 'meta.readingTime',
+      field: 'readingTime',
       label: 'Reading time (minutes)',
       rangeType: 'fixed',
       isMulti: true,
@@ -231,7 +231,7 @@ const globalSearchConfig = {
       ],
     }),
     multiTermFacet({
-      field: 'meta.language',
+      field: 'language',
       isFilterable: false,
       isMulti: true,
       label: 'Language',
@@ -246,7 +246,7 @@ const globalSearchConfig = {
           filter: {
             bool: {
               should: [
-                { bool: { must_not: { exists: { field: 'meta.expires' } } } },
+                { bool: { must_not: { exists: { field: 'expires' } } } },
                 { range: { expires: { gte: getTodayWithTime() } } },
               ],
             },
@@ -290,22 +290,22 @@ const globalSearchConfig = {
   sortOptions: [
     {
       name: 'Title a-z',
-      value: 'meta.title',
+      value: 'title',
       direction: 'asc',
     },
     {
       name: 'Title z-a',
-      value: 'meta.title',
+      value: 'title',
       direction: 'desc',
     },
     {
       name: 'Oldest',
-      value: 'meta.issued.date',
+      value: 'issued.date',
       direction: 'asc',
     },
     {
       name: 'Newest',
-      value: 'meta.issued.date',
+      value: 'issued.date',
       direction: 'desc',
     },
   ],
@@ -383,35 +383,35 @@ const globalSearchConfig = {
   },
 
   field_filters: {
-    'meta.type': {
+    type: {
       whitelist: typesWhitelist,
     },
-    'meta.objectProvides': {
+    objectProvides: {
       whitelist: objectProvidesWhitelist,
     },
-    'meta.spatial': {
+    spatial: {
       whitelist: spatialWhitelist,
     },
-    'meta.places': {
+    places: {
       blacklist: placesBlacklist,
     },
   },
 
   download_fields: [
     {
-      field: 'meta.about',
+      field: 'about',
       name: 'About',
     },
     {
-      field: 'meta.description',
+      field: 'description',
       name: 'Description',
     },
     {
-      field: 'meta.subject',
+      field: 'subject',
       name: 'Subject',
     },
     {
-      field: 'meta.issued',
+      field: 'issued',
       name: 'Issued',
     },
   ],

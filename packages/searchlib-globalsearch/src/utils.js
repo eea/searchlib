@@ -34,6 +34,7 @@ export const getGlobalsearchIconUrl = (contentTypeNormalize) => (
 ) => {
   let image = fallback;
   let has_img = false;
+  console.log('result', result);
   if (
     result.meta?.raw?.about?.startsWith(
       'http://www.eea.europa.eu/help/glossary/',
