@@ -34,7 +34,7 @@ export const getGlobalsearchIconUrl = (contentTypeNormalize) => (
 ) => {
   let image = fallback;
   let has_img = false;
-  if (result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')) {
+  if ((result.about.raw.startsWith('http://www.eea.europa.eu/help/glossary/')) || (result.about.raw.startsWith('https://www.eea.europa.eu/help/glossary/'))) {
     image = 'https://www.eea.europa.eu/portal_depiction/term/image_thumb';
     has_img = true;
   }
@@ -98,9 +98,11 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
 ) => {
   let image = fallback;
   let has_img = false;
-  if (
+  if ((
     result.about?.raw?.startsWith('http://www.eea.europa.eu/help/glossary/')
-  ) {
+  ) || (
+    result.about?.raw?.startsWith('https://www.eea.europa.eu/help/glossary/')
+  )) {
     image = 'https://www.eea.europa.eu/portal_depiction/term/image_preview';
     has_img = true;
   }
@@ -113,7 +115,7 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
     image = result.about.raw + '/image_preview';
     has_img = true;
   }
-  if (result.about?.raw?.startsWith('http://www.eea.europa.eu')) {
+  if ((result.about?.raw?.startsWith('http://www.eea.europa.eu')) || (result.about?.raw?.startsWith('https://www.eea.europa.eu'))) {
     image = result.about.raw + '/image_preview';
     has_img = true;
   } else {
