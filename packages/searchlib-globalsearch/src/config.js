@@ -534,5 +534,112 @@ export default function install(config) {
     }),
   ];
 
+  config.searchui.clms = {
+    ...mergeConfig(config.searchui.minimal, envConfig),
+    elastic_index: 'clms',
+    title: 'CLMS Dataset search',
+  };
+  config.searchui.clms.enableNLP = false;
+  config.searchui.clms.defaultFilters = {};
+  config.searchui.clms.facets = [
+    suiFacet({
+      field: 'content_type',
+      label: 'Content type',
+    }),
+    suiFacet({
+      field: 'topic',
+      label: 'Topic',
+    }),
+
+  ];
+  config.searchui.clms.sortOptions = [
+    { name: 'Relevance' },
+    { name: 'Title a-z', value: 'title', direction: 'asc' },
+    { name: 'Title z-a', value: 'title', direction: 'desc' },
+    { name: 'Oldest', value: 'issued_date', direction: 'asc' },
+    { name: 'Newest', value: 'issued_date', direction: 'desc' },
+  ];
+  config.searchui.clms.permanentFilters = [
+    // { term: { hasWorkflowState: 'published' } },
+    () => ({
+      constant_score: {
+        filter: {
+          bool: {
+            should: [
+              { bool: { must_not: { exists: { field: 'issued_date' } } } },
+              { range: { issued_date: { lte: getTodayWithTime() } } },
+            ],
+          },
+        },
+      },
+    }),
+  ];
+
+  config.searchui.clms.cardViewParams = {
+    titleField: 'title',
+    // metatypeField: 'provides',
+    metatypeField: 'title',
+    descriptionField: 'description',
+    tagsField: null, //'topic',
+    issuedField: 'issued_date',
+    enabled: true,
+    getThumbnailUrl: null, //'getGlobalsearchThumbUrl',
+    getIconUrl: null, //'getGlobalsearchIconUrl'
+  };
+  config.searchui.clms.tableViewParams = {
+    titleField: 'title',
+    urlField: 'about',
+    enabled: true,
+    columns: [
+      {
+        title: 'Title',
+        field: 'title',
+      },
+      {
+        title: 'Description',
+        field: 'description',
+      },
+      {
+        title: 'Issued',
+        field: 'issued_date',
+      },
+    ],
+  };
+
+  config.searchui.clms.extraQueryParams = {
+    text_fields: [
+      'title^2',
+      'subject^1.5',
+      'description^1.5',
+      'SearchableText',
+    ],
+    functions: [
+      {
+        exp: {
+          issued_date: {
+            offset: '30d',
+            scale: '1800d',
+          },
+        },
+      },
+    ],
+    score_mode: 'sum',
+  };
+
+  config.searchui.clms.resultViews = [
+    {
+      id: 'horizontalCard',
+      title: 'Horizontal cards',
+      icon: 'bars',
+      render: null,
+      isDefault: true,
+      factories: {
+        view: 'HorizontalCard.Group',
+        item: 'HorizontalCardItem',
+      },
+    },
+  ];
+  // debugger;
+
   return config;
 }
