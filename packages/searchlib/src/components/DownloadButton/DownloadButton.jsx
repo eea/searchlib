@@ -15,7 +15,9 @@ const DownloadButton = (props) => {
         name="query"
         value={JSON.stringify({ searchTerm, filters })}
       />
-      <Button type="submit">Download</Button>
+      <Button type="submit" className="download-btn">
+        Download
+      </Button>
     </Form>
   );
 };
