@@ -43,10 +43,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     registry.resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
 
-  const iconFactoryName = appConfig.cardViewParams.getIconUrl;
-  const getIcon =
-    registry.resolve[iconFactoryName] ||
-    ((result, config, fallback) => fallback);
+  // const iconFactoryName = appConfig.cardViewParams.getIconUrl;
+  // const getIcon =
+  //   registry.resolve[iconFactoryName] ||
+  //   ((result, config, fallback) => fallback);
 
   const thumbUrl = getThumb(
     result,
@@ -55,13 +55,13 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
-  const iconUrl = getIcon(
-    result,
-    appConfig,
-    // TODO: use a configured default
-    'https://react.semantic-ui.com/images/wireframe/white-image.png',
-  );
-  const url = props.urlField?result[props.urlField]?.raw:result.id?.raw;
+  // const iconUrl = getIcon(
+  //   result,
+  //   appConfig,
+  //   // TODO: use a configured default
+  //   'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  // );
+  const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');

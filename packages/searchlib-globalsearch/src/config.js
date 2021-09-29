@@ -40,19 +40,19 @@ const globalSearchConfig = {
       'all_fields_for_freetext',
     ],
     functions: [
-      // {
-      //   exp: {
-      //     'issued.date': {
-      //       offset: '30d',
-      //       scale: '1800d',
-      //     },
-      //   },
-      // },
-      // {
-      //   script_score: {
-      //     script: "doc['items_count_references'].value*0.01",
-      //   },
-      // },
+      {
+        exp: {
+          'issued.date': {
+            offset: '30d',
+            scale: '1800d',
+          },
+        },
+      },
+      {
+        script_score: {
+          script: "doc['items_count_references'].value*0.01",
+        },
+      },
     ],
     score_mode: 'sum',
     facet_boost_functions: {
@@ -92,18 +92,18 @@ const globalSearchConfig = {
   },
   permanentFilters: [
     { term: { hasWorkflowState: 'published' } },
-    // () => ({
-    //   constant_score: {
-    //     filter: {
-    //       bool: {
-    //         should: [
-    //           { bool: { must_not: { exists: { field: 'issued' } } } },
-    //           { range: { 'issued.date': { lte: getTodayWithTime() } } },
-    //         ],
-    //       },
-    //     },
-    //   },
-    // }),
+    () => ({
+      constant_score: {
+        filter: {
+          bool: {
+            should: [
+              { bool: { must_not: { exists: { field: 'issued' } } } },
+              { range: { 'issued.date': { lte: getTodayWithTime() } } },
+            ],
+          },
+        },
+      },
+    }),
   ],
   defaultFilters: {
     language: {
