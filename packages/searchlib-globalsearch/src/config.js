@@ -311,6 +311,7 @@ const globalSearchConfig = {
   ],
 
   cardViewParams: {
+    urlField: 'about',
     titleField: 'title',
     metatypeField: 'objectProvides',
     descriptionField: 'description',
@@ -322,6 +323,7 @@ const globalSearchConfig = {
   },
 
   horizontalCardViewParams: {
+    urlField: 'about',
     titleField: 'title',
     metatypeField: 'objectProvides',
     descriptionField: 'description',

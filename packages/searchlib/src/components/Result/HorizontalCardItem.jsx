@@ -61,7 +61,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     // TODO: use a configured default
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
-  const url = result.id?.raw;
+  const url = props.urlField?result[props.urlField]?.raw:result.id?.raw;
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
