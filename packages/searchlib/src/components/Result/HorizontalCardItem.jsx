@@ -86,6 +86,21 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             target="_blank"
             rel="noreferrer"
           />
+          <div className="controls">
+            <div>
+              <Button
+                compact
+                floated="left"
+                size="mini"
+                onClick={() => {
+                  removeFilter('lessLikeThis');
+                  setFilter('moreLikeThis', result._original._id, 'none');
+                }}
+              >
+                more like this
+              </Button>
+            </div>
+          </div>
         </div>
         <div className="col-right">
           <div className="details">
@@ -111,21 +126,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <StringList value={result[props.tagsField]?.raw} />
             </p>
             <p>{description}</p>
-          </div>
-          <div className="controls">
-            <div>
-              <Button
-                compact
-                floated="left"
-                size="mini"
-                onClick={() => {
-                  removeFilter('lessLikeThis');
-                  setFilter('moreLikeThis', result._original._id, 'none');
-                }}
-              >
-                more like this
-              </Button>
-            </div>
           </div>
         </div>
       </div>
