@@ -85,13 +85,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             href={url}
             target="_blank"
             rel="noreferrer"
-            label={
-              days < 30 && (
-                <Label color="yellow" ribbon="right">
-                  New
-                </Label>
-              )
-            }
           />
         </div>
         <div className="col-right">
@@ -100,6 +93,14 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <ExternalLink href={url}>
                 {result[props.titleField]?.raw}
               </ExternalLink>
+              {days < 30 && (
+                <>
+                  &nbsp;
+                  <Label className="new-item" horizontal>
+                    New
+                  </Label>
+                </>
+              )}
             </h4>
             <p>
               <DateTime
