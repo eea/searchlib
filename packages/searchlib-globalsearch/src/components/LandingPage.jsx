@@ -11,6 +11,9 @@ import { getTodayWithTime } from '../utils';
 import './styles.less';
 
 const RES_REQUEST = {
+  es_query_metadata: {
+    query_type: 'landing page documents',
+  },
   query: {
     function_score: {
       query: {
@@ -94,6 +97,19 @@ const RES_REQUEST = {
 };
 
 const AGGS_REQUEST = {
+  es_query_metadata: {
+    query_type: 'landing page',
+  },
+  query: {
+    bool: {
+      must: [
+        {
+          match_all: {},
+        },
+      ],
+    },
+  },
+
   aggs: {
     languages: {
       terms: {
