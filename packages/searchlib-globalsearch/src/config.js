@@ -118,6 +118,13 @@ const globalSearchConfig = {
 
   facets: [
     multiTermFacet({
+      field: 'moreLikeThis',
+      isFilterable: true,
+      isMulti: true,
+      label: 'More like this',
+      showInFacetsList: false,
+    }),
+    multiTermFacet({
       field: 'topic',
       isFilterable: true,
       isMulti: true,
