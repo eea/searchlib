@@ -94,7 +94,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 size="mini"
                 onClick={() => {
                   removeFilter('lessLikeThis');
-                  setFilter('moreLikeThis', result._original._id, 'none');
+                  setFilter('moreLikeThis', result.about.raw, 'none');
                 }}
               >
                 more like this
