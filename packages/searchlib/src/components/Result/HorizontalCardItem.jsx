@@ -1,7 +1,7 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Grid, Button, Card, Image, Label } from 'semantic-ui-react';
-import { DateTime, StringList } from '@eeacms/search';
+import { Button, Image, Label } from 'semantic-ui-react';
+import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';
 
@@ -31,7 +31,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   removeFilter,
 }))((props) => {
   // console.log('props', props);
-  const { result, setFilter, removeFilter } = props;
+  const { result, setFilter, removeFilter, showControls = true } = props;
   const { appConfig, registry } = useAppConfig();
   const days =
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
@@ -87,6 +87,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             rel="noreferrer"
           />
           <div className="controls">
+            {showControls && (
             <div>
               <Button
                 compact
@@ -100,6 +101,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 more like this
               </Button>
             </div>
+            )
           </div>
         </div>
         <div className="col-right">
@@ -125,7 +127,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               &nbsp;|&nbsp;
               <StringList value={result[props.tagsField]?.raw} />
             </p>
-            <p>{description}</p>
+            {props.children ? props.children : <p>{description}</p>}
           </div>
         </div>
       </div>

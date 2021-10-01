@@ -1,17 +1,53 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Rating, Icon, Accordion } from 'semantic-ui-react';
 import withAnswers from './withAnswers';
-const Answer = ({ item }) => {
+import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
+import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
+import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+
+const AnswerContext = ({ item }) => {
   return (
-    <li>
+    <>
       {item.context.slice(0, item.offset_start)}
-      <a href={item.document_id}>
-        <strong>
-          <em>{item.context.slice(item.offset_start, item.offset_end)}</em>
-        </strong>
-      </a>
+      <strong>{item.context.slice(item.offset_start, item.offset_end)}</strong>
       {item.context.slice(item.offset_end, item.context.length)}
-    </li>
+    </>
+  );
+};
+
+const Answer = ({ item }) => {
+  const { appConfig } = useAppConfig();
+  const result = convertHitToResult(
+    { ...item, _source: item.source },
+    appConfig.field_filters,
+  );
+  const [active, setActive] = React.useState();
+  console.log('result', result);
+
+  return (
+    <>
+      <Accordion.Title onClick={() => setActive(!active)} active={active}>
+        <Icon name="dropdown" />
+        <div className="answer__text">
+          {item.answer}
+          <Rating
+            rating={Math.round(5 * item.score)}
+            maxRating={5}
+            size="mini"
+            disabled
+          />
+        </div>
+      </Accordion.Title>
+      <Accordion.Content active={active}>
+        <HorizontalCardItem
+          {...appConfig.horizontalCardViewParams}
+          result={result}
+          showControls={false}
+        >
+          <AnswerContext item={item} />
+        </HorizontalCardItem>
+      </Accordion.Content>
+    </>
   );
 };
 
@@ -34,7 +70,9 @@ score: 6.118757247924805
 */
   //
   const showLoader = loading && !loaded;
+
   console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
+
   return (
     <div className="answers-list">
       {showLoader ? (
@@ -44,13 +82,15 @@ score: 6.118757247924805
       ) : searchTerm && searchedTerm === searchTerm && answers?.length ? (
         <>
           {/* <h4>Semantic results for your query</h4> */}
+          <h4>Direct answers</h4>
           <hr />
-          <ul>
-            {answers.map((item, i) => (
-              <Answer item={item} key={i} />
-            ))}
-            ))}
-          </ul>
+          <Accordion>
+            {answers
+              .filter((item) => item.score >= 0.5)
+              .map((item, i) => (
+                <Answer item={item} key={i} />
+              ))}
+          </Accordion>
           <hr />
         </>
       ) : (

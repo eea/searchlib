@@ -1,29 +1,14 @@
 import React from 'react';
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import runRequest from '@eeacms/search/lib/runRequest';
-import buildQuestionRequest from './buildQuestionRequest';
+import {
+  buildQuestionRequest,
+  buildClassifyQuestionRequest,
+} from './buildRequest';
 import { requestFamily } from './state';
 import { useAtom } from 'jotai';
 
 const timeoutRef = {};
-
-const buildClassifyQuestionRequest = (state, appConfig) => {
-  const { searchTerm } = state;
-
-  let query = searchTerm;
-  if (query.indexOf('|') > -1) {
-    query = query.split('|').filter((p) => !!p.trim());
-  }
-  if (Array.isArray(query)) {
-    query = query.join(' ');
-  }
-
-  return {
-    requestType: 'nlp',
-    endpoint: appConfig.nlp.classifyQuestion.servicePath,
-    query,
-  };
-};
 
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
@@ -31,10 +16,11 @@ const withAnswers = (WrappedComponent) => {
 
     const { searchTerm = '' } = searchContext;
     const { appConfig } = useAppConfig();
-    const [searchedTerm, setSearchedTerm] = React.useState();
+    const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
 
     const requestAtom = requestFamily(searchTerm);
     const [request, dispatch] = useAtom(requestAtom);
+    console.log('requestAtom', request, searchedTerm, searchTerm);
 
     React.useEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
@@ -45,17 +31,17 @@ const withAnswers = (WrappedComponent) => {
       if (shouldRunSearch) {
         timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
+          // const classifyQuestionBody = buildClassifyQuestionRequest(
+          //   searchContext,
+          //   appConfig,
+          // );
+          // const resp = await runRequest(classifyQuestionBody, appConfig);
+          // console.log('classify resp', { classifyQuestionBody, resp });
+
+          const requestBody = buildQuestionRequest(searchContext, appConfig);
+
           if (!(loading || loaded)) {
-            const classifyQuestionBody = buildClassifyQuestionRequest(
-              searchContext,
-              appConfig,
-            );
-            const resp = await runRequest(classifyQuestionBody, appConfig);
-            console.log('classify resp', { classifyQuestionBody, resp });
-
-            const requestBody = buildQuestionRequest(searchContext, appConfig);
-
-            console.log('run asnwers request', requestBody);
+            console.log('run answers request', requestBody);
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
               const { body } = response;

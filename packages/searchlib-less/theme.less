@@ -1,7 +1,7 @@
 // @import "~./semantic-ui";
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,7 +13,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -331,7 +331,7 @@ code {
     }
 
     &.listening::before {
-      content: "";
+      content: '';
       width: 100px;
       height: 100px;
       background-color: #ffffff81;
@@ -483,5 +483,33 @@ a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
 
   &:hover {
     color: #8e004d;
+  }
+}
+
+.answer__card {
+  .answer__headline {
+    .answer__text {
+      font-size: large;
+      font-weight: 900;
+    }
+  }
+}
+
+.searchapp {
+  i.icon.dropdown:before,
+  .ui.accordion .title .dropdown.icon:before,
+  .ui.accordion .accordion .title .dropdown.icon:before {
+    content: '\f0d7'; // fix compatibility with Volto?
+  }
+
+  .ui.accordion .active.title .dropdown.icon:before,
+  .ui.accordion .accordion .active.title .dropdown.icon:before {
+    content: '\f0d7'; // fix compatibility with Volto?
+    // content: '\e9ce';
+  }
+  .ui.accordion .accordion .active.title .dropdown.icon,
+  .ui.accordion .active.title .dropdown.icon {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
   }
 }

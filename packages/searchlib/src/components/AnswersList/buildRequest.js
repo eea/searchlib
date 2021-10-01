@@ -1,6 +1,24 @@
 import { buildRequestFilter } from '@eeacms/search/lib/search/query/filters';
 
-const buildQuestionRequest = (state, config) => {
+export const buildClassifyQuestionRequest = (state, appConfig) => {
+  const { searchTerm } = state;
+
+  let query = searchTerm;
+  if (query.indexOf('|') > -1) {
+    query = query.split('|').filter((p) => !!p.trim());
+  }
+  if (Array.isArray(query)) {
+    query = query.join(' ');
+  }
+
+  return {
+    requestType: 'nlp',
+    endpoint: appConfig.nlp.classifyQuestion.servicePath,
+    query,
+  };
+};
+
+export const buildQuestionRequest = (state, config) => {
   const {
     searchTerm,
     filters,
@@ -64,5 +82,3 @@ const buildQuestionRequest = (state, config) => {
 
   return body;
 };
-
-export default buildQuestionRequest;
