@@ -6,12 +6,15 @@ import { moreLikeThisAtom } from '@eeacms/search/state';
 const FilterResultEntry = (props) => {
   const { value } = props;
   const [result] = useAtom(moreLikeThisAtom);
+
   console.log('filter result', result);
+
   if (result) {
+    const itemURL = result.about.raw;
     return (
-      <a href={value} target="_blank" rel="noreferrer">
+      <a href={itemURL} target="_blank" rel="noreferrer">
         <Icon name="external" size="small" />
-        {value}
+        {itemURL}
       </a>
     );
   }
