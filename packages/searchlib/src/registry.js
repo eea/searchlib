@@ -172,10 +172,10 @@ const config = {
       enableNLP: false, // enables NLP capabilities
       nlp: {
         classifyQuestion: {
-          servicePath: 'api/question-classifier',
+          servicePath: 'query-classifier',
         },
         qa: {
-          servicePath: 'api/query',
+          servicePath: 'query',
         },
       },
 

@@ -21,39 +21,45 @@ const buildQuestionRequest = (state, config) => {
   const filter = buildRequestFilter(filters, config);
 
   const body = {
-    requestType: 'question',
-    question,
-    query: {
-      // Dynamic values based on current Search UI state
-      function_score: {
+    requestType: 'nlp',
+    endpoint: config.nlp.qa.servicePath,
+    query: question,
+    track_total_hits: false,
+    params: {
+      use_dp: true,
+      custom_query: {
         query: {
-          bool: {
-            must: [
-              {
-                multi_match: {
-                  // eslint-disable-next-line
+          // Dynamic values based on current Search UI state
+          function_score: {
+            query: {
+              bool: {
+                must: [
+                  {
+                    multi_match: {
+                      // eslint-disable-next-line
                   query: '${query}',
-                  fields: [
-                    // TODO: use in the above query
-                    ...(config.extraQueryParams?.text_fields || [
-                      'all_fields_for_freetext',
-                    ]),
-                  ],
-                },
+                      fields: [
+                        // TODO: use in the above query
+                        ...(config.extraQueryParams?.text_fields || [
+                          'all_fields_for_freetext',
+                        ]),
+                      ],
+                    },
+                  },
+                ],
+                ...(filter && { filter }),
               },
-            ],
-            ...(filter && { filter }),
+            },
+            // functions: [...(config.extraQueryParams?.functions || [])],
+            // score_mode: config.extraQueryParams?.score_mode || 'sum',
           },
         },
-        // functions: [...(config.extraQueryParams?.functions || [])],
-        // score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
     },
     // ...(sort && { sort }),
     // ...(size && { size }),
     // ...(from && { from }),
-    track_total_hits: true,
-    isQuestion: true,
+    // isQuestion: true,
   };
 
   return body;

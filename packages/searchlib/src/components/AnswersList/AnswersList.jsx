@@ -1,6 +1,19 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
 import withAnswers from './withAnswers';
+const Answer = ({ item }) => {
+  return (
+    <li>
+      {item.context.slice(0, item.offset_start)}
+      <a href={item.document_id}>
+        <strong>
+          <em>{item.context.slice(item.offset_start, item.offset_end)}</em>
+        </strong>
+      </a>
+      {item.context.slice(item.offset_end, item.context.length)}
+    </li>
+  );
+};
 
 const AnswersList = (props) => {
   const { answers = [], loading, loaded, searchedTerm } = props;
@@ -21,7 +34,7 @@ score: 6.118757247924805
 */
   //
   const showLoader = loading && !loaded;
-  console.log('answeers', answers, showLoader, searchedTerm, searchedTerm);
+  console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
   return (
     <div className="answers-list">
       {showLoader ? (
@@ -33,18 +46,9 @@ score: 6.118757247924805
           {/* <h4>Semantic results for your query</h4> */}
           <hr />
           <ul>
-            {answers.map((item) => (
-              <li>
-                {item.context.slice(0, item.offset_start)}
-                <a href={item.document_id}>
-                  <strong>
-                    <em>
-                      {item.context.slice(item.offset_start, item.offset_end)}
-                    </em>
-                  </strong>
-                </a>
-                {item.context.slice(item.offset_end, item.context.length)}
-              </li>
+            {answers.map((item, i) => (
+              <Answer item={item} key={i} />
+            ))}
             ))}
           </ul>
           <hr />

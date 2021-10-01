@@ -11,9 +11,9 @@ import { getTodayWithTime } from '../utils';
 import './styles.less';
 
 const RES_REQUEST = {
-  es_query_metadata: {
-    query_type: 'landing page documents',
-  },
+  // es_query_metadata: {
+  //   query_type: 'landing page documents',
+  // },
   query: {
     function_score: {
       query: {
@@ -97,9 +97,9 @@ const RES_REQUEST = {
 };
 
 const AGGS_REQUEST = {
-  es_query_metadata: {
-    query_type: 'landing page',
-  },
+  // es_query_metadata: {
+  //   query_type: 'landing page',
+  // },
   query: {
     bool: {
       must: [
@@ -190,8 +190,8 @@ const LandingPage = (props) => {
   }, [appConfig]);
 
   // console.log(landingDataAggs, landingDataRes);
-  if (landingDataAggs && landingDataRes) {
-    const total = landingDataAggs.hits.total.value;
+  if (landingDataAggs?.hits && landingDataRes?.hits) {
+    const total = landingDataAggs.hits?.total?.value;
     const min_time_coverage =
       landingDataAggs.aggregations.min_timecoverage.value;
     const max_time_coverage =
