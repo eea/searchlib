@@ -88,20 +88,20 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           />
           <div className="controls">
             {showControls && (
-            <div>
-              <Button
-                compact
-                floated="left"
-                size="mini"
-                onClick={() => {
-                  removeFilter('lessLikeThis');
-                  setFilter('moreLikeThis', result._original._id, 'none');
-                }}
-              >
-                more like this
-              </Button>
-            </div>
-            )
+              <div>
+                <Button
+                  compact
+                  floated="left"
+                  size="mini"
+                  onClick={() => {
+                    removeFilter('lessLikeThis');
+                    setFilter('moreLikeThis', result._original._id, 'none');
+                  }}
+                >
+                  more like this
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <div className="col-right">
