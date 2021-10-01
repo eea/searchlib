@@ -101,8 +101,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 more like this
               </Button>
             </div>
-            )
-          </div>
+            )}
         </div>
         <div className="col-right">
           <div className="details">
