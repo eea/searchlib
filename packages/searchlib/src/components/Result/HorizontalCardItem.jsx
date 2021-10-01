@@ -4,7 +4,7 @@ import { Button, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
-import { moreLikeThisAtom } from '@eeacms/search/state/moreLikeThis';
+import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
 
 const normalizeStr = (str) => {

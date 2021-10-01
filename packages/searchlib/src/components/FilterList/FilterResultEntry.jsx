@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
-import { moreLikeThisAtom } from '@eeacms/search/state/moreLikeThis';
+import { moreLikeThisAtom } from '@eeacms/search/state';
 
 const FilterResultEntry = (props) => {
   const { value } = props;
