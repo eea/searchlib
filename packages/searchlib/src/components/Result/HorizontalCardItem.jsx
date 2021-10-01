@@ -3,6 +3,8 @@ import { withSearch } from '@elastic/react-search-ui';
 import { Button, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAtom } from 'jotai';
+import { moreLikeThisAtom } from '@eeacms/search/state/moreLikeThis';
 import cx from 'classnames';
 
 const normalizeStr = (str) => {
@@ -62,6 +64,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   //   'https://react.semantic-ui.com/images/wireframe/white-image.png',
   // );
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
+  const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
@@ -95,6 +98,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   size="mini"
                   onClick={() => {
                     removeFilter('lessLikeThis');
+                    setMoreLikeThis(result);
                     setFilter('moreLikeThis', result._original._id, 'none');
                   }}
                 >
