@@ -7,12 +7,15 @@ const FilterResultEntry = (props) => {
   const { value } = props;
   const [result] = useAtom(moreLikeThisAtom);
   console.log('filter result', result);
-  return (
-    <a href={value} target="_blank" rel="noreferrer">
-      <Icon name="external" size="small" />
-      {value}
-    </a>
-  );
+  if (result) {
+    return (
+      <a href={value} target="_blank" rel="noreferrer">
+        <Icon name="external" size="small" />
+        {value}
+      </a>
+    );
+  }
+  return value;
 };
 
 export default FilterResultEntry;
