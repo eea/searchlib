@@ -77,8 +77,10 @@ export const SearchView = (props) => {
   React.useEffect(() => {
     if (!wasSearched) {
       const state = driver.URLManager.getStateFromURL();
-      setSearchTerm(defaultSearchText);
+      // console.log('was not searched, running default', state);
+      setSearchTerm(state.searchTerm || defaultSearchText);
 
+      // eslint-disable-next-line
       state.filters?.forEach((f) => addFilter(f.field, f.values, f.type));
 
       if (state.current) {
@@ -184,6 +186,10 @@ export const SearchView = (props) => {
       itemViewProps,
     ],
   );
+  // console.log('cur:', {
+  //   filters,
+  //   searchTerm,
+  // });
 
   return (
     <div className={`searchapp searchapp-${appName}`}>

@@ -438,13 +438,36 @@ code {
 }
 
 .answers-list {
-  .ui.segment {
+  .ui.segment.loading {
     min-height: 10em;
     margin-bottom: 2em;
     .loading-tip {
       color: black;
       z-index: 10;
       font-size: x-large;
+    }
+  }
+  .ui.segment.answers-wrapper {
+    margin-bottom: 2em;
+
+    div.search-result {
+      border-bottom: 0px !important;
+    }
+
+    h4.answers__boxtitle {
+      font-size: 0.7em;
+      text-align: right;
+      color: #ccc;
+      margin: 0em;
+    }
+
+    .answer__text {
+      font-size: normal;
+      font-weight: bold;
+    }
+
+    .rating {
+      margin-left: 1em;
     }
   }
 }
@@ -483,15 +506,6 @@ a.ui.mini.circular.compact.icon.right.floated.button.metaButton {
 
   &:hover {
     color: #8e004d;
-  }
-}
-
-.answer__card {
-  .answer__headline {
-    .answer__text {
-      font-size: large;
-      font-weight: 900;
-    }
   }
 }
 

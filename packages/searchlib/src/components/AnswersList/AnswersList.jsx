@@ -22,7 +22,7 @@ const Answer = ({ item }) => {
     appConfig.field_filters,
   );
   const [active, setActive] = React.useState();
-  console.log('result', result);
+  // console.log('result', result);
 
   return (
     <>
@@ -71,27 +71,27 @@ score: 6.118757247924805
   //
   const showLoader = loading && !loaded;
 
-  console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
+  // console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
 
   return (
     <div className="answers-list">
       {showLoader ? (
-        <Segment loading={true}>
+        <Segment loading={true} className="loading">
           <div className="loading-tip">Looking for semantic answers...</div>
         </Segment>
       ) : searchTerm && searchedTerm === searchTerm && answers?.length ? (
         <>
           {/* <h4>Semantic results for your query</h4> */}
-          <h4>Direct answers</h4>
-          <hr />
-          <Accordion>
-            {answers
-              .filter((item) => item.score >= 0.5)
-              .map((item, i) => (
-                <Answer item={item} key={i} />
-              ))}
-          </Accordion>
-          <hr />
+          <Segment className="answers-wrapper">
+            <h4 className="answers__boxtitle">Direct answers</h4>
+            <Accordion>
+              {answers
+                .filter((item) => item.score >= 0.2)
+                .map((item, i) => (
+                  <Answer item={item} key={i} />
+                ))}
+            </Accordion>
+          </Segment>
         </>
       ) : (
         ''
