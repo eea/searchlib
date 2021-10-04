@@ -180,7 +180,7 @@ export const SearchView = (props) => {
       InitialViewComponent,
       Item,
       NoResultsComponent,
-      appConfig.title,
+      // appConfig.title,
       itemViewProps,
     ],
   );

@@ -13,7 +13,7 @@ const timeoutRef = {};
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
-    console.log('searchContext', searchContext);
+    // console.log('searchContext', searchContext);
 
     const { searchTerm = '', query_type } = searchContext;
     const { appConfig } = useAppConfig();
