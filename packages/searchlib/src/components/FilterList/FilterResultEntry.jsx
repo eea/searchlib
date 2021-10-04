@@ -26,29 +26,33 @@ const FilterResultEntry = (props) => {
 
     return (
       <div class="mlt-card">
-        <Image
-          className="img-thumbnail"
-          src={thumbUrl}
-          wrapped
-          ui={false}
-          fluid
-          centered
-          style={{ backgroundImage: `url('${thumbUrl}')` }}
-          as={ExternalLink}
-          href={result.about.raw}
-          target="_blank"
-          rel="noreferrer"
-        />
-        <a href={result.about.raw} target="_blank" rel="noreferrer">
-          <Icon name="external" size="small" />
-          {result.title.raw}
-        </a>
-        <p>
-          <DateTime format="DATE_MED" value={result.issued.raw} />
-          &nbsp;|&nbsp;
-          <StringList value={result.subject.raw} />
-        </p>
-        <p>{result.description.raw}</p>
+        <div class="col-left">
+          <Image
+            className="img-thumbnail"
+            src={thumbUrl}
+            wrapped
+            ui={false}
+            fluid
+            centered
+            style={{ backgroundImage: `url('${thumbUrl}')` }}
+            as={ExternalLink}
+            href={result.about.raw}
+            target="_blank"
+            rel="noreferrer"
+          />
+        </div>
+        <div class="col-right">
+          <a href={result.about.raw} target="_blank" rel="noreferrer">
+            <Icon name="external" size="small" />
+            {result.title.raw}
+          </a>
+          <p>
+            <DateTime format="DATE_MED" value={result.issued.raw} />
+            &nbsp;|&nbsp;
+            <StringList value={result.subject.raw} />
+          </p>
+          <p>{result.description.raw}</p>
+        </div>
       </div>
     );
   }
