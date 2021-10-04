@@ -149,7 +149,6 @@ export const SearchView = (props) => {
   const BodyContent = React.useCallback(
     (props) => (
       <>
-        <h1>{appConfig.title}</h1>
         <Results
           shouldTrackClickThrough={true}
           view={({ children }) => {

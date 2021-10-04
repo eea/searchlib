@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
 import SearchInput from '../SearchInput/SearchInput';
+import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
 function SearchBoxView(props) {
+  const { appConfig } = useAppConfig();
   const {
     className,
     allAutocompletedItemsCount,
@@ -62,6 +64,7 @@ function SearchBoxView(props) {
               onSubmit(e);
             }}
           >
+            <h1>{appConfig.title}</h1>
             <div className={cx('sui-search-box', className, autocompleteClass)}>
               <InputView
                 onSubmit={onSubmit}
