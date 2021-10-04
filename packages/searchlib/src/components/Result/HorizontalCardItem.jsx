@@ -14,7 +14,7 @@ const normalizeStr = (str) => {
   return str;
 };
 
-const ExternalLink = (props) => {
+export const ExternalLink = (props) => {
   return (
     <a
       className={props.className}
