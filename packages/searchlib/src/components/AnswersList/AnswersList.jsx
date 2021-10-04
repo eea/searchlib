@@ -52,6 +52,7 @@ const Answer = ({ item }) => {
 };
 
 const AnswersList = (props) => {
+  const { appConfig } = useAppConfig();
   const { answers = [], loading, loaded, searchedTerm } = props;
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
@@ -69,8 +70,14 @@ question: null
 score: 6.118757247924805
 */
   //
+  let cutoff = 0.1;
+  try {
+    cutoff = parseFloat(appConfig.nlp.qa.cuttoffScore ?? 0.1);
+  } catch {
+    cutoff = 0.1;
+  }
   const showLoader = loading && !loaded;
-  const filtered = answers?.filter((item) => item.score >= 0.1);
+  const filtered = answers?.filter((item) => item.score >= cutoff);
 
   // console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
   //
