@@ -5,12 +5,13 @@ import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
 import {
-  FacetWrapper,
+  AccordionFacetWrapper,
   LeftColumnLayout,
   RightColumnLayout,
   TableRowItem,
   TableView,
   FilterResultEntry,
+  MultiCheckboxFacet,
 } from '@eeacms/search/components';
 
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
@@ -45,7 +46,7 @@ import {
 const config = {
   resolve: {
     'searchui.Facet': {
-      component: FacetWrapper,
+      component: MultiCheckboxFacet,
       // the facet aggregation part
       buildRequest: buildTermFacetAggregationRequest,
 
@@ -136,6 +137,9 @@ const config = {
     },
     'searchui.SearchBox': {
       component: SearchBox,
+    },
+    AccordionFacetWrapper: {
+      component: AccordionFacetWrapper,
     },
   },
 

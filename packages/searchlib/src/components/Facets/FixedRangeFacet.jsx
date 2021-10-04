@@ -1,7 +1,7 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import cx from 'classnames';
-import { Resizable, FacetWrapper } from '@eeacms/search/components';
+import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -78,9 +78,8 @@ const ViewComponent = (props) => {
 };
 
 const FixedRangeFacetComponent = (props) => {
-  return (
-    <FacetWrapper {...props} view={(props) => <ViewComponent {...props} />} />
-  );
+  //<FacetWrapper {...props} view={(props) => } />
+  return <ViewComponent {...props} />;
 };
 
 export default withSearch(

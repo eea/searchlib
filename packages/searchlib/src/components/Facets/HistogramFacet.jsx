@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResponsiveHistogramChart } from '../Vis';
-import { FacetWrapper, RangeSlider } from '@eeacms/search/components';
+import { RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
 import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
@@ -29,18 +29,18 @@ function extractNumeric(value) {
 export const HistogramFacetComponent = (props) => {
   const { data, ranges, onChange, rangeType } = props;
 
-  if (rangeType === 'closed'){
-    if (ranges[0].from === undefined){
-      ranges.shift()
+  if (rangeType === 'closed') {
+    if (ranges[0].from === undefined) {
+      ranges.shift();
     }
-    if (ranges[ranges.length - 1].to === undefined){
-      ranges.pop()
+    if (ranges[ranges.length - 1].to === undefined) {
+      ranges.pop();
     }
-    if (data[0].config.from === undefined){
-      data.shift()
+    if (data[0].config.from === undefined) {
+      data.shift();
     }
-    if (data[data.length - 1].config.to === undefined){
-      data.pop()
+    if (data[data.length - 1].config.to === undefined) {
+      data.pop();
     }
   }
   const range = getRangeStartEnd(ranges);
@@ -119,26 +119,26 @@ const HistogramFacet = (props) => {
 
   // TODO: resume work here
   // console.log('ff', facet, filters);
-
-  return (
-    <FacetWrapper
+  return props.active && facet?.data ? (
+    <HistogramFacetComponent
       {...props}
-      filterType="any"
-      show={100000}
-      view={(props) =>
-        // only show facet when toggled, to allow rangeslider to work properly
-        props.active && facet?.data ? (
-          <HistogramFacetComponent
-            {...props}
-            data={facet?.data}
-            onChange={({ to, from }) => {
-              setFilter(field, { to, from, type: 'range' });
-            }}
-          />
-        ) : null
-      }
+      data={facet?.data}
+      onChange={({ to, from }) => {
+        setFilter(field, { to, from, type: 'range' });
+      }}
     />
-  );
+  ) : null;
+
+  // return (
+  //   <FacetWrapper
+  //     {...props}
+  //     filterType="any"
+  //     show={100000}
+  //     view={(props) =>
+  //       // only show facet when toggled, to allow rangeslider to work properly
+  //     }
+  //   />
+  // );
 };
 
 export default withSearch(

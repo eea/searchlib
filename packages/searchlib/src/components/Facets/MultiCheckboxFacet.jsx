@@ -1,3 +1,6 @@
+/**
+ * A customized version of the CheckboxFacet
+ */
 import React from 'react';
 import cx from 'classnames';
 

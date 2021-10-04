@@ -9,15 +9,22 @@ const Facets = (props) => {
       {facets
         .filter((f) => f.showInFacetsList)
         .map((info, i) => {
-          const { factory } = info;
+          const { factory, wrapper = 'AccordionFacetWrapper' } = info;
           const facet = registry.resolve[factory];
           const FacetComponent = facet.component;
+          const WrapperComponent = registry.resolve[wrapper].component;
           const props = {
             ...info,
             ...info.params,
             ...facet,
           };
-          return <FacetComponent key={i} {...props} />;
+          return (
+            <WrapperComponent
+              key={i}
+              {...props}
+              view={(props) => <FacetComponent {...props} />}
+            />
+          );
         })}
     </div>
   );

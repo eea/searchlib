@@ -1,3 +1,4 @@
+import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
@@ -9,7 +10,7 @@ import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
-import FacetWrapper from './Facets/FacetWrapper';
+import AccordionFacetWrapper from './Facets/AccordionFacetWrapper';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
@@ -23,6 +24,7 @@ import String from './Result/String';
 import { Header } from './Result/ResultModal';
 
 export {
+  MultiCheckboxFacet,
   CardItem,
   DateTime,
   Facets,
@@ -34,7 +36,7 @@ export {
   TableView,
   ToggleSort,
   ViewSelector,
-  FacetWrapper,
+  AccordionFacetWrapper,
   SearchBox,
   RangeSlider,
   PagingInfo,

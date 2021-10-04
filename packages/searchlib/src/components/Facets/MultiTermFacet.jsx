@@ -2,7 +2,7 @@ import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { Resizable, ToggleSort, FacetWrapper } from '@eeacms/search/components';
+import { Resizable, ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 
 function getFilterValueDisplay(filterValue) {
@@ -93,14 +93,14 @@ const ViewComponent = (props) => {
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
 
-  const {
-    sortedValues: sortedOptions,
-    toggleSort,
-    sorting,
-  } = useSort(options, ['value', 'count'], {
-    defaultSortOn: 'count',
-    defaultSortOrder: 'descending',
-  });
+  const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
+    options,
+    ['value', 'count'],
+    {
+      defaultSortOn: 'count',
+      defaultSortOrder: 'descending',
+    },
+  );
 
   return (
     <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
@@ -193,29 +193,33 @@ const MultiTypeFacetComponent = (props) => {
   const [filterType, setFilterType] = React.useState('any');
   const filterValue = filters.find((f) => f.field === field);
   return (
-    <FacetWrapper
-      {...props}
+    <ViewComponent
       filterType={filterType}
-      show={100000}
-      view={(props) => (
-        <ViewComponent
-          filterType={filterType}
-          onChangeFilterType={(filterType) => {
-            if (!filterValue) {
-              setFilterType(filterType);
-              return;
-            }
-            removeFilter(field);
-            filterValue?.values?.forEach((v) => {
-              addFilter(filterValue.field, v, filterType);
-            });
-            setFilterType(filterType);
-          }}
-          {...props}
-        />
-      )}
+      onChangeFilterType={(filterType) => {
+        if (!filterValue) {
+          setFilterType(filterType);
+          return;
+        }
+        removeFilter(field);
+        const { values = [] } = filterValue || {};
+        values.forEach((v) => {
+          addFilter(filterValue.field, v, filterType);
+        });
+        setFilterType(filterType);
+      }}
+      {...props}
     />
   );
+
+  // return (
+  //   <FacetWrapper
+  //     {...props}
+  //     filterType={filterType}
+  //     show={100000}
+  //     view={(props) => (
+  //     )}
+  //   />
+  // );
 };
 
 export default withSearch(
