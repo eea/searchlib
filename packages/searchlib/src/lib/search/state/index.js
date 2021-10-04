@@ -27,6 +27,7 @@ export default function buildState(response, resultsPerPage, config) {
     totalPages,
     totalResults,
     ...(facets && { facets }),
+    query_type: response.query_type,
   };
 }
 

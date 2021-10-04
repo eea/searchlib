@@ -44,7 +44,7 @@ export const buildQuestionRequest = (state, config) => {
     query: question,
     track_total_hits: false,
     params: {
-      use_dp: true,
+      use_dp: config.nlp.qa.use_dp || false,
       custom_query: {
         query: {
           // Dynamic values based on current Search UI state
@@ -55,7 +55,7 @@ export const buildQuestionRequest = (state, config) => {
                   {
                     multi_match: {
                       // eslint-disable-next-line
-                  query: '${query}',
+                      query: '${query}',
                       fields: [
                         // TODO: use in the above query
                         ...(config.extraQueryParams?.text_fields || [
