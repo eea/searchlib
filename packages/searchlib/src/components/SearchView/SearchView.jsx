@@ -77,7 +77,6 @@ export const SearchView = (props) => {
   React.useEffect(() => {
     if (!wasSearched) {
       const state = driver.URLManager.getStateFromURL();
-      // console.log('was not searched, running default', state);
       setSearchTerm(state.searchTerm || defaultSearchText);
 
       // eslint-disable-next-line

@@ -13,20 +13,28 @@ const timeoutRef = {};
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
+    console.log('searchContext', searchContext);
 
-    const { searchTerm = '' } = searchContext;
+    const { searchTerm = '', query_type } = searchContext;
     const { appConfig } = useAppConfig();
     const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
+    const {
+      qa_queryTypes = [
+        'query:interrogative',
+        'query:declarative',
+        'query:keyword',
+      ],
+    } = appConfig?.nlp?.qa || {};
 
     const requestAtom = requestFamily(searchTerm);
     const [request, dispatch] = useAtom(requestAtom);
-    console.log('requestAtom', request, searchedTerm, searchTerm);
+    // console.log('requestAtom', request, searchedTerm, searchTerm);
 
     React.useEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
-      const shouldRunSearch = searchTerm && searchTerm.trim().indexOf(' ') > -1;
+      const shouldRunSearch = searchTerm; // && searchTerm.trim().indexOf(' ') > -1;
 
       if (shouldRunSearch) {
         timeoutRef.current = setTimeout(async () => {
@@ -40,7 +48,8 @@ const withAnswers = (WrappedComponent) => {
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
 
-          if (!(loading || loaded)) {
+          // TODO: this might not be perfect, can be desynced
+          if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
             console.log('run answers request', requestBody);
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
@@ -51,7 +60,15 @@ const withAnswers = (WrappedComponent) => {
           }
         }, 2000);
       }
-    }, [appConfig, searchContext, searchTerm, dispatch, request]);
+    }, [
+      appConfig,
+      searchContext,
+      searchTerm,
+      qa_queryTypes,
+      query_type,
+      dispatch,
+      request,
+    ]);
 
     return (
       <WrappedComponent

@@ -3,7 +3,7 @@ import { Segment, Rating, Icon, Accordion } from 'semantic-ui-react';
 import withAnswers from './withAnswers';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
-import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const AnswerContext = ({ item }) => {
   return (
@@ -70,29 +70,27 @@ score: 6.118757247924805
 */
   //
   const showLoader = loading && !loaded;
+  const filtered = answers?.filter((item) => item.score >= 0.1);
 
   // console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
+  //
+  // <Segment>
+  //   <div className="loading-tip">Looking for semantic answers...</div>
+  // </Segment>
 
   return (
     <div className="answers-list">
       {showLoader ? (
-        <Segment loading={true} className="loading">
-          <div className="loading-tip">Looking for semantic answers...</div>
+        ''
+      ) : searchTerm && searchedTerm === searchTerm && filtered?.length ? (
+        <Segment className="answers-wrapper">
+          <h4 className="answers__boxtitle">Direct answers</h4>
+          <Accordion>
+            {filtered.map((item, i) => (
+              <Answer item={item} key={i} />
+            ))}
+          </Accordion>
         </Segment>
-      ) : searchTerm && searchedTerm === searchTerm && answers?.length ? (
-        <>
-          {/* <h4>Semantic results for your query</h4> */}
-          <Segment className="answers-wrapper">
-            <h4 className="answers__boxtitle">Direct answers</h4>
-            <Accordion>
-              {answers
-                .filter((item) => item.score >= 0.2)
-                .map((item, i) => (
-                  <Answer item={item} key={i} />
-                ))}
-            </Accordion>
-          </Segment>
-        </>
       ) : (
         ''
       )}
