@@ -2,6 +2,7 @@ import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
+import FilterAsideLayout from './Layout/FilterAsideLayout';
 import LeftColumnLayout from './Layout/LeftColumnLayout';
 import RightColumnLayout from './Layout/RightColumnLayout';
 import TableRowItem from './Result/TableRowItem';
@@ -25,6 +26,7 @@ import String from './Result/String';
 import { Header } from './Result/ResultModal';
 
 export {
+  FilterAsideLayout,
   MultiCheckboxFacet,
   CardItem,
   DateTime,

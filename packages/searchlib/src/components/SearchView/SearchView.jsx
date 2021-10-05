@@ -34,6 +34,7 @@ export const SearchView = (props) => {
     wasSearched,
     filters,
     searchTerm,
+    mode = 'view',
   } = props;
   const { defaultSearchText = '' } = appConfig;
 
@@ -210,6 +211,7 @@ export const SearchView = (props) => {
                 ? registry.resolve[appConfig.searchBoxComponent].component
                 : undefined
             }
+            mode={mode}
           />
         }
         sideContent={<Facets />}

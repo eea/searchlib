@@ -13,6 +13,7 @@ import {
   FilterResultEntry,
   MultiCheckboxFacet,
   ModalFacetWrapper,
+  FilterAsideLayout,
 } from '@eeacms/search/components';
 
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
@@ -145,12 +146,17 @@ const config = {
     ModalFacetWrapper: {
       component: ModalFacetWrapper,
     },
+    FilterAsideLayout: {
+      component: FilterAsideLayout,
+    },
   },
 
   searchui: {
     default: {
       host: 'http://localhost:9200',
       elastic_index: '_all',
+      title: 'Search catalogue',
+      subheadline: '',
       // debug: true,
       hasA11yNotifications: true,
       onResultClick,
