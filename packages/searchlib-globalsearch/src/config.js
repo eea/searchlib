@@ -23,6 +23,7 @@ import LandingPage from './components/LandingPage';
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
+  contentBodyComponent: 'FilterAsideContentView',
   enableNLP: true, // enables NLP capabilities    // TODO: make this live-configurable
 
   extraQueryParams: {

@@ -17,6 +17,7 @@ import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
 import SortingDropdown from './Sorting/SortingDropdown';
+import SortingDropdownWithLabel from './Sorting/SortingDropdownWithLabel';
 import FilterResultEntry from './FilterList/FilterResultEntry';
 import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
@@ -46,6 +47,7 @@ export {
   RangeSlider,
   PagingInfo,
   SortingDropdown,
+  SortingDropdownWithLabel,
   FilterResultEntry,
   Resizable,
   AnswersList,

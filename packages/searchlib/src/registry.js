@@ -22,6 +22,7 @@ import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
+import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
 import { Item, Card } from 'semantic-ui-react';
 import {
   onResultClick,
@@ -152,6 +153,9 @@ const config = {
     },
     DefaultContentView: {
       component: DefaultContentView,
+    },
+    FilterAsideContentView: {
+      component: FilterAsideContentView,
     },
   },
 
