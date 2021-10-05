@@ -50,6 +50,7 @@ export const normalizeFilters = (filters) => {
 };
 
 export const checkInteracted = (props) => {
+  //const wasInteracted = filters.length > 0 || searchTerm;
   const { filters, searchTerm, appConfig } = props;
   const { defaultFilters = {} } = appConfig;
   const normalizedDefaultFilters = normalizeDefaultFilters(defaultFilters);

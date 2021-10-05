@@ -21,6 +21,7 @@ import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
+import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import { Item, Card } from 'semantic-ui-react';
 import {
   onResultClick,
@@ -149,14 +150,17 @@ const config = {
     FilterAsideLayout: {
       component: FilterAsideLayout,
     },
+    DefaultContentView: {
+      component: DefaultContentView,
+    },
   },
 
   searchui: {
     default: {
       host: 'http://localhost:9200',
       elastic_index: '_all',
-      title: 'Search catalogue',
-      subheadline: '',
+      title: 'Search catalogue', // the main search app headline
+      subheadline: '', // text under the headline
       // debug: true,
       hasA11yNotifications: true,
       onResultClick,
@@ -164,14 +168,18 @@ const config = {
       onAutocomplete,
       onSearch,
 
-      // visually layout the search components (header, side, etc)
-      layoutComponent: 'LeftColumnLayout',
+      // broad global layout (header, side, etc)
+      layoutComponent: 'LeftColumnLayout', // The global layout component
 
-      useSearchPhrases: true,
       // the SearchBox is a wrapper over the SearcBoxInput component
       searchBoxInputComponent: 'DefaultSearchInput',
 
-      // when entering in search view, use this to search
+      // the "content" layout, everything below the search input
+      contentBodyComponent: 'DefaultContentView',
+
+      useSearchPhrases: true,
+
+      // when entering in search view, this will be the default search text
       defaultSearchText: '',
 
       highlight: {
@@ -239,10 +247,10 @@ const config = {
       },
 
       initialView: {
-        factory: null,
+        factory: null, // the "Landing page" component
       },
       noResultView: {
-        factory: null,
+        factory: null, // Component used for "No results" view
       },
       resultViews: [
         {
