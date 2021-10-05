@@ -2,9 +2,21 @@
 @sf-azure: #2D9390;
 @sf-blue: #0F4B87;
 
-
-div.landing-page {
+div.landing-page-container {
+  width: calc(100% + 800px);
+  padding-right: 350px;
+  padding-left: 350px;
   background: @sf-light-gray;
+  transform: translateX(-400px);
+
+  div.landing-page {
+    padding: 50px;
+    min-height: 500px;
+
+    h3.browse-by {
+      font-weight: 700;
+    }
+  }
 }
 
 // OLD styles: (TODO: clean code)

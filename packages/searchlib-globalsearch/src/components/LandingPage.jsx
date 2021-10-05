@@ -208,8 +208,10 @@ const LandingPage = (props) => {
     ).length;
     const elements = landingDataRes.hits.hits;
     return (
-      <div className="landing-page">
-        <h3 class="browse-by">Browse by</h3>
+      <div className="landing-page-container">
+        <div className="landing-page">
+          <h3 class="browse-by">Browse by</h3>
+        </div>
       </div>
     );
   } else {
