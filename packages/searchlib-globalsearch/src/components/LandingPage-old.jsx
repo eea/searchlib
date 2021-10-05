@@ -209,9 +209,6 @@ const LandingPage = (props) => {
     const elements = landingDataRes.hits.hits;
     return (
       <div className="landing-page">
-        <h3 class="browse-by">Browse by</h3>
-
-        <p>TODO: Delete these VVV</p>
         <Masonry options={{ horizontalOrder: true }}>
           <div className="tile available_content">
             <h2>
