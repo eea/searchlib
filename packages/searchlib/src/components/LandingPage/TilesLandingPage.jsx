@@ -4,8 +4,13 @@ import { Button } from 'semantic-ui-react';
 
 import './tiles.less';
 
+const getFacetConfig = (facets, name) => {
+  return facets.find((facet) => facet.field === name);
+};
+
 const LandingPage = (props) => {
   const { appConfig, facets, children, setFilter } = props;
+  const facetsConfig = appConfig.facets;
 
   const {
     sections = [],
@@ -40,7 +45,11 @@ const LandingPage = (props) => {
         <div class="ui cards">
           {tiles.map((topic) => {
             const onClickHandler = () => {
-              setFilter(activeSection, [topic.value], 'any');
+              setFilter(
+                activeSection,
+                topic.value,
+                getFacetConfig(facetsConfig, activeSection).filterType,
+              );
             };
             return (
               <div
