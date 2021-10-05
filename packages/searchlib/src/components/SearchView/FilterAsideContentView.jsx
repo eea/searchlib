@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 import {
   ResultsPerPage,
   Paging,
@@ -6,13 +7,15 @@ import {
   PagingInfo as SUIPagingInfo,
 } from '@elastic/react-search-ui';
 import {
-  ViewSelector,
-  FilterList,
+  ViewSelectorWithLabel,
+  InlineFilterList,
   SortingDropdownWithLabel,
   AnswersList,
   DownloadButton,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
+import { useAtom } from 'jotai';
+import { showFacetsAsideAtom } from '@eeacms/search/state';
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, activeViewId, setActiveViewId, children } = props;
@@ -30,24 +33,37 @@ export const FilterAsideContentView = (props) => {
         : true;
     }),
   ];
+  const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
 
   return (
     <>
-      <FilterList />
+      <div className="filter-bar">
+        <Button
+          toggle
+          active={showFacets}
+          onClick={() => setShowFacets(!showFacets)}
+        >
+          Show filters
+        </Button>
+        <InlineFilterList />
+      </div>
+
       <div className="above-results">
-        <ViewSelector
-          views={availableResultViews}
-          active={activeViewId}
-          onSetView={setActiveViewId}
-        />
         <Sorting
           label={'Sort by'}
           sortOptions={sortOptions}
           view={SortingDropdownWithLabel}
         />
+        <ViewSelectorWithLabel
+          views={availableResultViews}
+          active={activeViewId}
+          onSetView={setActiveViewId}
+        />
       </div>
+
       <AnswersList />
       <ResultViewComponent>{children}</ResultViewComponent>
+
       <div className="row">
         <div>
           <DownloadButton appConfig={appConfig} />

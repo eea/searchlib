@@ -2,11 +2,13 @@ import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
+import InlineFilterList from './FilterList/InlineFilterList';
 import FilterAsideLayout from './Layout/FilterAsideLayout';
 import LeftColumnLayout from './Layout/LeftColumnLayout';
 import RightColumnLayout from './Layout/RightColumnLayout';
 import TableRowItem from './Result/TableRowItem';
 import ViewSelector from './ViewSelector/ViewSelector';
+import ViewSelectorWithLabel from './ViewSelector/ViewSelectorWithLabel';
 import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
@@ -34,6 +36,7 @@ export {
   DateTime,
   Facets,
   FilterList,
+  InlineFilterList,
   LeftColumnLayout,
   RightColumnLayout,
   StringList,
@@ -41,6 +44,7 @@ export {
   TableView,
   ToggleSort,
   ViewSelector,
+  ViewSelectorWithLabel,
   AccordionFacetWrapper,
   ModalFacetWrapper,
   SearchBox,
