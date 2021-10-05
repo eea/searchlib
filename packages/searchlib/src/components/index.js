@@ -2,11 +2,13 @@ import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
+import InlineFilterList from './FilterList/InlineFilterList';
 import FilterAsideLayout from './Layout/FilterAsideLayout';
 import LeftColumnLayout from './Layout/LeftColumnLayout';
 import RightColumnLayout from './Layout/RightColumnLayout';
 import TableRowItem from './Result/TableRowItem';
 import ViewSelector from './ViewSelector/ViewSelector';
+import ViewSelectorWithLabel from './ViewSelector/ViewSelectorWithLabel';
 import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
@@ -17,6 +19,7 @@ import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
 import SortingDropdown from './Sorting/SortingDropdown';
+import SortingDropdownWithLabel from './Sorting/SortingDropdownWithLabel';
 import FilterResultEntry from './FilterList/FilterResultEntry';
 import Resizable from './UI/Resizable';
 import AnswersList from './AnswersList/AnswersList';
@@ -33,6 +36,7 @@ export {
   DateTime,
   Facets,
   FilterList,
+  InlineFilterList,
   LeftColumnLayout,
   RightColumnLayout,
   StringList,
@@ -40,12 +44,14 @@ export {
   TableView,
   ToggleSort,
   ViewSelector,
+  ViewSelectorWithLabel,
   AccordionFacetWrapper,
   ModalFacetWrapper,
   SearchBox,
   RangeSlider,
   PagingInfo,
   SortingDropdown,
+  SortingDropdownWithLabel,
   FilterResultEntry,
   Resizable,
   AnswersList,

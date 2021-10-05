@@ -1,4 +1,3 @@
-import { openFacetsAtom } from './components/Facets/state';
+export * from './components/Facets/state';
 export * from './components/FilterList/state';
-
-export { openFacetsAtom };
+export * from './components/Layout/state';
