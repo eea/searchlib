@@ -343,25 +343,29 @@ const globalSearchConfig = {
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
   },
+
   initialView: {
     factory: 'TilesLandingPage',
-    sections: [
-      {
-        id: 'topics',
-        title: 'Topics',
-        facetField: 'topic',
-      },
-      {
-        id: 'organisations',
-        title: 'Organisations',
-        facetField: 'organisation',
-      },
-      {
-        id: 'countries',
-        title: 'Countries',
-        facetField: 'spatial',
-      },
-    ],
+    tilesLandingPageParams: {
+      maxPerSection: 10,
+      sections: [
+        {
+          id: 'topics',
+          title: 'Topics',
+          facetField: 'topic',
+        },
+        {
+          id: 'organisations',
+          title: 'Organisations',
+          facetField: 'organisation',
+        },
+        {
+          id: 'countries',
+          title: 'Countries',
+          facetField: 'spatial',
+        },
+      ],
+    },
   },
   listingViewParams: {
     enabled: false,

@@ -108,7 +108,7 @@ export const HistogramFacetComponent = (props) => {
 };
 
 const HistogramFacet = (props) => {
-  const { facets, field, setFilter, filters } = props;
+  const { facets, field, setFilter } = props; // , filters
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
