@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Icon, Dropdown } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 
 const ViewSelectorWithLabel = (props) => {
   const { views, active, onSetView } = props;
@@ -11,7 +11,7 @@ const ViewSelectorWithLabel = (props) => {
   }));
 
   return (
-    <Container className="view-selector">
+    <div className="view-selector">
       <span>
         Display as{' '}
         <Dropdown
@@ -23,7 +23,7 @@ const ViewSelectorWithLabel = (props) => {
           }}
         />
       </span>
-    </Container>
+    </div>
   );
 };
 

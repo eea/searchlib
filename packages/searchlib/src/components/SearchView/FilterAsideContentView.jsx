@@ -49,15 +49,15 @@ export const FilterAsideContentView = (props) => {
       </div>
 
       <div className="above-results">
-        <Sorting
-          label={'Sort by'}
-          sortOptions={sortOptions}
-          view={SortingDropdownWithLabel}
-        />
         <ViewSelectorWithLabel
           views={availableResultViews}
           active={activeViewId}
           onSetView={setActiveViewId}
+        />
+        <Sorting
+          label={'Sort by'}
+          sortOptions={sortOptions}
+          view={SortingDropdownWithLabel}
         />
       </div>
 
