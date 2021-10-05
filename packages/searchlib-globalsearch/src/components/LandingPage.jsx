@@ -207,10 +207,44 @@ const LandingPage = (props) => {
       (bucket) => spatialWhitelist.indexOf(bucket.key) !== -1,
     ).length;
     const elements = landingDataRes.hits.hits;
+
+    const filters = ['Topics', 'Organizations', 'Countries'];
+    const demoTopics = [
+      ['Agriculture', 73],
+      ['Air pollution', 53],
+      ['Lorem ipsum', 5],
+      ['Lorem ipsum 2', 75],
+      ['Lorem ipsum 3', 95],
+      ['Lorem ipsum 4', 35],
+      ['Lorem ipsum 5', 53],
+      ['Lorem ipsum 6', 52],
+      ['Lorem ipsum 7', 51],
+    ];
+
     return (
       <div className="landing-page-container">
         <div className="landing-page">
           <h3 class="browse-by">Browse by</h3>
+
+          <div className="filters">
+            {filters.map((filter) => {
+              return <button className="ui button">{filter}</button>;
+            })}
+          </div>
+          <div class="ui cards">
+            {demoTopics.map((topic) => {
+              return (
+                <div class="ui card">
+                  <div class="content">
+                    <div class="header">{topic[0]}</div>
+                  </div>
+                  <div class="extra content">{topic[1]}</div>
+                </div>
+              );
+            })}
+          </div>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+          <p></p>
         </div>
       </div>
     );

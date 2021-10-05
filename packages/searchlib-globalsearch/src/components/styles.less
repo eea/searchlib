@@ -1,6 +1,8 @@
 @sf-light-gray: #f9f9f9;
 @sf-azure: #2D9390;
 @sf-blue: #0F4B87;
+@sf-medium-gray: #cccccc;
+@sf-dark-gray: #303030;
 
 div.landing-page-container {
   width: calc(100% + 800px);
@@ -10,11 +12,30 @@ div.landing-page-container {
   transform: translateX(-400px);
 
   div.landing-page {
-    padding: 50px;
     min-height: 500px;
+    padding: 50px;
 
     h3.browse-by {
       font-weight: 700;
+    }
+
+    div.filters {
+      margin-bottom: 2em;
+
+      button {
+        border: 1px solid @sf-medium-gray;
+        margin-right: 20px;
+        background-color: white;
+        border-radius: 0 !important;
+        color: @sf-dark-gray;
+        font-weight: 400;
+      }
+    }
+
+    div.cards {
+      div.card {
+        border-radius: 0 !important;
+      }
     }
   }
 }
