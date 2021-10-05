@@ -16,6 +16,7 @@ function SearchInput({
   getInputProps,
   onChange,
   onSubmit,
+  mode,
 }) {
   const inputProps = getInputProps();
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
@@ -27,8 +28,8 @@ function SearchInput({
   const inpRef = React.useRef();
 
   React.useEffect(() => {
-    inpRef.current && inpRef.current.focus();
-  }, [searchTerm]);
+    mode === 'view' && inpRef.current && inpRef.current.focus();
+  }, [searchTerm, mode]);
 
   return (
     <>

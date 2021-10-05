@@ -8,7 +8,7 @@ import { rebind, applyConfigurationSchema } from '@eeacms/search/lib/utils';
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
 export default function SearchApp(props) {
-  const { appName, registry } = props;
+  const { appName, registry, mode = 'view' } = props;
 
   const appConfig = React.useMemo(
     () => applyConfigurationSchema(rebind(registry.searchui[appName])),
@@ -31,6 +31,7 @@ export default function SearchApp(props) {
                   {...params}
                   appName={appName}
                   appConfig={appConfig}
+                  mode={mode}
                 />
               </SearchContext.Provider>
             </AppConfigContext.Provider>

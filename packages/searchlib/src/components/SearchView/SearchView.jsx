@@ -22,6 +22,7 @@ import {
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 import { checkInteracted } from './utils';
+import { BodyContent } from './BodyContent';
 
 export const SearchView = (props) => {
   const {
@@ -34,44 +35,20 @@ export const SearchView = (props) => {
     wasSearched,
     filters,
     searchTerm,
+    mode = 'view',
   } = props;
   const { defaultSearchText = '' } = appConfig;
 
   const { driver } = React.useContext(SearchContext);
 
-  const { sortOptions, resultViews } = appConfig;
-  const defaultViewId =
-    resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
-  const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
-
-  const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
-
-  const Item = registry.resolve[listingViewDef.factories.item].component;
-  const ResultViewComponent =
-    registry.resolve[listingViewDef.factories.view].component;
-
   const InitialViewComponent =
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
-  const NoResultsComponent =
-    appConfig.noResultsView?.factory &&
-    registry.resolve[appConfig.noResultsView?.factory].component;
-
   // const itemViewProps = listingViewDef.params;
-  const itemViewProps = appConfig[`${activeViewId}ViewParams`];
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
-  const availableResultViews = [
-    ...resultViews.filter(({ id }) => {
-      const paramsPropId = `${id}ViewParams`;
-      return Object.keys(appConfig).includes(paramsPropId)
-        ? appConfig[paramsPropId].enabled
-        : true;
-    }),
-  ];
   const { defaultFilters } = appConfig;
-  //const wasInteracted = filters.length > 0 || searchTerm;
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
 
   React.useEffect(() => {
@@ -112,83 +89,6 @@ export const SearchView = (props) => {
     defaultFilters,
   ]);
 
-  const DefaultView = React.useCallback(
-    ({ children }) => (
-      <>
-        <FilterList />
-        <div className="above-results">
-          <ViewSelector
-            views={availableResultViews}
-            active={activeViewId}
-            onSetView={setActiveViewId}
-          />
-          <Sorting
-            label={'Order'}
-            sortOptions={sortOptions}
-            view={SortingDropdown}
-          />
-        </div>
-        <AnswersList />
-        <ResultViewComponent>{children}</ResultViewComponent>
-        <div className="row">
-          <div>
-            <DownloadButton appConfig={appConfig} />
-          </div>
-          <div className="search-body-footer">
-            <div></div>
-            <Paging />
-            <ResultsPerPage />
-          </div>
-        </div>
-      </>
-    ),
-    [activeViewId, appConfig, availableResultViews, sortOptions],
-  );
-
-  const BodyContent = React.useCallback(
-    (props) => (
-      <>
-        <Results
-          shouldTrackClickThrough={true}
-          view={({ children }) => {
-            return wasInteracted ? (
-              NoResultsComponent ? (
-                children ? (
-                  <DefaultView>{children}</DefaultView>
-                ) : (
-                  <NoResultsComponent {...props} />
-                )
-              ) : (
-                <DefaultView>{children}</DefaultView>
-              )
-            ) : InitialViewComponent ? (
-              <InitialViewComponent {...props} />
-            ) : (
-              <DefaultView>{children}</DefaultView>
-            );
-          }}
-          resultView={(props) => (
-            <Result {...props} {...itemViewProps} view={Item} />
-          )}
-        />
-      </>
-    ),
-    [
-      wasInteracted,
-      // filters,
-      // searchTerm,
-      InitialViewComponent,
-      Item,
-      NoResultsComponent,
-      // appConfig.title,
-      itemViewProps,
-    ],
-  );
-  // console.log('cur:', {
-  //   filters,
-  //   searchTerm,
-  // });
-
   return (
     <div className={`searchapp searchapp-${appName}`}>
       <Layout
@@ -210,11 +110,12 @@ export const SearchView = (props) => {
                 ? registry.resolve[appConfig.searchBoxComponent].component
                 : undefined
             }
+            mode={mode}
           />
         }
         sideContent={<Facets />}
         bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
-        bodyContent={<BodyContent {...props} />}
+        bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}
       />
     </div>

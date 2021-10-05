@@ -33,6 +33,7 @@ function SearchBoxView(props) {
     completeSuggestion,
     // eslint-disable-next-line no-unused-vars
     notifyAutocompleteSelected,
+    mode,
     ...rest
   } = props;
   const focusedClass = isFocused ? 'focus' : '';
@@ -64,9 +65,19 @@ function SearchBoxView(props) {
               onSubmit(e);
             }}
           >
-            <h1>{appConfig.title}</h1>
+            {appConfig.title ? (
+              <h2 className="searchApp-headline">{appConfig.title}</h2>
+            ) : (
+              ''
+            )}
+            {appConfig.subheadline ? (
+              <h3 className="searchApp-subheadline">{appConfig.subheadline}</h3>
+            ) : (
+              ''
+            )}
             <div className={cx('sui-search-box', className, autocompleteClass)}>
               <InputView
+                mode={mode}
                 onSubmit={onSubmit}
                 onChange={(newValue) => {
                   // To avoid over dispatching

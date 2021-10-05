@@ -22,8 +22,8 @@ import LandingPage from './components/LandingPage';
 
 const globalSearchConfig = {
   title: 'Global search and catalogue',
-  layoutComponent: 'RightColumnLayout',
-  enableNLP: false, // enables NLP capabilities
+  layoutComponent: 'FilterAsideLayout',
+  enableNLP: false, // enables NLP capabilities    // TODO: make this live-configurable
 
   extraQueryParams: {
     text_fields: [
@@ -129,8 +129,9 @@ const globalSearchConfig = {
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
-      wrapper: 'ModalFacetWrapper',
+      // factory: 'FilterMultiTermFacet',
       // factory: 'sui.Facet',
+      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'spatial',

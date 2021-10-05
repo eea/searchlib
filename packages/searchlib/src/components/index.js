@@ -2,6 +2,7 @@ import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
 import TableView from './Result/TableView';
 import Facets from './Facets/Facets';
 import FilterList from './FilterList/FilterList';
+import FilterAsideLayout from './Layout/FilterAsideLayout';
 import LeftColumnLayout from './Layout/LeftColumnLayout';
 import RightColumnLayout from './Layout/RightColumnLayout';
 import TableRowItem from './Result/TableRowItem';
@@ -23,8 +24,10 @@ import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
 import { Header } from './Result/ResultModal';
+import DefaultContentView from './SearchView/DefaultContentView';
 
 export {
+  FilterAsideLayout,
   MultiCheckboxFacet,
   CardItem,
   DateTime,
@@ -50,6 +53,7 @@ export {
   AppInfo,
   Header,
   String,
+  DefaultContentView,
 };
 
 // SimpleSearchInput,
