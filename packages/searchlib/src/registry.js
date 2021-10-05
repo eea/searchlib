@@ -24,7 +24,7 @@ import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardI
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
 import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
-import { Item, Card } from 'semantic-ui-react';
+import { Item, Card, Menu } from 'semantic-ui-react';
 import {
   onResultClick,
   onAutocompleteResultClick,
@@ -105,6 +105,9 @@ const config = {
         <Card.Group {...props} stackable itemsPerRow={4} doubling />
       ),
     },
+    VerticalMenu: {
+      component: (props) => <Menu vertical {...props} />,
+    },
     'HorizontalCard.Group': {
       component: (props) => (
         <Card.Group {...props} stackable itemsPerRow={1} doubling />
@@ -160,6 +163,9 @@ const config = {
     },
     TilesLandingPage: {
       component: TilesLandingPage,
+    },
+    DefaultFacetsList: {
+      component: ({ children }) => <div className="facets">{children}</div>,
     },
   },
 

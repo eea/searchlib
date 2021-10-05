@@ -24,7 +24,8 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: false, // enables NLP capabilities    // TODO: make this live-configurable
+  enableNLP: false, // enables NLP capabilities
+  facetsListComponent: 'VerticalMenu',
 
   extraQueryParams: {
     text_fields: [
@@ -124,6 +125,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'More like this',
       showInFacetsList: false,
+      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'topic',
@@ -141,6 +143,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Countries',
       whitelist: spatialWhitelist,
+      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'places',
@@ -148,6 +151,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
+      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'objectProvides',
@@ -155,20 +159,24 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Content types',
       whitelist: objectProvidesWhitelist,
+      wrapper: 'ModalFacetWrapper',
     }),
     suiFacet({
       field: 'organisation',
       isFilterable: false,
       isMulti: true,
       label: 'Organisation involved',
+      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'cluster_name',
       isFilterable: false,
       isMulti: true,
       label: 'Websites',
+      wrapper: 'ModalFacetWrapper',
     }),
     histogramFacet({
+      wrapper: 'ModalFacetWrapper',
       rangeType: 'closed',
       field: 'year',
       // isFilterable: false,
@@ -199,6 +207,7 @@ const globalSearchConfig = {
     }),
 
     histogramFacet({
+      wrapper: 'ModalFacetWrapper',
       rangeType: 'closed',
       field: 'time_coverage',
       // isFilterable: false,
@@ -229,6 +238,7 @@ const globalSearchConfig = {
     }),
 
     fixedRangeFacet({
+      wrapper: 'ModalFacetWrapper',
       field: 'readingTime',
       label: 'Reading time (minutes)',
       rangeType: 'fixed',
@@ -242,6 +252,7 @@ const globalSearchConfig = {
       ],
     }),
     multiTermFacet({
+      wrapper: 'ModalFacetWrapper',
       field: 'language',
       isFilterable: false,
       isMulti: true,

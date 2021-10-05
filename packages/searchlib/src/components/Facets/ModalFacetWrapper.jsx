@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
-import { Accordion, Icon } from 'semantic-ui-react';
+import { Menu, Accordion, Icon } from 'semantic-ui-react';
 import MultiCheckboxFacet from './MultiCheckboxFacet';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from './state';
@@ -21,43 +21,39 @@ const FacetWrapperComponent = (props) => {
         temp[field] = { opened: false };
       }
     }
-    updateOpenFacets(temp);
+    // updateOpenFacets(temp);
   }, [hasFilter, field, openFacets, updateOpenFacets]);
 
   let isOpened = openFacets[field]?.opened || false;
   const [counter, setCounter] = React.useState(0);
 
-  return collapsable ? (
-    <Accordion>
-      <Accordion.Title
-        active={isOpened}
-        onClick={() => {
-          setCounter(counter + 1); // Force render
-          let temp = openFacets;
-          if (isOpened) {
-            temp[field] = { opened: false };
-            isOpened = false;
-          } else {
-            temp[field] = { opened: true };
-            isOpened = true;
-          }
-          updateOpenFacets(temp);
-        }}
-      >
-        <Icon name="dropdown" />
-        {label}
-      </Accordion.Title>
-      <Accordion.Content active={isOpened}>
-        <SUIFacet
-          {...props}
-          active={isOpened}
-          view={props.view || MultiCheckboxFacet}
-        />
-      </Accordion.Content>
-    </Accordion>
-  ) : (
-    <SUIFacet {...props} />
-  );
+  return <Menu.Item>{label}</Menu.Item>;
+  //   <Accordion.Title
+  //     active={isOpened}
+  //     onClick={() => {
+  //       setCounter(counter + 1); // Force render
+  //       let temp = openFacets;
+  //       if (isOpened) {
+  //         temp[field] = { opened: false };
+  //         isOpened = false;
+  //       } else {
+  //         temp[field] = { opened: true };
+  //         isOpened = true;
+  //       }
+  //       updateOpenFacets(temp);
+  //     }}
+  //   >
+  //     <Icon name="dropdown" />
+  //     {label}
+  //   </Accordion.Title>
+  //   <Accordion.Content active={isOpened}>
+  //     <SUIFacet
+  //       {...props}
+  //       active={isOpened}
+  //       view={props.view || MultiCheckboxFacet}
+  //     />
+  //   </Accordion.Content>
+  // </Accordion>
 };
 
 const FacetWrapper = withSearch(

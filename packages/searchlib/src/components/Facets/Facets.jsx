@@ -4,8 +4,12 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 const Facets = (props) => {
   const { appConfig, registry } = useAppConfig();
   const { facets = [] } = appConfig;
+  // console.log(appConfig['facetsListComponent'] || 'DefaultFacetsList');
+  const Component =
+    registry.resolve[appConfig['facetsListComponent'] || 'DefaultFacetsList']
+      .component;
   return (
-    <div className="facets">
+    <Component>
       {facets
         .filter((f) => f.showInFacetsList)
         .map((info, i) => {
@@ -26,7 +30,7 @@ const Facets = (props) => {
             />
           );
         })}
-    </div>
+    </Component>
   );
 };
 
