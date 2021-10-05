@@ -129,6 +129,7 @@ const globalSearchConfig = {
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
+      wrapper: 'ModalFacetWrapper',
       // factory: 'sui.Facet',
     }),
     multiTermFacet({

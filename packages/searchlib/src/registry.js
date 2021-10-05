@@ -12,6 +12,7 @@ import {
   TableView,
   FilterResultEntry,
   MultiCheckboxFacet,
+  ModalFacetWrapper,
 } from '@eeacms/search/components';
 
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
@@ -140,6 +141,9 @@ const config = {
     },
     AccordionFacetWrapper: {
       component: AccordionFacetWrapper,
+    },
+    ModalFacetWrapper: {
+      component: ModalFacetWrapper,
     },
   },
 

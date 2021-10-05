@@ -11,6 +11,7 @@ import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
 import AccordionFacetWrapper from './Facets/AccordionFacetWrapper';
+import ModalFacetWrapper from './Facets/ModalFacetWrapper';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
@@ -37,6 +38,7 @@ export {
   ToggleSort,
   ViewSelector,
   AccordionFacetWrapper,
+  ModalFacetWrapper,
   SearchBox,
   RangeSlider,
   PagingInfo,
