@@ -1,15 +1,64 @@
+@sf-light-gray: #f9f9f9;
+@sf-azure: #2d9390;
+@sf-blue: #0f4b87;
+@sf-medium-gray: #cccccc;
+@sf-dark-gray: #303030;
+
+div.landing-page-container {
+  background: @sf-light-gray;
+
+  div.landing-page {
+    min-height: 500px;
+    padding: 50px;
+
+    h3.browse-by {
+      font-weight: 700;
+    }
+
+    div.filters {
+      margin-bottom: 2em;
+
+      button {
+        border: 1px solid @sf-medium-gray;
+        margin-right: 20px;
+        background-color: white;
+        border-radius: 1 !important;
+        color: @sf-dark-gray;
+        font-weight: 400;
+      }
+    }
+
+    div.cards {
+      div.card {
+        border-radius: 2 !important;
+
+        div.header {
+          padding: 0px;
+          color: @sf-blue;
+          font-size: 1rem !important;
+          font-weight: 400 !important;
+        }
+      }
+    }
+  }
+}
+
+// OLD styles: (TODO: clean code)
 .ui.container.stackable.two.column.grid.body-content {
   width: 100% !important;
   margin: 0 !important;
 }
+
 .ui.container.one.column.grid {
   width: 100% !important;
   margin: 0 !important;
 }
+
 .ui.container.grid.body-footer {
   width: 100% !important;
   margin: 0 !important;
 }
+
 .tile {
   padding: 18px;
   margin: 0 12px 12px 0;
@@ -27,96 +76,34 @@
   }
 
   h2 {
-    font-size: 200%;
     border-bottom: 1px solid white;
+    margin: 0 0 1em 0;
     margin-bottom: 0;
+    font-size: 200%;
     font-weight: bold;
     line-height: 1.3;
-    margin: 0 0 1em 0;
   }
+
   span {
     font-size: 250%;
     font-weight: bold;
   }
+
   &.available_content {
     height: 434px;
+
     h2 {
       border-bottom: 1px solid #115c57;
-      font-size: 200%;
       color: #115c57;
+      font-size: 200%;
     }
+
     h3 {
       color: #115c57;
     }
+
     span {
       color: #1b928f;
-    }
-  }
-  &.countries {
-    background: #1c65a4 url("./img/countries-bg.png") no-repeat center center;
-    background-position-y: 0;
-    color: white;
-    height: 434px;
-    h2 {
-      padding-top: 180px;
-    }
-  }
-  &.content_types {
-    background: #b3548d url("./img/content-types-bg.png") no-repeat 85% 55%;
-    color: white;
-    height: 300px;
-  }
-  &.picture {
-    background: #1b928f url("./img/search-album-slideshow-bg.png") no-repeat
-      center center;
-    color: white;
-    height: 434px;
-  }
-  &.topics {
-    background: #fbaf33 url("./img/topics-bg.png") no-repeat 85% 25%;
-    color: white;
-    height: 300px;
-  }
-  &.time_coverage {
-    background: #b0c649;
-    color: white;
-    height: 300px;
-    p {
-      text-align: right;
-      span.label {
-        font-size: 150%;
-        font-weight: normal;
-      }
-    }
-  }
-  &.organisations {
-    background: #babbdb url("./img/organisations-bg.png") no-repeat 85px 100px;
-    color: white;
-    height: 300px;
-  }
-  &.latest {
-    height: 434px;
-    h2 {
-      border-bottom: 1px solid #1b928f;
-      font-size: 250%;
-      color: #1b928f;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    li {
-      margin-bottom: 1em;
-      span {
-        font-size: 12px;
-        font-weight: normal;
-      }
-      a {
-        font-size: 12px;
-        font-weight: bold;
-        color: #1b928f;
-        display: block;
-      }
     }
   }
 }

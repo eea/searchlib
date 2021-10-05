@@ -207,45 +207,66 @@ const LandingPage = (props) => {
       (bucket) => spatialWhitelist.indexOf(bucket.key) !== -1,
     ).length;
     const elements = landingDataRes.hits.hits;
-
-    const filters = ['Topics', 'Organizations', 'Countries'];
-    const demoTopics = [
-      ['Agriculture', 73],
-      ['Air pollution', 53],
-      ['Lorem ipsum', 5],
-      ['Lorem ipsum 2', 75],
-      ['Lorem ipsum 3', 95],
-      ['Lorem ipsum 4', 35],
-      ['Lorem ipsum 5', 53],
-      ['Lorem ipsum 6', 52],
-      ['Lorem ipsum 7', 51],
-    ];
-
     return (
-      <div className="landing-page-container">
-        <div className="landing-page">
-          <h3 class="browse-by">Browse by</h3>
+      <div className="landing-page">
+        <Masonry options={{ horizontalOrder: true }}>
+          <div className="tile available_content">
+            <h2>
+              Instantly search over 20 years of environmental knowledge by EEA
+            </h2>
+            <h3>Documents</h3>
+            <span>{total}</span>
+            <h3>Languages</h3>
+            <span>{languages}</span>
+          </div>
 
-          <div className="filters">
-            {filters.map((filter) => {
-              return <button className="ui button">{filter}</button>;
-            })}
+          <div className="tile picture"></div>
+
+          <div className="tile topics">
+            <h2>Topics</h2>
+            <span>{topics}</span>
           </div>
-          <div class="ui cards">
-            {demoTopics.map((topic) => {
-              return (
-                <div class="ui card">
-                  <div class="content">
-                    <div class="header">{topic[0]}</div>
-                  </div>
-                  <div class="extra content">{topic[1]}</div>
-                </div>
-              );
-            })}
+
+          <div className="tile time_coverage">
+            <h2>Time coverage</h2>
+            <p>
+              <span className="label">from</span>
+              <span className="value">{min_time_coverage}</span>
+            </p>
+            <p>
+              <span className="label">to</span>
+              <span className="value">{max_time_coverage}</span>
+            </p>
           </div>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
-          <p></p>
-        </div>
+          <div className="tile organisations">
+            <h2>Organisations</h2>
+            <span>{organisations}</span>
+          </div>
+
+          <div className="tile content_types">
+            <h2>Content Types</h2>
+            <span>{content_types}</span>
+          </div>
+          <div className="tile countries">
+            <h2>Countries</h2>
+            <span>{countries}</span>
+          </div>
+          <div className="tile latest">
+            <h2>Recently added</h2>
+            <ul>
+              {elements.map((element, i) => {
+                const { about, title, issued } = element._source;
+                return (
+                  <li key={i}>
+                    <a href={about}>{title}</a>
+                    <span>Published on </span>
+                    <span>{issued}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </Masonry>
       </div>
     );
   } else {
