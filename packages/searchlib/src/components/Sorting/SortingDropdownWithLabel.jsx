@@ -9,15 +9,17 @@ const SortingViewComponent = (props) => {
   const { sortField, sortDirection } = searchContext;
   return (
     <div className="sorting">
-      {label}
-      <Dropdown
-        inline
-        value={`${sortField}|||${sortDirection}`}
-        options={options.map(({ label, value }) => ({ text: label, value }))}
-        onChange={(e, { value }) => {
-          onChange(value);
-        }}
-      />
+      <span>
+        {label}
+        <Dropdown
+          inline
+          value={`${sortField}|||${sortDirection}`}
+          options={options.map(({ label, value }) => ({ text: label, value }))}
+          onChange={(e, { value }) => {
+            onChange(value);
+          }}
+        />
+      </span>
     </div>
   );
 };
