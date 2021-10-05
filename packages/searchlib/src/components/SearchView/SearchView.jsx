@@ -45,6 +45,10 @@ export const SearchView = (props) => {
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
+  const FacetsComponent = appConfig.facetsListComponent
+    ? registry.resolve[appConfig.facetsListComponent].component
+    : Facets;
+
   // const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
@@ -113,7 +117,7 @@ export const SearchView = (props) => {
             mode={mode}
           />
         }
-        sideContent={<Facets />}
+        sideContent={<FacetsComponent />}
         bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
         bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}

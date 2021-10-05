@@ -19,6 +19,7 @@ import {
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
+import Facets from '@eeacms/search/components/Facets/Facets';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -105,6 +106,9 @@ const config = {
         <Card.Group {...props} stackable itemsPerRow={4} doubling />
       ),
     },
+    VerticalCardsGroup: {
+      component: (props) => <Card.Group {...props} stackable itemsPerRow={1} />,
+    },
     VerticalMenu: {
       component: (props) => <Menu vertical {...props} />,
     },
@@ -151,6 +155,18 @@ const config = {
     },
     ModalFacetWrapper: {
       component: ModalFacetWrapper,
+    },
+    VerticalCardsModalFacets: {
+      component: (props) => (
+        <Facets
+          defaultWraper={ModalFacetWrapper}
+          view={({ children }) => (
+            <Card.Group {...props} stackable itemsPerRow={1}>
+              {children}
+            </Card.Group>
+          )}
+        />
+      ),
     },
     FilterAsideLayout: {
       component: FilterAsideLayout,

@@ -24,8 +24,8 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: false, // enables NLP capabilities
-  facetsListComponent: 'VerticalMenu',
+  enableNLP: true, // enables NLP capabilities
+  facetsListComponent: 'VerticalCardsModalFacets',
 
   extraQueryParams: {
     text_fields: [
@@ -125,7 +125,6 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'More like this',
       showInFacetsList: false,
-      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'topic',

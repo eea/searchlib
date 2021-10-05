@@ -210,16 +210,6 @@ const MultiTypeFacetComponent = (props) => {
       {...props}
     />
   );
-
-  // return (
-  //   <FacetWrapper
-  //     {...props}
-  //     filterType={filterType}
-  //     show={100000}
-  //     view={(props) => (
-  //     )}
-  //   />
-  // );
 };
 
 export default withSearch(
