@@ -6,15 +6,17 @@ const SortingView = (props) => {
   const { label, options, onChange } = props;
   return (
     <div className="sorting">
-      <Dropdown
-        selection
-        placeholder={label || 'Sort by'}
-        floating
-        options={options.map(({ label, value }) => ({ text: label, value }))}
-        onChange={(e, { value }) => {
-          onChange(value);
-        }}
-      />
+      <span>
+        {label || 'Sort by'}
+        <Dropdown
+          selection
+          floating
+          options={options.map(({ label, value }) => ({ text: label, value }))}
+          onChange={(e, { value }) => {
+            onChange(value);
+          }}
+        />
+      </span>
     </div>
   );
 };
