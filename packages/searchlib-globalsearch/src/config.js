@@ -18,7 +18,7 @@ import {
   getGlobalsearchThumbUrl,
   getGlobalsearchIconUrl,
 } from './utils';
-import LandingPage from './components/LandingPage';
+// import LandingPage from './components/LandingPage';
 
 const globalSearchConfig = {
   title: 'Global search and catalogue',
@@ -344,7 +344,24 @@ const globalSearchConfig = {
     getIconUrl: 'getGlobalsearchIconUrl',
   },
   initialView: {
-    factory: 'LandingPage',
+    factory: 'TilesLandingPage',
+    sections: [
+      {
+        id: 'topics',
+        title: 'Topics',
+        facetField: 'topic',
+      },
+      {
+        id: 'organisations',
+        title: 'Organisations',
+        facetField: 'organisation',
+      },
+      {
+        id: 'countries',
+        title: 'Countries',
+        facetField: 'spatial',
+      },
+    ],
   },
   listingViewParams: {
     enabled: false,
@@ -490,7 +507,7 @@ export default function install(config) {
     contentTypeNormalize,
   );
 
-  config.resolve.LandingPage = { component: LandingPage };
+  // config.resolve.LandingPage = { component: LandingPage };
 
   config.searchui.minimal = mergeConfig(config.searchui.default, envConfig);
   config.searchui.minimal.facets = [

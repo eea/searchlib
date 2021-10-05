@@ -23,6 +23,7 @@ import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
+import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
 import { Item, Card } from 'semantic-ui-react';
 import {
   onResultClick,
@@ -156,6 +157,9 @@ const config = {
     },
     FilterAsideContentView: {
       component: FilterAsideContentView,
+    },
+    TilesLandingPage: {
+      component: TilesLandingPage,
     },
   },
 
