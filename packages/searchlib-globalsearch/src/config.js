@@ -24,7 +24,7 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: true, // enables NLP capabilities    // TODO: make this live-configurable
+  enableNLP: false, // enables NLP capabilities    // TODO: make this live-configurable
 
   extraQueryParams: {
     text_fields: [
