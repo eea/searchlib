@@ -37,6 +37,7 @@ export const suiFacet = ({
     showInFacetsList: true,
     filterType,
     isFilterable,
+    show: 10000,
     ...params,
   };
 };
@@ -62,7 +63,7 @@ export const suiRangeFacet = ({
 export const multiTermFacet = ({
   field,
   label,
-  // filterType = 'any',
+  filterType = 'all',
   isFilterable = false,
   ...params
 }) => {
@@ -71,8 +72,9 @@ export const multiTermFacet = ({
     factory: 'MultiTermFacet',
     label: label || field,
     showInFacetsList: true,
-    // filterType,
+    filterType,
     isFilterable,
+    show: 10000,
     ...params,
   };
 };
