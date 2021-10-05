@@ -133,6 +133,7 @@ const globalSearchConfig = {
       // factory: 'FilterMultiTermFacet',
       // factory: 'sui.Facet',
       wrapper: 'ModalFacetWrapper',
+      show: 10000,
     }),
     multiTermFacet({
       field: 'spatial',

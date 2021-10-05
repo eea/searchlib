@@ -37,6 +37,7 @@ export const suiFacet = ({
     showInFacetsList: true,
     filterType,
     isFilterable,
+    show: 10000,
     ...params,
   };
 };
@@ -73,6 +74,7 @@ export const multiTermFacet = ({
     showInFacetsList: true,
     filterType,
     isFilterable,
+    show: 10000,
     ...params,
   };
 };

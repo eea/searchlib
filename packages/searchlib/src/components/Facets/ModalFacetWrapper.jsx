@@ -45,7 +45,6 @@ const FacetWrapperComponent = (props) => {
         }}
       >
         <Icon name="dropdown" />
-        tibi-
         {label}
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
