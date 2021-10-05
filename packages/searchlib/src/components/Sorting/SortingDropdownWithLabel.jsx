@@ -11,9 +11,8 @@ const SortingViewComponent = (props) => {
     <div className="sorting">
       {label}
       <Dropdown
-        selection
+        inline
         value={`${sortField}|||${sortDirection}`}
-        floating
         options={options.map(({ label, value }) => ({ text: label, value }))}
         onChange={(e, { value }) => {
           onChange(value);
