@@ -1,5 +1,6 @@
 @sf-light-gray: #f9f9f9;
 @sf-azure: #2d9390;
+@sf-dark-azure: #267f7c;
 @sf-blue: #0f4b87;
 @sf-medium-gray: #cccccc;
 @sf-dark-gray: #303030;
@@ -49,6 +50,21 @@ div.landing-page-container {
             background: @sf-light-gray;
             border-radius: 5px;
             color: @sf-dark-gray;
+          }
+        }
+
+        &:hover {
+          background: @sf-azure;
+
+          div.header {
+            color: white;
+          }
+
+          div.extra.content {
+            span.count {
+              background: @sf-dark-azure;
+              color: white;
+            }
           }
         }
       }
