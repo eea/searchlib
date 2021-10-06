@@ -33,15 +33,9 @@ const FilterAsideLayout = (props) => {
       ) : (
         <Grid columns={1} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="2" tablet="1">
-              <div></div>
-            </Grid.Column>
-            <Grid.Column widescreen="8" tablet="10">
+            <Grid.Column widescreen="12" tablet="12">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
-            </Grid.Column>
-            <Grid.Column widescreen="2" tablet="1">
-              <div> </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
