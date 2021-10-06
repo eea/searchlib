@@ -18,21 +18,30 @@ const FilterAsideLayout = (props) => {
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="3">
+            <Grid.Column widescreen="2">
               <div>{sideContent}</div>
             </Grid.Column>
-            <Grid.Column widescreen="9">
+            <Grid.Column widescreen="8">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
+            </Grid.Column>
+            <Grid.Column widescreen="2">
+              <div></div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       ) : (
         <Grid columns={1} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="12">
+            <Grid.Column widescreen="2">
+              <div></div>
+            </Grid.Column>
+            <Grid.Column widescreen="8">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
+            </Grid.Column>
+            <Grid.Column widescreen="2">
+              <div></div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
