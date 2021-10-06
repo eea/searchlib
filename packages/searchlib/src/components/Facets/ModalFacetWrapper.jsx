@@ -5,7 +5,8 @@ import MultiCheckboxFacet from './MultiCheckboxFacet';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const getFacetTotalCount = (facets, name) => {
-  return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
+  return facets?.[name]?.[0]?.data?.length || 0;
+  // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
 };
 
 const FacetWrapperComponent = (props) => {
