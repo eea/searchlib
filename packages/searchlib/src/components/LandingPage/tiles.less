@@ -30,14 +30,26 @@ div.landing-page-container {
 
     div.cards {
       div.card {
-        cursor: pointer;
         border-radius: 2 !important;
+        cursor: pointer;
 
         div.header {
           padding: 0px;
           color: @sf-blue;
           font-size: 1rem !important;
           font-weight: 400 !important;
+        }
+
+        div.extra.content {
+          padding: 10px 10px 15px 15px;
+          border-top: none !important;
+
+          span.count {
+            padding: 5px 15px;
+            background: @sf-light-gray;
+            border-radius: 5px;
+            color: @sf-dark-gray;
+          }
         }
       }
     }
