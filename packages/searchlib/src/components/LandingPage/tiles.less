@@ -3,6 +3,7 @@
 @sf-dark-azure: #267f7c;
 @sf-blue: #0f4b87;
 @sf-medium-gray: #cccccc;
+@sf-medium-gray2: #505050;
 @sf-dark-gray: #303030;
 
 div.landing-page-container {
@@ -21,16 +22,21 @@ div.landing-page-container {
 
       button {
         border: 1px solid @sf-medium-gray;
-        margin-right: 20px;
+        margin-right: 14px;
         background-color: white;
         border-radius: 1 !important;
-        color: @sf-dark-gray;
+        color: @sf-medium-gray2;
         font-weight: 400;
+
+        &.active {
+          border: none;
+        }
       }
     }
 
     div.cards {
       div.card {
+        margin: 0.875em 0.5em 0.375em 0.5em;
         border-radius: 2 !important;
         cursor: pointer;
 
@@ -49,12 +55,15 @@ div.landing-page-container {
             padding: 5px 15px;
             background: @sf-light-gray;
             border-radius: 5px;
-            color: @sf-dark-gray;
+            color: @sf-medium-gray2;
+            font-size: 14px;
           }
         }
 
         &:hover {
+          border: none !important;
           background: @sf-azure;
+          box-shadow: none;
 
           div.header {
             color: white;
