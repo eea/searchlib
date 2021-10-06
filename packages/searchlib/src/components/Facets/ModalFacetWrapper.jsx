@@ -24,9 +24,9 @@ const FacetWrapperComponent = (props) => {
         open={isOpened}
         trigger={
           <Card
+            className={(isActive && 'facet active') || 'facet'}
             fluid
             header={label}
-            color={isActive && 'red'}
             onClick={() => {}}
             meta={getFacetTotalCount(facets, field)}
           />
