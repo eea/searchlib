@@ -55,7 +55,7 @@ export const FilterAsideContentView = (props) => {
           onSetView={setActiveViewId}
         />
         <Sorting
-          label={'Sort by'}
+          label={'Sort by '}
           sortOptions={sortOptions}
           view={SortingDropdownWithLabel}
         />
