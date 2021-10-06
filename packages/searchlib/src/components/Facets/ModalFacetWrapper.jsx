@@ -1,14 +1,19 @@
 import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
-import { Card, Modal, Button, Header, Image } from 'semantic-ui-react';
+import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import MultiCheckboxFacet from './MultiCheckboxFacet';
-// import { useAtom } from 'jotai';
-// import { openFacetsAtom } from './state';
-// import { useUpdateAtom } from 'jotai/utils';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+
+const getFacetTotalCount = (facets, name) => {
+  return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
+};
 
 const FacetWrapperComponent = (props) => {
-  const { filters = [], field, label } = props;
+  const { filters = [], facets = {}, field, label } = props;
   const [isOpened, setIsOpened] = React.useState();
+  const isActive = filters.find((f) => f.field === field);
+  const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
 
   return (
     <>
@@ -17,10 +22,17 @@ const FacetWrapperComponent = (props) => {
         onOpen={() => setIsOpened(true)}
         open={isOpened}
         trigger={
-          <Card fluid raised header={label} onClick={() => {}} meta={123} />
+          <Card
+            fluid
+            raised
+            header={label}
+            color={isActive && 'red'}
+            onClick={() => {}}
+            meta={getFacetTotalCount(facets, field)}
+          />
         }
       >
-        <Modal.Header>{field}</Modal.Header>
+        <Modal.Header>{facetConfig?.title || field}</Modal.Header>
         <Modal.Content image>
           <SUIFacet
             {...props}
@@ -30,10 +42,10 @@ const FacetWrapperComponent = (props) => {
         </Modal.Content>
         <Modal.Actions>
           <Button color="black" onClick={() => setIsOpened(false)}>
-            Nope
+            Cancel
           </Button>
           <Button
-            content="Yep, that's me"
+            content="Apply"
             labelPosition="right"
             icon="checkmark"
             onClick={() => setIsOpened(false)}
@@ -58,6 +70,9 @@ const FacetWrapper = withSearch(
 
 export default FacetWrapper;
 
+// import { useAtom } from 'jotai';
+// import { openFacetsAtom } from './state';
+// import { useUpdateAtom } from 'jotai/utils';
 // const hasFilter = !!filters.find((filter) => field === filter.field);
 // const [openFacets] = useAtom(openFacetsAtom);
 // const updateOpenFacets = useUpdateAtom(openFacetsAtom);
