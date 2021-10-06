@@ -82,39 +82,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         onMouseLeave={() => setHovered(false)}
       >
         <div className="col-left">
-          <Image
-            className="img-thumbnail"
-            src={thumbUrl}
-            wrapped
-            ui={false}
-            fluid
-            centered
-            style={{ backgroundImage: `url('${thumbUrl}')` }}
-            as={ExternalLink}
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-          />
-          <div className="controls">
-            {showControls && (
-              <div>
-                <Button
-                  compact
-                  floated="left"
-                  size="mini"
-                  onClick={() => {
-                    removeFilter('lessLikeThis');
-                    setMoreLikeThis(result);
-                    setFilter('moreLikeThis', result._original._id, 'none');
-                  }}
-                >
-                  more like this
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="col-right">
           <div className="details">
             <h4>
               <ExternalLink href={url}>
@@ -146,6 +113,39 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <StringList value={result[props.tagsField]?.raw} />
             </p>
             {props.children ? props.children : <p>{description}</p>}
+          </div>
+        </div>
+        <div className="col-right">
+          <Image
+            className="img-thumbnail"
+            src={thumbUrl}
+            wrapped
+            ui={false}
+            fluid
+            centered
+            style={{ backgroundImage: `url('${thumbUrl}')` }}
+            as={ExternalLink}
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+          />
+          <div className="controls">
+            {showControls && (
+              <div>
+                <Button
+                  compact
+                  floated="left"
+                  size="mini"
+                  onClick={() => {
+                    removeFilter('lessLikeThis');
+                    setMoreLikeThis(result);
+                    setFilter('moreLikeThis', result._original._id, 'none');
+                  }}
+                >
+                  more like this
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
