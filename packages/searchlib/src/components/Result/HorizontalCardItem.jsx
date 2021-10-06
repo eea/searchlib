@@ -39,6 +39,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
   // console.log('card props', props, appConfig);
 
+  let expired = false;
+  console.log('here2');
+  console.log(result['expires']);
+  if (result['expires']?.raw !== undefined) {
+    expired = Date.parse(result['expires']?.raw) < Date.now();
+  }
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
 
   const getThumb =
@@ -119,6 +125,14 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   &nbsp;
                   <Label className="new-item" horizontal>
                     New
+                  </Label>
+                </>
+              )}
+              {expired && (
+                <>
+                  &nbsp;
+                  <Label className="archived-item" horizontal>
+                    Archived
                   </Label>
                 </>
               )}
