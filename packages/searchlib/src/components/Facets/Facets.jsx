@@ -4,7 +4,6 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 const Facets = ({ view, defaultWrapper }) => {
   const { appConfig, registry } = useAppConfig();
   const { facets = [] } = appConfig;
-  // console.log(appConfig['facetsListComponent'] || 'DefaultFacetsList');
   const ViewComponent = view || registry.resolve['DefaultFacetsList'].component;
   return (
     <ViewComponent>
@@ -26,7 +25,8 @@ const Facets = ({ view, defaultWrapper }) => {
             <WrapperComponent
               key={i}
               {...props}
-              view={(props) => <FacetComponent {...props} />}
+              field={info.field}
+              view={(props) => <FacetComponent {...props} field={info.field} />}
             />
           );
         })}

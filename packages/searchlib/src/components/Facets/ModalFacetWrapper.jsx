@@ -2,58 +2,138 @@ import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import MultiCheckboxFacet from './MultiCheckboxFacet';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
+import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
   return facets?.[name]?.[0]?.data?.length || 0;
   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
 };
 
-const FacetWrapperComponent = (props) => {
-  const { filters = [], facets = {}, field, label } = props;
-  const [isOpened, setIsOpened] = React.useState();
-  const isActive = filters.find((f) => f.field === field);
-  const { appConfig } = useAppConfig();
-  const facetConfig = appConfig.facets.find((f) => f.field === field);
+function reducer(state, action) {
+  const { value } = action;
+  switch (action.type) {
+    case 'set':
+      if (state.includes(value)) return;
+      return [...state, value];
+    case 'remove':
+      return [...state].filter((v) => v !== value);
+    case 'reset':
+      return [...action.value];
+    default:
+      throw new Error();
+  }
+}
+
+const OptionsWrapper = (props) => {
+  const { options, view, state, dispatch, ...rest } = props;
+  const View = view || MultiCheckboxFacet;
+  const previousOptions = usePrevious(options);
+
+  React.useEffect(() => {
+    if (!isEqual(options, previousOptions)) {
+      const newState = options
+        .filter(({ selected }) => !!selected)
+        .map(({ value }) => value);
+      dispatch({
+        type: 'reset',
+        value: newState,
+      });
+    }
+  }, [state, dispatch, options, previousOptions]);
+
+  const newOptions = options.map(({ value, count, selected }) => ({
+    value,
+    count,
+    selected: state.includes(value) ? true : false,
+  }));
 
   return (
-    <>
-      <Modal
-        onClose={() => setIsOpened(false)}
-        onOpen={() => setIsOpened(true)}
-        open={isOpened}
-        trigger={
-          <Card
-            className={(isActive && 'facet active') || 'facet'}
-            fluid
-            header={label}
-            onClick={() => {}}
-            meta={getFacetTotalCount(facets, field)}
+    <View
+      {...rest}
+      options={newOptions}
+      onSelect={(value) => {
+        dispatch({ type: 'set', value });
+      }}
+      onRemove={(value) => {
+        dispatch({ type: 'remove', value });
+      }}
+    />
+  );
+};
+
+const FacetWrapperComponent = (props) => {
+  const {
+    filters = [],
+    facets = {},
+    field,
+    label,
+    addFilter,
+    removeFilter,
+    filterType,
+  } = props;
+  const [isOpened, setIsOpened] = React.useState();
+  const initialValue =
+    (filters.find((f) => f.field === field) || {})?.values || [];
+  const isActive = !!initialValue;
+
+  const [state, dispatch] = React.useReducer(
+    reducer,
+    !initialValue
+      ? []
+      : Array.isArray(initialValue)
+      ? initialValue
+      : [initialValue],
+  );
+
+  return (
+    <Modal
+      onClose={() => setIsOpened(false)}
+      onOpen={() => setIsOpened(true)}
+      open={isOpened}
+      trigger={
+        <Card
+          fluid
+          header={label}
+          className={(isActive && 'facet active') || 'facet'}
+          onClick={() => {}}
+          meta={getFacetTotalCount(facets, field)}
+        />
+      }
+    >
+      <SUIFacet
+        {...props}
+        active={isOpened}
+        view={(innerProps) => (
+          <OptionsWrapper
+            {...innerProps}
+            view={props.view}
+            state={state}
+            dispatch={dispatch}
           />
-        }
-      >
-        <Modal.Header>{facetConfig?.title || field}</Modal.Header>
-        <Modal.Content image>
-          <SUIFacet
-            {...props}
-            active={isOpened}
-            view={props.view || MultiCheckboxFacet}
-          />
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color="black" onClick={() => setIsOpened(false)}>
-            Cancel
-          </Button>
-          <Button
-            content="Apply"
-            labelPosition="right"
-            icon="checkmark"
-            onClick={() => setIsOpened(false)}
-            positive
-          />
-        </Modal.Actions>
-      </Modal>
-    </>
+        )}
+      />
+      <Modal.Actions>
+        <Button color="black" onClick={() => setIsOpened(false)}>
+          Cancel
+        </Button>
+        <Button
+          content="Apply"
+          labelPosition="right"
+          icon="checkmark"
+          onClick={() => {
+            setIsOpened(false);
+            removeFilter(field, '', filterType);
+            if (state.length) {
+              state.forEach((v) => {
+                addFilter(field, v, filterType);
+              });
+            }
+          }}
+          positive
+        />
+      </Modal.Actions>
+    </Modal>
   );
 };
 
@@ -69,50 +149,3 @@ const FacetWrapper = withSearch(
 )(FacetWrapperComponent);
 
 export default FacetWrapper;
-
-// import { useAtom } from 'jotai';
-// import { openFacetsAtom } from './state';
-// import { useUpdateAtom } from 'jotai/utils';
-// const hasFilter = !!filters.find((filter) => field === filter.field);
-// const [openFacets] = useAtom(openFacetsAtom);
-// const updateOpenFacets = useUpdateAtom(openFacetsAtom);
-//
-// React.useEffect(() => {
-//   let temp = openFacets;
-//   if (hasFilter && !(field in openFacets)) {
-//     temp[field] = { opened: true };
-//   } else {
-//     if (!(field in openFacets)) {
-//       temp[field] = { opened: false };
-//     }
-//   }
-//   // updateOpenFacets(temp);
-// }, [hasFilter, field, openFacets, updateOpenFacets]);
-// let isOpened = openFacets[field]?.opened || false;
-// const [counter, setCounter] = React.useState(0);
-//   <Accordion.Title
-//     active={isOpened}
-//     onClick={() => {
-//       setCounter(counter + 1); // Force render
-//       let temp = openFacets;
-//       if (isOpened) {
-//         temp[field] = { opened: false };
-//         isOpened = false;
-//       } else {
-//         temp[field] = { opened: true };
-//         isOpened = true;
-//       }
-//       updateOpenFacets(temp);
-//     }}
-//   >
-//     <Icon name="dropdown" />
-//     {label}
-//   </Accordion.Title>
-//   <Accordion.Content active={isOpened}>
-//     <SUIFacet
-//       {...props}
-//       active={isOpened}
-//       view={props.view || MultiCheckboxFacet}
-//     />
-//   </Accordion.Content>
-// </Accordion>

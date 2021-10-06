@@ -4,55 +4,44 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
+import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
 const FacetOptions = (props) => {
-  const { sortedOptions, label, onSelect, onRemove } = props;
+  const { sortedOptions, onSelect, onRemove } = props;
   return (
-    <div className="sui-multi-checkbox-facet">
+    <div>
       {sortedOptions.map((option) => {
         const checked = option.selected;
         return (
-          <label
+          <Button
             key={`${getFilterValueDisplay(option.value)}`}
-            htmlFor={`multiterm_facet_${label}${getFilterValueDisplay(
-              option.value,
-            )}`}
-            className="sui-multi-checkbox-facet__option-label"
+            toggle
+            active={checked}
+            onClick={() =>
+              checked ? onRemove(option.value) : onSelect(option.value)
+            }
+            onRemove={() => onRemove(option.value)}
           >
-            <div className="sui-multi-checkbox-facet__option-input-wrapper">
-              <input
-                id={`multiterm_facet_${label}${getFilterValueDisplay(
-                  option.value,
-                )}`}
-                type="checkbox"
-                className="sui-multi-checkbox-facet__checkbox"
-                checked={checked}
-                onChange={() =>
-                  checked ? onRemove(option.value) : onSelect(option.value)
-                }
-              />
-              <span className="sui-multi-checkbox-facet__input-text">
-                {getFilterValueDisplay(option.value)}
-              </span>
-            </div>
-            <span className="sui-multi-checkbox-facet__option-count">
-              {option.count.toLocaleString('en')}
-            </span>
-          </label>
+            <span>{getFilterValueDisplay(option.value)}</span>
+            <span>{option.count.toLocaleString('en')}</span>
+          </Button>
         );
       })}
+      {sortedOptions.length < 1 && <div>No matching options</div>}
     </div>
   );
 };
 
 const Select = ({ options, value, onChange, className }) => {
   const handler = (e) => onChange(e.target.value);
-  // console.log('value', value);
 
   return (
     <select
@@ -84,7 +73,9 @@ const ViewComponent = (props) => {
     searchPlaceholder,
     onChangeFilterType,
     filterType = 'any',
+    field,
   } = props;
+  const { appConfig } = useAppConfig();
 
   const filterTypes = [
     { key: 2, text: 'Match any', value: 'any' },
@@ -101,116 +92,93 @@ const ViewComponent = (props) => {
       defaultSortOrder: 'descending',
     },
   );
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
 
   return (
-    <fieldset className={cx('sui-facet searchlib-multiterm-facet', className)}>
-      <legend className="sui-facet__title">{label}</legend>
+    <>
+      <Modal.Header>
+        <div className="multitermlist__facet__header">
+          {facetConfig?.title || field}
 
-      {showSearch && (
-        <div className="sui-facet-search">
-          <Icon name="search" size="small" color="blue" />
-          <input
-            className="sui-facet-search__text-input"
-            type="search"
-            placeholder={searchPlaceholder || 'Search'}
-            onChange={(e) => {
-              onSearch(e.target.value);
-            }}
+          {showSearch && (
+            <div>
+              <Icon name="search" size="small" color="blue" />
+              <input
+                className="multitermlist__search__text-input"
+                type="search"
+                placeholder={searchPlaceholder || 'Search'}
+                onChange={(e) => {
+                  onSearch(e.target.value);
+                }}
+              />
+            </div>
+          )}
+
+          <ToggleSort
+            label={label}
+            onToggle={() => toggleSort('value')}
+            on={sorting.sortOn === 'value'}
+            icon={
+              sorting.sortOrder === 'ascending' ? (
+                <Icon name="sort alphabet ascending" />
+              ) : (
+                <Icon name="sort alphabet descending" />
+              )
+            }
+          >
+            <Select
+              className="match-select"
+              value={filterType}
+              options={filterTypes}
+              onChange={onChangeFilterType}
+            />
+          </ToggleSort>
+
+          <ToggleSort
+            label="Count"
+            onToggle={() => toggleSort('count')}
+            on={sorting.sortOn === 'count'}
+            icon={
+              sorting.sortOrder === 'ascending' ? (
+                <Icon name="sort numeric ascending" />
+              ) : (
+                <Icon name="sort numeric descending" />
+              )
+            }
           />
         </div>
-      )}
-
-      {options.length < 1 && <div>No matching options</div>}
-
-      <div className="sui-multi-checkbox-facet facet-term-controls">
-        <div className="sui-multi-checkbox-facet__option-label">
-          <div className="sui-multi-checkbox-facet__option-input-wrapper">
-            <div className="sui-multi-checkbox-facet__checkbox"></div>
-            <span className="sui-multi-checkbox-facet__input-text">
-              <ToggleSort
-                label={label}
-                onToggle={() => toggleSort('value')}
-                on={sorting.sortOn === 'value'}
-                icon={
-                  sorting.sortOrder === 'ascending' ? (
-                    <Icon name="sort alphabet ascending" />
-                  ) : (
-                    <Icon name="sort alphabet descending" />
-                  )
-                }
-              >
-                <Select
-                  className="match-select"
-                  value={filterType}
-                  options={filterTypes}
-                  onChange={onChangeFilterType}
-                />
-              </ToggleSort>
-            </span>
-          </div>
-          <span className="sui-multi-checkbox-facet__option-count">
-            <ToggleSort
-              label="Count"
-              onToggle={() => toggleSort('count')}
-              on={sorting.sortOn === 'count'}
-              icon={
-                sorting.sortOrder === 'ascending' ? (
-                  <Icon name="sort numeric ascending" />
-                ) : (
-                  <Icon name="sort numeric descending" />
-                )
-              }
-            />
-          </span>
-        </div>
-      </div>
-      <Resizable>
+      </Modal.Header>
+      <Modal.Content image>
         <FacetOptions
           sortedOptions={sortedOptions}
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
         />
-      </Resizable>
-
-      {showMore && (
-        <button
-          type="button"
-          className="sui-facet-view-more"
-          onClick={onMoreClick}
-          aria-label="Show more options"
+        <fieldset
+          className={cx('sui-facet searchlib-multiterm-facet', className)}
         >
-          + More
-        </button>
-      )}
-    </fieldset>
+          <legend className="sui-facet__title">{label}</legend>
+
+          {showMore && (
+            <button
+              type="button"
+              className="sui-facet-view-more"
+              onClick={onMoreClick}
+              aria-label="Show more options"
+            >
+              + More
+            </button>
+          )}
+        </fieldset>
+      </Modal.Content>
+    </>
   );
 };
 
-const MultiTypeFacetComponent = (props) => {
-  // console.log('facet props', props);
-  const { field, addFilter, removeFilter, filters } = props;
-  const [filterType, setFilterType] = React.useState('any');
-  const filterValue = filters.find((f) => f.field === field);
-  return (
-    <ViewComponent
-      filterType={filterType}
-      onChangeFilterType={(filterType) => {
-        if (!filterValue) {
-          setFilterType(filterType);
-          return;
-        }
-        removeFilter(field);
-        const { values = [] } = filterValue || {};
-        values.forEach((v) => {
-          addFilter(filterValue.field, v, filterType);
-        });
-        setFilterType(filterType);
-      }}
-      {...props}
-    />
-  );
-};
+const Component = (props) => (
+  <MultiTypeFacetWrapper {...props} view={ViewComponent} />
+);
 
 export default withSearch(
   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
@@ -221,4 +189,4 @@ export default withSearch(
     setFilter,
     a11yNotify,
   }),
-)(MultiTypeFacetComponent);
+)(Component);
