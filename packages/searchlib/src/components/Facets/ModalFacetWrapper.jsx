@@ -24,7 +24,6 @@ const FacetWrapperComponent = (props) => {
         trigger={
           <Card
             fluid
-            raised
             header={label}
             color={isActive && 'red'}
             onClick={() => {}}

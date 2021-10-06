@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/MultiTermFacet';
+import MultiTermListFacet from '@eeacms/search/components/Facets/MultiTermListFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
@@ -82,6 +83,12 @@ const config = {
     },
     MultiTermFacet: {
       component: MultiTermFacet,
+      buildRequest: buildTermFacetAggregationRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
+    },
+    MultiTermListFacet: {
+      component: MultiTermListFacet,
       buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
