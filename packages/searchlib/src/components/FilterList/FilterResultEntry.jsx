@@ -27,6 +27,20 @@ const FilterResultEntry = (props) => {
     return (
       <div className="mlt-card">
         <div className="col-left">
+          <p class="meta">
+            <DateTime format="DATE_MED" value={result.issued.raw} />
+            &nbsp;|&nbsp;
+            <StringList value={result.subject.raw} />
+          </p>
+          <h4>
+            <a href={result.about.raw} target="_blank" rel="noreferrer">
+              <Icon name="external" size="small" />
+              {result.title.raw}
+            </a>
+          </h4>
+          <p>{result.description.raw}</p>
+        </div>
+        <div className="col-right">
           <Image
             className="img-thumbnail"
             src={thumbUrl}
@@ -40,18 +54,6 @@ const FilterResultEntry = (props) => {
             target="_blank"
             rel="noreferrer"
           />
-        </div>
-        <div className="col-right">
-          <a href={result.about.raw} target="_blank" rel="noreferrer">
-            <Icon name="external" size="small" />
-            {result.title.raw}
-          </a>
-          <p>
-            <DateTime format="DATE_MED" value={result.issued.raw} />
-            &nbsp;|&nbsp;
-            <StringList value={result.subject.raw} />
-          </p>
-          <p>{result.description.raw}</p>
         </div>
       </div>
     );

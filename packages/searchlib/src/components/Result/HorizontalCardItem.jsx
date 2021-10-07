@@ -74,6 +74,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
+  const score = 4.5; // TODO fill real score
+
   return (
     <>
       <div
@@ -84,12 +86,16 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <div className="col-left">
           <div className="details">
             <p className="meta">
-              <DateTime
-                format="DATE_MED"
-                value={result[props.issuedField]?.raw}
-              />
-              &nbsp;|&nbsp;
-              <StringList value={result[props.tagsField]?.raw} />
+              <span className="score">{score}</span>
+              <span className="date">
+                <DateTime
+                  format="DATE_MED"
+                  value={result[props.issuedField]?.raw}
+                />
+              </span>
+              <span className="tags">
+                <StringList value={result[props.tagsField]?.raw} />
+              </span>
               {showControls && (
                 <Dropdown icon="ellipsis vertical">
                   <Dropdown.Menu>
