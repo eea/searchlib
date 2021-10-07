@@ -242,9 +242,11 @@ const config = {
         },
         qa: {
           servicePath: 'query',
+          cutoffScore: 0.5,
         },
         similarity: {
           servicePath: 'similarity',
+          cutoffScore: 0.9,
         },
       },
 

@@ -93,8 +93,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
   return (
     <Modal
@@ -106,7 +106,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
           meta={getFacetTotalCount(facets, field)}
         />
       }

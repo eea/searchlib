@@ -56,29 +56,41 @@ const withAnswers = (WrappedComponent) => {
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
               const { body } = response;
-              let { answers = [] } = body;
+              const { answers = [] } = body;
 
-              if (answers.length) {
-                const [highestRatedAnswer, ...rest] = answers;
-                const base = highestRatedAnswer.answer;
-                const candidates = rest.map(({ answer }) => answer);
-
-                // Take the highest rated response, determine which of the
-                // answers are already paraphrasings, so that we can group them
-                // together
-
-                runRequest(
-                  buildSimilarityRequest({ base, candidates }, appConfig),
-                  appConfig,
-                ).then((response) => {
-                  console.log('response similarity', response);
-                  dispatch({ type: 'loaded', data: answers });
-                  setSearchedTerm(searchTerm);
-                });
-              } else {
+              if (!answers.length) {
                 dispatch({ type: 'loaded', data: answers });
                 setSearchedTerm(searchTerm);
+                return;
               }
+
+              const [highestRatedAnswer, ...rest] = answers;
+              const base = highestRatedAnswer.answer;
+              const candidates = rest.map(({ answer }) => answer);
+
+              // Take the highest rated response, determine which of the
+              // answers are already paraphrasings, so that we can group them
+              // together
+
+              runRequest(
+                buildSimilarityRequest({ base, candidates }, appConfig),
+                appConfig,
+              ).then((response) => {
+                const { predictions = [] } = response.body || {};
+                const data = [
+                  highestRatedAnswer,
+                  ...rest
+                    .map((ans, i) => [ans, predictions[i]?.score])
+                    .filter(
+                      ([, score]) =>
+                        score > appConfig.nlp.similarity.cutoffScore,
+                    )
+                    .map(([ans, score]) => ans),
+                ];
+                // console.log({ response, data, predictions, rest, highestRatedAnswer });
+                dispatch({ type: 'loaded', data });
+                setSearchedTerm(searchTerm);
+              });
             });
           }
         }, 100);

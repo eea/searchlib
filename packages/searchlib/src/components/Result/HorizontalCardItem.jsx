@@ -32,29 +32,21 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   setFilter,
   removeFilter,
 }))((props) => {
-  // console.log('props', props);
   const { result, setFilter, removeFilter, showControls = true } = props;
   const { appConfig, registry } = useAppConfig();
   const days =
     (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
-  // console.log('card props', props, appConfig);
 
-  let expired = false;
-  // console.log('here2');
-  // console.log(result['expires']);
-  if (result['expires']?.raw !== undefined) {
-    expired = Date.parse(result['expires']?.raw) < Date.now();
-  }
+  let expired =
+    result['expires']?.raw !== undefined
+      ? Date.parse(result['expires']?.raw) < Date.now()
+      : false;
+
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
 
   const getThumb =
     registry.resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
-
-  // const iconFactoryName = appConfig.cardViewParams.getIconUrl;
-  // const getIcon =
-  //   registry.resolve[iconFactoryName] ||
-  //   ((result, config, fallback) => fallback);
 
   const thumbUrl = getThumb(
     result,
@@ -63,18 +55,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
-  // const iconUrl = getIcon(
-  //   result,
-  //   appConfig,
-  //   // TODO: use a configured default
-  //   'https://react.semantic-ui.com/images/wireframe/white-image.png',
-  // );
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
-  const score = 4.5; // TODO fill real score
 
   return (
     <>
@@ -86,7 +71,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <div className="col-left">
           <div className="details">
             <p className="meta">
-              <span className="score">{score}</span>
               <span className="date">
                 <DateTime
                   format="DATE_MED"
@@ -159,3 +143,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 const CardItem = (props) => <CardItemComponent {...props} />;
 
 export default CardItem;
+// const iconFactoryName = appConfig.cardViewParams.getIconUrl;
+// const getIcon = registry.resolve[iconFactoryName] || ((result, config, fallback) => fallback);
+// const iconUrl = getIcon(
+//   result,
+//   appConfig,
+//   // TODO: use a configured default
+//   'https://react.semantic-ui.com/images/wireframe/white-image.png',
+// );
