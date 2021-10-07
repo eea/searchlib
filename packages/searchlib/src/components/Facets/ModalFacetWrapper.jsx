@@ -75,7 +75,7 @@ const FacetWrapperComponent = (props) => {
   const [isOpened, setIsOpened] = React.useState();
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
-  const isActive = !!initialValue;
+  const isActive = initialValue.length > 0;
 
   const [state, dispatch] = React.useReducer(
     reducer,
