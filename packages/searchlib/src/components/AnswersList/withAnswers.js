@@ -13,7 +13,6 @@ const timeoutRef = {};
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
-    // console.log('searchContext', searchContext);
 
     const { searchTerm = '', query_type } = searchContext;
     const { appConfig } = useAppConfig();
@@ -47,6 +46,7 @@ const withAnswers = (WrappedComponent) => {
           // console.log('classify resp', { classifyQuestionBody, resp });
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
+          console.log('query_type', query_type);
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {

@@ -31,7 +31,7 @@ const OptionsWrapper = (props) => {
   const previousOptions = usePrevious(options);
 
   React.useEffect(() => {
-    if (!isEqual(options, previousOptions)) {
+    if (previousOptions && !isEqual(options, previousOptions)) {
       const newState = options
         .filter(({ selected }) => !!selected)
         .map(({ value }) => value);

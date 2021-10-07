@@ -386,7 +386,7 @@ const globalSearchConfig = {
   initialView: {
     factory: 'TilesLandingPage',
     tilesLandingPageParams: {
-      maxPerSection: 10,
+      maxPerSection: 30,
       sections: [
         {
           id: 'topics',

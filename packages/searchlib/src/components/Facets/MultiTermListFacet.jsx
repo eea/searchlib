@@ -2,9 +2,9 @@ import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { Resizable, ToggleSort } from '@eeacms/search/components';
+import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
+import { Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
