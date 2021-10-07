@@ -26,12 +26,13 @@ const LandingPage = (props) => {
   return (
     <div className="landing-page-container">
       <div className="landing-page">
-        <h3 class="browse-by">Browse by</h3>
+        <h3 className="browse-by">Browse by</h3>
 
         <div className="filters">
           {sections.map((section) => {
             return (
               <Button
+                key={section.facetField}
                 toggle
                 active={activeSection === section.facetField}
                 className="ui button"
@@ -42,7 +43,7 @@ const LandingPage = (props) => {
             );
           })}
         </div>
-        <div class="ui cards">
+        <div className="ui cards">
           {tiles.map((topic) => {
             const onClickHandler = () => {
               setFilter(
@@ -53,18 +54,18 @@ const LandingPage = (props) => {
             };
             return (
               <div
-                tabindex="-1"
+                key={topic.value}
+                tabIndex="-1"
                 role="button"
                 onKeyDown={onClickHandler}
-                class="ui card"
-                key={topic.facetField}
+                className="ui card"
                 onClick={onClickHandler}
               >
-                <div class="content">
-                  <div class="header">{topic.value}</div>
+                <div className="content">
+                  <div className="header">{topic.value}</div>
                 </div>
-                <div class="extra content">
-                  <span class="count">{topic.count}</span>
+                <div className="extra content">
+                  <span className="count">{topic.count}</span>
                 </div>
               </div>
             );
