@@ -25,6 +25,8 @@ export const BodyContent = (props) => {
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
+  const args = { ...props, setActiveViewId, activeViewId };
+
   return (
     <Results
       shouldTrackClickThrough={true}
@@ -32,23 +34,17 @@ export const BodyContent = (props) => {
         return wasInteracted ? (
           NoResultsComponent ? (
             children ? (
-              <ContentBodyView>{children}</ContentBodyView>
+              <ContentBodyView {...args}>{children}</ContentBodyView>
             ) : (
-              <NoResultsComponent {...props} />
+              <NoResultsComponent {...args} />
             )
           ) : (
-            <ContentBodyView
-              {...props}
-              setActiveViewId={setActiveViewId}
-              activeViewId={activeViewId}
-            >
-              {children}
-            </ContentBodyView>
+            <ContentBodyView {...args}>{children}</ContentBodyView>
           )
         ) : InitialViewComponent ? (
-          <InitialViewComponent {...props} />
+          <InitialViewComponent {...args} />
         ) : (
-          <ContentBodyView>{children}</ContentBodyView>
+          <ContentBodyView {...args}>{children}</ContentBodyView>
         );
       }}
       resultView={(props) => (
