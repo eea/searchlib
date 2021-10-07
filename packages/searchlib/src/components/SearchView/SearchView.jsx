@@ -1,22 +1,10 @@
 import React from 'react';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
-import {
-  Results,
-  Result,
-  ResultsPerPage,
-  Paging,
-  Sorting,
-  PagingInfo as SUIPagingInfo,
-} from '@elastic/react-search-ui';
+import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import {
   Facets,
-  ViewSelector,
-  FilterList,
   SearchBox,
   PagingInfo,
-  SortingDropdown,
-  AnswersList,
-  DownloadButton,
   AppInfo,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
