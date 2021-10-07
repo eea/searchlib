@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Image, Label } from 'semantic-ui-react';
+import { Button, Image, Label, Dropdown } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
@@ -103,6 +103,22 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   </Label>
                 </>
               )}
+
+              {showControls && (
+                <Dropdown icon="ellipsis vertical">
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => {
+                        removeFilter('lessLikeThis');
+                        setMoreLikeThis(result);
+                        setFilter('moreLikeThis', result._original._id, 'none');
+                      }}
+                    >
+                      More like this
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
             </h3>
             <p>
               <DateTime
@@ -129,24 +145,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             target="_blank"
             rel="noreferrer"
           />
-          <div className="controls">
-            {showControls && (
-              <div>
-                <Button
-                  compact
-                  floated="left"
-                  size="mini"
-                  onClick={() => {
-                    removeFilter('lessLikeThis');
-                    setMoreLikeThis(result);
-                    setFilter('moreLikeThis', result._original._id, 'none');
-                  }}
-                >
-                  more like this
-                </Button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </>

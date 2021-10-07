@@ -5,7 +5,7 @@ import { moreLikeThisAtom } from '@eeacms/search/state';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { ExternalLink } from './../Result/HorizontalCardItem';
-import { Button, Image, Label } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
 const FilterResultEntry = (props) => {
   const { value } = props;
@@ -25,8 +25,8 @@ const FilterResultEntry = (props) => {
     );
 
     return (
-      <div class="mlt-card">
-        <div class="col-left">
+      <div className="mlt-card">
+        <div className="col-left">
           <Image
             className="img-thumbnail"
             src={thumbUrl}
@@ -41,7 +41,7 @@ const FilterResultEntry = (props) => {
             rel="noreferrer"
           />
         </div>
-        <div class="col-right">
+        <div className="col-right">
           <a href={result.about.raw} target="_blank" rel="noreferrer">
             <Icon name="external" size="small" />
             {result.title.raw}
