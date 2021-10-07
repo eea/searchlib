@@ -28,6 +28,7 @@ import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
 import { Header } from './Result/ResultModal';
 import DefaultContentView from './SearchView/DefaultContentView';
+import SectionTabs from './Facets/SectionTabs';
 
 export {
   FilterAsideLayout,
@@ -60,6 +61,7 @@ export {
   Header,
   String,
   DefaultContentView,
+  SectionTabs,
 };
 
 // SimpleSearchInput,

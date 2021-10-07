@@ -3,6 +3,7 @@ import React from 'react';
 import { Grid, Container } from 'semantic-ui-react';
 import { showFacetsAsideAtom } from './state';
 import { useAtom } from 'jotai';
+import { SectionTabs } from '@eeacms/search/components';
 
 const FilterAsideLayout = (props) => {
   const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
@@ -15,22 +16,27 @@ const FilterAsideLayout = (props) => {
         </div>
       </Container>
 
+      <SectionTabs />
+
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="3">
+            <Grid.Column widescreen="2" tablet="3">
               <div>{sideContent}</div>
             </Grid.Column>
-            <Grid.Column widescreen="9">
+            <Grid.Column widescreen="8" tablet="9">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
+            </Grid.Column>
+            <Grid.Column widescreen="2" tablet="1">
+              <div> </div>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       ) : (
         <Grid columns={1} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="12">
+            <Grid.Column widescreen="12" tablet="12">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
             </Grid.Column>

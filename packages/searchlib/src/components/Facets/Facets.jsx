@@ -1,22 +1,21 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
-const Facets = (props) => {
+const Facets = ({ view, defaultWrapper }) => {
   const { appConfig, registry } = useAppConfig();
   const { facets = [] } = appConfig;
-  // console.log(appConfig['facetsListComponent'] || 'DefaultFacetsList');
-  const Component =
-    registry.resolve[appConfig['facetsListComponent'] || 'DefaultFacetsList']
-      .component;
+  const ViewComponent = view || registry.resolve['DefaultFacetsList'].component;
   return (
-    <Component>
+    <ViewComponent>
       {facets
         .filter((f) => f.showInFacetsList)
         .map((info, i) => {
-          const { factory, wrapper = 'AccordionFacetWrapper' } = info;
+          const { factory, wrapper } = info;
           const facet = registry.resolve[factory];
           const FacetComponent = facet.component;
-          const WrapperComponent = registry.resolve[wrapper].component;
+          const WrapperComponent = wrapper
+            ? registry.resolve[wrapper].component
+            : defaultWrapper;
           const props = {
             ...info,
             ...info.params,
@@ -26,11 +25,12 @@ const Facets = (props) => {
             <WrapperComponent
               key={i}
               {...props}
-              view={(props) => <FacetComponent {...props} />}
+              field={info.field}
+              view={(props) => <FacetComponent {...props} field={info.field} />}
             />
           );
         })}
-    </Component>
+    </ViewComponent>
   );
 };
 

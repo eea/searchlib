@@ -4,6 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { Resizable, ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
+import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -187,40 +188,9 @@ const ViewComponent = (props) => {
   );
 };
 
-const MultiTypeFacetComponent = (props) => {
-  // console.log('facet props', props);
-  const { field, addFilter, removeFilter, filters } = props;
-  const [filterType, setFilterType] = React.useState('any');
-  const filterValue = filters.find((f) => f.field === field);
-  return (
-    <ViewComponent
-      filterType={filterType}
-      onChangeFilterType={(filterType) => {
-        if (!filterValue) {
-          setFilterType(filterType);
-          return;
-        }
-        removeFilter(field);
-        const { values = [] } = filterValue || {};
-        values.forEach((v) => {
-          addFilter(filterValue.field, v, filterType);
-        });
-        setFilterType(filterType);
-      }}
-      {...props}
-    />
-  );
-
-  // return (
-  //   <FacetWrapper
-  //     {...props}
-  //     filterType={filterType}
-  //     show={100000}
-  //     view={(props) => (
-  //     )}
-  //   />
-  // );
-};
+const Component = (props) => (
+  <MultiTypeFacetWrapper {...props} view={ViewComponent} />
+);
 
 export default withSearch(
   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
@@ -231,4 +201,4 @@ export default withSearch(
     setFilter,
     a11yNotify,
   }),
-)(MultiTypeFacetComponent);
+)(Component);

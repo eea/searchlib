@@ -25,7 +25,7 @@ const globalSearchConfig = {
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
   enableNLP: false, // enables NLP capabilities
-  facetsListComponent: 'VerticalMenu',
+  facetsListComponent: 'VerticalCardsModalFacets',
 
   extraQueryParams: {
     text_fields: [
@@ -125,14 +125,13 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'More like this',
       showInFacetsList: false,
-      wrapper: 'ModalFacetWrapper',
     }),
     multiTermFacet({
       field: 'topic',
       isFilterable: true,
       isMulti: true,
       label: 'Topics',
-      // factory: 'FilterMultiTermFacet',
+      factory: 'MultiTermListFacet',
       // factory: 'sui.Facet',
       wrapper: 'ModalFacetWrapper',
       show: 10000,
@@ -144,6 +143,8 @@ const globalSearchConfig = {
       label: 'Countries',
       whitelist: spatialWhitelist,
       wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'places',
@@ -152,6 +153,8 @@ const globalSearchConfig = {
       label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
       wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'objectProvides',
@@ -160,13 +163,15 @@ const globalSearchConfig = {
       label: 'Content types',
       whitelist: objectProvidesWhitelist,
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
-    suiFacet({
+    multiTermFacet({
       field: 'organisation',
       isFilterable: false,
       isMulti: true,
       label: 'Organisation involved',
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'cluster_name',
@@ -174,6 +179,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Websites',
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
     histogramFacet({
       wrapper: 'ModalFacetWrapper',
@@ -248,8 +254,9 @@ const globalSearchConfig = {
         { from: 0, to: 4.99999, key: 'Short (<5 minutes)' },
         { from: 5, to: 24.9999, key: 'Medium (5-25 minutes)' },
         { from: 25, to: 10000, key: 'Large (25+ minutes)' },
-        { to: -0.0001, key: 'Unknown' },
+        //        { to: -0.0001, key: 'Unknown' },
       ],
+      factory: 'ModalFixedRangeFacet',
     }),
     multiTermFacet({
       wrapper: 'ModalFacetWrapper',
@@ -258,6 +265,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Language',
       defaultValues: ['en'],
+      factory: 'MultiTermListFacet',
     }),
     booleanFacet(() => ({
       field: 'Include archived content',
@@ -276,6 +284,13 @@ const globalSearchConfig = {
         },
       },
     })),
+
+    multiTermFacet({
+      showInFacetsList: false,
+      field: 'objectProvides',
+      isFilterable: false,
+      isMulti: true,
+    }),
   ],
 
   resultViews: [
@@ -332,6 +347,18 @@ const globalSearchConfig = {
     },
   ],
 
+  contentSectionsParams: {
+    // This enables the content as section tabs
+    enable: true,
+    sectionFacetsField: 'objectProvides',
+    labels: {
+      News: 'News',
+    },
+    icons: {
+      News: '',
+    },
+  },
+
   cardViewParams: {
     urlField: 'about',
     titleField: 'title',
@@ -359,7 +386,7 @@ const globalSearchConfig = {
   initialView: {
     factory: 'TilesLandingPage',
     tilesLandingPageParams: {
-      maxPerSection: 10,
+      maxPerSection: 30,
       sections: [
         {
           id: 'topics',

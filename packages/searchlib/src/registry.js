@@ -1,9 +1,11 @@
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/MultiTermFacet';
+import MultiTermListFacet from '@eeacms/search/components/Facets/MultiTermListFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
+import ModalFixedRangeFacet from '@eeacms/search/components/Facets/ModalFixedRangeFacet';
 import {
   AccordionFacetWrapper,
   LeftColumnLayout,
@@ -19,6 +21,7 @@ import {
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
+import Facets from '@eeacms/search/components/Facets/Facets';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -73,6 +76,12 @@ const config = {
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
     },
+    ModalFixedRangeFacet: {
+      component: ModalFixedRangeFacet,
+      buildRequest: buildRangeFacetAggregationRequest,
+      buildFilter: getRangeFilter,
+      getValue: getRangeFacet,
+    },
     BooleanFacet: {
       component: BooleanFacet,
       buildRequest: buildBooleanFacetRequest,
@@ -81,6 +90,12 @@ const config = {
     },
     MultiTermFacet: {
       component: MultiTermFacet,
+      buildRequest: buildTermFacetAggregationRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
+    },
+    MultiTermListFacet: {
+      component: MultiTermListFacet,
       buildRequest: buildTermFacetAggregationRequest,
       buildFilter: getTermFilter,
       getValue: getValueFacet,
@@ -104,6 +119,9 @@ const config = {
       component: (props) => (
         <Card.Group {...props} stackable itemsPerRow={4} doubling />
       ),
+    },
+    VerticalCardsGroup: {
+      component: (props) => <Card.Group {...props} stackable itemsPerRow={1} />,
     },
     VerticalMenu: {
       component: (props) => <Menu vertical {...props} />,
@@ -151,6 +169,18 @@ const config = {
     },
     ModalFacetWrapper: {
       component: ModalFacetWrapper,
+    },
+    VerticalCardsModalFacets: {
+      component: (props) => (
+        <Facets
+          defaultWraper={ModalFacetWrapper}
+          view={({ children }) => (
+            <Card.Group {...props} stackable itemsPerRow={1}>
+              {children}
+            </Card.Group>
+          )}
+        />
+      ),
     },
     FilterAsideLayout: {
       component: FilterAsideLayout,
@@ -212,6 +242,20 @@ const config = {
         },
         qa: {
           servicePath: 'query',
+          cutoffScore: 0.5,
+        },
+        similarity: {
+          servicePath: 'similarity',
+          cutoffScore: 0.9,
+        },
+      },
+
+      contentSectionsParams: {
+        // This enables the content as section tabs
+        enable: false,
+        sectionFacetsField: 'objectProvides',
+        icons: {
+          News: '',
         },
       },
 

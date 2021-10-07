@@ -1,11 +1,17 @@
 @sf-light-gray: #f9f9f9;
 @sf-azure: #2d9390;
+@sf-dark-azure: #267f7c;
 @sf-blue: #0f4b87;
 @sf-medium-gray: #cccccc;
+@sf-medium-gray2: #606060;
 @sf-dark-gray: #303030;
 
 div.landing-page-container {
+  // width: calc(100% + 1600px);
+  // padding-right: 800px;
+  // padding-left: 800px;
   background: @sf-light-gray;
+  // transform: translateX(-800px);
 
   div.landing-page {
     min-height: 500px;
@@ -20,24 +26,60 @@ div.landing-page-container {
 
       button {
         border: 1px solid @sf-medium-gray;
-        margin-right: 20px;
+        margin: 5px 14px 5px 0px;
         background-color: white;
         border-radius: 1 !important;
         color: @sf-dark-gray;
         font-weight: 400;
+
+        &.active {
+          border: none;
+        }
       }
     }
 
     div.cards {
       div.card {
-        cursor: pointer;
+        width: 275px;
+        margin: 0.5em;
         border-radius: 2 !important;
+        cursor: pointer;
 
         div.header {
           padding: 0px;
           color: @sf-blue;
           font-size: 1rem !important;
           font-weight: 400 !important;
+        }
+
+        div.extra.content {
+          padding: 10px 10px 15px 15px;
+          border-top: none !important;
+
+          span.count {
+            padding: 5px 15px;
+            background: @sf-light-gray;
+            border-radius: 5px;
+            color: @sf-medium-gray2;
+            font-size: 14px;
+          }
+        }
+
+        &:hover {
+          border: none !important;
+          background: @sf-azure;
+          box-shadow: none;
+
+          div.header {
+            color: white;
+          }
+
+          div.extra.content {
+            span.count {
+              background: @sf-dark-azure;
+              color: white;
+            }
+          }
         }
       }
     }

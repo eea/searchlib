@@ -1,22 +1,10 @@
 import React from 'react';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
-import {
-  Results,
-  Result,
-  ResultsPerPage,
-  Paging,
-  Sorting,
-  PagingInfo as SUIPagingInfo,
-} from '@elastic/react-search-ui';
+import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import {
   Facets,
-  ViewSelector,
-  FilterList,
   SearchBox,
   PagingInfo,
-  SortingDropdown,
-  AnswersList,
-  DownloadButton,
   AppInfo,
 } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
@@ -44,6 +32,10 @@ export const SearchView = (props) => {
   const InitialViewComponent =
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
+
+  const FacetsComponent = appConfig.facetsListComponent
+    ? registry.resolve[appConfig.facetsListComponent].component
+    : Facets;
 
   // const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
@@ -113,7 +105,7 @@ export const SearchView = (props) => {
             mode={mode}
           />
         }
-        sideContent={<Facets />}
+        sideContent={<FacetsComponent />}
         bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
         bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}

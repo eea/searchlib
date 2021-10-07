@@ -63,7 +63,9 @@ const LandingPage = (props) => {
                 <div class="content">
                   <div class="header">{topic.value}</div>
                 </div>
-                <div class="extra content">{topic.count}</div>
+                <div class="extra content">
+                  <span class="count">{topic.count}</span>
+                </div>
               </div>
             );
           })}

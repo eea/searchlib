@@ -45,6 +45,7 @@ export const buildQuestionRequest = (state, config) => {
     track_total_hits: false,
     params: {
       use_dp: config.nlp.qa.use_dp || false,
+      config,
       custom_query: {
         query: {
           // Dynamic values based on current Search UI state
@@ -80,5 +81,15 @@ export const buildQuestionRequest = (state, config) => {
     // isQuestion: true,
   };
 
+  return body;
+};
+
+export const buildSimilarityRequest = ({ base, candidates }, config) => {
+  const body = {
+    requestType: 'nlp',
+    endpoint: config.nlp.similarity.servicePath,
+    base,
+    candidates,
+  };
   return body;
 };

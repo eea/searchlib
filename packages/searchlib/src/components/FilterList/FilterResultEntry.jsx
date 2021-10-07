@@ -5,7 +5,7 @@ import { moreLikeThisAtom } from '@eeacms/search/state';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { ExternalLink } from './../Result/HorizontalCardItem';
-import { Button, Image, Label } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
 const FilterResultEntry = (props) => {
   const { value } = props;
@@ -25,8 +25,22 @@ const FilterResultEntry = (props) => {
     );
 
     return (
-      <div class="mlt-card">
-        <div class="col-left">
+      <div className="mlt-card">
+        <div className="col-left">
+          <p class="meta">
+            <DateTime format="DATE_MED" value={result.issued.raw} />
+            &nbsp;|&nbsp;
+            <StringList value={result.subject.raw} />
+          </p>
+          <h4>
+            <a href={result.about.raw} target="_blank" rel="noreferrer">
+              <Icon name="external" size="small" />
+              {result.title.raw}
+            </a>
+          </h4>
+          <p>{result.description.raw}</p>
+        </div>
+        <div className="col-right">
           <Image
             className="img-thumbnail"
             src={thumbUrl}
@@ -40,18 +54,6 @@ const FilterResultEntry = (props) => {
             target="_blank"
             rel="noreferrer"
           />
-        </div>
-        <div class="col-right">
-          <a href={result.about.raw} target="_blank" rel="noreferrer">
-            <Icon name="external" size="small" />
-            {result.title.raw}
-          </a>
-          <p>
-            <DateTime format="DATE_MED" value={result.issued.raw} />
-            &nbsp;|&nbsp;
-            <StringList value={result.subject.raw} />
-          </p>
-          <p>{result.description.raw}</p>
         </div>
       </div>
     );
