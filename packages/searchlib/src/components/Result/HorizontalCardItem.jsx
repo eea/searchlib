@@ -83,7 +83,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-left">
           <div className="details">
-            <p>
+            <p className="meta">
               <DateTime
                 format="DATE_MED"
                 value={result[props.issuedField]?.raw}
