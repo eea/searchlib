@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Image, Label, Dropdown } from 'semantic-ui-react';
+import { Image, Label, Dropdown } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
