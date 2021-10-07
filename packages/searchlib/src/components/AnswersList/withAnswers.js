@@ -27,30 +27,31 @@ const withAnswers = (WrappedComponent) => {
 
     const requestAtom = requestFamily(searchTerm);
     const [request, dispatch] = useAtom(requestAtom);
-    // console.log('requestAtom', request, searchedTerm, searchTerm);
+    // console.log('requestAtom', { request, searchedTerm, searchTerm });
 
     React.useEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
       const shouldRunSearch = searchTerm; // && searchTerm.trim().indexOf(' ') > -1;
+      // console.log('shouldRunSearch', qa_queryTypes);
 
       if (shouldRunSearch) {
-        timeoutRef.current = setTimeout(async () => {
+        timeoutRef.current = setTimeout(() => {
           const { loading, loaded } = request;
           // const classifyQuestionBody = buildClassifyQuestionRequest(
           //   searchContext,
           //   appConfig,
-          // );
+          // );async
           // const resp = await runRequest(classifyQuestionBody, appConfig);
           // console.log('classify resp', { classifyQuestionBody, resp });
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
-          console.log('query_type', query_type);
+          // console.log('query_type', query_type);
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
-            console.log('run answers request', requestBody);
+            // console.log('run answers request', requestBody);
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
               const { body } = response;
@@ -58,7 +59,7 @@ const withAnswers = (WrappedComponent) => {
               setSearchedTerm(searchTerm);
             });
           }
-        }, 2000);
+        }, 100);
       }
     }, [
       appConfig,
