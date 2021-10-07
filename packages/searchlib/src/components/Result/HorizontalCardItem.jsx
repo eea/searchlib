@@ -83,6 +83,29 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-left">
           <div className="details">
+            <p>
+              <DateTime
+                format="DATE_MED"
+                value={result[props.issuedField]?.raw}
+              />
+              &nbsp;|&nbsp;
+              <StringList value={result[props.tagsField]?.raw} />
+              {showControls && (
+                <Dropdown icon="ellipsis vertical">
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => {
+                        removeFilter('lessLikeThis');
+                        setMoreLikeThis(result);
+                        setFilter('moreLikeThis', result._original._id, 'none');
+                      }}
+                    >
+                      More like this
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
+            </p>
             <h3>
               <ExternalLink href={url}>
                 {result[props.titleField]?.raw}
@@ -103,31 +126,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   </Label>
                 </>
               )}
-
-              {showControls && (
-                <Dropdown icon="ellipsis vertical">
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        removeFilter('lessLikeThis');
-                        setMoreLikeThis(result);
-                        setFilter('moreLikeThis', result._original._id, 'none');
-                      }}
-                    >
-                      More like this
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
             </h3>
-            <p>
-              <DateTime
-                format="DATE_MED"
-                value={result[props.issuedField]?.raw}
-              />
-              &nbsp;|&nbsp;
-              <StringList value={result[props.tagsField]?.raw} />
-            </p>
             {props.children ? props.children : <p>{description}</p>}
           </div>
         </div>
