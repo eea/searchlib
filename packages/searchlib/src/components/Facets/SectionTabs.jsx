@@ -24,7 +24,7 @@ const SectionTabs = (props) => {
           key={value}
           active={activeValues.includes(value)}
           onClick={() => {
-            context.setFilter(facetField, value, 'any');
+            searchContext.setFilter(facetField, value, 'any');
           }}
         >
           <span>{value}</span>
