@@ -80,7 +80,6 @@ score: 6.118757247924805
   const filtered = answers?.filter((item) => item.score >= cutoff);
 
   // console.log('answers', answers, showLoader, searchedTerm, searchedTerm);
-  //
   // <Segment>
   //   <div className="loading-tip">Looking for semantic answers...</div>
   // </Segment>

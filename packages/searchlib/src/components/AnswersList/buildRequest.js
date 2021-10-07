@@ -83,3 +83,13 @@ export const buildQuestionRequest = (state, config) => {
 
   return body;
 };
+
+export const buildSimilarityRequest = ({ base, candidates }, config) => {
+  const body = {
+    requestType: 'nlp',
+    endpoint: config.nlp.similarity.servicePath,
+    base,
+    candidates,
+  };
+  return body;
+};

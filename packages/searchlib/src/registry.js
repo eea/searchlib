@@ -236,6 +236,9 @@ const config = {
         qa: {
           servicePath: 'query',
         },
+        similarity: {
+          servicePath: 'similarity',
+        },
       },
 
       contentSectionsParams: {

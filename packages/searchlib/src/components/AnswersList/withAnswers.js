@@ -3,6 +3,7 @@ import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
+  buildSimilarityRequest,
   buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
@@ -55,8 +56,29 @@ const withAnswers = (WrappedComponent) => {
             dispatch({ type: 'loading' });
             runRequest(requestBody, appConfig).then((response) => {
               const { body } = response;
-              dispatch({ type: 'loaded', data: body.answers });
-              setSearchedTerm(searchTerm);
+              let { answers = [] } = body;
+
+              if (answers.length) {
+                const [highestRatedAnswer, ...rest] = answers;
+                const base = highestRatedAnswer.answer;
+                const candidates = rest.map(({ answer }) => answer);
+
+                // Take the highest rated response, determine which of the
+                // answers are already paraphrasings, so that we can group them
+                // together
+
+                runRequest(
+                  buildSimilarityRequest({ base, candidates }, appConfig),
+                  appConfig,
+                ).then((response) => {
+                  console.log('response similarity', response);
+                  dispatch({ type: 'loaded', data: answers });
+                  setSearchedTerm(searchTerm);
+                });
+              } else {
+                dispatch({ type: 'loaded', data: answers });
+                setSearchedTerm(searchTerm);
+              }
             });
           }
         }, 100);
