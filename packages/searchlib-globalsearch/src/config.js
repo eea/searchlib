@@ -275,6 +275,13 @@ const globalSearchConfig = {
         },
       },
     })),
+
+    multiTermFacet({
+      showInFacetsList: false,
+      field: 'objectProvides',
+      isFilterable: false,
+      isMulti: true,
+    }),
   ],
 
   resultViews: [
@@ -330,6 +337,18 @@ const globalSearchConfig = {
       direction: 'desc',
     },
   ],
+
+  contentSectionsParams: {
+    // This enables the content as section tabs
+    enable: true,
+    sectionFacetsField: 'objectProvides',
+    labels: {
+      News: 'News',
+    },
+    icons: {
+      News: '',
+    },
+  },
 
   cardViewParams: {
     urlField: 'about',

@@ -238,6 +238,15 @@ const config = {
         },
       },
 
+      contentSectionsParams: {
+        // This enables the content as section tabs
+        enable: false,
+        sectionFacetsField: 'objectProvides',
+        icons: {
+          News: '',
+        },
+      },
+
       filters: {
         // registration of filter options
         moreLikeThis: {
