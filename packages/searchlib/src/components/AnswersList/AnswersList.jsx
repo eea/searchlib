@@ -50,6 +50,7 @@ score: 6.118757247924805
 
   // console.log('filtered', { filtered, sliced: filtered?.slice(1) });
   console.log('answers', {
+    appConfig,
     answers,
     showLoader,
     searchedTerm,
@@ -68,7 +69,6 @@ score: 6.118757247924805
         ''
       ) : searchTerm && searchedTerm === searchTerm && filtered?.length ? (
         <Segment className="answers-wrapper">
-          <h4 className="answers__boxtitle">Direct answer</h4>
           <div className="answerCard">
             <h3 className="answers__directAnswer">{filtered[0].answer}</h3>
             <AnswerContext item={primaryAnswer} />;
@@ -116,6 +116,7 @@ score: 6.118757247924805
               })}
             </div>
           </div>
+          <h4 className="answers__boxtitle">Direct answer</h4>
         </Segment>
       ) : (
         ''
