@@ -12,12 +12,18 @@ const getFacetTotalCount = (facets, name) => {
 
 function reducer(state, action) {
   const { value } = action;
+  const tmp_state = state.map((st) => {
+    return typeof st === 'object' ? st.name : st;
+  });
+  const tmp_value = typeof value === 'object' ? value.name : value;
   switch (action.type) {
     case 'set':
-      if (state.includes(value)) return;
+      if (tmp_state.includes(tmp_value)) return;
       return [...state, value];
     case 'remove':
-      return [...state].filter((v) => v !== value);
+      return [...state].filter((v) =>
+        typeof v === 'object' ? v.name !== tmp_value : v !== tmp_value,
+      );
     case 'reset':
       return [...action.value];
     default:
@@ -42,12 +48,17 @@ const OptionsWrapper = (props) => {
     }
   }, [state, dispatch, options, previousOptions]);
 
+  const tmp_state = state.map((st) => {
+    return typeof st === 'object' ? st.name : st;
+  });
+
   const newOptions = options.map(({ value, count, selected }) => ({
     value,
     count,
-    selected: state.includes(value) ? true : false,
+    selected: tmp_state.includes(typeof value === 'object' ? value.name : value)
+      ? true
+      : false,
   }));
-
   return (
     <View
       {...rest}
@@ -82,10 +93,9 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   );
-
   return (
     <Modal
       onClose={() => setIsOpened(false)}
@@ -96,7 +106,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => {}}
+          onClick={() => { }}
           meta={getFacetTotalCount(facets, field)}
         />
       }
@@ -114,7 +124,13 @@ const FacetWrapperComponent = (props) => {
         )}
       />
       <Modal.Actions>
-        <Button color="black" onClick={() => setIsOpened(false)}>
+        <Button
+          color="black"
+          onClick={() => {
+            setIsOpened(false);
+            dispatch({ type: 'reset', value: initialValue });
+          }}
+        >
           Cancel
         </Button>
         <Button

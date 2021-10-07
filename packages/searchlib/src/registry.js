@@ -5,6 +5,7 @@ import MultiTermListFacet from '@eeacms/search/components/Facets/MultiTermListFa
 import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
 import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
+import ModalFixedRangeFacet from '@eeacms/search/components/Facets/ModalFixedRangeFacet';
 import {
   AccordionFacetWrapper,
   LeftColumnLayout,
@@ -71,6 +72,12 @@ const config = {
     },
     FixedRangeFacet: {
       component: FixedRangeFacet,
+      buildRequest: buildRangeFacetAggregationRequest,
+      buildFilter: getRangeFilter,
+      getValue: getRangeFacet,
+    },
+    ModalFixedRangeFacet: {
+      component: ModalFixedRangeFacet,
       buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
