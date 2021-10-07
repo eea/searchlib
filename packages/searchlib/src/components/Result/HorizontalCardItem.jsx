@@ -40,8 +40,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   // console.log('card props', props, appConfig);
 
   let expired = false;
-  console.log('here2');
-  console.log(result['expires']);
+  // console.log('here2');
+  // console.log(result['expires']);
   if (result['expires']?.raw !== undefined) {
     expired = Date.parse(result['expires']?.raw) < Date.now();
   }
