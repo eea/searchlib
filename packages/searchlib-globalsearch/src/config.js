@@ -143,6 +143,8 @@ const globalSearchConfig = {
       label: 'Countries',
       whitelist: spatialWhitelist,
       wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'places',
@@ -151,6 +153,8 @@ const globalSearchConfig = {
       label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
       wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'objectProvides',
@@ -159,13 +163,15 @@ const globalSearchConfig = {
       label: 'Content types',
       whitelist: objectProvidesWhitelist,
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
-    suiFacet({
+    multiTermFacet({
       field: 'organisation',
       isFilterable: false,
       isMulti: true,
       label: 'Organisation involved',
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       field: 'cluster_name',
@@ -173,6 +179,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Websites',
       wrapper: 'ModalFacetWrapper',
+      factory: 'MultiTermListFacet',
     }),
     histogramFacet({
       wrapper: 'ModalFacetWrapper',
@@ -249,6 +256,7 @@ const globalSearchConfig = {
         { from: 25, to: 10000, key: 'Large (25+ minutes)' },
         { to: -0.0001, key: 'Unknown' },
       ],
+      //      factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
       wrapper: 'ModalFacetWrapper',
@@ -257,6 +265,7 @@ const globalSearchConfig = {
       isMulti: true,
       label: 'Language',
       defaultValues: ['en'],
+      factory: 'MultiTermListFacet',
     }),
     booleanFacet(() => ({
       field: 'Include archived content',
