@@ -23,6 +23,7 @@ const FacetOptions = (props) => {
         return (
           <Button
             key={`${getFilterValueDisplay(option.value)}`}
+            className="term"
             toggle
             active={checked}
             onClick={() =>
