@@ -24,9 +24,9 @@ function PagingInfo({
           for:{' '}
           <em>
             {searchTerm.split('|').map((phrase, i) => (
-              <>
-                <u key={i}>{phrase}</u>{' '}
-              </>
+              <React.Fragment key={i}>
+                <u>{phrase}</u>{' '}
+              </React.Fragment>
             ))}
           </em>
         </>
