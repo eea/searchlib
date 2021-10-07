@@ -2,6 +2,7 @@ import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
 import cx from 'classnames';
 import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
+import { Button } from 'semantic-ui-react'; // , Header, Image
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -16,40 +17,27 @@ const FacetOptions = (props) => {
       {options.map((option) => {
         const checked = option.selected;
         return (
-          <label
+          <Button
             key={`${getFilterValueDisplay(option.value)}`}
-            htmlFor={`multiterm_facet_${label}${getFilterValueDisplay(
-              option.value,
-            )}`}
-            className="sui-multi-checkbox-facet__option-label"
+            className="term"
+            toggle
+            active={checked}
+            onClick={() =>
+              //              checked ? onRemove(option.value) : onSelect(option.value)
+              options.forEach((opt) => {
+                if (opt.value.name === option.value.name) {
+                  onSelect(opt.value);
+                } else {
+                  onRemove(opt.value);
+                }
+              })
+
+            }
+          //onRemove={() => onRemove(option.value)}
           >
-            <div className="sui-multi-checkbox-facet__option-input-wrapper">
-              <input
-                id={`multiterm_facet_${label}${getFilterValueDisplay(
-                  option.value,
-                )}`}
-                name={`multiterm_facet_${label}`}
-                type="radio"
-                className="sui-multi-checkbox-facet__checkbox"
-                checked={checked}
-                onChange={() => {
-                  options.forEach((opt) => {
-                    if (opt.value.name === option.value.name) {
-                      onSelect(opt.value);
-                    } else {
-                      onRemove(opt.value);
-                    }
-                  });
-                }}
-              />
-              <span className="sui-multi-checkbox-facet__input-text">
-                {getFilterValueDisplay(option.value)}
-              </span>
-            </div>
-            <span className="sui-multi-checkbox-facet__option-count">
-              {option.count.toLocaleString('en')}
-            </span>
-          </label>
+            <span class="title">{getFilterValueDisplay(option.value)}</span>
+            <span class="count">{option.count.toLocaleString('en')}</span>
+          </Button>
         );
       })}
     </div>
