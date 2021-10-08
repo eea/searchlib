@@ -31,8 +31,8 @@ const FacetOptions = (props) => {
             }
             onRemove={() => onRemove(option.value)}
           >
-            <span class="title">{getFilterValueDisplay(option.value)}</span>
-            <span class="count">{option.count.toLocaleString('en')}</span>
+            <span className="title">{getFilterValueDisplay(option.value)}</span>
+            <span className="count">{option.count.toLocaleString('en')}</span>
           </Button>
         );
       })}
@@ -99,10 +99,10 @@ const ViewComponent = (props) => {
     <>
       <Modal.Header>
         <div className="multitermlist__facet__header">
-          {facetConfig?.title || label}
+          <h3>{facetConfig?.title || label}</h3>
 
           {showSearch && (
-            <div>
+            <div className="search">
               <Icon name="search" size="small" color="blue" />
               <input
                 className="multitermlist__search__text-input"
