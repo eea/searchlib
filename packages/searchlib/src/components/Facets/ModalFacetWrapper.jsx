@@ -38,8 +38,6 @@ function reducer(state, action) {
   const tmp_value = typeof value === 'object' ? value.name : value;
   switch (action.type) {
     case 'set':
-      console.log("value:", value)
-      console.log("force:", action.force)
       if (has_names && tmp_state.includes(tmp_value)) {
         return;
       }
@@ -60,18 +58,19 @@ const OptionsWrapper = (props) => {
   const View = view || MultiCheckboxFacet;
   const previousOptions = usePrevious(options);
 
-  React.useEffect(() => {
-    if (previousOptions && !isEqual(options, previousOptions)) {
-      const newState = options
-        .filter(({ selected }) => !!selected)
-        .map(({ value }) => value);
-      dispatch({
-        type: 'reset',
-        value: newState,
-      });
-    }
-  }, [state, dispatch, options, previousOptions]);
-
+  /* TODO:investigate
+    React.useEffect(() => {
+      if (previousOptions && !isEqual(options, previousOptions)) {
+        const newState = options
+          .filter(({ selected }) => !!selected)
+          .map(({ value }) => value);
+        dispatch({
+          type: 'reset',
+          value: newState,
+        });
+      }
+    }, [state, dispatch, options, previousOptions]);
+  */
   const { tmp_state, has_names } = normalize_state(state);
 
   let newOptions = [];
@@ -125,7 +124,6 @@ const FacetWrapperComponent = (props) => {
       ? initialValue
       : [initialValue],
   );
-  console.log("state:", state)
   return (
     <Modal
       onClose={() => setIsOpened(false)}
