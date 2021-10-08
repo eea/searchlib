@@ -27,11 +27,11 @@ const FilterResultEntry = (props) => {
     return (
       <div className="mlt-card">
         <div className="col-left">
-          <p class="meta">
+          <div class="meta">
             <DateTime format="DATE_MED" value={result.issued.raw} />
             &nbsp;|&nbsp;
             <StringList value={result.subject.raw} />
-          </p>
+          </div>
           <h4>
             <a href={result.about.raw} target="_blank" rel="noreferrer">
               <Icon name="external" size="small" />
