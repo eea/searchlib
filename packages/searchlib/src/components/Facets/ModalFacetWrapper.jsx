@@ -6,6 +6,11 @@ import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
 import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
+  const customFields = ['time_coverage', 'year'];
+  if (customFields.includes(name)) {
+    return <>&nbsp;</>;
+  }
+
   return facets?.[name]?.[0]?.data?.length || 0;
   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
 };
@@ -116,8 +121,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
   return (
     <Modal
@@ -129,7 +134,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
           meta={getFacetTotalCount(facets, field)}
         />
       }
