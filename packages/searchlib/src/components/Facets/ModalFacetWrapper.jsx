@@ -69,6 +69,9 @@ const OptionsWrapper = (props) => {
       onRemove={(value) => {
         dispatch({ type: 'remove', value });
       }}
+      onSetForce={(value) => {
+        dispatch({ type: 'reset', value });
+      }}
     />
   );
 };
@@ -93,8 +96,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   );
   return (
     <Modal
@@ -106,7 +109,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => {}}
+          onClick={() => { }}
           meta={getFacetTotalCount(facets, field)}
         />
       }
@@ -119,6 +122,7 @@ const FacetWrapperComponent = (props) => {
             {...innerProps}
             view={props.view}
             state={state}
+            initialValue={initialValue}
             dispatch={dispatch}
           />
         )}

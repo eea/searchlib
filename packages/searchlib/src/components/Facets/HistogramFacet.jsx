@@ -69,8 +69,8 @@ export const HistogramFacetComponent = (props) => {
   );
 
   const settings = {
-    min: start,
-    max: end,
+    min: range.start,
+    max: range.end,
     step,
   };
 
@@ -108,7 +108,9 @@ export const HistogramFacetComponent = (props) => {
 };
 
 const HistogramFacet = (props) => {
-  const { facets, field, setFilter } = props; // , filters
+  const { facets, field, onSetForce, initialValue } = props; // , filters
+  const initialStart = initialValue?.[0]?.from;
+  const initialEnd = initialValue?.[0]?.to;
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -122,9 +124,13 @@ const HistogramFacet = (props) => {
   return props.active && facet?.data ? (
     <HistogramFacetComponent
       {...props}
+      //range={initialRange}
+      start={initialStart}
+      end={initialEnd}
       data={facet?.data}
       onChange={({ to, from }) => {
-        setFilter(field, { to, from, type: 'range' });
+        onSetForce([{ to, from, type: 'range' }])
+        //setFilter(field, { to, from, type: 'range' });
       }}
     />
   ) : null;
