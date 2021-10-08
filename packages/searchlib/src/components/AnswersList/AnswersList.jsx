@@ -1,19 +1,31 @@
 import React from 'react';
 import { Segment, Label } from 'semantic-ui-react'; //, Rating, Icon, Accordion
 import withAnswers from './withAnswers';
-import HorizontalCardItem, {
-  ExternalLink,
-} from '@eeacms/search/components/Result/HorizontalCardItem';
+import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import cx from 'classnames';
 
 const AnswerContext = ({ item }) => {
+  const { full_context, answer } = item;
+
+  const start = (full_context || '').indexOf(item.answer);
+
+  const pre = full_context
+    ? full_context.slice(0, start)
+    : item.context.slice(0, item.offset_start);
+  const ans = full_context
+    ? answer
+    : item.context.slice(item.offset_start, item.offset_end);
+  const post = full_context
+    ? full_context.slice(start + answer.length, full_context.length)
+    : item.context.slice(item.offset_end, item.context.length);
+
   return (
     <>
-      {item.context.slice(0, item.offset_start)}
-      <strong>{item.context.slice(item.offset_start, item.offset_end)}</strong>
-      {item.context.slice(item.offset_end, item.context.length)}
+      {pre}
+      <strong>{ans}</strong>
+      {post}
     </>
   );
 };
