@@ -6,6 +6,11 @@ import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
 import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
+  const customFields = ['time_coverage', 'year'];
+  if (customFields.includes(name)) {
+    return <>&nbsp;</>;
+  }
+
   return facets?.[name]?.[0]?.data?.length || 0;
   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
 };
@@ -33,8 +38,6 @@ function reducer(state, action) {
   const tmp_value = typeof value === 'object' ? value.name : value;
   switch (action.type) {
     case 'set':
-      console.log("value:", value)
-      console.log("force:", action.force)
       if (has_names && tmp_state.includes(tmp_value)) {
         return;
       }
@@ -55,18 +58,19 @@ const OptionsWrapper = (props) => {
   const View = view || MultiCheckboxFacet;
   const previousOptions = usePrevious(options);
 
-  React.useEffect(() => {
-    if (previousOptions && !isEqual(options, previousOptions)) {
-      const newState = options
-        .filter(({ selected }) => !!selected)
-        .map(({ value }) => value);
-      dispatch({
-        type: 'reset',
-        value: newState,
-      });
-    }
-  }, [state, dispatch, options, previousOptions]);
-
+  /* TODO:investigate
+    React.useEffect(() => {
+      if (previousOptions && !isEqual(options, previousOptions)) {
+        const newState = options
+          .filter(({ selected }) => !!selected)
+          .map(({ value }) => value);
+        dispatch({
+          type: 'reset',
+          value: newState,
+        });
+      }
+    }, [state, dispatch, options, previousOptions]);
+  */
   const { tmp_state, has_names } = normalize_state(state);
 
   let newOptions = [];
@@ -117,10 +121,9 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
-  console.log("state:", state)
   return (
     <Modal
       onClose={() => setIsOpened(false)}
@@ -131,7 +134,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
           meta={getFacetTotalCount(facets, field)}
         />
       }
