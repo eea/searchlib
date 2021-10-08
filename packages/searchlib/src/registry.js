@@ -248,6 +248,9 @@ const config = {
           servicePath: 'similarity',
           cutoffScore: 0.9,
         },
+        spacy: {
+          servicePath: 'ner-spacy',
+        },
       },
 
       contentSectionsParams: {

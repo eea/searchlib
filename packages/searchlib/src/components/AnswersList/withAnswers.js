@@ -4,6 +4,7 @@ import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
   buildSimilarityRequest,
+  buildSpacyRequest,
   buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
@@ -38,7 +39,7 @@ const withAnswers = (WrappedComponent) => {
       // console.log('shouldRunSearch', qa_queryTypes);
 
       if (shouldRunSearch) {
-        timeoutRef.current = setTimeout(() => {
+        timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
           // const classifyQuestionBody = buildClassifyQuestionRequest(
           //   searchContext,
@@ -54,44 +55,52 @@ const withAnswers = (WrappedComponent) => {
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
             // console.log('run answers request', requestBody);
             dispatch({ type: 'loading' });
-            runRequest(requestBody, appConfig).then((response) => {
-              const { body } = response;
-              const { answers = [] } = body;
+            const response = await runRequest(requestBody, appConfig);
+            const { body } = response;
+            const { answers = [] } = body;
 
-              if (!answers.length) {
-                dispatch({ type: 'loaded', data: answers });
-                setSearchedTerm(searchTerm);
-                return;
-              }
+            if (!answers.length) {
+              dispatch({ type: 'loaded', data: answers });
+              setSearchedTerm(searchTerm);
+              return;
+            }
 
-              const [highestRatedAnswer, ...rest] = answers;
-              const base = highestRatedAnswer.answer;
-              const candidates = rest.map(({ answer }) => answer);
+            const [highestRatedAnswer, ...rest] = answers;
+            const base = highestRatedAnswer.answer;
+            const candidates = rest.map(({ answer }) => answer);
 
-              // Take the highest rated response, determine which of the
-              // answers are already paraphrasings, so that we can group them
-              // together
+            // Take the highest rated response, determine which of the
+            // answers are already paraphrasings, so that we can group them
+            // together
 
+            const [simResp, spacyResp] = await Promise.all([
               runRequest(
                 buildSimilarityRequest({ base, candidates }, appConfig),
                 appConfig,
-              ).then((response) => {
-                const { predictions = [] } = response.body || {};
-                const data = [
-                  highestRatedAnswer,
-                  ...rest
-                    .map((ans, i) => [ans, predictions[i]?.score])
-                    .filter(
-                      ([, score]) =>
-                        score > appConfig.nlp.similarity.cutoffScore,
-                    )
-                    .map(([ans, score]) => ans),
-                ];
-                // console.log({ response, data, predictions, rest, highestRatedAnswer });
-                dispatch({ type: 'loaded', data });
-                setSearchedTerm(searchTerm);
-              });
-            });
+              ),
+              runRequest(
+                buildSpacyRequest(
+                  { texts: [highestRatedAnswer.text] },
+                  appConfig,
+                ),
+                appConfig,
+              ),
+            ]);
+            // console.log('spacy', { highestRatedAnswer, spacyResp });
+
+            const { predictions = [] } = simResp.body || {};
+            const data = [
+              highestRatedAnswer,
+              ...rest
+                .map((ans, i) => [ans, predictions[i]?.score])
+                .filter(
+                  ([, score]) => score > appConfig.nlp.similarity.cutoffScore,
+                )
+                .map(([ans, score]) => ans),
+            ];
+            // console.log({ response, data, predictions, rest, highestRatedAnswer });
+            dispatch({ type: 'loaded', data });
+            setSearchedTerm(searchTerm);
           }
         }, 100);
       }

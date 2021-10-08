@@ -62,6 +62,7 @@ export const HistogramFacetComponent = (props) => {
         setRangeEnd(end);
         const val = { from: start, to: end };
         onChange(val);
+        console.log('triggered');
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
     },
@@ -109,8 +110,8 @@ export const HistogramFacetComponent = (props) => {
 
 const HistogramFacet = (props) => {
   const { facets, field, onSetForce, initialValue } = props; // , filters
-  const initialStart = initialValue?.[0]?.from;
-  const initialEnd = initialValue?.[0]?.to;
+  // const initialStart = initialValue?.[0]?.from;
+  // const initialEnd = initialValue?.[0]?.to;
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -129,7 +130,7 @@ const HistogramFacet = (props) => {
       end={initialEnd}
       data={facet?.data}
       onChange={({ to, from }) => {
-        onSetForce([{ to, from, type: 'range' }])
+        // onSetForce([{ to, from, type: 'range' }]);
         //setFilter(field, { to, from, type: 'range' });
       }}
     />

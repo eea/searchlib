@@ -93,3 +93,12 @@ export const buildSimilarityRequest = ({ base, candidates }, config) => {
   };
   return body;
 };
+
+export const buildSpacyRequest = ({ texts }, config) => {
+  const body = {
+    requestType: 'nlp',
+    endpoint: config.nlp.spacy.servicePath,
+    texts,
+  };
+  return body;
+};

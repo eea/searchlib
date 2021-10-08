@@ -19,7 +19,7 @@ function reducer(state, action) {
   switch (action.type) {
     case 'set':
       if (tmp_state.includes(tmp_value)) return;
-      return [...state, value];
+      return action.force ? value : [...state, value];
     case 'remove':
       return [...state].filter((v) =>
         typeof v === 'object' ? v.name !== tmp_value : v !== tmp_value,
@@ -63,8 +63,8 @@ const OptionsWrapper = (props) => {
     <View
       {...rest}
       options={newOptions}
-      onSelect={(value) => {
-        dispatch({ type: 'set', value });
+      onSelect={(value, force) => {
+        dispatch({ type: 'set', force, value });
       }}
       onRemove={(value) => {
         dispatch({ type: 'remove', value });
@@ -96,8 +96,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
   return (
     <Modal
@@ -109,7 +109,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
           meta={getFacetTotalCount(facets, field)}
         />
       }
@@ -122,7 +122,6 @@ const FacetWrapperComponent = (props) => {
             {...innerProps}
             view={props.view}
             state={state}
-            initialValue={initialValue}
             dispatch={dispatch}
           />
         )}
