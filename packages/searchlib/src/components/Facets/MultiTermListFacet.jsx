@@ -116,7 +116,6 @@ const ViewComponent = (props) => {
           )}
 
           <ToggleSort
-            label={label}
             onToggle={() => toggleSort('value')}
             on={sorting.sortOn === 'value'}
             icon={
