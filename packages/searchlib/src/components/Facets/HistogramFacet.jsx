@@ -60,7 +60,13 @@ export const HistogramFacetComponent = (props) => {
         const end = extractNumeric(value[1]);
         setRangeStart(start);
         setRangeEnd(end);
-        const val = { from: start, to: end };
+        let val = {};
+        if (settings.min !== start) {
+          val.from = start;
+        }
+        if (settings.max !== end) {
+          val.to = end;
+        }
         onChange(val);
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
@@ -127,7 +133,11 @@ const HistogramFacet = (props) => {
       end={options?.[0]?.to}
       data={facet?.data}
       onChange={({ to, from }) => {
-        onSelect([{ to, from, type: 'range' }], true);
+        if (to || from) {
+          onSelect([{ to, from, type: 'range' }], true);
+        } else {
+          onSelect([], true);
+        }
         // onSetForce([{ to, from, type: 'range' }]);
         //setFilter(field, { to, from, type: 'range' });
       }}
