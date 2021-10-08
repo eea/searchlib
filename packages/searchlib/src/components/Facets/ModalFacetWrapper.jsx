@@ -24,7 +24,7 @@ function normalize_state(state) {
       has_names = false;
     }
   }
-  return { tmp_state, has_names }
+  return { tmp_state, has_names };
 }
 
 function reducer(state, action) {
@@ -33,6 +33,8 @@ function reducer(state, action) {
   const tmp_value = typeof value === 'object' ? value.name : value;
   switch (action.type) {
     case 'set':
+      console.log("value:", value)
+      console.log("force:", action.force)
       if (has_names && tmp_state.includes(tmp_value)) {
         return;
       }
@@ -118,6 +120,7 @@ const FacetWrapperComponent = (props) => {
         ? initialValue
         : [initialValue],
   );
+  console.log("state:", state)
   return (
     <Modal
       onClose={() => setIsOpened(false)}
