@@ -49,6 +49,12 @@ export const HistogramFacetComponent = (props) => {
   const [rangeStart, setRangeStart] = React.useState(start);
   const [rangeEnd, setRangeEnd] = React.useState(end);
 
+  const settings = {
+    min: range.start,
+    max: range.end,
+    step,
+  };
+
   const timeoutRef = React.useRef();
 
   const onChangeValue = React.useCallback(
@@ -71,14 +77,8 @@ export const HistogramFacetComponent = (props) => {
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
     },
-    [onChange],
+    [onChange, settings.max, settings.min],
   );
-
-  const settings = {
-    min: range.start,
-    max: range.end,
-    step,
-  };
 
   return (
     <div className="histogram-facet">
