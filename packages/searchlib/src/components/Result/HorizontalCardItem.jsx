@@ -70,7 +70,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-left">
           <div className="details">
-            <p className="meta">
+            <div className="meta">
               <span className="date">
                 <DateTime
                   format="DATE_MED"
@@ -95,7 +95,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   </Dropdown.Menu>
                 </Dropdown>
               )}
-            </p>
+            </div>
             <h3>
               <ExternalLink href={url}>
                 {result[props.titleField]?.raw}
