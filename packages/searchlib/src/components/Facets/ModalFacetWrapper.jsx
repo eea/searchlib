@@ -10,15 +10,32 @@ const getFacetTotalCount = (facets, name) => {
   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
 };
 
+function normalize_state(state) {
+  let tmp_state = [];
+  let has_names = true;
+  if (typeof state?.[0] === 'string') {
+    tmp_state = state;
+  }
+  if (typeof state?.[0] === 'object') {
+    if (state?.[0]?.name) {
+      tmp_state = state.map((st) => st.name);
+    } else {
+      tmp_state = state;
+      has_names = false;
+    }
+  }
+  return { tmp_state, has_names }
+}
+
 function reducer(state, action) {
   const { value } = action;
-  const tmp_state = state.map((st) => {
-    return typeof st === 'object' ? st.name : st;
-  });
+  const { tmp_state, has_names } = normalize_state(state);
   const tmp_value = typeof value === 'object' ? value.name : value;
   switch (action.type) {
     case 'set':
-      if (tmp_state.includes(tmp_value)) return;
+      if (has_names && tmp_state.includes(tmp_value)) {
+        return;
+      }
       return action.force ? value : [...state, value];
     case 'remove':
       return [...state].filter((v) =>
@@ -48,17 +65,22 @@ const OptionsWrapper = (props) => {
     }
   }, [state, dispatch, options, previousOptions]);
 
-  const tmp_state = state.map((st) => {
-    return typeof st === 'object' ? st.name : st;
-  });
+  const { tmp_state, has_names } = normalize_state(state);
 
-  const newOptions = options.map(({ value, count, selected }) => ({
-    value,
-    count,
-    selected: tmp_state.includes(typeof value === 'object' ? value.name : value)
-      ? true
-      : false,
-  }));
+  let newOptions = [];
+  if (has_names) {
+    newOptions = options.map(({ value, count, selected }) => ({
+      value,
+      count,
+      selected: tmp_state.includes(
+        typeof value === 'object' ? value.name : value,
+      )
+        ? true
+        : false,
+    }));
+  } else {
+    newOptions = tmp_state;
+  }
   return (
     <View
       {...rest}
@@ -68,9 +90,6 @@ const OptionsWrapper = (props) => {
       }}
       onRemove={(value) => {
         dispatch({ type: 'remove', value });
-      }}
-      onSetForce={(value) => {
-        dispatch({ type: 'reset', value });
       }}
     />
   );
@@ -96,8 +115,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   );
   return (
     <Modal
@@ -109,7 +128,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => {}}
+          onClick={() => { }}
           meta={getFacetTotalCount(facets, field)}
         />
       }

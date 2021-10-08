@@ -62,7 +62,6 @@ export const HistogramFacetComponent = (props) => {
         setRangeEnd(end);
         const val = { from: start, to: end };
         onChange(val);
-        console.log('triggered');
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
     },
@@ -109,7 +108,7 @@ export const HistogramFacetComponent = (props) => {
 };
 
 const HistogramFacet = (props) => {
-  const { facets, field, onSetForce, initialValue } = props; // , filters
+  const { facets, field, options, onSelect } = props; // , filters
   // const initialStart = initialValue?.[0]?.from;
   // const initialEnd = initialValue?.[0]?.to;
   // const filterValue = filters.find((f) => f.field === field);
@@ -119,17 +118,16 @@ const HistogramFacet = (props) => {
   // in future version, so instead of an array, there will only be one facet allowed per field.
   const facetsForField = facets[field];
   const facet = facetsForField?.[0] || {};
-
   // TODO: resume work here
   // console.log('ff', facet, filters);
   return props.active && facet?.data ? (
     <HistogramFacetComponent
       {...props}
-      //range={initialRange}
-      start={initialStart}
-      end={initialEnd}
+      start={options?.[0]?.from}
+      end={options?.[0]?.to}
       data={facet?.data}
       onChange={({ to, from }) => {
+        onSelect([{ to, from, type: 'range' }], true);
         // onSetForce([{ to, from, type: 'range' }]);
         //setFilter(field, { to, from, type: 'range' });
       }}
