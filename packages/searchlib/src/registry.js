@@ -248,6 +248,9 @@ const config = {
           servicePath: 'similarity',
           cutoffScore: 0.9,
         },
+        spacy: {
+          servicePath: 'ner-spacy',
+        },
       },
 
       contentSectionsParams: {
@@ -345,6 +348,17 @@ const config = {
         enabled: true,
       },
 
+      horizontalCardViewParams: {
+        urlField: 'about',
+        titleField: 'title',
+        metatypeField: 'objectProvides',
+        descriptionField: 'description',
+        tagsField: 'topic',
+        issuedField: 'issued',
+        enabled: true,
+        getThumbnailUrl: 'getGlobalsearchThumbUrl',
+        getIconUrl: 'getGlobalsearchIconUrl',
+      },
       tableViewParams: {
         enabled: true,
       },
