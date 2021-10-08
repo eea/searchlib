@@ -99,7 +99,7 @@ const ViewComponent = (props) => {
     <>
       <Modal.Header>
         <div className="multitermlist__facet__header">
-          {facetConfig?.title || field}
+          {facetConfig?.title || label}
 
           {showSearch && (
             <div>
