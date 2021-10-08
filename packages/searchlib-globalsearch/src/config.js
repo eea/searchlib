@@ -183,13 +183,17 @@ const globalSearchConfig = {
     }),
     histogramFacet({
       wrapper: 'ModalFacetWrapper',
-      rangeType: 'closed',
       field: 'year',
       // isFilterable: false,
       isMulti: true,
       label: 'Publishing year',
       // TODO: implement split in buckets
-      ranges: makeRange({ step: 10, normalRange: [1970, 2100] }),
+      ranges: makeRange({
+        step: 10,
+        normalRange: [1970, 2100],
+        includeOutlierStart: false,
+        includeOutlierEnd: false,
+      }),
       step: 10,
       // [
       //   {
@@ -214,13 +218,17 @@ const globalSearchConfig = {
 
     histogramFacet({
       wrapper: 'ModalFacetWrapper',
-      rangeType: 'closed',
       field: 'time_coverage',
       // isFilterable: false,
       isMulti: true,
       label: 'Time coverage',
       // TODO: implement split in buckets
-      ranges: makeRange({ step: 10, normalRange: [1700, 2210] }),
+      ranges: makeRange({
+        step: 10,
+        normalRange: [1700, 2210],
+        includeOutlierStart: false,
+        includeOutlierEnd: false,
+      }),
       step: 10,
       // [
       //   {
@@ -543,12 +551,10 @@ export default function install(config) {
     },
   };
 
-  config.resolve.getGlobalsearchIconUrl = getGlobalsearchIconUrl(
-    contentTypeNormalize,
-  );
-  config.resolve.getGlobalsearchThumbUrl = getGlobalsearchThumbUrl(
-    contentTypeNormalize,
-  );
+  config.resolve.getGlobalsearchIconUrl =
+    getGlobalsearchIconUrl(contentTypeNormalize);
+  config.resolve.getGlobalsearchThumbUrl =
+    getGlobalsearchThumbUrl(contentTypeNormalize);
 
   // config.resolve.LandingPage = { component: LandingPage };
 

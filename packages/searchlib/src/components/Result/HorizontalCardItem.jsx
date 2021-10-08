@@ -128,7 +128,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             ui={false}
             fluid
             centered
-            style={{ backgroundImage: `url('${thumbUrl}')` }}
             as={ExternalLink}
             href={url}
             target="_blank"

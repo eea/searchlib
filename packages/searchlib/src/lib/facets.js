@@ -17,7 +17,6 @@ export const histogramFacet = ({
     label: label || field,
     height: 100, // default height of the histogram
     showInFacetsList: true,
-    rangeType: 'open',
     isFilterable,
     ...params,
   };

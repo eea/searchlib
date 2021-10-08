@@ -27,27 +27,19 @@ function extractNumeric(value) {
 }
 
 export const HistogramFacetComponent = (props) => {
-  const { data, ranges, onChange, rangeType } = props;
+  const { data, ranges, onChange } = props;
 
-  if (rangeType === 'closed') {
-    if (ranges[0].from === undefined) {
-      ranges.shift();
-    }
-    if (ranges[ranges.length - 1].to === undefined) {
-      ranges.pop();
-    }
-    if (data[0].config.from === undefined) {
-      data.shift();
-    }
-    if (data[data.length - 1].config.to === undefined) {
-      data.pop();
-    }
-  }
   const range = getRangeStartEnd(ranges);
   const { start = range.start, end = range.end, step = 1 } = props;
 
   const [rangeStart, setRangeStart] = React.useState(start);
   const [rangeEnd, setRangeEnd] = React.useState(end);
+
+  const settings = {
+    min: range.start,
+    max: range.end,
+    step,
+  };
 
   const timeoutRef = React.useRef();
 
@@ -71,14 +63,8 @@ export const HistogramFacetComponent = (props) => {
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
     },
-    [onChange],
+    [onChange, settings.max, settings.min],
   );
-
-  const settings = {
-    min: range.start,
-    max: range.end,
-    step,
-  };
 
   return (
     <div className="histogram-facet">

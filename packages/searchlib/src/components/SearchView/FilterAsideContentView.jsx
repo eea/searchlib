@@ -39,6 +39,7 @@ export const FilterAsideContentView = (props) => {
     <>
       <div className="filter-bar">
         <Button
+          className="show-filters"
           toggle
           active={showFacets}
           onClick={() => setShowFacets(!showFacets)}

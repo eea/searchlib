@@ -31,8 +31,8 @@ const FacetOptions = (props) => {
             }
             onRemove={() => onRemove(option.value)}
           >
-            <span class="title">{getFilterValueDisplay(option.value)}</span>
-            <span class="count">{option.count.toLocaleString('en')}</span>
+            <span className="title">{getFilterValueDisplay(option.value)}</span>
+            <span className="count">{option.count.toLocaleString('en')}</span>
           </Button>
         );
       })}
@@ -99,10 +99,10 @@ const ViewComponent = (props) => {
     <>
       <Modal.Header>
         <div className="multitermlist__facet__header">
-          {facetConfig?.title || field}
+          <h3>{facetConfig?.title || label}</h3>
 
           {showSearch && (
-            <div>
+            <div className="search">
               <Icon name="search" size="small" color="blue" />
               <input
                 className="multitermlist__search__text-input"
@@ -116,7 +116,6 @@ const ViewComponent = (props) => {
           )}
 
           <ToggleSort
-            label={label}
             onToggle={() => toggleSort('value')}
             on={sorting.sortOn === 'value'}
             icon={
@@ -159,8 +158,6 @@ const ViewComponent = (props) => {
         <fieldset
           className={cx('sui-facet searchlib-multiterm-facet', className)}
         >
-          <legend className="sui-facet__title">{label}</legend>
-
           {showMore && (
             <button
               type="button"
