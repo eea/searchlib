@@ -150,7 +150,7 @@ const globalSearchConfig = {
       field: 'places',
       isFilterable: true,
       isMulti: true,
-      label: 'Regions/Places/Cities/Seas...',
+      label: 'Regions / Places / Cities / Seas...',
       blacklist: placesBlacklist,
       wrapper: 'ModalFacetWrapper',
       show: 10000,
@@ -350,7 +350,7 @@ const globalSearchConfig = {
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
-    sectionFacetsField: 'topic',
+    sectionFacetsField: 'objectProvides',
     labels: {
       News: 'News',
     },
@@ -428,7 +428,7 @@ const globalSearchConfig = {
         field: 'spatial',
       },
       {
-        title: 'Regions/Places/Cities/Seas...',
+        title: 'Regions / Places / Cities / Seas...',
         field: 'places',
       },
       {
