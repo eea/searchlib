@@ -345,6 +345,17 @@ const config = {
         enabled: true,
       },
 
+      horizontalCardViewParams: {
+        urlField: 'about',
+        titleField: 'title',
+        metatypeField: 'objectProvides',
+        descriptionField: 'description',
+        tagsField: 'topic',
+        issuedField: 'issued',
+        enabled: true,
+        getThumbnailUrl: 'getGlobalsearchThumbUrl',
+        getIconUrl: 'getGlobalsearchIconUrl',
+      },
       tableViewParams: {
         enabled: true,
       },
