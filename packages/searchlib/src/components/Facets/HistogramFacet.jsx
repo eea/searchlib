@@ -60,7 +60,13 @@ export const HistogramFacetComponent = (props) => {
         const end = extractNumeric(value[1]);
         setRangeStart(start);
         setRangeEnd(end);
-        const val = { from: start, to: end };
+        let val = {};
+        if (settings.min !== start) {
+          val.from = start;
+        }
+        if (settings.max !== end) {
+          val.to = end;
+        }
         onChange(val);
       }, 300);
       return () => timeoutRef.current && clearTimeout(timeoutRef.current);
@@ -69,8 +75,8 @@ export const HistogramFacetComponent = (props) => {
   );
 
   const settings = {
-    min: start,
-    max: end,
+    min: range.start,
+    max: range.end,
     step,
   };
 
@@ -108,7 +114,9 @@ export const HistogramFacetComponent = (props) => {
 };
 
 const HistogramFacet = (props) => {
-  const { facets, field, setFilter } = props; // , filters
+  const { facets, field, options, onSelect } = props; // , filters
+  // const initialStart = initialValue?.[0]?.from;
+  // const initialEnd = initialValue?.[0]?.to;
   // const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
@@ -116,15 +124,22 @@ const HistogramFacet = (props) => {
   // in future version, so instead of an array, there will only be one facet allowed per field.
   const facetsForField = facets[field];
   const facet = facetsForField?.[0] || {};
-
   // TODO: resume work here
   // console.log('ff', facet, filters);
   return props.active && facet?.data ? (
     <HistogramFacetComponent
       {...props}
+      start={options?.[0]?.from}
+      end={options?.[0]?.to}
       data={facet?.data}
       onChange={({ to, from }) => {
-        setFilter(field, { to, from, type: 'range' });
+        if (to || from) {
+          onSelect([{ to, from, type: 'range' }], true);
+        } else {
+          onSelect([], true);
+        }
+        // onSetForce([{ to, from, type: 'range' }]);
+        //setFilter(field, { to, from, type: 'range' });
       }}
     />
   ) : null;
