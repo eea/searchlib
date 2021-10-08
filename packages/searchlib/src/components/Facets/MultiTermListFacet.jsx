@@ -158,8 +158,6 @@ const ViewComponent = (props) => {
         <fieldset
           className={cx('sui-facet searchlib-multiterm-facet', className)}
         >
-          <legend className="sui-facet__title">{label}</legend>
-
           {showMore && (
             <button
               type="button"
