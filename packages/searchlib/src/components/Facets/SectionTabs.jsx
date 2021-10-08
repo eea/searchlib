@@ -27,8 +27,8 @@ const SectionTabs = (props) => {
             searchContext.setFilter(facetField, value, 'any');
           }}
         >
-          <span>{value}</span>
-          <span>({count})</span>
+          <span className="title">{value}</span>
+          <span className="count">({count})</span>
         </Menu.Item>
       ))}
     </Menu>

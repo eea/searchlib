@@ -350,7 +350,7 @@ const globalSearchConfig = {
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
-    sectionFacetsField: 'objectProvides',
+    sectionFacetsField: 'topic',
     labels: {
       News: 'News',
     },
