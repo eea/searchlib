@@ -68,34 +68,36 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
+        <div className="col-full">
+          <div className="meta">
+            <span className="date">
+              <DateTime
+                format="DATE_MED"
+                value={result[props.issuedField]?.raw}
+              />
+            </span>
+            <span className="tags">
+              <StringList value={result[props.tagsField]?.raw} />
+            </span>
+            {showControls && (
+              <Dropdown icon="ellipsis vertical">
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      removeFilter('lessLikeThis');
+                      setMoreLikeThis(result);
+                      setFilter('moreLikeThis', result._original._id, 'none');
+                    }}
+                  >
+                    More like this
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </div>
+        </div>
         <div className="col-left">
           <div className="details">
-            <div className="meta">
-              <span className="date">
-                <DateTime
-                  format="DATE_MED"
-                  value={result[props.issuedField]?.raw}
-                />
-              </span>
-              <span className="tags">
-                <StringList value={result[props.tagsField]?.raw} />
-              </span>
-              {showControls && (
-                <Dropdown icon="ellipsis vertical">
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        removeFilter('lessLikeThis');
-                        setMoreLikeThis(result);
-                        setFilter('moreLikeThis', result._original._id, 'none');
-                      }}
-                    >
-                      More like this
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </div>
             <h3>
               <ExternalLink href={url}>
                 {result[props.titleField]?.raw}
