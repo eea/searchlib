@@ -7,7 +7,15 @@ import { SectionTabs } from '@eeacms/search/components';
 import InlineFilterList from './../FilterList/InlineFilterList';
 
 const FilterAsideLayout = (props) => {
-  const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
+  const {
+    bodyContent,
+    bodyFooter,
+    bodyHeader,
+    header,
+    sideContent,
+    appConfig,
+  } = props;
+  const { defaultFilters } = appConfig;
   const [showFacets] = useAtom(showFacetsAsideAtom);
   return (
     <div>
@@ -18,7 +26,7 @@ const FilterAsideLayout = (props) => {
       </Container>
 
       <SectionTabs />
-      <InlineFilterList />
+      <InlineFilterList defaultFilters={defaultFilters} />
 
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">

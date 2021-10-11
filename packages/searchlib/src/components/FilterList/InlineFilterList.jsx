@@ -7,6 +7,7 @@ import { showFacetsAsideAtom } from '@eeacms/search/state';
 
 const InlineFilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = useSearchContext();
+  const { defaultFilters } = props;
   const [isOpened, setIsOpened] = React.useState(false);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
 
@@ -38,7 +39,17 @@ const InlineFilterList = (props) => {
               basic
               inverted
               size="mini"
-              onClick={() => clearFilters()}
+              onClick={() => {
+                clearFilters();
+                Object.keys(defaultFilters).map((filter, index) => {
+                  setFilter(
+                    filter,
+                    defaultFilters[filter]?.value,
+                    defaultFilters[filter]?.type,
+                  );
+                  return true;
+                });
+              }}
             >
               Reset
               <Icon name="undo alternate" />
