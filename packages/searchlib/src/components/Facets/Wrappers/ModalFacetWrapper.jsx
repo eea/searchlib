@@ -2,6 +2,8 @@ import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
+import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
   const customFields = ['time_coverage', 'year'];
@@ -56,22 +58,19 @@ const OptionsWrapper = (props) => {
   const searchContext = useSearchContext();
   const View = view;
 
-  /* TODO:investigate
-    import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
-    import { isEqual } from 'lodash';
-    const previousOptions = usePrevious(options);
-    React.useEffect(() => {
-      if (previousOptions && !isEqual(options, previousOptions)) {
-        const newState = options
-          .filter(({ selected }) => !!selected)
-          .map(({ value }) => value);
-        dispatch({
-          type: 'reset',
-          value: newState,
-        });
-      }
-    }, [state, dispatch, options, previousOptions]);
-  */
+  const previousOptions = usePrevious(options);
+  React.useEffect(() => {
+    if (previousOptions && !isEqual(options, previousOptions)) {
+      const newState = options
+        .filter(({ selected }) => !!selected)
+        .map(({ value }) => value);
+      dispatch({
+        type: 'reset',
+        value: newState,
+      });
+    }
+  }, [state, dispatch, options, previousOptions]);
+
   const { tmp_state, has_names } = normalize_state(state);
 
   let newOptions = [];
@@ -118,8 +117,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
+        ? initialValue
+        : [initialValue],
   );
   return (
     <Modal
@@ -131,7 +130,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => {}}
+          onClick={() => { }}
           meta={getFacetTotalCount(facets, field)}
         />
       }
