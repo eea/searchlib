@@ -33,6 +33,7 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
+      <AnswersList />
       <div className="above-results">
         <ViewSelectorWithLabel
           views={availableResultViews}
@@ -46,7 +47,6 @@ export const FilterAsideContentView = (props) => {
         />
       </div>
 
-      <AnswersList />
       <ResultViewComponent>{children}</ResultViewComponent>
 
       <div className="row">
