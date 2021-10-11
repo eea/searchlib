@@ -1,11 +1,11 @@
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
-import MultiTermFacet from '@eeacms/search/components/Facets/MultiTermFacet';
-import MultiTermListFacet from '@eeacms/search/components/Facets/MultiTermListFacet';
-import HistogramFacet from '@eeacms/search/components/Facets/HistogramFacet';
-import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
-import FixedRangeFacet from '@eeacms/search/components/Facets/FixedRangeFacet';
-import ModalFixedRangeFacet from '@eeacms/search/components/Facets/ModalFixedRangeFacet';
+import MultiTermFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermFacet';
+import MultiTermListFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermListFacet';
+import HistogramFacet from '@eeacms/search/components/Facets/Unconnected/HistogramFacet';
+import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
+import FixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/FixedRangeFacet';
+import ModalFixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/ModalFixedRangeFacet';
 import {
   AccordionFacetWrapper,
   LeftColumnLayout,
@@ -21,7 +21,7 @@ import {
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
-import Facets from '@eeacms/search/components/Facets/Facets';
+import FacetsList from '@eeacms/search/components/Facets/FacetsList';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -172,7 +172,7 @@ const config = {
     },
     VerticalCardsModalFacets: {
       component: (props) => (
-        <Facets
+        <FacetsList
           defaultWraper={ModalFacetWrapper}
           view={({ children }) => (
             <Card.Group {...props} stackable itemsPerRow={1}>

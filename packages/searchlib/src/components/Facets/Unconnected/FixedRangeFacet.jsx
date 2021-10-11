@@ -1,5 +1,4 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
 import cx from 'classnames';
 import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
 
@@ -82,13 +81,16 @@ const FixedRangeFacetComponent = (props) => {
   return <ViewComponent {...props} />;
 };
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(FixedRangeFacetComponent);
+export default FixedRangeFacetComponent;
+
+// import { withSearch } from '@elastic/react-search-ui';
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(FixedRangeFacetComponent);

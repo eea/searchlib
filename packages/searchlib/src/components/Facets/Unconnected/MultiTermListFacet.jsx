@@ -1,12 +1,11 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
+// import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -174,17 +173,19 @@ const ViewComponent = (props) => {
   );
 };
 
-const Component = (props) => (
-  <MultiTypeFacetWrapper {...props} view={ViewComponent} />
-);
+export default ViewComponent;
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(Component);
+// const Component = (props) => (
+//   <MultiTypeFacetWrapper {...props} view={ViewComponent} />
+// );
+// import { withSearch } from '@elastic/react-search-ui';
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(Component);

@@ -1,8 +1,8 @@
 import React from 'react';
-import { ResponsiveHistogramChart } from '../Vis';
+import { ResponsiveHistogramChart } from '@eeacms/search/components/Vis';
 import { RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
-import { withSearch } from '@elastic/react-search-ui';
+// import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
 
 function toFloat(value) {
@@ -142,13 +142,15 @@ const HistogramFacet = (props) => {
   // );
 };
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(HistogramFacet);
+export default HistogramFacet;
+
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(HistogramFacet);

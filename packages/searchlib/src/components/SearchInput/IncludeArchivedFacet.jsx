@@ -1,13 +1,18 @@
 import React from 'react';
-import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
+import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
 import { INCLUDE_ARCHIVED } from '@eeacms/search/constants';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
-const IncludeArchivedFacet = (props) => (
-  <BooleanFacet
-    id="archived-facet"
-    label="Include archived content"
-    field={INCLUDE_ARCHIVED}
-  />
-);
+const IncludeArchivedFacet = (props) => {
+  const searchContext = useSearchContext();
+  return (
+    <BooleanFacet
+      {...searchContext}
+      id="archived-facet"
+      label="Include archived content"
+      field={INCLUDE_ARCHIVED}
+    />
+  );
+};
 
 export default IncludeArchivedFacet;

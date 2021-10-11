@@ -1,5 +1,4 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
 import cx from 'classnames';
 import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
 import { Button } from 'semantic-ui-react'; // , Header, Image
@@ -31,9 +30,8 @@ const FacetOptions = (props) => {
                   onRemove(opt.value);
                 }
               })
-
             }
-          //onRemove={() => onRemove(option.value)}
+            //onRemove={() => onRemove(option.value)}
           >
             <span class="title">{getFilterValueDisplay(option.value)}</span>
             <span class="count">{option.count.toLocaleString('en')}</span>
@@ -70,13 +68,16 @@ const ModalFixedRangeFacetComponent = (props) => {
   return <ViewComponent {...props} />;
 };
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(ModalFixedRangeFacetComponent);
+export default ModalFixedRangeFacetComponent;
+
+// import { withSearch } from '@elastic/react-search-ui';
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(ModalFixedRangeFacetComponent);

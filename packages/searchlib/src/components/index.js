@@ -1,6 +1,7 @@
-import MultiCheckboxFacet from './Facets/MultiCheckboxFacet';
+import MultiCheckboxFacet from './Facets/Unconnected/MultiCheckboxFacet';
+import SectionTabs from './Facets/Connected/SectionTabs';
 import TableView from './Result/TableView';
-import Facets from './Facets/Facets';
+import FacetsList from './Facets/FacetsList';
 import FilterList from './FilterList/FilterList';
 import InlineFilterList from './FilterList/InlineFilterList';
 import FilterAsideLayout from './Layout/FilterAsideLayout';
@@ -13,8 +14,8 @@ import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
-import AccordionFacetWrapper from './Facets/AccordionFacetWrapper';
-import ModalFacetWrapper from './Facets/ModalFacetWrapper';
+import AccordionFacetWrapper from './Facets/Wrappers/AccordionFacetWrapper';
+import ModalFacetWrapper from './Facets/Wrappers/ModalFacetWrapper';
 import SearchBox from './SearchBox/SearchBox';
 import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
@@ -28,14 +29,13 @@ import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
 import { Header } from './Result/ResultModal';
 import DefaultContentView from './SearchView/DefaultContentView';
-import SectionTabs from './Facets/SectionTabs';
 
 export {
   FilterAsideLayout,
   MultiCheckboxFacet,
   CardItem,
   DateTime,
-  Facets,
+  FacetsList,
   FilterList,
   InlineFilterList,
   LeftColumnLayout,

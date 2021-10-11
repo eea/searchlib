@@ -1,9 +1,9 @@
 import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Accordion, Icon } from 'semantic-ui-react';
-import MultiCheckboxFacet from './MultiCheckboxFacet';
+// import MultiCheckboxFacet from './MultiCheckboxFacet';
 import { useAtom } from 'jotai';
-import { openFacetsAtom } from './state';
+import { openFacetsAtom } from '../state';
 import { useUpdateAtom } from 'jotai/utils';
 
 const FacetWrapperComponent = (props) => {
@@ -48,11 +48,7 @@ const FacetWrapperComponent = (props) => {
         {label}
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
-        <SUIFacet
-          {...props}
-          active={isOpened}
-          view={props.view || MultiCheckboxFacet}
-        />
+        <SUIFacet {...props} active={isOpened} />
       </Accordion.Content>
     </Accordion>
   ) : (

@@ -2,7 +2,7 @@ import React from 'react';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import {
-  Facets,
+  FacetsList,
   SearchBox,
   PagingInfo,
   AppInfo,
@@ -33,9 +33,9 @@ export const SearchView = (props) => {
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
-  const FacetsComponent = appConfig.facetsListComponent
+  const FacetsListComponent = appConfig.facetsListComponent
     ? registry.resolve[appConfig.facetsListComponent].component
-    : Facets;
+    : FacetsList;
 
   // const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
@@ -105,7 +105,7 @@ export const SearchView = (props) => {
             mode={mode}
           />
         }
-        sideContent={<FacetsComponent />}
+        sideContent={<FacetsListComponent />}
         bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
         bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}

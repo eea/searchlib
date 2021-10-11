@@ -1,13 +1,18 @@
 import React from 'react';
-import BooleanFacet from '@eeacms/search/components/Facets/BooleanFacet';
+import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
 import { EXACT_PHRASES } from '@eeacms/search/constants';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
-const ExactPhrasesFacet = (props) => (
-  <BooleanFacet
-    id="exact-phrases-facet"
-    label="Exact phrases?"
-    field={EXACT_PHRASES}
-  />
-);
+const ExactPhrasesFacet = (props) => {
+  const searchContext = useSearchContext();
+  return (
+    <BooleanFacet
+      {...searchContext}
+      id="exact-phrases-facet"
+      label="Exact phrases?"
+      field={EXACT_PHRASES}
+    />
+  );
+};
 
 export default ExactPhrasesFacet;

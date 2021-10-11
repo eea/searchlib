@@ -1,9 +1,6 @@
 import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
-import MultiCheckboxFacet from './MultiCheckboxFacet';
-import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
-import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
   const customFields = ['time_coverage', 'year'];
@@ -55,10 +52,12 @@ function reducer(state, action) {
 
 const OptionsWrapper = (props) => {
   const { options, view, state, dispatch, ...rest } = props;
-  const View = view || MultiCheckboxFacet;
-  const previousOptions = usePrevious(options);
+  const View = view;
 
   /* TODO:investigate
+    import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
+    import { isEqual } from 'lodash';
+    const previousOptions = usePrevious(options);
     React.useEffect(() => {
       if (previousOptions && !isEqual(options, previousOptions)) {
         const newState = options
