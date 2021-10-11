@@ -32,14 +32,15 @@ const InlineFilterList = (props) => {
               Current filters applied: {filters.length}
             </div>
             <Button
+              className="reset-filters"
               compact
               basic
               inverted
               size="mini"
               onClick={() => clearFilters()}
             >
-              <Icon name="eraser" />
-              Clear filters
+              Reset
+              <Icon name="undo alternate" />
             </Button>
           </Accordion.Title>
           <Accordion.Content className="filter-list-content" active={isOpened}>
