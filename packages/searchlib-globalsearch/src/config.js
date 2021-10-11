@@ -1,24 +1,6 @@
-import {
-  // histogramFacet,
-  suiFacet,
-  // suiRangeFacet,
-  // multiTermFacet,
-  mergeConfig,
-  // makeRange,
-  // booleanFacet,
-  // fixedRangeFacet,
-} from '@eeacms/search';
-// import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
-// import spatialWhitelist from './json/spatialWhitelist.json';
-// import placesBlacklist from './json/placesBlacklist.json';
-// import typesWhitelist from './json/typesWhitelist.json';
+import { suiFacet, mergeConfig } from '@eeacms/search';
+import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './utils';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
-import {
-  // getTodayWithTime,
-  getGlobalsearchThumbUrl,
-  getGlobalsearchIconUrl,
-} from './utils';
-// import LandingPage from './components/LandingPage';
 import globalSearchConfig from './global-search-config.js';
 
 const getClientProxyAddress = () => {
