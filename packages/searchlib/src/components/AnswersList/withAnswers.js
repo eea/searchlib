@@ -88,7 +88,12 @@ const withAnswers = (WrappedComponent) => {
                   ([, score]) => score > appConfig.nlp.similarity.cutoffScore,
                 )
                 .map(([ans, score]) => ans),
-            ];
+            ].reduce((acc, ans) => {
+              // filter out duplicate results
+              return acc.findIndex((a) => a.id === ans.id) > -1
+                ? acc
+                : [...acc, ans];
+            }, []);
             dispatch({ type: 'loaded', data });
             setSearchedTerm(searchTerm);
           }

@@ -4,7 +4,7 @@ import withAnswers from './withAnswers';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { DateTime, StringList } from '@eeacms/search/components';
+import { DateTime } from '@eeacms/search/components'; //, StringList
 import cx from 'classnames';
 
 const AnswerContext = ({ item }) => {
@@ -102,6 +102,12 @@ score: 6.118757247924805
 
                 return (
                   <div key={i} className={cx({ primary: i === 0 })}>
+                    <span className="answer__date">
+                      <DateTime
+                        format="DATE_MED"
+                        value={result['issued']?.raw}
+                      />
+                    </span>
                     <ExternalLink href={result[urlField]?.raw}>
                       {result[titleField]?.raw}
                     </ExternalLink>
@@ -121,12 +127,6 @@ score: 6.118757247924805
                         </Label>
                       </>
                     )}
-                    <span>
-                      <DateTime
-                        format="DATE_MED"
-                        value={result['issued']?.raw}
-                      />
-                    </span>
                   </div>
                 );
               })}

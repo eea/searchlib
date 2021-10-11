@@ -4,6 +4,7 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 /**
  * A hoc that grants multi-type faceting (all/any)
  *
+ * TODO: is this actually used?
  */
 
 const withMultiTypeFilter = (options = {}) => {
