@@ -17,7 +17,7 @@ const InlineFilterList = (props) => {
         className="show-filters"
         toggle
         active={showFacets}
-        onClick={() => setShowFacets(!showFacets)}
+        onClick={() => { debugger; setShowFacets(!showFacets) }}
       >
         <Icon name="filter" />
         {showFacets ? 'Hide filters' : 'Show filters'}
@@ -39,7 +39,9 @@ const InlineFilterList = (props) => {
               basic
               inverted
               size="mini"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
                 clearFilters();
                 Object.keys(defaultFilters).map((filter, index) => {
                   setFilter(
