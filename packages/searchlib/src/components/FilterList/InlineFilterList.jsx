@@ -19,7 +19,7 @@ const InlineFilterList = (props) => {
         onClick={() => setShowFacets(!showFacets)}
       >
         <Icon name="filter" />
-        Show filters
+        {showFacets ? 'Hide filters' : 'Show filters'}
       </Button>
       <Segment inverted className="filter-list">
         <Accordion inverted>
