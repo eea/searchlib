@@ -8,7 +8,6 @@ import {
 } from '@elastic/react-search-ui';
 import {
   ViewSelectorWithLabel,
-  InlineFilterList,
   SortingDropdownWithLabel,
   AnswersList,
   DownloadButton,
@@ -46,7 +45,6 @@ export const FilterAsideContentView = (props) => {
         >
           Show filters
         </Button>
-        <InlineFilterList />
       </div>
 
       <div className="above-results">
