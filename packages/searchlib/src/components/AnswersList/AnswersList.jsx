@@ -4,12 +4,14 @@ import withAnswers from './withAnswers';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { DateTime, StringList } from '@eeacms/search/components';
 import cx from 'classnames';
 
 const AnswerContext = ({ item }) => {
   const { full_context, answer } = item;
 
-  const start = (full_context || '').indexOf(item.answer);
+  const start = (full_context || '').indexOf(answer);
+  // console.log({ full_context, answer, start, item });
 
   const pre = full_context
     ? full_context.slice(0, start)
@@ -90,13 +92,9 @@ score: 6.118757247924805
                   { ...item, _source: item.source },
                   appConfig.field_filters,
                 );
+                const date = Date.parse(result['issued']?.raw);
                 const days =
-                  result &&
-                  (Date.now() - Date.parse(result['issued']?.raw)) /
-                    1000 /
-                    60 /
-                    60 /
-                    24;
+                  result && (Date.now() - date) / 1000 / 60 / 60 / 24;
                 let expired =
                   result?.['expires']?.raw !== undefined
                     ? Date.parse(result['expires']?.raw) < Date.now()
@@ -123,6 +121,12 @@ score: 6.118757247924805
                         </Label>
                       </>
                     )}
+                    <span>
+                      <DateTime
+                        format="DATE_MED"
+                        value={result['issued']?.raw}
+                      />
+                    </span>
                   </div>
                 );
               })}

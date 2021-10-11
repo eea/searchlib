@@ -4,7 +4,6 @@ import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
   buildSimilarityRequest,
-  buildSpacyRequest,
   buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
@@ -73,20 +72,12 @@ const withAnswers = (WrappedComponent) => {
             // answers are already paraphrasings, so that we can group them
             // together
 
-            const [simResp, spacyResp] = await Promise.all([
+            const [simResp] = await Promise.all([
               runRequest(
                 buildSimilarityRequest({ base, candidates }, appConfig),
                 appConfig,
               ),
-              runRequest(
-                buildSpacyRequest(
-                  { texts: [highestRatedAnswer.text] },
-                  appConfig,
-                ),
-                appConfig,
-              ),
             ]);
-            // console.log('spacy', { highestRatedAnswer, spacyResp });
 
             const { predictions = [] } = simResp.body || {};
             const data = [
@@ -98,7 +89,6 @@ const withAnswers = (WrappedComponent) => {
                 )
                 .map(([ans, score]) => ans),
             ];
-            // console.log({ response, data, predictions, rest, highestRatedAnswer });
             dispatch({ type: 'loaded', data });
             setSearchedTerm(searchTerm);
           }
