@@ -3,7 +3,7 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Modal, Button } from 'semantic-ui-react'; // , Header, Image
+import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
@@ -28,7 +28,6 @@ const FacetOptions = (props) => {
             onClick={() =>
               checked ? onRemove(option.value) : onSelect(option.value)
             }
-            onRemove={() => onRemove(option.value)}
           >
             <span className="title">{getFilterValueDisplay(option.value)}</span>
             <span className="count">{option.count.toLocaleString('en')}</span>
@@ -37,25 +36,6 @@ const FacetOptions = (props) => {
       })}
       {sortedOptions.length < 1 && <div>No matching options</div>}
     </div>
-  );
-};
-
-const Select = ({ options, value, onChange, className }) => {
-  const handler = (e) => onChange(e.target.value);
-
-  return (
-    <select
-      onBlur={handler}
-      onChange={handler}
-      value={value}
-      className={className}
-    >
-      {options.map((opt) => (
-        <option value={opt.value} key={opt.key}>
-          {opt.text}
-        </option>
-      ))}
-    </select>
   );
 };
 
@@ -74,13 +54,12 @@ const ViewComponent = (props) => {
     onChangeFilterType,
     filterType = 'any',
     field,
+    HeaderWrapper = 'div',
+    ContentWrapper = 'div',
   } = props;
   const { appConfig } = useAppConfig();
 
-  const filterTypes = [
-    { key: 2, text: 'Match any', value: 'any' },
-    { key: 1, text: 'Match all', value: 'all' },
-  ];
+  console.log('props', props);
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
 
@@ -96,42 +75,34 @@ const ViewComponent = (props) => {
 
   return (
     <>
-      <Modal.Header>
+      <HeaderWrapper>
         <div className="multitermlist__facet__header">
-          <h3>{facetConfig?.title || label}</h3>
+          <div className="facet-title">
+            <h3>{facetConfig?.title || label}</h3>
 
-          {showSearch && (
-            <div className="search">
-              <Icon name="search" size="small" color="blue" />
-              <input
-                className="multitermlist__search__text-input"
-                type="search"
-                placeholder={searchPlaceholder || 'Search'}
-                onChange={(e) => {
-                  onSearch(e.target.value);
-                }}
-              />
-            </div>
-          )}
+            {showSearch && (
+              <div className="search">
+                <Icon name="search" size="small" color="blue" />
+                <input
+                  className="multitermlist__search__text-input"
+                  type="search"
+                  placeholder={searchPlaceholder || 'Search'}
+                  onChange={(e) => {
+                    onSearch(e.target.value);
+                  }}
+                />
+              </div>
+            )}
+          </div>
 
-          <ToggleSort
-            onToggle={() => toggleSort('value')}
-            on={sorting.sortOn === 'value'}
-            icon={
-              sorting.sortOrder === 'ascending' ? (
-                <Icon name="sort alphabet ascending" />
-              ) : (
-                <Icon name="sort alphabet descending" />
-              )
-            }
-          >
-            <Select
-              className="match-select"
-              value={filterType}
-              options={filterTypes}
-              onChange={onChangeFilterType}
-            />
-          </ToggleSort>
+          <Checkbox
+            toggle
+            label="Match all selected"
+            checked={filterType === 'all'}
+            onChange={(e, { checked }) => {
+              onChangeFilterType(checked ? 'all' : 'any');
+            }}
+          />
 
           <ToggleSort
             label="Count"
@@ -146,8 +117,8 @@ const ViewComponent = (props) => {
             }
           />
         </div>
-      </Modal.Header>
-      <Modal.Content image>
+      </HeaderWrapper>
+      <ContentWrapper>
         <FacetOptions
           sortedOptions={sortedOptions}
           label={label}
@@ -168,7 +139,7 @@ const ViewComponent = (props) => {
             </button>
           )}
         </fieldset>
-      </Modal.Content>
+      </ContentWrapper>
     </>
   );
 };
@@ -190,3 +161,42 @@ export default withMultiTypeFilter()(ViewComponent);
 //     a11yNotify,
 //   }),
 // )(Component);
+//
+
+//        {/* <ToggleSort */}
+//        {/*   onToggle={() => toggleSort('value')} */}
+//        {/*   on={sorting.sortOn === 'value'} */}
+//        {/*   icon={ */}
+//        {/*     sorting.sortOrder === 'ascending' ? ( */}
+//        {/*       <Icon name="sort alphabet ascending" /> */}
+//        {/*     ) : ( */}
+//        {/*       <Icon name="sort alphabet descending" /> */}
+//        {/*     ) */}
+//        {/*   } */}
+//        {/* > */}
+//        {/*   <Select */}
+//        {/*     className="match-select" */}
+//        {/*     value={filterType} */}
+//        {/*     options={filterTypes} */}
+//        {/*     onChange={onChangeFilterType} */}
+//        {/*   /> */}
+//        {/* </ToggleSort> */}
+//
+// const Select = ({ options, value, onChange, className }) => {
+//   const handler = (e) => onChange(e.target.value);
+//
+//   return (
+//     <select
+//       onBlur={handler}
+//       onChange={handler}
+//       value={value}
+//       className={className}
+//     >
+//       {options.map((opt) => (
+//         <option value={opt.value} key={opt.key}>
+//           {opt.text}
+//         </option>
+//       ))}
+//     </select>
+//   );
+// };

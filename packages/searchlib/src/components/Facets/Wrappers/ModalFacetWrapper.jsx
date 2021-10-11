@@ -91,6 +91,10 @@ const OptionsWrapper = (props) => {
     <View
       {...rest}
       {...searchContext}
+      HeaderWrapper={Modal.Header}
+      ContentWrapper={({ children }) => (
+        <Modal.Content image>{children}</Modal.Content>
+      )}
       options={newOptions}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });
