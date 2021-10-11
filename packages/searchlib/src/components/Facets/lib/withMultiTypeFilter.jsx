@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 /**
  * A hoc that grants multi-type faceting (all/any)
@@ -15,10 +16,13 @@ const withMultiTypeFilter = (options = {}) => {
 
   const decorator = (WrappedComponent) => {
     function WithWrappedComponent(props) {
+      const { appConfig } = useAppConfig();
       const { field = null, filters = {} } = props;
+      const facet = appConfig.facets?.find((f) => f.field === field);
+      const fallback = facet ? facet.filterType : defaultType;
       const defaultValue = field
-        ? filters?.find((f) => f.field === field)?.type
-        : defaultType;
+        ? filters?.find((f) => f.field === field)?.type || fallback
+        : fallback;
       const [filterType, setFilterType] = React.useState(defaultValue);
       return (
         <WrappedComponent

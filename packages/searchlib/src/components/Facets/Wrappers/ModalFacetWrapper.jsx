@@ -1,5 +1,5 @@
 import React from 'react';
-import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
+import { Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
@@ -107,10 +107,16 @@ const OptionsWrapper = (props) => {
 };
 
 const FacetWrapperComponent = (props) => {
+  const searchContext = useSearchContext();
+  const {
+    filters = [],
+    facets = {},
+    addFilter,
+    removeFilter,
+    // setFilter,
+  } = searchContext;
   const { field, label, filterType } = props;
   const [isOpened, setIsOpened] = React.useState();
-  const searchContext = useSearchContext();
-  const { filters = [], facets = {}, addFilter, removeFilter } = searchContext;
 
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
@@ -121,9 +127,10 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
+
   return (
     <Modal
       onClose={() => setIsOpened(false)}
@@ -134,7 +141,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={label}
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
           meta={getFacetTotalCount(facets, field)}
         />
       }
@@ -145,6 +152,7 @@ const FacetWrapperComponent = (props) => {
         view={(innerProps) => (
           <OptionsWrapper
             {...innerProps}
+            filterType={filterType}
             view={props.view}
             state={state}
             dispatch={dispatch}
@@ -181,15 +189,17 @@ const FacetWrapperComponent = (props) => {
   );
 };
 
-const FacetWrapper = withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(FacetWrapperComponent);
+export default FacetWrapperComponent;
 
-export default FacetWrapper;
+// const FacetWrapper = withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(FacetWrapperComponent);
+//
+// export default FacetWrapper;

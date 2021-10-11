@@ -59,7 +59,7 @@ const ViewComponent = (props) => {
   } = props;
   const { appConfig } = useAppConfig();
 
-  console.log('props', props);
+  // console.log('props', props);
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
 
@@ -145,58 +145,3 @@ const ViewComponent = (props) => {
 };
 
 export default withMultiTypeFilter()(ViewComponent);
-
-// import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
-// const Component = (props) => (
-//   <MultiTypeFacetWrapper {...props} view={ViewComponent} />
-// );
-// import { withSearch } from '@elastic/react-search-ui';
-// export default withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(Component);
-//
-
-//        {/* <ToggleSort */}
-//        {/*   onToggle={() => toggleSort('value')} */}
-//        {/*   on={sorting.sortOn === 'value'} */}
-//        {/*   icon={ */}
-//        {/*     sorting.sortOrder === 'ascending' ? ( */}
-//        {/*       <Icon name="sort alphabet ascending" /> */}
-//        {/*     ) : ( */}
-//        {/*       <Icon name="sort alphabet descending" /> */}
-//        {/*     ) */}
-//        {/*   } */}
-//        {/* > */}
-//        {/*   <Select */}
-//        {/*     className="match-select" */}
-//        {/*     value={filterType} */}
-//        {/*     options={filterTypes} */}
-//        {/*     onChange={onChangeFilterType} */}
-//        {/*   /> */}
-//        {/* </ToggleSort> */}
-//
-// const Select = ({ options, value, onChange, className }) => {
-//   const handler = (e) => onChange(e.target.value);
-//
-//   return (
-//     <select
-//       onBlur={handler}
-//       onChange={handler}
-//       value={value}
-//       className={className}
-//     >
-//       {options.map((opt) => (
-//         <option value={opt.value} key={opt.key}>
-//           {opt.text}
-//         </option>
-//       ))}
-//     </select>
-//   );
-// };
