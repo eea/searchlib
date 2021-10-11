@@ -3,6 +3,8 @@ import React from 'react';
 /**
  * This component enables acts as a wrapper over a facet and enables changing
  * its type
+ *
+ * TODO: remove this, always use withMultiTypeFilter
  */
 export default function MultiTypeFacetWrapper(props) {
   const { field, addFilter, removeFilter, filters, view } = props;
