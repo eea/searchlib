@@ -20,7 +20,7 @@
     "cypress:open": "cypress open",
     "yalc-publish": "pnpm build && npx yalc publish"
   },
-  "eslintConfig": {
+  "//eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
