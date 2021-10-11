@@ -188,8 +188,8 @@ const globalSearchConfig = {
       label: 'Publishing year',
       // TODO: implement split in buckets
       ranges: makeRange({
-        step: 10,
-        normalRange: [1970, 2100],
+        step: 1,
+        normalRange: [1958, 2021],
         includeOutlierStart: false,
         includeOutlierEnd: false,
       }),
