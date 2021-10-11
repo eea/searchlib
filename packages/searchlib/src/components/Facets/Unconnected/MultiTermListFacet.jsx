@@ -144,4 +144,4 @@ const ViewComponent = (props) => {
   );
 };
 
-export default withMultiTypeFilter()(ViewComponent);
+export default ViewComponent;

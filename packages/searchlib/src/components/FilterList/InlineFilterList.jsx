@@ -17,7 +17,9 @@ const InlineFilterList = (props) => {
         className="show-filters"
         toggle
         active={showFacets}
-        onClick={() => { debugger; setShowFacets(!showFacets) }}
+        onClick={() => {
+          setShowFacets(!showFacets);
+        }}
       >
         <Icon name="filter" />
         {showFacets ? 'Hide filters' : 'Show filters'}

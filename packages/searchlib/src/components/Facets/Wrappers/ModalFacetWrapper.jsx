@@ -3,6 +3,7 @@ import { Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
@@ -115,8 +116,18 @@ const FacetWrapperComponent = (props) => {
     removeFilter,
     // setFilter,
   } = searchContext;
-  const { field, label, filterType } = props;
+  const { field, label } = props;
   const [isOpened, setIsOpened] = React.useState();
+
+  const { appConfig } = useAppConfig();
+  const facet = appConfig.facets?.find((f) => f.field === field);
+  // const fallback = facet ? facet.filterType : defaultType;
+  const fallback = props.filterType ? props.filterType : facet.filterType;
+  const defaultValue = field
+    ? filters?.find((f) => f.field === field)?.type || fallback
+    : fallback;
+  const [localFilterType, setLocalFilterType] = React.useState(defaultValue);
+  // console.log('props', props);
 
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
@@ -152,7 +163,8 @@ const FacetWrapperComponent = (props) => {
         view={(innerProps) => (
           <OptionsWrapper
             {...innerProps}
-            filterType={filterType}
+            filterType={localFilterType}
+            onChangeFilterType={(v) => setLocalFilterType(v)}
             view={props.view}
             state={state}
             dispatch={dispatch}
@@ -175,10 +187,11 @@ const FacetWrapperComponent = (props) => {
           icon="checkmark"
           onClick={() => {
             setIsOpened(false);
-            removeFilter(field, '', filterType);
+            removeFilter(field, '', 'any');
+            removeFilter(field, '', 'all');
             if (state.length) {
               state.forEach((v) => {
-                addFilter(field, v, filterType);
+                addFilter(field, v, localFilterType);
               });
             }
           }}
