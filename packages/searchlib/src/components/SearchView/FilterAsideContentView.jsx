@@ -1,17 +1,12 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
-import {
-  ResultsPerPage,
-  Paging,
-  Sorting,
-  PagingInfo as SUIPagingInfo,
-} from '@elastic/react-search-ui';
+import { ResultsPerPage, Paging, Sorting } from '@elastic/react-search-ui';
 import {
   ViewSelectorWithLabel,
   SortingDropdownWithLabel,
   AnswersList,
   DownloadButton,
 } from '@eeacms/search/components';
+
 import registry from '@eeacms/search/registry';
 
 export const FilterAsideContentView = (props) => {
