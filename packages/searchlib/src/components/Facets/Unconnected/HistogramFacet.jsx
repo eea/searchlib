@@ -129,21 +129,20 @@ const HistogramFacet = (props) => {
       }}
     />
   ) : null;
-
-  // return (
-  //   <FacetWrapper
-  //     {...props}
-  //     filterType="any"
-  //     show={100000}
-  //     view={(props) =>
-  //       // only show facet when toggled, to allow rangeslider to work properly
-  //     }
-  //   />
-  // );
 };
 
 export default HistogramFacet;
 
+// return (
+//   <FacetWrapper
+//     {...props}
+//     filterType="any"
+//     show={100000}
+//     view={(props) =>
+//       // only show facet when toggled, to allow rangeslider to work properly
+//     }
+//   />
+// );
 // export default withSearch(
 //   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
 //     filters,

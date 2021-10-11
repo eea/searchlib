@@ -1,6 +1,7 @@
 import React from 'react';
 import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const getFacetTotalCount = (facets, name) => {
   const customFields = ['time_coverage', 'year'];
@@ -52,6 +53,7 @@ function reducer(state, action) {
 
 const OptionsWrapper = (props) => {
   const { options, view, state, dispatch, ...rest } = props;
+  const searchContext = useSearchContext();
   const View = view;
 
   /* TODO:investigate
@@ -89,6 +91,7 @@ const OptionsWrapper = (props) => {
   return (
     <View
       {...rest}
+      {...searchContext}
       options={newOptions}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });
@@ -101,16 +104,11 @@ const OptionsWrapper = (props) => {
 };
 
 const FacetWrapperComponent = (props) => {
-  const {
-    filters = [],
-    facets = {},
-    field,
-    label,
-    addFilter,
-    removeFilter,
-    filterType,
-  } = props;
+  const { field, label, filterType } = props;
   const [isOpened, setIsOpened] = React.useState();
+  const searchContext = useSearchContext();
+  const { filters = [], facets = {}, addFilter, removeFilter } = searchContext;
+
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
   const isActive = initialValue.length > 0;
