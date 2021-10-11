@@ -5,6 +5,7 @@ import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { Modal, Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -172,7 +173,7 @@ const ViewComponent = (props) => {
   );
 };
 
-export default ViewComponent;
+export default withMultiTypeFilter()(ViewComponent);
 
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 // const Component = (props) => (

@@ -5,15 +5,25 @@ import React from 'react';
  *
  */
 
-const withMultiTypeFilter = ({ defaultType = 'any' }) => (WrappedComponent) => {
-  const [filterType, setFilterType] = React.useState(defaultType);
-  return (props) => (
-    <WrappedComponent
-      {...props}
-      filterType={filterType}
-      onChangeFilterType={setFilterType}
-    />
-  );
+const withMultiTypeFilter = (options = {}) => {
+  const { defaultType = 'any' } = options;
+
+  const decorator = (WrappedComponent) => {
+    function WithWrappedComponent(props) {
+      const [filterType, setFilterType] = React.useState(defaultType);
+      return (
+        <WrappedComponent
+          {...props}
+          filterType={filterType}
+          onChangeFilterType={setFilterType}
+        />
+      );
+    }
+
+    return WithWrappedComponent;
+  };
+
+  return decorator;
 };
 
 export default withMultiTypeFilter;
