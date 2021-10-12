@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Label } from 'semantic-ui-react'; //, Rating, Icon, Accordion
+import { Segment, Label, Rating } from 'semantic-ui-react'; //, Icon, Accordion
 import withAnswers from './withAnswers';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
@@ -16,6 +16,10 @@ const highlightUrl = (url, text) => {
   // return `${url}#:~:text=${encodeURIComponent(start)},${encodeURIComponent(
   //   end,
   // )}`;
+};
+
+const extractDomain = (url) => {
+  return url ? new URL(url).hostname : url;
 };
 
 const AnswerContext = ({ item }) => {
@@ -124,6 +128,9 @@ score: 6.118757247924805
                     >
                       {result[titleField]?.raw}
                     </ExternalLink>
+                    <span className="answer__domain">
+                      {extractDomain(result[urlField]?.raw)}
+                    </span>
                     {days < 30 && (
                       <>
                         &nbsp;
@@ -145,7 +152,15 @@ score: 6.118757247924805
               })}
             </div>
           </div>
-          <h4 className="answers__boxtitle">Direct answer</h4>
+          <div className="answers__bottom">
+            <Rating
+              rating={Math.round(5 * primaryAnswer.score)}
+              maxRating={5}
+              size="mini"
+              disabled
+            />
+            <h5>Direct answer</h5>
+          </div>
         </Segment>
       ) : (
         ''
