@@ -60,7 +60,10 @@ const InlineFilterList = (props) => {
                 <Icon name="undo alternate" />
               </Button>
             </Accordion.Title>
-            <Accordion.Content className="filter-list-content" active={isOpened}>
+            <Accordion.Content
+              className="filter-list-content"
+              active={isOpened}
+            >
               <Divider inverted />
               <div className="filter">
                 {filters.map((filter, index) => {
