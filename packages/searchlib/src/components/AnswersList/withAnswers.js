@@ -15,7 +15,7 @@ const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
 
-    const { searchTerm = '' } = searchContext;
+    const { searchTerm = '', query_type } = searchContext;
     const { appConfig } = useAppConfig();
     const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
     const {
@@ -40,13 +40,13 @@ const withAnswers = (WrappedComponent) => {
       if (shouldRunSearch) {
         timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
-          const classifyQuestionBody = await buildClassifyQuestionRequest(
-            searchContext,
-            appConfig,
-          );
-          const resp = await runRequest(classifyQuestionBody, appConfig);
-          const { answer: query_type } = resp.body || {};
-          console.log('classify resp', { classifyQuestionBody, resp });
+          // const classifyQuestionBody = await buildClassifyQuestionRequest(
+          //   searchContext,
+          //   appConfig,
+          // );
+          // const resp = await runRequest(classifyQuestionBody, appConfig);
+          // const {answer:query_type} = resp.body || {};
+          // console.log('classify resp', { classifyQuestionBody, resp });
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
           // console.log('query_type', query_type);
@@ -105,6 +105,7 @@ const withAnswers = (WrappedComponent) => {
       searchContext,
       searchTerm,
       qa_queryTypes,
+      query_type,
       dispatch,
       request,
     ]);
