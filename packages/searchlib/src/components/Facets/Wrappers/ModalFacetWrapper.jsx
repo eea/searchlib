@@ -144,6 +144,7 @@ const FacetWrapperComponent = (props) => {
 
   return (
     <Modal
+      className={(isActive && 'facet active') || 'facet'}
       onClose={() => setIsOpened(false)}
       onOpen={() => setIsOpened(true)}
       open={isOpened}
