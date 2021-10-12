@@ -106,8 +106,13 @@ export const SearchView = (props) => {
           />
         }
         sideContent={<FacetsListComponent />}
-        bodyHeader={wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
-        bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
+        bodyHeader={null}
+        bodyContent={
+          <>
+            <BodyContent {...props} wasInteracted={wasInteracted} />
+            {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
+          </>
+        }
         bodyFooter={<AppInfo appConfig={appConfig} />}
       />
     </div>
