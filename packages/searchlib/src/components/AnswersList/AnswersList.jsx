@@ -7,6 +7,17 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
 import cx from 'classnames';
 
+const highlightUrl = (url, text) => {
+  return `${url}#:~:text=${encodeURIComponent(text)}`;
+  // TODO: ideally we'd use this library, but it is too much tied up to DOM
+  // https://github.com/GoogleChromeLabs/text-fragments-polyfill/blob/main/src/fragment-generation-utils.js
+  // const start = text.slice(0, 8);
+  // const end = text.slice(text.length - 8, text.length);
+  // return `${url}#:~:text=${encodeURIComponent(start)},${encodeURIComponent(
+  //   end,
+  // )}`;
+};
+
 const AnswerContext = ({ item }) => {
   const { full_context, answer } = item;
 
@@ -108,7 +119,9 @@ score: 6.118757247924805
                         value={result['issued']?.raw}
                       />
                     </span>
-                    <ExternalLink href={result[urlField]?.raw}>
+                    <ExternalLink
+                      href={highlightUrl(result[urlField]?.raw, item.answer)}
+                    >
                       {result[titleField]?.raw}
                     </ExternalLink>
                     {days < 30 && (
