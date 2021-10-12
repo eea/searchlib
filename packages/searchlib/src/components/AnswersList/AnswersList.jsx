@@ -159,6 +159,7 @@ score: 6.118757247924805
               size="mini"
               disabled
             />
+            <div className="answers__bottom__spacer"></div>
             <h5>Direct answer</h5>
           </div>
         </Segment>
