@@ -47,31 +47,29 @@ export const buildQuestionRequest = (state, config) => {
       use_dp: config.nlp.qa.use_dp || false,
       config,
       custom_query: {
-        query: {
-          // Dynamic values based on current Search UI state
-          function_score: {
-            query: {
-              bool: {
-                must: [
-                  {
-                    multi_match: {
-                      // eslint-disable-next-line
-                      query: '${query}',
-                      fields: [
-                        // TODO: use in the above query
-                        ...(config.extraQueryParams?.text_fields || [
-                          'all_fields_for_freetext',
-                        ]),
-                      ],
-                    },
+        // Dynamic values based on current Search UI state
+        function_score: {
+          query: {
+            bool: {
+              must: [
+                {
+                  multi_match: {
+                    // eslint-disable-next-line
+                      query: question,
+                    fields: [
+                      // TODO: use in the above query
+                      ...(config.extraQueryParams?.text_fields || [
+                        'all_fields_for_freetext',
+                      ]),
+                    ],
                   },
-                ],
-                ...(filter && { filter }),
-              },
+                },
+              ],
+              ...(filter && { filter }),
             },
-            // functions: [...(config.extraQueryParams?.functions || [])],
-            // score_mode: config.extraQueryParams?.score_mode || 'sum',
           },
+          // functions: [...(config.extraQueryParams?.functions || [])],
+          // score_mode: config.extraQueryParams?.score_mode || 'sum',
         },
       },
     },
