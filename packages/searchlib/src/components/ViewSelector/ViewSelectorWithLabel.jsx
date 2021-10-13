@@ -14,7 +14,7 @@ const ViewSelectorWithLabel = (props) => {
     key: view.id,
     text: (
       <>
-        <Icon name={iconNames[view.id]} />
+        <Icon title={view.title} name={iconNames[view.id]} />
       </>
     ),
     value: view.id,
