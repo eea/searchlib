@@ -4,13 +4,23 @@ import {
   ViewSelectorWithLabel,
   SortingDropdownWithLabel,
   AnswersList,
+  PagingInfo,
   DownloadButton,
 } from '@eeacms/search/components';
+import { checkInteracted } from './utils';
+import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 
 import registry from '@eeacms/search/registry';
 
 export const FilterAsideContentView = (props) => {
-  const { appConfig, activeViewId, setActiveViewId, children } = props;
+  const {
+    appConfig,
+    activeViewId,
+    setActiveViewId,
+    children,
+    filters,
+    searchTerm,
+  } = props;
   const { sortOptions, resultViews } = appConfig;
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
@@ -25,6 +35,8 @@ export const FilterAsideContentView = (props) => {
         : true;
     }),
   ];
+
+  const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
 
   return (
     <>
@@ -50,6 +62,9 @@ export const FilterAsideContentView = (props) => {
         </div>
         <div className="search-body-footer">
           <div></div>
+          <div>
+            {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
+          </div>
           <Paging />
           <ResultsPerPage />
         </div>

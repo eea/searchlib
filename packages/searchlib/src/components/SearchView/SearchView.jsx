@@ -1,12 +1,6 @@
 import React from 'react';
 import { withAppConfig } from '@eeacms/search/lib/hocs';
-import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
-import {
-  FacetsList,
-  SearchBox,
-  PagingInfo,
-  AppInfo,
-} from '@eeacms/search/components';
+import { FacetsList, SearchBox, AppInfo } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 import { checkInteracted } from './utils';
@@ -107,12 +101,7 @@ export const SearchView = (props) => {
         }
         sideContent={<FacetsListComponent />}
         bodyHeader={null}
-        bodyContent={
-          <>
-            <BodyContent {...props} wasInteracted={wasInteracted} />
-            {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
-          </>
-        }
+        bodyContent={<BodyContent {...props} wasInteracted={wasInteracted} />}
         bodyFooter={<AppInfo appConfig={appConfig} />}
       />
     </div>
