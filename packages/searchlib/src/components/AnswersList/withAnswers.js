@@ -4,7 +4,6 @@ import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
   buildSimilarityRequest,
-  buildSpacyRequest,
   buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
@@ -41,11 +40,12 @@ const withAnswers = (WrappedComponent) => {
       if (shouldRunSearch) {
         timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
-          // const classifyQuestionBody = buildClassifyQuestionRequest(
+          // const classifyQuestionBody = await buildClassifyQuestionRequest(
           //   searchContext,
           //   appConfig,
-          // );async
+          // );
           // const resp = await runRequest(classifyQuestionBody, appConfig);
+          // const {answer:query_type} = resp.body || {};
           // console.log('classify resp', { classifyQuestionBody, resp });
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
@@ -73,20 +73,12 @@ const withAnswers = (WrappedComponent) => {
             // answers are already paraphrasings, so that we can group them
             // together
 
-            const [simResp, spacyResp] = await Promise.all([
+            const [simResp] = await Promise.all([
               runRequest(
                 buildSimilarityRequest({ base, candidates }, appConfig),
                 appConfig,
               ),
-              runRequest(
-                buildSpacyRequest(
-                  { texts: [highestRatedAnswer.text] },
-                  appConfig,
-                ),
-                appConfig,
-              ),
             ]);
-            // console.log('spacy', { highestRatedAnswer, spacyResp });
 
             const { predictions = [] } = simResp.body || {};
             const data = [
@@ -97,8 +89,12 @@ const withAnswers = (WrappedComponent) => {
                   ([, score]) => score > appConfig.nlp.similarity.cutoffScore,
                 )
                 .map(([ans, score]) => ans),
-            ];
-            // console.log({ response, data, predictions, rest, highestRatedAnswer });
+            ].reduce((acc, ans) => {
+              // filter out duplicate results
+              return acc.findIndex((a) => a.id === ans.id) > -1
+                ? acc
+                : [...acc, ans];
+            }, []);
             dispatch({ type: 'loaded', data });
             setSearchedTerm(searchTerm);
           }

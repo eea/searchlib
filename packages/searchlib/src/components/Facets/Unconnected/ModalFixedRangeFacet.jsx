@@ -1,8 +1,8 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
 import cx from 'classnames';
 import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
 import { Button } from 'semantic-ui-react'; // , Header, Image
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
@@ -31,9 +31,8 @@ const FacetOptions = (props) => {
                   onRemove(opt.value);
                 }
               })
-
             }
-          //onRemove={() => onRemove(option.value)}
+            //onRemove={() => onRemove(option.value)}
           >
             <span class="title">{getFilterValueDisplay(option.value)}</span>
             <span class="count">{option.count.toLocaleString('en')}</span>
@@ -45,23 +44,46 @@ const FacetOptions = (props) => {
 };
 
 const ViewComponent = (props) => {
-  const { className, label, onRemove, onSelect, options, facets } = props;
+  const {
+    className,
+    label,
+    onRemove,
+    onSelect,
+    options,
+    facets,
+    field,
+    HeaderWrapper = 'div',
+    ContentWrapper = 'div',
+  } = props;
+  const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
   return (
-    <fieldset className={cx('sui-facet searchlib-fixedrange-facet', className)}>
-      <legend className="sui-facet__title">{label}</legend>
+    <>
+      <HeaderWrapper>
+        <div className="fixedrange__facet__header">
+          <div className="facet-title">
+            <h3>{facetConfig?.title || label}</h3>
+          </div>
+        </div>
+      </HeaderWrapper>
+      <ContentWrapper>
+        <fieldset
+          className={cx('sui-facet searchlib-fixedrange-facet', className)}
+        >
+          {options.length < 1 && <div>No matching options</div>}
 
-      {options.length < 1 && <div>No matching options</div>}
-
-      <Resizable>
-        <FacetOptions
-          options={options}
-          label={label}
-          facets={facets}
-          onSelect={onSelect}
-          onRemove={onRemove}
-        />
-      </Resizable>
-    </fieldset>
+          <Resizable>
+            <FacetOptions
+              options={options}
+              label={label}
+              facets={facets}
+              onSelect={onSelect}
+              onRemove={onRemove}
+            />
+          </Resizable>
+        </fieldset>
+      </ContentWrapper>
+    </>
   );
 };
 
@@ -70,13 +92,16 @@ const ModalFixedRangeFacetComponent = (props) => {
   return <ViewComponent {...props} />;
 };
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(ModalFixedRangeFacetComponent);
+export default ModalFixedRangeFacetComponent;
+
+// import { withSearch } from '@elastic/react-search-ui';
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(ModalFixedRangeFacetComponent);

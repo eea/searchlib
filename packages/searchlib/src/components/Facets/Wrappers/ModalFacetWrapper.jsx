@@ -1,8 +1,9 @@
 import React from 'react';
-import { withSearch, Facet as SUIFacet } from '@elastic/react-search-ui';
+import { Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
-import MultiCheckboxFacet from './MultiCheckboxFacet';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
 
 const getFacetTotalCount = (facets, name) => {
@@ -55,22 +56,22 @@ function reducer(state, action) {
 
 const OptionsWrapper = (props) => {
   const { options, view, state, dispatch, ...rest } = props;
-  const View = view || MultiCheckboxFacet;
-  const previousOptions = usePrevious(options);
+  const searchContext = useSearchContext();
+  const View = view;
 
-  /* TODO:investigate
-    React.useEffect(() => {
-      if (previousOptions && !isEqual(options, previousOptions)) {
-        const newState = options
-          .filter(({ selected }) => !!selected)
-          .map(({ value }) => value);
-        dispatch({
-          type: 'reset',
-          value: newState,
-        });
-      }
-    }, [state, dispatch, options, previousOptions]);
-  */
+  const previousOptions = usePrevious(options);
+  React.useEffect(() => {
+    if (previousOptions && !isEqual(options, previousOptions)) {
+      const newState = options
+        .filter(({ selected }) => !!selected)
+        .map(({ value }) => value);
+      dispatch({
+        type: 'reset',
+        value: newState,
+      });
+    }
+  }, [state, dispatch, options, previousOptions]);
+
   const { tmp_state, has_names } = normalize_state(state);
 
   let newOptions = [];
@@ -90,6 +91,11 @@ const OptionsWrapper = (props) => {
   return (
     <View
       {...rest}
+      {...searchContext}
+      HeaderWrapper={Modal.Header}
+      ContentWrapper={({ children }) => (
+        <Modal.Content image>{children}</Modal.Content>
+      )}
       options={newOptions}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });
@@ -102,16 +108,27 @@ const OptionsWrapper = (props) => {
 };
 
 const FacetWrapperComponent = (props) => {
+  const searchContext = useSearchContext();
   const {
     filters = [],
     facets = {},
-    field,
-    label,
     addFilter,
     removeFilter,
-    filterType,
-  } = props;
+    // setFilter,
+  } = searchContext;
+  const { field, label } = props;
   const [isOpened, setIsOpened] = React.useState();
+
+  const { appConfig } = useAppConfig();
+  const facet = appConfig.facets?.find((f) => f.field === field);
+  // const fallback = facet ? facet.filterType : defaultType;
+  const fallback = props.filterType ? props.filterType : facet.filterType;
+  const defaultValue = field
+    ? filters?.find((f) => f.field === field)?.type || fallback
+    : fallback;
+  const [localFilterType, setLocalFilterType] = React.useState(defaultValue);
+  // console.log('props', props);
+
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
   const isActive = initialValue.length > 0;
@@ -124,8 +141,10 @@ const FacetWrapperComponent = (props) => {
       ? initialValue
       : [initialValue],
   );
+
   return (
     <Modal
+      className={(isActive && 'facet active') || 'facet'}
       onClose={() => setIsOpened(false)}
       onOpen={() => setIsOpened(true)}
       open={isOpened}
@@ -145,6 +164,8 @@ const FacetWrapperComponent = (props) => {
         view={(innerProps) => (
           <OptionsWrapper
             {...innerProps}
+            filterType={localFilterType}
+            onChangeFilterType={(v) => setLocalFilterType(v)}
             view={props.view}
             state={state}
             dispatch={dispatch}
@@ -167,10 +188,11 @@ const FacetWrapperComponent = (props) => {
           icon="checkmark"
           onClick={() => {
             setIsOpened(false);
-            removeFilter(field, '', filterType);
+            removeFilter(field, '', 'any');
+            removeFilter(field, '', 'all');
             if (state.length) {
               state.forEach((v) => {
-                addFilter(field, v, filterType);
+                addFilter(field, v, localFilterType);
               });
             }
           }}
@@ -181,15 +203,17 @@ const FacetWrapperComponent = (props) => {
   );
 };
 
-const FacetWrapper = withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(FacetWrapperComponent);
+export default FacetWrapperComponent;
 
-export default FacetWrapper;
+// const FacetWrapper = withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(FacetWrapperComponent);
+//
+// export default FacetWrapper;

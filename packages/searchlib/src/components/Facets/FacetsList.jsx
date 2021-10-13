@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
-const Facets = ({ view, defaultWrapper }) => {
+const FacetsList = ({ view, defaultWrapper }) => {
   const { appConfig, registry } = useAppConfig();
   const { facets = [] } = appConfig;
   const ViewComponent = view || registry.resolve['DefaultFacetsList'].component;
@@ -13,7 +13,7 @@ const Facets = ({ view, defaultWrapper }) => {
           const { factory, wrapper } = info;
           const facet = registry.resolve[factory];
           const FacetComponent = facet.component;
-          const WrapperComponent = wrapper
+          const FacetWrapperComponent = wrapper
             ? registry.resolve[wrapper].component
             : defaultWrapper;
           const props = {
@@ -22,7 +22,7 @@ const Facets = ({ view, defaultWrapper }) => {
             ...facet,
           };
           return (
-            <WrapperComponent
+            <FacetWrapperComponent
               key={i}
               {...props}
               field={info.field}
@@ -34,4 +34,4 @@ const Facets = ({ view, defaultWrapper }) => {
   );
 };
 
-export default Facets;
+export default FacetsList;

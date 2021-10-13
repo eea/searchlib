@@ -1,12 +1,22 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Icon } from 'semantic-ui-react';
 
 const ViewSelectorWithLabel = (props) => {
   const { views, active, onSetView } = props;
 
+  const iconNames = {
+    horizontalCard: 'list alternate',
+    card: 'th',
+    table: 'table',
+  };
+
   const viewOptions = views.map((view) => ({
     key: view.id,
-    text: view.title,
+    text: (
+      <>
+        <Icon name={iconNames[view.id]} />
+      </>
+    ),
     value: view.id,
   }));
 

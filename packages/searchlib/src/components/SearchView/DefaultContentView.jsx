@@ -35,6 +35,7 @@ export const DefaultContentView = (props) => {
   return (
     <>
       <FilterList />
+      <AnswersList />
       <div className="above-results">
         <ViewSelector
           views={availableResultViews}
@@ -47,7 +48,6 @@ export const DefaultContentView = (props) => {
           view={SortingDropdown}
         />
       </div>
-      <AnswersList />
       <ResultViewComponent>{children}</ResultViewComponent>
       <div className="row">
         <div>

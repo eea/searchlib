@@ -1,5 +1,4 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
 import { Radio } from 'semantic-ui-react';
 
 const truthy = (val) => {
@@ -41,11 +40,12 @@ export const BooleanFacetComponent = (props) => {
   );
 };
 
-const Facet = withSearch(({ filters, addFilter, removeFilter, setFilter }) => ({
-  filters,
-  addFilter,
-  removeFilter,
-  setFilter,
-}))(BooleanFacetComponent);
+// import { withSearch } from '@elastic/react-search-ui';
+// const Facet = withSearch(({ filters, addFilter, removeFilter, setFilter }) => ({
+//   filters,
+//   addFilter,
+//   removeFilter,
+//   setFilter,
+// }))(BooleanFacetComponent);
 
-export default Facet;
+export default BooleanFacetComponent;

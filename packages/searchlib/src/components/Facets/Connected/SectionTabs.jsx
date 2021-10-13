@@ -16,9 +16,18 @@ const SectionTabs = (props) => {
   if (!Array.isArray(activeValues)) {
     activeValues = [activeValues];
   }
+  const allCount = sections.reduce((acc, { count }) => acc + count, 0);
 
   return (
     <Menu className="content-section-tabs">
+      <Menu.Item
+        onClick={() => {
+          searchContext.removeFilter(facetField, '', 'any');
+        }}
+        active={activeValues.length === 0}
+      >
+        {`All (${allCount})`}
+      </Menu.Item>
       {sections.map(({ value, count }) => (
         <Menu.Item
           key={value}

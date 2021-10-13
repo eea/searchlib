@@ -1,19 +1,48 @@
 import React from 'react';
-import { Segment, Label } from 'semantic-ui-react'; //, Rating, Icon, Accordion
+import { Segment, Label, Rating } from 'semantic-ui-react'; //, Icon, Accordion
 import withAnswers from './withAnswers';
-import HorizontalCardItem, {
-  ExternalLink,
-} from '@eeacms/search/components/Result/HorizontalCardItem';
+import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { DateTime } from '@eeacms/search/components'; //, StringList
 import cx from 'classnames';
 
+const highlightUrl = (url, text) => {
+  return `${url}#:~:text=${encodeURIComponent(text)}`;
+  // TODO: ideally we'd use this library, but it is too much tied up to DOM
+  // https://github.com/GoogleChromeLabs/text-fragments-polyfill/blob/main/src/fragment-generation-utils.js
+  // const start = text.slice(0, 8);
+  // const end = text.slice(text.length - 8, text.length);
+  // return `${url}#:~:text=${encodeURIComponent(start)},${encodeURIComponent(
+  //   end,
+  // )}`;
+};
+
+const extractDomain = (url) => {
+  return url ? new URL(url).hostname : url;
+};
+
 const AnswerContext = ({ item }) => {
+  const { full_context, answer } = item;
+
+  const start = (full_context || '').indexOf(answer);
+  // console.log({ full_context, answer, start, item });
+
+  const pre = full_context
+    ? full_context.slice(0, start)
+    : item.context.slice(0, item.offset_start);
+  const ans = full_context
+    ? answer
+    : item.context.slice(item.offset_start, item.offset_end);
+  const post = full_context
+    ? full_context.slice(start + answer.length, full_context.length)
+    : item.context.slice(item.offset_end, item.context.length);
+
   return (
     <>
-      {item.context.slice(0, item.offset_start)}
-      <strong>{item.context.slice(item.offset_start, item.offset_end)}</strong>
-      {item.context.slice(item.offset_end, item.context.length)}
+      {pre}
+      <strong>{ans}</strong>
+      {post}
     </>
   );
 };
@@ -78,13 +107,9 @@ score: 6.118757247924805
                   { ...item, _source: item.source },
                   appConfig.field_filters,
                 );
+                const date = Date.parse(result['issued']?.raw);
                 const days =
-                  result &&
-                  (Date.now() - Date.parse(result['issued']?.raw)) /
-                    1000 /
-                    60 /
-                    60 /
-                    24;
+                  result && (Date.now() - date) / 1000 / 60 / 60 / 24;
                 let expired =
                   result?.['expires']?.raw !== undefined
                     ? Date.parse(result['expires']?.raw) < Date.now()
@@ -92,9 +117,20 @@ score: 6.118757247924805
 
                 return (
                   <div key={i} className={cx({ primary: i === 0 })}>
-                    <ExternalLink href={result[urlField]?.raw}>
+                    <span className="answer__date">
+                      <DateTime
+                        format="DATE_MED"
+                        value={result['issued']?.raw}
+                      />
+                    </span>
+                    <ExternalLink
+                      href={highlightUrl(result[urlField]?.raw, item.answer)}
+                    >
                       {result[titleField]?.raw}
                     </ExternalLink>
+                    <span className="answer__domain">
+                      {extractDomain(result[urlField]?.raw)}
+                    </span>
                     {days < 30 && (
                       <>
                         &nbsp;
@@ -116,7 +152,16 @@ score: 6.118757247924805
               })}
             </div>
           </div>
-          <h4 className="answers__boxtitle">Direct answer</h4>
+          <div className="answers__bottom">
+            <Rating
+              rating={Math.round(5 * primaryAnswer.score)}
+              maxRating={5}
+              size="mini"
+              disabled
+            />
+            <div className="answers__bottom__spacer"></div>
+            <h5>Direct answer</h5>
+          </div>
         </Segment>
       ) : (
         ''

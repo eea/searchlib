@@ -1,8 +1,8 @@
 import React from 'react';
-import { ResponsiveHistogramChart } from '../Vis';
+import { ResponsiveHistogramChart } from '@eeacms/search/components/Vis';
 import { RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
-import { withSearch } from '@elastic/react-search-ui';
+// import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
 
 function toFloat(value) {
@@ -129,26 +129,27 @@ const HistogramFacet = (props) => {
       }}
     />
   ) : null;
-
-  // return (
-  //   <FacetWrapper
-  //     {...props}
-  //     filterType="any"
-  //     show={100000}
-  //     view={(props) =>
-  //       // only show facet when toggled, to allow rangeslider to work properly
-  //     }
-  //   />
-  // );
 };
 
-export default withSearch(
-  ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-    filters,
-    facets,
-    addFilter,
-    removeFilter,
-    setFilter,
-    a11yNotify,
-  }),
-)(HistogramFacet);
+export default HistogramFacet;
+
+// return (
+//   <FacetWrapper
+//     {...props}
+//     filterType="any"
+//     show={100000}
+//     view={(props) =>
+//       // only show facet when toggled, to allow rangeslider to work properly
+//     }
+//   />
+// );
+// export default withSearch(
+//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
+//     filters,
+//     facets,
+//     addFilter,
+//     removeFilter,
+//     setFilter,
+//     a11yNotify,
+//   }),
+// )(HistogramFacet);

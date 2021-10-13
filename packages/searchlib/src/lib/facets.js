@@ -62,7 +62,7 @@ export const suiRangeFacet = ({
 export const multiTermFacet = ({
   field,
   label,
-  filterType = 'all',
+  filterType = 'any',
   isFilterable = false,
   ...params
 }) => {
