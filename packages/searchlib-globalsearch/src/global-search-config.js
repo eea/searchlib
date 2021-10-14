@@ -19,13 +19,65 @@ import {
   // getGlobalsearchIconUrl,
 } from './utils';
 
+const get_icons = (settings) => {
+  const icons = {};
+  settings.clusters.forEach((cluster) => {
+    icons[cluster.name] = cluster.icon;
+  });
+  return icons;
+};
+
+const build_runtime_mappings = (settings) => {
+  const clusters = settings.clusters
+    .map((cluster) => {
+      return (
+        '["name": "' +
+        cluster.name +
+        '", "values": ' +
+        JSON.stringify(cluster.values) +
+        ']'
+      );
+    })
+    .join(',');
+  const source =
+    'emit("_all_"); def clusters_settings = [' +
+    clusters +
+    "]; def vals = doc['" +
+    settings.field +
+    "']; def clusters = ['All']; for (val in vals) { for (cs in clusters_settings) { if (cs.values.contains(val)) { emit(cs.name) } } }";
+
+  const mapping = {};
+  mapping[settings.name] = {
+    type: 'keyword',
+    script: { source: source },
+  };
+  return mapping;
+};
+
+const clusters = {
+  name: 'countries_cluster',
+  field: 'spatial',
+  clusters: [
+    {
+      name: 'cluster1',
+      icon: 'chart area',
+      values: ['Austria', 'Germany'],
+    },
+    {
+      name: 'cluster2',
+      icon: 'edit',
+      values: ['Romania', 'Hungary'],
+    },
+  ],
+};
+
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: false, // enables NLP capabilities
+  enableNLP: true, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
-
+  runtime_mappings: build_runtime_mappings(clusters),
   extraQueryParams: {
     text_fields: [
       'title^2',
@@ -145,6 +197,17 @@ const globalSearchConfig = {
       show: 10000,
       factory: 'MultiTermListFacet',
     }),
+    multiTermFacet({
+      field: 'countries_cluster',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Countries cluster',
+      wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
+      showInFacetsList: false,
+    }),
+
     multiTermFacet({
       field: 'places',
       isFilterable: true,
@@ -292,12 +355,12 @@ const globalSearchConfig = {
       },
     })),
 
-    multiTermFacet({
-      showInFacetsList: false,
-      field: 'objectProvides',
-      isFilterable: false,
-      isMulti: true,
-    }),
+    /*    multiTermFacet({
+          showInFacetsList: false,
+          field: 'objectProvides',
+          isFilterable: false,
+          isMulti: true,
+        }),*/
   ],
 
   resultViews: [
@@ -357,13 +420,9 @@ const globalSearchConfig = {
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
-    sectionFacetsField: 'objectProvides',
-    labels: {
-      News: 'News',
-    },
-    icons: {
-      News: '',
-    },
+    sectionFacetsField: 'countries_cluster',
+
+    icons: get_icons(clusters),
   },
 
   cardViewParams: {
