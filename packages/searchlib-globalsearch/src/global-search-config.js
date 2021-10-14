@@ -401,11 +401,6 @@ const globalSearchConfig = {
           facetField: 'topic',
         },
         {
-          id: 'organisations',
-          title: 'Organisations',
-          facetField: 'organisation',
-        },
-        {
           id: 'countries',
           title: 'Countries',
           facetField: 'spatial',
