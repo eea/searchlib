@@ -12,7 +12,8 @@ import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
-// import contentTypeNormalize from './json/contentTypeNormalize.json';
+import contentTypeNormalize from './json/contentTypeNormalize.json';
+
 import {
   getTodayWithTime,
   // getGlobalsearchThumbUrl,
@@ -55,18 +56,23 @@ const build_runtime_mappings = (settings) => {
 };
 
 const clusters = {
-  name: 'countries_cluster',
-  field: 'spatial',
+  name: 'op_cluster',
+  field: 'objectProvides',
   clusters: [
     {
-      name: 'cluster1',
+      name: 'Visualizations',
       icon: 'chart area',
-      values: ['Austria', 'Germany'],
+      values: ['EEAFigure', 'DavizVisualization', 'Infographic', 'Dashboard'],
     },
     {
-      name: 'cluster2',
+      name: 'News',
       icon: 'edit',
-      values: ['Romania', 'Hungary'],
+      values: ['News', 'Report', 'Article'],
+    },
+    {
+      name: 'Data',
+      icon: 'table',
+      values: ['ExternalDataSpec', 'Data'],
     },
   ],
 };
@@ -198,10 +204,10 @@ const globalSearchConfig = {
       factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
-      field: 'countries_cluster',
+      field: 'op_cluster',
       isFilterable: true,
       isMulti: true,
-      label: 'Countries cluster',
+      label: 'Section',
       wrapper: 'ModalFacetWrapper',
       show: 10000,
       factory: 'MultiTermListFacet',
@@ -223,7 +229,7 @@ const globalSearchConfig = {
       isFilterable: false,
       isMulti: true,
       label: 'Content types',
-      whitelist: objectProvidesWhitelist,
+      //whitelist: objectProvidesWhitelist,
       wrapper: 'ModalFacetWrapper',
       factory: 'MultiTermListFacet',
     }),
@@ -420,7 +426,7 @@ const globalSearchConfig = {
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
-    sectionFacetsField: 'countries_cluster',
+    sectionFacetsField: 'op_cluster',
 
     icons: get_icons(clusters),
   },
