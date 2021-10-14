@@ -57,6 +57,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
+  const source = url
+    .replace('https://', '')
+    .replace('http://', '')
+    .split('/')[0];
 
   const [hovered, setHovered] = React.useState(false);
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
@@ -120,6 +124,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               )}
             </h3>
             {props.children ? props.children : <p>{description}</p>}
+            <p className="source">
+              <span>Source: </span>
+              <ExternalLink href={url}>{source}</ExternalLink>
+            </p>
           </div>
         </div>
         <div className="col-right">
