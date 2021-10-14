@@ -68,6 +68,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
+  const source = url
+    .replace('https://', '')
+    .replace('http://', '')
+    .split('/')[0];
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
 
   const [hovered, setHovered] = React.useState(false);
@@ -108,7 +112,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       />
 
       <Card.Content>
-        <Card.Meta>{url}</Card.Meta>
+        <Card.Meta>
+          <p className="source">
+            <span>Source: </span>
+            <ExternalLink href={url}>{source}</ExternalLink>
+          </p>
+        </Card.Meta>
         <Card.Header>
           <ExternalLink href={url}>
             {result[props.titleField]?.raw || ''}
