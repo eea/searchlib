@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Button } from 'semantic-ui-react';
+import { useAtom } from 'jotai';
+import { showFacetsAsideAtom } from './../../state';
 
 import './tiles.less';
 
@@ -22,6 +24,8 @@ const LandingPage = (props) => {
 
   const tiles =
     facets?.[activeSection]?.[0]?.data?.slice(0, maxPerSection) || [];
+
+  const [, setShowFacets] = useAtom(showFacetsAsideAtom);
 
   return (
     <div className="landing-page-container">
@@ -51,6 +55,7 @@ const LandingPage = (props) => {
                 topic.value,
                 getFacetConfig(facetsConfig, activeSection).filterType,
               );
+              setShowFacets(true);
             };
             return (
               <div
