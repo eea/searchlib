@@ -3,6 +3,20 @@ import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './utils';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
 import globalSearchConfig from './global-search-config.js';
 
+import { clmssearchui, clmsresolve } from './clms-config.js';
+
+import {
+  CLMSSearchBoxView,
+  CLMSSearchInput,
+  CLMSLayout,
+  CLMSContentView,
+  CLMSCardItem,
+  CLMSModalFacetWrapper,
+  CLMSMultiTermListFacet,
+  // CLMSVerticalCardsModalFacets,
+} from './components/CLMS';
+import { Card } from 'semantic-ui-react';
+
 const getClientProxyAddress = () => {
   const url = new URL(window.location);
   url.pathname = '';
@@ -75,31 +89,8 @@ export default function install(config) {
     }),
   ];
 
-  config.resolve = {
-    ...config.resolve,
-    CLMSSearchBoxView: {
-      component: CLMSSearchBoxView,
-    },
-    CLMSSearchInput: {
-      component: CLMSSearchInput,
-    },
-    CLMSLayout: {
-      component: CLMSLayout,
-    },
-    CLMSContentView: {
-      component: CLMSContentView,
-    },
-    'CLMSCard.Group': {
-      component: (props) => (
-        <Card.Group {...props} stackable itemsPerRow={1} doubling />
-      ),
-    },
-    CLMSCardItem: {
-      component: CLMSCardItem,
-    },
-  };
-
-  config.searchui.clms = clmsconfig(config);
+  config.searchui.clms = clmssearchui(config);
+  config.resolve = clmsresolve(config);
   // debugger;
 
   return config;

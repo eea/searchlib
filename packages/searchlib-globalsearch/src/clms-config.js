@@ -9,8 +9,32 @@ import {
   // fixedRangeFacet,
 } from '@eeacms/search';
 
-import { globalSearchConfig } from './config.js';
-function clmsconfig(config) {
+import {
+  CLMSSearchBoxView,
+  CLMSSearchInput,
+  CLMSLayout,
+  CLMSContentView,
+  CLMSCardItem,
+  CLMSModalFacetWrapper,
+  CLMSMultiTermListFacet,
+  CLMSSortingDropdown,
+  CLMSSortingDropdownWrapper,
+  // CLMSVerticalCardsModalFacets,
+} from './components/CLMS';
+
+
+import { ModalFacetWrapper } from '@eeacms/search/components';
+import { Card } from 'semantic-ui-react';
+
+import {
+  getTermFilter,
+  getValueFacet,
+  buildTermFacetAggregationRequest,
+} from '@eeacms/search/lib/search';
+import FacetsList from '@eeacms/search/components/Facets/FacetsList';
+
+import globalSearchConfig from './global-search-config.js';
+function clmssearchui(config) {
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : globalSearchConfig;
@@ -25,21 +49,23 @@ function clmsconfig(config) {
     enableNLP: false,
     facets: [
       multiTermFacet({
-        field: 'tags',
+        field: 'topics.keyword',
         isFilterable: true,
         isMulti: true,
-        label: 'Tags',
-        factory: 'MultiTermListFacet',
+        label: 'Topics',
+        // factory: 'MultiTermListFacet',
+        factory: 'CLMSMultiTermListFacet',
         // factory: 'sui.Facet',
-        wrapper: 'ModalFacetWrapper',
+        wrapper: 'CLMSModalFacetWrapper',
         show: 10000,
+        showSearch: false,
       }),
     ],
     highlight: {},
     sortOptions: [
       {
         name: 'Title a-z',
-        value: 'title',
+        value: 'Title',
         direction: 'asc',
       },
       // {
@@ -109,7 +135,61 @@ function clmsconfig(config) {
     searchBoxInputComponent: 'CLMSSearchInput',
     layoutComponent: 'CLMSLayout',
     contentBodyComponent: 'CLMSContentView',
+    facetsListComponent: 'VerticalFacets',
   };
 }
 
-export default clmsconfig;
+function clmsresolve(config) {
+  return {
+    ...config.resolve,
+    CLMSSearchBoxView: {
+      component: CLMSSearchBoxView,
+    },
+    CLMSSearchInput: {
+      component: CLMSSearchInput,
+    },
+    CLMSLayout: {
+      component: CLMSLayout,
+    },
+    CLMSContentView: {
+      component: CLMSContentView,
+    },
+    'CLMSCard.Group': {
+      component: (props) => (
+        <Card.Group {...props} stackable itemsPerRow={1} doubling />
+      ),
+    },
+    CLMSCardItem: {
+      component: CLMSCardItem,
+    },
+    CLMSModalFacetWrapper: {
+      component: CLMSModalFacetWrapper,
+    },
+    CLMSMultiTermListFacet: {
+      component: CLMSMultiTermListFacet,
+      buildRequest: buildTermFacetAggregationRequest,
+      buildFilter: getTermFilter,
+      getValue: getValueFacet,
+    },
+    VerticalFacets: {
+      component: (props) => (
+        <>
+          <CLMSSortingDropdownWrapper label={'Sort by'}
+            sortOptions={config.searchui.clms.sortOptions}
+            view={CLMSSortingDropdown}/>
+          <FacetsList
+            defaultWraper={ModalFacetWrapper}
+            view={({ children }) => (
+              <nav className="dropdown-filters">{children}</nav>
+            )}
+          />
+        </>
+      ),
+    },
+    // CLMSVerticalCardsModalFacets: {
+    //   component: CLMSVerticalCardsModalFacets,
+    // },
+  };
+}
+
+export { clmssearchui, clmsresolve };

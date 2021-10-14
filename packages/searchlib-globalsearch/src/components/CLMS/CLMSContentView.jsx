@@ -14,6 +14,7 @@ import {
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
+import { CLMSSortingDropdown } from '.';
 export const CLMSContentView = (props) => {
   const { appConfig, registry } = useAppConfig();
   const { activeViewId, setActiveViewId, children } = props;
@@ -44,7 +45,7 @@ export const CLMSContentView = (props) => {
         {/* <Sorting
           label={'Order'}
           sortOptions={sortOptions}
-          view={SortingDropdown}
+          view={CLMSSortingDropdown}
         /> */}
       </div>
       <AnswersList />

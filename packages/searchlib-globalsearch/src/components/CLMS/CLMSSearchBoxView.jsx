@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
-import { SearchInput } from '@eeacms/search/components/SearchInput/SearchInput';
+import { SearchInput } from '@eeacms/search/components';
 // import { CLMSSearchInput } from './SearchInput/CLMSSearchInput';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
