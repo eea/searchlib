@@ -405,6 +405,11 @@ const globalSearchConfig = {
           title: 'Countries',
           facetField: 'spatial',
         },
+        {
+          id: 'types',
+          title: 'Types',
+          facetField: 'objectProvides',
+        },
       ],
     },
   },
