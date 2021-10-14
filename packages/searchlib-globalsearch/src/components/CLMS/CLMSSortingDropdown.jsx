@@ -3,13 +3,13 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
 const SortingView = (props) => {
-  const { options, onChange } = props;
+  const { options, onChange, value } = props;
   console.log('props: ', props);
   return (
     <div class="ccl-form">
       <div>
         {options.map((option) => {
-          const checked = option.selected;
+          const checked = option.value === value;
           return (
             <>
               <div class="ccl-form-group">

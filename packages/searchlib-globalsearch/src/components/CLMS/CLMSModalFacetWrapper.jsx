@@ -155,22 +155,22 @@ const CLMSFacetWrapperComponent = (props) => {
     //     />
     //   }
     // >
-      
-        <SUIFacet
-          {...props}
-          // active={isOpened}
-          view={(innerProps) => (
-            <OptionsWrapper
-              {...innerProps}
-              filterType={localFilterType}
-              onChangeFilterType={(v) => setLocalFilterType(v)}
-              view={props.view}
-              state={state}
-              dispatch={dispatch}
-              field={field}
-            />
-          )}
+
+    <SUIFacet
+      {...props}
+      // active={isOpened}
+      view={(innerProps) => (
+        <OptionsWrapper
+          {...innerProps}
+          filterType={localFilterType}
+          onChangeFilterType={(v) => setLocalFilterType(v)}
+          view={props.view}
+          state={state}
+          dispatch={dispatch}
+          field={field}
         />
+      )}
+    />
     //   <Modal.Actions>
     //     <Button
     //       color="black"

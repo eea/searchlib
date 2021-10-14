@@ -10,6 +10,12 @@ import {
 } from '@eeacms/search';
 
 import {
+  getTodayWithTime,
+  // getGlobalsearchThumbUrl,
+  // getGlobalsearchIconUrl,
+} from './utils';
+
+import {
   CLMSSearchBoxView,
   CLMSSearchInput,
   CLMSLayout,
@@ -21,7 +27,6 @@ import {
   CLMSSortingDropdownWrapper,
   // CLMSVerticalCardsModalFacets,
 } from './components/CLMS';
-
 
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { Card } from 'semantic-ui-react';
@@ -35,6 +40,16 @@ import FacetsList from '@eeacms/search/components/Facets/FacetsList';
 
 import globalSearchConfig from './global-search-config.js';
 function clmssearchui(config) {
+  const baseFacet = {
+    isFilterable: true,
+    isMulti: true,
+    // factory: 'MultiTermListFacet',
+    factory: 'CLMSMultiTermListFacet',
+    // factory: 'sui.Facet',
+    wrapper: 'CLMSModalFacetWrapper',
+    show: 10000,
+    showSearch: false,
+  };
   const envConfig = process.env.RAZZLE_ENV_CONFIG
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : globalSearchConfig;
@@ -50,41 +65,75 @@ function clmssearchui(config) {
     facets: [
       multiTermFacet({
         field: 'topics.keyword',
-        isFilterable: true,
-        isMulti: true,
-        label: 'Topics',
-        // factory: 'MultiTermListFacet',
-        factory: 'CLMSMultiTermListFacet',
-        // factory: 'sui.Facet',
-        wrapper: 'CLMSModalFacetWrapper',
-        show: 10000,
-        showSearch: false,
+        label: 'Keywords',
+        ...baseFacet,
       }),
+      multiTermFacet({
+        field: 'inspire_themes.keyword',
+        label: 'INSPIRE themes',
+        ...baseFacet,
+      }),
+      multiTermFacet({
+        field: 'classification_topic_category.keyword',
+        label: 'GEMET keyword',
+        ...baseFacet,
+      }),
+      multiTermFacet({
+        field: 'temporal_coverage.keyword',
+        label: 'Temporal coverage',
+        ...baseFacet,
+      }),
+      multiTermFacet({
+        field: 'update_frequency.keyword',
+        label: 'Update frequency',
+        ...baseFacet,
+      }),
+      multiTermFacet({
+        field: 'resource_type.keyword',
+        label: 'Resource type',
+        ...baseFacet,
+      }),
+      // multiTermFacet({
+      //   field: 'content_type.keyword',
+      //   isFilterable: true,
+      //   isMulti: true,
+      //   label: 'CT',
+      //   factory: 'CLMSMultiTermListFacet',
+      //   // factory: 'BooleanFacet',
+      //   wrapper: 'CLMSModalFacetWrapper',
+      //   show: 10000,
+      //   showSearch: false,
+      // }),
     ],
     highlight: {},
     sortOptions: [
       {
         name: 'Title a-z',
-        value: 'Title',
+        value: 'title.keyword',
         direction: 'asc',
       },
-      // {
-      //   name: 'Title z-a',
-      //   value: 'title',
-      //   direction: 'desc',
-      // },
-      // {
-      //   name: 'Oldest',
-      //   value: 'issued.date',
-      //   direction: 'asc',
-      // },
-      // {
-      //   name: 'Newest',
-      //   value: 'issued.date',
-      //   direction: 'desc',
-      // },
+      {
+        name: 'Title z-a',
+        value: 'title.keyword',
+        direction: 'desc',
+      },
+      {
+        name: 'Oldest',
+        value: 'issued_date',
+        direction: 'asc',
+      },
+      {
+        name: 'Newest',
+        value: 'issued_date',
+        direction: 'desc',
+      },
     ],
-    defaultFilters: {},
+    defaultFilters: {
+      content_type: {
+        value: 'DataSet',
+        type: 'all',
+      },
+    },
     clmsCardsViewParams: {
       urlField: 'absolute_url',
       titleField: 'title',
@@ -125,12 +174,49 @@ function clmssearchui(config) {
       ],
       score_mode: 'sum',
       facet_boost_functions: {
-        query: { match_all: {} },
-        boost: '5',
-        random_score: {},
-        boost_mode: 'multiply',
+        // query: { match_all: {} },
+        // boost: '5',
+        // random_score: {},
+        // boost_mode: 'multiply',
+        // 'topics.keyword': {
+        //   linear: {
+        //     items_count_topics: {
+        //       scale: 1,
+        //       origin: 0,
+        //     },
+        //   },
+        // },
       },
     },
+    permanentFilters: [
+      // { term: { hasWorkflowState: 'published' } },
+      // {
+
+      // },
+      () => ({
+        constant_score: {
+          filter: {
+            bool: {
+              should: [
+                {
+                  bool: { must_not: { exists: { field: 'issued_date' } } },
+                },
+                { range: { issued_date: { lte: getTodayWithTime() } } },
+              ],
+              must: [
+                {
+                  term: {
+                    'content_type.keyword': 'DataSet',
+                  },
+                },
+                //   // { bool: { must: { exists: { field: 'content_type' } } } },
+                //   { query: { "content_type.keyword": { match: 'DataSet' } } },
+              ],
+            },
+          },
+        },
+      }),
+    ],
     searchBoxComponent: 'CLMSSearchBoxView',
     searchBoxInputComponent: 'CLMSSearchInput',
     layoutComponent: 'CLMSLayout',
@@ -174,9 +260,11 @@ function clmsresolve(config) {
     VerticalFacets: {
       component: (props) => (
         <>
-          <CLMSSortingDropdownWrapper label={'Sort by'}
+          <CLMSSortingDropdownWrapper
+            label={'Sort by'}
             sortOptions={config.searchui.clms.sortOptions}
-            view={CLMSSortingDropdown}/>
+            view={CLMSSortingDropdown}
+          />
           <FacetsList
             defaultWraper={ModalFacetWrapper}
             view={({ children }) => (
