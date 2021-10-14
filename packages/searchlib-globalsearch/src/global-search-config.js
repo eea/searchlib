@@ -23,7 +23,7 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: true, // enables NLP capabilities
+  enableNLP: false, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
 
   extraQueryParams: {
@@ -399,11 +399,6 @@ const globalSearchConfig = {
           id: 'topics',
           title: 'Topics',
           facetField: 'topic',
-        },
-        {
-          id: 'organisations',
-          title: 'Organisations',
-          facetField: 'organisation',
         },
         {
           id: 'countries',
