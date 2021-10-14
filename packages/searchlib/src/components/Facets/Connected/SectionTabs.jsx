@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 const SectionTabs = (props) => {
   const searchContext = useSearchContext();
@@ -10,13 +10,26 @@ const SectionTabs = (props) => {
 
   const { facets = {}, filters = [] } = searchContext;
   const facetField = contentSectionsParams.sectionFacetsField;
-  const sections = facets?.[facetField]?.[0]?.data || [];
+  let sections = facets?.[facetField]?.[0]?.data || [];
   const activeFilter = filters.find(({ field }) => field === facetField) || {};
   let activeValues = activeFilter.values || [];
   if (!Array.isArray(activeValues)) {
     activeValues = [activeValues];
   }
-  const allCount = sections.reduce((acc, { count }) => acc + count, 0);
+
+  sections = sections.map((section) => {
+    section.icon = contentSectionsParams.icons[section.value];
+    return section;
+  });
+
+  const allCount =
+    sections.filter((section) => {
+      return section.value === '_all_';
+    })?.[0]?.count || sections.reduce((acc, { count }) => acc + count, 0);
+
+  sections = sections.filter((section) => {
+    return section.value !== '_all_';
+  });
 
   return (
     <Menu className="content-section-tabs">
@@ -28,7 +41,7 @@ const SectionTabs = (props) => {
       >
         {`All (${allCount})`}
       </Menu.Item>
-      {sections.map(({ value, count }) => (
+      {sections.map(({ value, count, icon }) => (
         <Menu.Item
           key={value}
           active={activeValues.includes(value)}
@@ -36,6 +49,7 @@ const SectionTabs = (props) => {
             searchContext.setFilter(facetField, value, 'any');
           }}
         >
+          {icon !== undefined && <Icon name={icon} />}
           <span className="title">{value}</span>
           <span className="count">({count})</span>
         </Menu.Item>

@@ -91,6 +91,8 @@ export default function buildRequest(state, config, includeAggs = false) {
     ...(from && { from }),
     track_total_hits: true,
   };
-
+  if (config.runtime_mappings) {
+    body.runtime_mappings = config.runtime_mappings;
+  }
   return body;
 }

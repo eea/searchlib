@@ -12,20 +12,78 @@ import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
-// import contentTypeNormalize from './json/contentTypeNormalize.json';
+import contentTypeNormalize from './json/contentTypeNormalize.json';
+
 import {
   getTodayWithTime,
   // getGlobalsearchThumbUrl,
   // getGlobalsearchIconUrl,
 } from './utils';
 
+const get_icons = (settings) => {
+  const icons = {};
+  settings.clusters.forEach((cluster) => {
+    icons[cluster.name] = cluster.icon;
+  });
+  return icons;
+};
+
+const build_runtime_mappings = (settings) => {
+  const clusters = settings.clusters
+    .map((cluster) => {
+      return (
+        '["name": "' +
+        cluster.name +
+        '", "values": ' +
+        JSON.stringify(cluster.values) +
+        ']'
+      );
+    })
+    .join(',');
+  const source =
+    'emit("_all_"); def clusters_settings = [' +
+    clusters +
+    "]; def vals = doc['" +
+    settings.field +
+    "']; def clusters = ['All']; for (val in vals) { for (cs in clusters_settings) { if (cs.values.contains(val)) { emit(cs.name) } } }";
+
+  const mapping = {};
+  mapping[settings.name] = {
+    type: 'keyword',
+    script: { source: source },
+  };
+  return mapping;
+};
+
+const clusters = {
+  name: 'op_cluster',
+  field: 'objectProvides',
+  clusters: [
+    {
+      name: 'Visualizations',
+      icon: 'chart area',
+      values: ['EEAFigure', 'DavizVisualization', 'Infographic', 'Dashboard'],
+    },
+    {
+      name: 'News',
+      icon: 'edit',
+      values: ['News', 'Report', 'Article'],
+    },
+    {
+      name: 'Data',
+      icon: 'table',
+      values: ['ExternalDataSpec', 'Data'],
+    },
+  ],
+};
+
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: false, // enables NLP capabilities
+  enableNLP: true, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
-
+  runtime_mappings: build_runtime_mappings(clusters),
   extraQueryParams: {
     text_fields: [
       'title^2',
@@ -146,6 +204,17 @@ const globalSearchConfig = {
       factory: 'MultiTermListFacet',
     }),
     multiTermFacet({
+      field: 'op_cluster',
+      isFilterable: true,
+      isMulti: true,
+      label: 'Section',
+      wrapper: 'ModalFacetWrapper',
+      show: 10000,
+      factory: 'MultiTermListFacet',
+      showInFacetsList: false,
+    }),
+
+    multiTermFacet({
       field: 'places',
       isFilterable: true,
       isMulti: true,
@@ -160,7 +229,7 @@ const globalSearchConfig = {
       isFilterable: false,
       isMulti: true,
       label: 'Content types',
-      whitelist: objectProvidesWhitelist,
+      //whitelist: objectProvidesWhitelist,
       wrapper: 'ModalFacetWrapper',
       factory: 'MultiTermListFacet',
     }),
@@ -292,12 +361,12 @@ const globalSearchConfig = {
       },
     })),
 
-    multiTermFacet({
-      showInFacetsList: false,
-      field: 'objectProvides',
-      isFilterable: false,
-      isMulti: true,
-    }),
+    /*    multiTermFacet({
+          showInFacetsList: false,
+          field: 'objectProvides',
+          isFilterable: false,
+          isMulti: true,
+        }),*/
   ],
 
   resultViews: [
@@ -357,13 +426,9 @@ const globalSearchConfig = {
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
-    sectionFacetsField: 'objectProvides',
-    labels: {
-      News: 'News',
-    },
-    icons: {
-      News: '',
-    },
+    sectionFacetsField: 'op_cluster',
+
+    icons: get_icons(clusters),
   },
 
   cardViewParams: {
@@ -404,6 +469,11 @@ const globalSearchConfig = {
           id: 'countries',
           title: 'Countries',
           facetField: 'spatial',
+        },
+        {
+          id: 'types',
+          title: 'Types',
+          facetField: 'objectProvides',
         },
       ],
     },
