@@ -4,7 +4,7 @@ import { Dropdown } from 'semantic-ui-react';
 
 const SortingView = (props) => {
   const { options, onChange, value } = props;
-  console.log('props: ', props);
+  // console.log('props: ', props);
   return (
     <div class="ccl-form">
       <div>

@@ -59,7 +59,8 @@ function clmssearchui(config) {
     subheadline:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis luctus mauris ante, a iaculis leo placerat quis. Nullam vitae vulputate leo, et ultricies dolor.',
     REMOVEDhost: process.env.RAZZLE_ES_PROXY_ADDR,
-    host: 'http://ulmaarchitectural.cs:9200',
+    host:
+      process.env.RAZZLE_ES_PROXY_ADDR || 'http://ulmaarchitectural.cs:9200',
     elastic_index: 'clms',
     enableNLP: false,
     facets: [
