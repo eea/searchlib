@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid, Container } from 'semantic-ui-react';
 import { showFacetsAsideAtom } from './state';
+import { isLandingPageAtom } from './../SearchView/state';
 import { useAtom } from 'jotai';
 import { SectionTabs } from '@eeacms/search/components';
 import InlineFilterList from './../FilterList/InlineFilterList';
@@ -17,6 +18,7 @@ const FilterAsideLayout = (props) => {
   } = props;
   const { defaultFilters } = appConfig;
   const [showFacets] = useAtom(showFacetsAsideAtom);
+  const [isLandingPage] = useAtom(isLandingPageAtom);
   return (
     <div>
       <Container>
@@ -45,12 +47,23 @@ const FilterAsideLayout = (props) => {
         </Grid>
       ) : (
         <Grid columns={1} container stackable className="body-content">
-          <Grid.Row>
-            <Grid.Column widescreen="12" tablet="12">
-              <div>{bodyHeader}</div>
-              <div>{bodyContent}</div>
-            </Grid.Column>
-          </Grid.Row>
+          {isLandingPage ? (
+            <Grid.Row>
+              <Grid.Column widescreen="12" tablet="12">
+                <div>{bodyHeader}</div>
+                <div>{bodyContent}</div>
+              </Grid.Column>
+            </Grid.Row>
+          ) : (
+            <Grid.Row>
+              <Grid.Column widescreen="2" tablet="2"></Grid.Column>
+              <Grid.Column widescreen="8" tablet="2">
+                <div>{bodyHeader}</div>
+                <div>{bodyContent}</div>
+              </Grid.Column>
+              <Grid.Column widescreen="2" tablet="2"></Grid.Column>
+            </Grid.Row>
+          )}
         </Grid>
       )}
 
