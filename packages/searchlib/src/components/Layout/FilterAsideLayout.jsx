@@ -57,7 +57,7 @@ const FilterAsideLayout = (props) => {
           ) : (
             <Grid.Row>
               <Grid.Column widescreen="2" tablet="2"></Grid.Column>
-              <Grid.Column widescreen="8" tablet="2">
+              <Grid.Column widescreen="8" tablet="8">
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
               </Grid.Column>
