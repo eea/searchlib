@@ -1,11 +1,14 @@
 import React from 'react';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import { Menu, Icon } from 'semantic-ui-react';
+import { useAtom } from 'jotai';
+import { isLandingPageAtom } from './../../SearchView/state';
 
 const SectionTabs = (props) => {
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
   const { contentSectionsParams = {} } = appConfig;
+  const [isLandingPage] = useAtom(isLandingPageAtom);
   if (!contentSectionsParams.enable) return null;
 
   const { facets = {}, filters = [] } = searchContext;
@@ -31,7 +34,7 @@ const SectionTabs = (props) => {
     return section.value !== '_all_';
   });
 
-  return (
+  return !isLandingPage ? (
     <Menu className="content-section-tabs">
       <Menu.Item
         onClick={() => {
@@ -55,7 +58,7 @@ const SectionTabs = (props) => {
         </Menu.Item>
       ))}
     </Menu>
-  );
+  ) : null;
 };
 
 export default SectionTabs;
