@@ -45,7 +45,16 @@ export const buildQuestionRequest = (state, config) => {
     track_total_hits: false,
     params: {
       use_dp: config.nlp.qa.use_dp || false,
-      config,
+      // config,
+      DensePassageRetriever: {
+        top_k: 20,
+      },
+      RawRetriever: {
+        top_k: 20,
+      },
+      AnswerExtraction: {
+        top_k: 20,
+      },
       custom_query: {
         // Dynamic values based on current Search UI state
         function_score: {
