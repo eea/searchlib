@@ -475,6 +475,11 @@ const globalSearchConfig = {
           title: 'Types',
           facetField: 'objectProvides',
         },
+        {
+          id: 'language',
+          title: 'Languages',
+          facetField: 'language',
+        },
       ],
     },
   },
