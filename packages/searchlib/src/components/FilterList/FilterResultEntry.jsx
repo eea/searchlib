@@ -30,7 +30,7 @@ const FilterResultEntry = (props) => {
           <div class="meta">
             <DateTime format="DATE_MED" value={result.issued.raw} />
             &nbsp;|&nbsp;
-            <StringList value={result.subject.raw} />
+            <StringList value={result.subject?.raw} />
           </div>
           <h4>
             <a href={result.about.raw} target="_blank" rel="noreferrer">
@@ -38,7 +38,7 @@ const FilterResultEntry = (props) => {
               {result.title.raw}
             </a>
           </h4>
-          <p>{result.description.raw}</p>
+          <p>{result.description?.raw}</p>
         </div>
         <div className="col-right">
           <Image
