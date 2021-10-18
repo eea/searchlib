@@ -45,15 +45,17 @@ export const buildQuestionRequest = (state, config) => {
     track_total_hits: false,
     params: {
       use_dp: config.nlp.qa.use_dp || false,
-      // config,
+      config,
       DensePassageRetriever: {
-        top_k: 20,
+        top_k: parseInt(config.nlp.qa.topk_retriever || 10),
+        index: config.nlp.qa.dpr_index,
       },
       RawRetriever: {
-        top_k: 20,
+        top_k: parseInt(config.nlp.qa.topk_retriever || 10),
+        index: config.nlp.qa.raw_index,
       },
       AnswerExtraction: {
-        top_k: 20,
+        top_k: parseInt(config.nlp.qa.topk_reader || 10),
       },
       custom_query: {
         // Dynamic values based on current Search UI state

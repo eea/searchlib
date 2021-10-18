@@ -4,7 +4,7 @@ import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
   buildSimilarityRequest,
-  buildClassifyQuestionRequest,
+  // buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
 import { useAtom } from 'jotai';
@@ -49,6 +49,7 @@ const withAnswers = (WrappedComponent) => {
           // console.log('classify resp', { classifyQuestionBody, resp });
 
           const requestBody = buildQuestionRequest(searchContext, appConfig);
+          console.log('reqBody', requestBody);
           // console.log('query_type', query_type);
 
           // TODO: this might not be perfect, can be desynced
