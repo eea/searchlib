@@ -81,7 +81,7 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: false, // enables NLP capabilities
+  enableNLP: true, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
   runtime_mappings: build_runtime_mappings(clusters),
   extraQueryParams: {
