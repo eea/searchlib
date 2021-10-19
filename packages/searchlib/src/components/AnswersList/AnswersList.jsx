@@ -1,12 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { Segment, Label, Rating } from 'semantic-ui-react'; //, Icon, Accordion
+import { Segment, Label, Rating, Popup, Button } from 'semantic-ui-react'; //, Icon, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
+import AnswerBoxDetails from './AnswerBoxDetails';
 
 import withAnswers from './withAnswers';
 
@@ -82,15 +83,12 @@ score: 6.118757247924805
   const filtered = answers?.filter((item) => item.score >= cutoff);
 
   const primaryAnswer = filtered?.[0];
-
-  if (!primaryAnswer) {
-    return null;
-  }
-
-  const primaryResult = convertHitToResult(
-    { ...primaryAnswer, _source: primaryAnswer.source },
-    appConfig.field_filters,
-  );
+  const primaryResult = primaryAnswer
+    ? convertHitToResult(
+        { ...primaryAnswer, _source: primaryAnswer?.source },
+        appConfig.field_filters,
+      )
+    : null;
 
   return (
     <div className="answers-list">
@@ -132,7 +130,12 @@ score: 6.118757247924805
                       {result[titleField]?.raw}
                     </ExternalLink>
                     <span className="answer__domain">
-                      {extractDomain(result[urlField]?.raw)}
+                      Source:{' '}
+                      <ExternalLink
+                        href={highlightUrl(result[urlField]?.raw, item.answer)}
+                      >
+                        {extractDomain(result[urlField]?.raw)}
+                      </ExternalLink>
                     </span>
                     {days < 30 && (
                       <>
@@ -163,7 +166,15 @@ score: 6.118757247924805
               disabled
             />
             <div className="answers__bottom__spacer"></div>
-            <h5>Direct answer</h5>
+            <Popup
+              trigger={
+                <Button basic size="mini">
+                  Direct answer
+                </Button>
+              }
+            >
+              <AnswerBoxDetails />
+            </Popup>
           </div>
         </Segment>
       ) : (
