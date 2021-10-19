@@ -1,11 +1,14 @@
 import React from 'react';
+import cx from 'classnames';
+
 import { Segment, Label, Rating } from 'semantic-ui-react'; //, Icon, Accordion
-import withAnswers from './withAnswers';
+
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
-import cx from 'classnames';
+
+import withAnswers from './withAnswers';
 
 const highlightUrl = (url, text) => {
   return `${url}#:~:text=${encodeURIComponent(text)}`;
@@ -22,11 +25,10 @@ const extractDomain = (url) => {
   return url ? new URL(url).hostname : url;
 };
 
-const AnswerContext = ({ item }) => {
+const AnswerContext = ({ item, href }) => {
   const { full_context, answer } = item;
 
   const start = (full_context || '').indexOf(answer);
-  // console.log({ full_context, answer, start, item });
 
   const pre = full_context
     ? full_context.slice(0, start)
@@ -41,7 +43,9 @@ const AnswerContext = ({ item }) => {
   return (
     <>
       {pre}
-      <strong>{ans}</strong>
+      <strong>
+        <ExternalLink href={highlightUrl(href, ans)}>{ans}</ExternalLink>
+      </strong>
       {post}
     </>
   );
@@ -77,20 +81,11 @@ score: 6.118757247924805
   const showLoader = loading && !loaded;
   const filtered = answers?.filter((item) => item.score >= cutoff);
 
-  // console.log('filtered', { filtered, sliced: filtered?.slice(1) });
-  // console.log('answers', {
-  //   appConfig,
-  //   answers,
-  //   showLoader,
-  //   searchedTerm,
-  //   searchTerm,
-  //   filtered,
-  //   cutoff,
-  // });
-  // <Segment>
-  //   <div className="loading-tip">Looking for semantic answers...</div>
-  // </Segment>
   const primaryAnswer = filtered?.[0];
+  const primaryResult = convertHitToResult(
+    { ...primaryAnswer, _source: primaryAnswer.source },
+    appConfig.field_filters,
+  );
 
   return (
     <div className="answers-list">
@@ -100,7 +95,10 @@ score: 6.118757247924805
         <Segment className="answers-wrapper">
           <div className="answerCard">
             <h3 className="answers__directAnswer">{filtered[0].answer}</h3>
-            <AnswerContext item={primaryAnswer} />;
+            <AnswerContext
+              item={primaryAnswer}
+              href={primaryResult[urlField]?.raw}
+            />
             <div className="answers__links">
               {filtered.slice(0, 5).map((item, i) => {
                 const result = convertHitToResult(
@@ -171,3 +169,16 @@ score: 6.118757247924805
 };
 
 export default withAnswers(AnswersList);
+// console.log('filtered', { filtered, sliced: filtered?.slice(1) });
+// console.log('answers', {
+//   appConfig,
+//   answers,
+//   showLoader,
+//   searchedTerm,
+//   searchTerm,
+//   filtered,
+//   cutoff,
+// });
+// <Segment>
+//   <div className="loading-tip">Looking for semantic answers...</div>
+// </Segment>
