@@ -23,6 +23,7 @@ export function rebind(config) {
   let clone = cloneDeep(config);
 
   // rebinds functions to the "activated" config
+  // TODO: does this need to called after mutating config?
   const self = {};
   return Object.assign(
     self,
