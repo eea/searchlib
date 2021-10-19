@@ -1,11 +1,14 @@
 import React from 'react';
+import cx from 'classnames';
+
 import { Segment, Label, Rating } from 'semantic-ui-react'; //, Icon, Accordion
-import withAnswers from './withAnswers';
+
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
-import cx from 'classnames';
+
+import withAnswers from './withAnswers';
 
 const highlightUrl = (url, text) => {
   return `${url}#:~:text=${encodeURIComponent(text)}`;
