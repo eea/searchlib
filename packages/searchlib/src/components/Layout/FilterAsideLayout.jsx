@@ -33,14 +33,14 @@ const FilterAsideLayout = (props) => {
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">
           <Grid.Row>
-            <Grid.Column widescreen="2" tablet="2">
+            <Grid.Column widescreen="2" tablet="2" className="col-left">
               <div>{sideContent}</div>
             </Grid.Column>
-            <Grid.Column widescreen="8" tablet="8">
+            <Grid.Column widescreen="8" tablet="8" className="col-mid">
               <div>{bodyHeader}</div>
               <div>{bodyContent}</div>
             </Grid.Column>
-            <Grid.Column widescreen="2" tablet="2">
+            <Grid.Column widescreen="2" tablet="2" className="col-right">
               <div> </div>
             </Grid.Column>
           </Grid.Row>
@@ -49,19 +49,27 @@ const FilterAsideLayout = (props) => {
         <Grid columns={1} container stackable className="body-content">
           {isLandingPage ? (
             <Grid.Row>
-              <Grid.Column widescreen="12" tablet="12">
+              <Grid.Column widescreen="12" tablet="12" className="col-full">
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
               </Grid.Column>
             </Grid.Row>
           ) : (
             <Grid.Row>
-              <Grid.Column widescreen="2" tablet="2"></Grid.Column>
-              <Grid.Column widescreen="8" tablet="8">
+              <Grid.Column
+                widescreen="2"
+                tablet="2"
+                className="col-left"
+              ></Grid.Column>
+              <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
               </Grid.Column>
-              <Grid.Column widescreen="2" tablet="2"></Grid.Column>
+              <Grid.Column
+                widescreen="2"
+                tablet="2"
+                className="col-right"
+              ></Grid.Column>
             </Grid.Row>
           )}
         </Grid>
