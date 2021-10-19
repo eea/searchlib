@@ -74,11 +74,15 @@ function SearchBoxView(props) {
                   ''
                 )}
                 {appConfig.subheadline ? (
-                  <h3 className="searchApp-subheadline">{appConfig.subheadline}</h3>
+                  <h3 className="searchApp-subheadline">
+                    {appConfig.subheadline}
+                  </h3>
                 ) : (
                   ''
                 )}
-                <div className={cx('sui-search-box', className, autocompleteClass)}>
+                <div
+                  className={cx('sui-search-box', className, autocompleteClass)}
+                >
                   <InputView
                     mode={mode}
                     onSubmit={onSubmit}

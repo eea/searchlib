@@ -82,6 +82,11 @@ score: 6.118757247924805
   const filtered = answers?.filter((item) => item.score >= cutoff);
 
   const primaryAnswer = filtered?.[0];
+
+  if (!primaryAnswer) {
+    return null;
+  }
+
   const primaryResult = convertHitToResult(
     { ...primaryAnswer, _source: primaryAnswer.source },
     appConfig.field_filters,
