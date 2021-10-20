@@ -66,7 +66,7 @@ const clusters = {
     },
     {
       name: 'News',
-      icon: 'edit',
+      icon: 'newspaper outline',
       values: ['News', 'Report', 'Article'],
     },
     {
@@ -81,7 +81,7 @@ const get_cluster_icons = (settings) => {
   const icons = {
     fallback: {
       name: 'fallback',
-      icon: 'home',
+      icon: 'file outline',
     },
   };
   settings.clusters.forEach((cluster) => {

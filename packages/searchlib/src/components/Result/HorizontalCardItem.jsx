@@ -83,7 +83,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-full">
           <div className="meta">
-            <Icon name={clusterIcon} size="small" />
+            <span className="cluster-icon">
+              <Icon name={clusterIcon} size="small" />
+            </span>
             <span className="date">
               <DateTime
                 format="DATE_MED"
