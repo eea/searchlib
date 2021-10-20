@@ -95,7 +95,9 @@ const OptionsWrapper = (props) => {
       {...searchContext}
       HeaderWrapper={Modal.Header}
       ContentWrapper={({ children }) => (
-        <Modal.Content image>{children}</Modal.Content>
+        <Modal.Content image scrolling>
+          {children}
+        </Modal.Content>
       )}
       options={newOptions}
       onSelect={(value, force) => {
