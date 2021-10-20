@@ -77,6 +77,24 @@ const clusters = {
   ],
 };
 
+const get_cluster_icons = (settings) => {
+  const icons = {
+    fallback: {
+      name: 'fallback',
+      icon: 'home',
+    },
+  };
+  settings.clusters.forEach((cluster) => {
+    cluster.values.forEach((value) => {
+      icons[value] = {
+        cluster: cluster.name,
+        icon: cluster.icon,
+      };
+    });
+  });
+  return icons;
+};
+
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
@@ -441,6 +459,7 @@ const globalSearchConfig = {
     enabled: true,
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
+    clusterIcons: get_cluster_icons(clusters),
   },
 
   horizontalCardViewParams: {
@@ -453,6 +472,7 @@ const globalSearchConfig = {
     enabled: true,
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
+    clusterIcons: get_cluster_icons(clusters),
   },
 
   initialView: {

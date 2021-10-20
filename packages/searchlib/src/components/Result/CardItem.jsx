@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Card, Image, Label } from 'semantic-ui-react';
+import { Button, Card, Icon, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
@@ -49,6 +49,15 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     registry.resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
 
+  const clusterIcons = appConfig.cardViewParams.clusterIcons;
+
+  const getClusterIcon = (result) => {
+    return (
+      clusterIcons[result.objectProvides.raw]?.icon ||
+      clusterIcons.fallback.icon
+    );
+  };
+
   const iconFactoryName = appConfig.cardViewParams.getIconUrl;
   const getIcon =
     registry.resolve[iconFactoryName] ||
@@ -67,6 +76,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     // TODO: use a configured default
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
+  const clusterIcon = getClusterIcon(result);
+
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const source = url
     .replace('https://', '')
@@ -176,10 +187,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             size="mini"
             compact
             icon={
-              <div
-                className="card-icon"
-                style={{ backgroundImage: `url('${iconUrl}')` }}
-              ></div>
+              <div className="card-icon">
+                <Icon name={clusterIcon} size="mini" />
+              </div>
             }
           ></Button>
         </Card.Meta>
