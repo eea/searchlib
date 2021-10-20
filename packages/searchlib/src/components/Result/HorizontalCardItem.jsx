@@ -1,6 +1,6 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Image, Label, Dropdown } from 'semantic-ui-react';
+import { Icon, Image, Label, Dropdown } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
@@ -55,6 +55,15 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
+  const clusterIcons = appConfig.cardViewParams.clusterIcons;
+  const getClusterIcon = (result) => {
+    return (
+      clusterIcons[result.objectProvides.raw]?.icon ||
+      clusterIcons.fallback.icon
+    );
+  };
+  const clusterIcon = getClusterIcon(result);
+
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
   const source = url
@@ -74,6 +83,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-full">
           <div className="meta">
+            <Icon name={clusterIcon} size="small" />
             <span className="date">
               <DateTime
                 format="DATE_MED"

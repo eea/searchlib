@@ -50,13 +50,13 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     ((result, config, fallback) => fallback);
 
   const clusterIcons = appConfig.cardViewParams.clusterIcons;
-
   const getClusterIcon = (result) => {
     return (
       clusterIcons[result.objectProvides.raw]?.icon ||
       clusterIcons.fallback.icon
     );
   };
+  const clusterIcon = getClusterIcon(result);
 
   const iconFactoryName = appConfig.cardViewParams.getIconUrl;
   const getIcon =
@@ -76,7 +76,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     // TODO: use a configured default
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
-  const clusterIcon = getClusterIcon(result);
 
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const source = url
