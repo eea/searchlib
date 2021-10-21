@@ -46,7 +46,7 @@ const FilterAsideLayout = (props) => {
           </Grid.Row>
         </Grid>
       ) : (
-        <Grid columns={1} container stackable className="body-content">
+        <Grid columns={2} container stackable className="body-content">
           {isLandingPage ? (
             <Grid.Row>
               <Grid.Column widescreen="12" tablet="12" className="col-full">

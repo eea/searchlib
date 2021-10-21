@@ -68,7 +68,7 @@ function SearchBoxView(props) {
                   tablet="2"
                   className="col-left"
                 ></Grid.Column>
-                <Grid.Column widescreen="10" tablet="10" className="col-right">
+                <Grid.Column widescreen="8" tablet="8" className="col-mid">
                   <form
                     onSubmit={(e) => {
                       closeMenu();
@@ -136,7 +136,10 @@ function SearchBoxView(props) {
                             allAutocompletedItemsCount > 0
                           ) {
                             return (
-                              <AutocompleteView {...props} {...downshiftProps} />
+                              <AutocompleteView
+                                {...props}
+                                {...downshiftProps}
+                              />
                             );
                           } else {
                             return null;
@@ -146,6 +149,11 @@ function SearchBoxView(props) {
                     </div>
                   </form>
                 </Grid.Column>
+                <Grid.Column
+                  widescreen="2"
+                  tablet="2"
+                  className="col-left"
+                ></Grid.Column>
               </Grid.Row>
             </Grid>
           </div>
