@@ -106,7 +106,8 @@ function SearchBoxView(props) {
                         getInputProps={(additionalProps) => {
                           const { className, ...rest } = additionalProps || {};
                           return getInputProps({
-                            placeholder: 'Search',
+                            placeholder:
+                              'Type in keywords or just ask a question',
                             ...inputProps,
                             className: cx(
                               'sui-search-box__text-input',
