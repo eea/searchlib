@@ -116,15 +116,15 @@ function SearchInput({
         )}
 
         <MicrophoneInput onChange={onChange} />
-      </div>
-      <div className="ui button basic show-extra-facets">
-        <Icon
-          name="sliders"
-          role="button"
-          onClick={() => {
-            setShowExtraFacets(!showExtraFacets);
-          }}
-        />
+        <div className="ui button basic show-extra-facets">
+          <Icon
+            name="sliders"
+            role="button"
+            onClick={() => {
+              setShowExtraFacets(!showExtraFacets);
+            }}
+          />
+        </div>
       </div>
 
       {getAutocomplete()}
