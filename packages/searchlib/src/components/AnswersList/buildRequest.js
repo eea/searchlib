@@ -60,13 +60,15 @@ export const buildQuestionRequest = (state, config) => {
       custom_query: {
         // Dynamic values based on current Search UI state
         function_score: {
+          functions: config?.extraQueryParams?.functions,
+          score_mode: config?.extraQueryParams?.score_mode,
           query: {
             bool: {
               must: [
                 {
                   multi_match: {
                     // eslint-disable-next-line
-                      query: question,
+                    query: question,
                     fields: [
                       // TODO: use in the above query
                       ...(config.extraQueryParams?.text_fields || [
