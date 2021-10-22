@@ -27,7 +27,7 @@ import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardI
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
 import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
-import { Item, Card, Menu } from 'semantic-ui-react';
+import { Item, Card, Menu, Sticky } from 'semantic-ui-react';
 import {
   onResultClick,
   onAutocompleteResultClick,
@@ -171,16 +171,22 @@ const config = {
       component: ModalFacetWrapper,
     },
     VerticalCardsModalFacets: {
-      component: (props) => (
-        <FacetsList
-          defaultWraper={ModalFacetWrapper}
-          view={({ children }) => (
-            <Card.Group {...props} stackable itemsPerRow={1}>
-              {children}
-            </Card.Group>
-          )}
-        />
-      ),
+      component: (props) => {
+        const text = '';
+        // debugger; TODO use forwardedRefStickyFacets
+        return (
+          <Sticky context={null}>
+            <FacetsList
+              defaultWraper={ModalFacetWrapper}
+              view={({ children }) => (
+                <Card.Group {...props} stackable itemsPerRow={1}>
+                  {children}
+                </Card.Group>
+              )}
+            />
+          </Sticky>
+        );
+      },
     },
     FilterAsideLayout: {
       component: FilterAsideLayout,
