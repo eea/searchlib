@@ -9,6 +9,8 @@ import { Label, Icon } from 'semantic-ui-react'; // Button,
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
+import { useAtom } from 'jotai';
+import { showExtraFacetsAtom } from './state';
 
 function SearchInput({
   getAutocomplete,
@@ -26,6 +28,7 @@ function SearchInput({
   const currentTerm = searchPhrases.pop();
 
   const inpRef = React.useRef();
+  const [showExtraFacets, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
 
   React.useEffect(() => {
     mode === 'view' && inpRef.current && inpRef.current.focus();
@@ -114,16 +117,27 @@ function SearchInput({
 
         <MicrophoneInput onChange={onChange} />
       </div>
+      <div className="ui button basic show-extra-facets">
+        <Icon
+          name="sliders"
+          role="button"
+          onClick={() => {
+            setShowExtraFacets(!showExtraFacets);
+          }}
+        />
+      </div>
 
       {getAutocomplete()}
 
-      <div className="extra-facets">
-        {searchPhrases.length > 0 &&
-          searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
-            <ExactPhrasesFacet />
-          )}
-        <IncludeArchivedFacet />
-      </div>
+      {showExtraFacets ? (
+        <div className="extra-facets">
+          {searchPhrases.length > 0 &&
+            searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
+              <ExactPhrasesFacet />
+            )}
+          <IncludeArchivedFacet />
+        </div>
+      ) : null}
     </>
   );
 }
