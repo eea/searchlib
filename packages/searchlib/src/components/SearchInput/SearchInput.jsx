@@ -38,37 +38,40 @@ function SearchInput({
     <>
       <div className="search-input">
         <div className="terms-box">
-          <Icon name="search" size="large" color="grey" />
-          {searchPhrases.map(
-            (phrase, i) =>
-              phrase &&
-              phrase.trim() && (
-                <Label key={i} className="search-phrase">
-                  {phrase}{' '}
-                  <Icon
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onSubmit(
-                        e,
-                        [
-                          ...searchPhrases.filter((p) => p !== phrase),
-                          currentTerm,
-                        ].join('|'),
-                        {
-                          deleteOneTerm: true,
-                        },
-                      );
+          <div className="search-terms">
+            {searchPhrases.map(
+              (phrase, i) =>
+                phrase &&
+                phrase.trim() && (
+                  <Label key={i} className="search-phrase">
+                    {phrase}{' '}
+                    <Icon
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSubmit(
+                          e,
+                          [
+                            ...searchPhrases.filter((p) => p !== phrase),
+                            currentTerm,
+                          ].join('|'),
+                          {
+                            deleteOneTerm: true,
+                          },
+                        );
 
-                      setTimeout(() => {
-                        inpRef.current && inpRef.current.focus();
-                      }, 500);
-                    }}
-                    name="trash"
-                    size="small"
-                  />
-                </Label>
-              ),
-          )}
+                        setTimeout(() => {
+                          inpRef.current && inpRef.current.focus();
+                        }, 500);
+                      }}
+                      name="trash"
+                      size="small"
+                    />
+                  </Label>
+                ),
+            )}
+          </div>
+
+          <Icon name="search" size="large" color="grey" />
 
           <input
             {...domProps}
@@ -115,6 +118,7 @@ function SearchInput({
               />
             </div>
           )}
+
           {getAutocomplete()}
         </div>
         <div class="input-controls">
