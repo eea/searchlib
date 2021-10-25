@@ -21,13 +21,13 @@ import {
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
-import FacetsList from '@eeacms/search/components/Facets/FacetsList';
+import StickyFacetList from '@eeacms/search/components/Facets/StickyFacetList';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
 import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
-import { Item, Card, Menu, Sticky } from 'semantic-ui-react';
+import { Item, Card, Menu } from 'semantic-ui-react';
 import {
   onResultClick,
   onAutocompleteResultClick,
@@ -171,22 +171,7 @@ const config = {
       component: ModalFacetWrapper,
     },
     VerticalCardsModalFacets: {
-      component: (props) => {
-        const text = '';
-        // debugger; TODO use forwardedRefStickyFacets
-        return (
-          <Sticky context={null}>
-            <FacetsList
-              defaultWraper={ModalFacetWrapper}
-              view={({ children }) => (
-                <Card.Group {...props} stackable itemsPerRow={1}>
-                  {children}
-                </Card.Group>
-              )}
-            />
-          </Sticky>
-        );
-      },
+      component: StickyFacetList,
     },
     FilterAsideLayout: {
       component: FilterAsideLayout,

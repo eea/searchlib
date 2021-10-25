@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import { SectionTabs } from '@eeacms/search/components';
 import InlineFilterList from './../FilterList/InlineFilterList';
 import { Ref } from 'semantic-ui-react';
+import { bodyContentRefAtom } from '@eeacms/search/state';
 
 const FilterAsideLayout = (props) => {
   const {
@@ -20,25 +21,33 @@ const FilterAsideLayout = (props) => {
   const { defaultFilters } = appConfig;
   const [showFacets] = useAtom(showFacetsAsideAtom);
   const [isLandingPage] = useAtom(isLandingPageAtom);
-  const forwardedRefStickyFacets = React.useRef(null);
+  // const forwardedRefStickyFacets = React.useRef(null);
+
+  const [stateRef, setStateRef] = useAtom(bodyContentRefAtom);
+  const setRef = React.useCallback(
+    (ref) => {
+      setStateRef(ref);
+    },
+    [setStateRef],
+  );
 
   return (
-    <Ref innerRef={forwardedRefStickyFacets}>
-      <div>
-        <Container>
-          <div className="sui-layout-header">
-            <div className="sui-layout-header__inner">{header}</div>
-          </div>
-        </Container>
+    <div>
+      <Container>
+        <div className="sui-layout-header">
+          <div className="sui-layout-header__inner">{header}</div>
+        </div>
+      </Container>
 
-        <SectionTabs />
-        <InlineFilterList defaultFilters={defaultFilters} />
+      <SectionTabs />
+      <InlineFilterList defaultFilters={defaultFilters} />
 
-        {showFacets ? (
-          <Grid columns={2} container stackable className="body-content">
+      {showFacets ? (
+        <Grid columns={2} container stackable className="body-content">
+          <Ref innerRef={setRef}>
             <Grid.Row>
               <Grid.Column widescreen="2" tablet="2" className="col-left">
-                <div>{sideContent}</div>
+                <div className={stateRef ? 'scrolled' : ''}>{sideContent}</div>
               </Grid.Column>
               <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
@@ -48,42 +57,42 @@ const FilterAsideLayout = (props) => {
                 <div> </div>
               </Grid.Column>
             </Grid.Row>
-          </Grid>
-        ) : (
-          <Grid columns={2} container stackable className="body-content">
-            {isLandingPage ? (
-              <Grid.Row>
-                <Grid.Column widescreen="12" tablet="12" className="col-full">
-                  <div>{bodyHeader}</div>
-                  <div>{bodyContent}</div>
-                </Grid.Column>
-              </Grid.Row>
-            ) : (
-              <Grid.Row>
-                <Grid.Column
-                  widescreen="2"
-                  tablet="2"
-                  className="col-left"
-                ></Grid.Column>
-                <Grid.Column widescreen="8" tablet="8" className="col-mid">
-                  <div>{bodyHeader}</div>
-                  <div>{bodyContent}</div>
-                </Grid.Column>
-                <Grid.Column
-                  widescreen="2"
-                  tablet="2"
-                  className="col-right"
-                ></Grid.Column>
-              </Grid.Row>
-            )}
-          </Grid>
-        )}
-
-        <Grid container className="body-footer">
-          <div>{bodyFooter}</div>
+          </Ref>
         </Grid>
-      </div>
-    </Ref>
+      ) : (
+        <Grid columns={2} container stackable className="body-content">
+          {isLandingPage ? (
+            <Grid.Row>
+              <Grid.Column widescreen="12" tablet="12" className="col-full">
+                <div>{bodyHeader}</div>
+                <div>{bodyContent}</div>
+              </Grid.Column>
+            </Grid.Row>
+          ) : (
+            <Grid.Row>
+              <Grid.Column
+                widescreen="2"
+                tablet="2"
+                className="col-left"
+              ></Grid.Column>
+              <Grid.Column widescreen="8" tablet="8" className="col-mid">
+                <div>{bodyHeader}</div>
+                <div>{bodyContent}</div>
+              </Grid.Column>
+              <Grid.Column
+                widescreen="2"
+                tablet="2"
+                className="col-right"
+              ></Grid.Column>
+            </Grid.Row>
+          )}
+        </Grid>
+      )}
+
+      <Grid container className="body-footer">
+        <div>{bodyFooter}</div>
+      </Grid>
+    </div>
   );
 };
 
