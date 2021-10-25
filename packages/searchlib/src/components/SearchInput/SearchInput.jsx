@@ -37,97 +37,99 @@ function SearchInput({
   return (
     <>
       <div className="search-input">
-        <Icon name="search" size="large" color="grey" />
-        {searchPhrases.map(
-          (phrase, i) =>
-            phrase &&
-            phrase.trim() && (
-              <Label key={i} className="search-phrase">
-                {phrase}{' '}
-                <Icon
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onSubmit(
-                      e,
-                      [
-                        ...searchPhrases.filter((p) => p !== phrase),
-                        currentTerm,
-                      ].join('|'),
-                      {
-                        deleteOneTerm: true,
-                      },
-                    );
+        <div className="terms-box">
+          <Icon name="search" size="large" color="grey" />
+          {searchPhrases.map(
+            (phrase, i) =>
+              phrase &&
+              phrase.trim() && (
+                <Label key={i} className="search-phrase">
+                  {phrase}{' '}
+                  <Icon
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onSubmit(
+                        e,
+                        [
+                          ...searchPhrases.filter((p) => p !== phrase),
+                          currentTerm,
+                        ].join('|'),
+                        {
+                          deleteOneTerm: true,
+                        },
+                      );
 
-                    setTimeout(() => {
-                      inpRef.current && inpRef.current.focus();
-                    }, 500);
-                  }}
-                  name="trash"
-                  size="small"
-                />
-              </Label>
-            ),
-        )}
+                      setTimeout(() => {
+                        inpRef.current && inpRef.current.focus();
+                      }, 500);
+                    }}
+                    name="trash"
+                    size="small"
+                  />
+                </Label>
+              ),
+          )}
 
-        <input
-          {...domProps}
-          value={currentTerm}
-          ref={inpRef}
-          className=""
-          onChange={(event) => {
-            let {
-              target: { value },
-            } = event;
-            value = [...searchPhrases, value].join('|');
-            inputProps.onChange({ target: { value } });
-          }}
-          onKeyDown={(ev) => {
-            if (ev.key === 'Backspace') {
-              if (currentTerm === '' && searchPhrases.length > 0) {
-                const lastPhrase = searchPhrases[searchPhrases.length - 1];
-                const fakeEvent = {
-                  target: {
-                    value: `${searchPhrases
-                      .slice(0, searchPhrases.length - 1)
-                      .join('|')}|${lastPhrase}`,
-                  },
-                };
-                ev.preventDefault();
-                inputProps.onChange(fakeEvent);
-                return;
+          <input
+            {...domProps}
+            value={currentTerm}
+            ref={inpRef}
+            className=""
+            onChange={(event) => {
+              let {
+                target: { value },
+              } = event;
+              value = [...searchPhrases, value].join('|');
+              inputProps.onChange({ target: { value } });
+            }}
+            onKeyDown={(ev) => {
+              if (ev.key === 'Backspace') {
+                if (currentTerm === '' && searchPhrases.length > 0) {
+                  const lastPhrase = searchPhrases[searchPhrases.length - 1];
+                  const fakeEvent = {
+                    target: {
+                      value: `${searchPhrases
+                        .slice(0, searchPhrases.length - 1)
+                        .join('|')}|${lastPhrase}`,
+                    },
+                  };
+                  ev.preventDefault();
+                  inputProps.onChange(fakeEvent);
+                  return;
+                }
               }
-            }
 
-            return inputProps.onKeyDown(ev);
-          }}
-          onBlur={() => {
-            // console.log('blur?');
-          }}
-        />
-
-        {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && (
-          <div className="ui button basic">
-            <Icon
-              name="delete"
-              role="button"
-              onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })}
-            />
-          </div>
-        )}
-
-        <MicrophoneInput onChange={onChange} />
-        <div className="ui button basic show-extra-facets">
-          <Icon
-            name="sliders"
-            role="button"
-            onClick={() => {
-              setShowExtraFacets(!showExtraFacets);
+              return inputProps.onKeyDown(ev);
+            }}
+            onBlur={() => {
+              // console.log('blur?');
             }}
           />
+
+          {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && (
+            <div className="ui button basic">
+              <Icon
+                name="delete"
+                role="button"
+                onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })}
+              />
+            </div>
+          )}
+          {getAutocomplete()}
+        </div>
+        <div class="input-controls">
+          <div className="ui button basic show-extra-facets">
+            <Icon
+              name="sliders"
+              role="button"
+              onClick={() => {
+                setShowExtraFacets(!showExtraFacets);
+              }}
+            />
+          </div>
+          <MicrophoneInput onChange={onChange} />
         </div>
       </div>
-
-      {getAutocomplete()}
 
       {showExtraFacets ? (
         <div className="extra-facets">
