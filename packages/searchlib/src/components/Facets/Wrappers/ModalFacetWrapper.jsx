@@ -181,7 +181,6 @@ const FacetWrapperComponent = (props) => {
           }
           className={(isActive && 'facet active') || 'facet'}
           onClick={() => {}}
-          meta={getFacetTotalCount(facets, field)}
         />
       }
     >
