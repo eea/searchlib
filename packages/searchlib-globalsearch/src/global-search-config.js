@@ -441,6 +441,10 @@ const globalSearchConfig = {
     },
   ],
 
+  contentUtilsParams: {
+    clusterIcons: get_cluster_icons(clusters),
+  },
+
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,

@@ -15,6 +15,13 @@ function getFilterValueDisplay(filterValue) {
 
 const FacetOptions = (props) => {
   const { sortedOptions, onSelect, onRemove } = props;
+  const { appConfig } = useAppConfig();
+
+  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
+  const getClusterIcon = (title) => {
+    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  };
+
   return (
     <div>
       {sortedOptions.map((option) => {
@@ -29,6 +36,7 @@ const FacetOptions = (props) => {
               checked ? onRemove(option.value) : onSelect(option.value)
             }
           >
+            <Icon name={getClusterIcon(option.value)} />
             <span className="title">{getFilterValueDisplay(option.value)}</span>
             <span className="count">{option.count.toLocaleString('en')}</span>
           </Button>
