@@ -122,7 +122,12 @@ function SearchInput({
           {getAutocomplete()}
         </div>
         <div className="input-controls">
-          <div className="ui button basic show-extra-facets">
+          <div
+            className={
+              'ui button basic show-extra-facets ' +
+              (showExtraFacets ? 'opened' : '')
+            }
+          >
             <Icon
               name="sliders"
               role="button"
