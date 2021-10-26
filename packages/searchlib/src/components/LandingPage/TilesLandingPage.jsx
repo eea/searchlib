@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from './../../state';
 
@@ -17,10 +17,15 @@ const LandingPage = (props) => {
   const {
     sections = [],
     maxPerSection = 12,
+    clusterIcons = {},
   } = appConfig.initialView.tilesLandingPageParams;
   const [activeSection, setActiveSection] = React.useState(
     sections?.[0]?.facetField,
   );
+
+  const getClusterIcon = (title) => {
+    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  };
 
   const tiles =
     facets?.[activeSection]?.[0]?.data?.slice(0, maxPerSection) || [];
@@ -67,7 +72,12 @@ const LandingPage = (props) => {
                 onClick={onClickHandler}
               >
                 <div className="content">
-                  <div className="header">{topic.value}</div>
+                  <div className="header">
+                    {activeSection === 'objectProvides' ? (
+                      <Icon name={getClusterIcon(topic.value)} />
+                    ) : null}
+                    {topic.value}
+                  </div>
                 </div>
                 <div className="extra content">
                   <span className="count">

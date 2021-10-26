@@ -479,6 +479,7 @@ const globalSearchConfig = {
     factory: 'TilesLandingPage',
     tilesLandingPageParams: {
       maxPerSection: 30,
+      clusterIcons: get_cluster_icons(clusters),
       sections: [
         {
           id: 'topics',
