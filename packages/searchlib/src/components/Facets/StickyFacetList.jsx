@@ -6,8 +6,6 @@ import { useAtom } from 'jotai';
 import { bodyContentRefAtom } from '@eeacms/search/state';
 
 export default (props) => {
-  // const text = '';
-  // debugger; TODO use forwardedRefStickyFacets
   const [bodyRef] = useAtom(bodyContentRefAtom);
 
   return (

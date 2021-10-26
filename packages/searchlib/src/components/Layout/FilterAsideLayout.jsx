@@ -21,7 +21,6 @@ const FilterAsideLayout = (props) => {
   const { defaultFilters } = appConfig;
   const [showFacets] = useAtom(showFacetsAsideAtom);
   const [isLandingPage] = useAtom(isLandingPageAtom);
-  // const forwardedRefStickyFacets = React.useRef(null);
 
   const [stateRef, setStateRef] = useAtom(bodyContentRefAtom);
   const setRef = React.useCallback(
