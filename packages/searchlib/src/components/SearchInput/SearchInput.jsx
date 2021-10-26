@@ -5,7 +5,7 @@
  * - search phrases
  */
 import React from 'react';
-import { Button, Label, Icon } from 'semantic-ui-react';
+import { Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
@@ -122,15 +122,15 @@ function SearchInput({
           {getAutocomplete()}
         </div>
         <div className="input-controls">
-          <Button
-            icon
-            className="show-extra-facets"
-            onClick={() => {
-              setShowExtraFacets(!showExtraFacets);
-            }}
-          >
-            <Icon name="sliders" />
-          </Button>
+          <div className="ui button basic show-extra-facets">
+            <Icon
+              name="sliders"
+              role="button"
+              onClick={() => {
+                setShowExtraFacets(!showExtraFacets);
+              }}
+            />
+          </div>
 
           <MicrophoneInput onChange={onChange} />
         </div>
