@@ -46,6 +46,7 @@ function SearchInput({
             ref={inpRef}
             className=""
             onChange={(event) => {
+              setShowExtraFacets(false);
               let {
                 target: { value },
               } = event;
