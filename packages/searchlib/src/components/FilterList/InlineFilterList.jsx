@@ -4,14 +4,17 @@ import { Divider, Segment, Accordion, Button, Icon } from 'semantic-ui-react';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
+import { isLandingPageAtom } from './../SearchView/state';
 
 const InlineFilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = useSearchContext();
   const { defaultFilters } = props;
   const [isOpened, setIsOpened] = React.useState(false);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
+  const [isLandingPage] = useAtom(isLandingPageAtom);
+  const hideFilters = true; // TODO Show/Hide filters + Reset + Sort + Display - in the same component
 
-  return (
+  return !isLandingPage ? (
     <div className="inline-filter-list">
       <Button
         className="show-filters"
@@ -24,7 +27,7 @@ const InlineFilterList = (props) => {
         <Icon name="filter" />
         {showFacets ? 'Hide filters' : 'Show more filters'}
       </Button>
-      {filters.length ? (
+      {filters.length && !hideFilters ? (
         <Segment inverted className="filter-list">
           <Accordion inverted>
             <Accordion.Title
@@ -90,7 +93,7 @@ const InlineFilterList = (props) => {
         </Segment>
       ) : null}
     </div>
-  );
+  ) : null;
 };
 
 export default InlineFilterList;

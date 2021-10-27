@@ -46,16 +46,29 @@ export const buildQuestionRequest = (state, config) => {
     params: {
       use_dp: config.nlp.qa.use_dp || false,
       config,
+      DensePassageRetriever: {
+        top_k: parseInt(config.nlp.qa.topk_retriever || 10),
+        index: config.nlp.qa.dpr_index,
+      },
+      RawRetriever: {
+        top_k: parseInt(config.nlp.qa.topk_retriever || 10),
+        index: config.nlp.qa.raw_index,
+      },
+      AnswerExtraction: {
+        top_k: parseInt(config.nlp.qa.topk_reader || 10),
+      },
       custom_query: {
         // Dynamic values based on current Search UI state
         function_score: {
+          functions: config?.extraQueryParams?.functions,
+          score_mode: config?.extraQueryParams?.score_mode,
           query: {
             bool: {
               must: [
                 {
                   multi_match: {
                     // eslint-disable-next-line
-                      query: question,
+                    query: question,
                     fields: [
                       // TODO: use in the above query
                       ...(config.extraQueryParams?.text_fields || [

@@ -55,7 +55,7 @@ export default function buildRequest(state, config, includeAggs = false) {
     sortDirection,
     sortField,
   } = state;
-  // console.log('buildRequest', state);
+  // console.log('buildRequest', config);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildFullTextMatch(searchTerm, filters, config);
@@ -90,9 +90,13 @@ export default function buildRequest(state, config, includeAggs = false) {
     ...(size && { size }),
     ...(from && { from }),
     track_total_hits: true,
+    ...(config.runtime_mappings && {
+      runtime_mappings: config.runtime_mappings,
+    }),
+    ...(config.enableNLP && {
+      ...config.requestParams,
+    }),
   };
-  if (config.runtime_mappings) {
-    body.runtime_mappings = config.runtime_mappings;
-  }
+
   return body;
 }

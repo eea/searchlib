@@ -21,7 +21,7 @@ import {
 import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearchInput';
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
-import FacetsList from '@eeacms/search/components/Facets/FacetsList';
+import StickyFacetList from '@eeacms/search/components/Facets/StickyFacetList';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -171,16 +171,7 @@ const config = {
       component: ModalFacetWrapper,
     },
     VerticalCardsModalFacets: {
-      component: (props) => (
-        <FacetsList
-          defaultWraper={ModalFacetWrapper}
-          view={({ children }) => (
-            <Card.Group {...props} stackable itemsPerRow={1}>
-              {children}
-            </Card.Group>
-          )}
-        />
-      ),
+      component: StickyFacetList,
     },
     FilterAsideLayout: {
       component: FilterAsideLayout,

@@ -4,18 +4,20 @@ import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
   buildSimilarityRequest,
-  buildClassifyQuestionRequest,
+  // buildClassifyQuestionRequest,
 } from './buildRequest';
 import { requestFamily } from './state';
 import { useAtom } from 'jotai';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const timeoutRef = {};
 
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
+    // console.log('search context', searchContext);
 
-    const { searchTerm = '', query_type } = searchContext;
+    const { searchTerm = '', query_type, filters } = searchContext;
     const { appConfig } = useAppConfig();
     const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
     const {
@@ -26,35 +28,24 @@ const withAnswers = (WrappedComponent) => {
       ],
     } = appConfig?.nlp?.qa || {};
 
-    const requestAtom = requestFamily(searchTerm);
+    const requestAtom = requestFamily({ searchTerm, filters });
     const [request, dispatch] = useAtom(requestAtom);
-    // console.log('requestAtom', { request, searchedTerm, searchTerm });
 
-    React.useEffect(() => {
+    useDeepCompareEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
       const shouldRunSearch = searchTerm; // && searchTerm.trim().indexOf(' ') > -1;
-      // console.log('shouldRunSearch', qa_queryTypes);
 
       if (shouldRunSearch) {
         timeoutRef.current = setTimeout(async () => {
           const { loading, loaded } = request;
-          // const classifyQuestionBody = await buildClassifyQuestionRequest(
-          //   searchContext,
-          //   appConfig,
-          // );
-          // const resp = await runRequest(classifyQuestionBody, appConfig);
-          // const {answer:query_type} = resp.body || {};
-          // console.log('classify resp', { classifyQuestionBody, resp });
-
           const requestBody = buildQuestionRequest(searchContext, appConfig);
-          // console.log('query_type', query_type);
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
-            // console.log('run answers request', requestBody);
             dispatch({ type: 'loading' });
+
             const response = await runRequest(requestBody, appConfig);
             const { body } = response;
             const { answers = [] } = body;
@@ -71,7 +62,7 @@ const withAnswers = (WrappedComponent) => {
 
             // Take the highest rated response, determine which of the
             // answers are already paraphrasings, so that we can group them
-            // together
+            // together. Ideally this should be moved in the NLP pipeline
 
             const [simResp] = await Promise.all([
               runRequest(
@@ -108,6 +99,7 @@ const withAnswers = (WrappedComponent) => {
       query_type,
       dispatch,
       request,
+      filters,
     ]);
 
     return (
@@ -125,3 +117,15 @@ const withAnswers = (WrappedComponent) => {
 };
 
 export default withAnswers;
+
+// const classifyQuestionBody = await buildClassifyQuestionRequest(
+//   searchContext,
+//   appConfig,
+// );
+// const resp = await runRequest(classifyQuestionBody, appConfig);
+// const {answer:query_type} = resp.body || {};
+// console.log('classify resp', { classifyQuestionBody, resp });
+// console.log('requestAtom', { request, searchedTerm, searchTerm });
+// console.log('reqBody', requestBody);
+// // console.log('query_type', query_type);
+// console.log('run answers request', requestBody);

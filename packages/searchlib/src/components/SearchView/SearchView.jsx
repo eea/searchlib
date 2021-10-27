@@ -5,6 +5,8 @@ import registry from '@eeacms/search/registry';
 import { SearchContext } from '@elastic/react-search-ui';
 import { checkInteracted } from './utils';
 import { BodyContent } from './BodyContent';
+import { useAtom } from 'jotai';
+import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
   const {
@@ -21,6 +23,7 @@ export const SearchView = (props) => {
   } = props;
   const { defaultSearchText = '' } = appConfig;
 
+  const [isLandingPage, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
   const { driver } = React.useContext(SearchContext);
 
   const InitialViewComponent =
@@ -36,6 +39,12 @@ export const SearchView = (props) => {
 
   const { defaultFilters } = appConfig;
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
+
+  React.useEffect(() => {
+    setIsLandingPageAtom(!wasInteracted);
+  });
+
+  const customClassName = isLandingPage ? 'landing-page' : 'simple-page';
 
   React.useEffect(() => {
     if (!wasSearched) {
@@ -76,7 +85,7 @@ export const SearchView = (props) => {
   ]);
 
   return (
-    <div className={`searchapp searchapp-${appName}`}>
+    <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       <Layout
         appConfig={appConfig}
         header={

@@ -66,7 +66,7 @@ const clusters = {
     },
     {
       name: 'News',
-      icon: 'edit',
+      icon: 'newspaper outline',
       values: ['News', 'Report', 'Article'],
     },
     {
@@ -75,6 +75,24 @@ const clusters = {
       values: ['ExternalDataSpec', 'Data'],
     },
   ],
+};
+
+const get_cluster_icons = (settings) => {
+  const icons = {
+    fallback: {
+      name: 'fallback',
+      icon: 'file outline',
+    },
+  };
+  settings.clusters.forEach((cluster) => {
+    cluster.values.forEach((value) => {
+      icons[value] = {
+        cluster: cluster.name,
+        icon: cluster.icon,
+      };
+    });
+  });
+  return icons;
 };
 
 const globalSearchConfig = {
@@ -218,7 +236,7 @@ const globalSearchConfig = {
       field: 'places',
       isFilterable: true,
       isMulti: true,
-      label: 'Regions / Places / Cities / Seas...',
+      label: 'Regions/Places/Cities/Seas...',
       blacklist: placesBlacklist,
       wrapper: 'ModalFacetWrapper',
       show: 10000,
@@ -423,6 +441,10 @@ const globalSearchConfig = {
     },
   ],
 
+  contentUtilsParams: {
+    clusterIcons: get_cluster_icons(clusters),
+  },
+
   contentSectionsParams: {
     // This enables the content as section tabs
     enable: true,
@@ -441,6 +463,7 @@ const globalSearchConfig = {
     enabled: true,
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
+    clusterIcons: get_cluster_icons(clusters),
   },
 
   horizontalCardViewParams: {
@@ -453,12 +476,14 @@ const globalSearchConfig = {
     enabled: true,
     getThumbnailUrl: 'getGlobalsearchThumbUrl',
     getIconUrl: 'getGlobalsearchIconUrl',
+    clusterIcons: get_cluster_icons(clusters),
   },
 
   initialView: {
     factory: 'TilesLandingPage',
     tilesLandingPageParams: {
       maxPerSection: 30,
+      clusterIcons: get_cluster_icons(clusters),
       sections: [
         {
           id: 'topics',
@@ -474,6 +499,11 @@ const globalSearchConfig = {
           id: 'types',
           title: 'Types',
           facetField: 'objectProvides',
+        },
+        {
+          id: 'language',
+          title: 'Languages',
+          facetField: 'language',
         },
       ],
     },

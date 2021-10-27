@@ -1,5 +1,6 @@
 import { atom } from 'jotai';
 import { atomFamily, atomWithReducer } from 'jotai/utils';
+import { isEqual } from 'lodash';
 
 const requestReducer = (prev, action) => {
   switch (action.type) {
@@ -32,7 +33,7 @@ export const requestFamily = atomFamily(
       },
       requestReducer,
     ),
-  (a, b) => a === b,
+  (a, b) => isEqual(a, b),
 );
 
 export const debounceAtom = atom(0);

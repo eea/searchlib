@@ -130,6 +130,9 @@ export function buildRequest({ searchTerm }, config) {
         must: [], // TODO: predefined_filters
       },
     },
+    ...(config.enableNLP && {
+      ...config.requestParams,
+    }),
   };
 
   return query;

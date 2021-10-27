@@ -5,6 +5,7 @@ import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
+import Filter from './../../FilterList/Filter';
 
 const getFacetTotalCount = (facets, name) => {
   const customFields = ['time_coverage', 'year'];
@@ -94,7 +95,9 @@ const OptionsWrapper = (props) => {
       {...searchContext}
       HeaderWrapper={Modal.Header}
       ContentWrapper={({ children }) => (
-        <Modal.Content image>{children}</Modal.Content>
+        <Modal.Content image scrolling>
+          {children}
+        </Modal.Content>
       )}
       options={newOptions}
       onSelect={(value, force) => {
@@ -142,6 +145,8 @@ const FacetWrapperComponent = (props) => {
       : [initialValue],
   );
 
+  const { clearFilters, setFilter } = useSearchContext();
+
   return (
     <Modal
       className={(isActive && 'facet active') || 'facet'}
@@ -152,9 +157,30 @@ const FacetWrapperComponent = (props) => {
         <Card
           fluid
           header={label}
+          description={
+            <div className="filter description">
+              {filters.map((filter, index) => {
+                return filter.field == field ? (
+                  <Filter
+                    key={index}
+                    {...filter}
+                    noTitle={true}
+                    setFilter={setFilter}
+                    removeFilter={removeFilter}
+                    onClear={(field) => {
+                      const activeFilters = filters.map(({ field }) => field);
+                      const exclude = activeFilters.filter(
+                        (name) => name !== field,
+                      );
+                      clearFilters(exclude);
+                    }}
+                  />
+                ) : null;
+              })}
+            </div>
+          }
           className={(isActive && 'facet active') || 'facet'}
           onClick={() => {}}
-          meta={getFacetTotalCount(facets, field)}
         />
       }
     >

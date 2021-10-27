@@ -4,6 +4,7 @@ import Downshift from 'downshift';
 import cx from 'classnames';
 import SearchInput from '../SearchInput/SearchInput';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+import { Grid, Container } from 'semantic-ui-react';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
@@ -59,69 +60,104 @@ function SearchBoxView(props) {
         const { closeMenu, getInputProps, isOpen } = downshiftProps;
         let autocompleteClass = isOpen === true ? ' autocomplete' : '';
         return (
-          <form
-            onSubmit={(e) => {
-              closeMenu();
-              onSubmit(e);
-            }}
-          >
-            {appConfig.title ? (
-              <h2 className="searchApp-headline">{appConfig.title}</h2>
-            ) : (
-              ''
-            )}
-            {appConfig.subheadline ? (
-              <h3 className="searchApp-subheadline">{appConfig.subheadline}</h3>
-            ) : (
-              ''
-            )}
-            <div className={cx('sui-search-box', className, autocompleteClass)}>
-              <InputView
-                mode={mode}
-                onSubmit={onSubmit}
-                onChange={(newValue) => {
-                  // To avoid over dispatching
-                  if (value === newValue) return;
-                  onChange(newValue);
-                }}
-                {...downshiftProps}
-                getInputProps={(additionalProps) => {
-                  const { className, ...rest } = additionalProps || {};
-                  return getInputProps({
-                    placeholder: 'Search',
-                    ...inputProps,
-                    className: cx(
-                      'sui-search-box__text-input',
-                      inputProps.className,
-                      className,
-                      focusedClass,
-                    ),
-                    ...rest,
-                  });
-                }}
-                getButtonProps={(additionalProps) => {
-                  const { className, ...rest } = additionalProps || {};
-                  return {
-                    type: 'submit',
-                    value: 'Search',
-                    className: cx('button sui-search-box__submit', className),
-                    ...rest,
-                  };
-                }}
-                getAutocomplete={() => {
-                  if (
-                    useAutocomplete &&
-                    isOpen &&
-                    allAutocompletedItemsCount > 0
-                  ) {
-                    return <AutocompleteView {...props} {...downshiftProps} />;
-                  } else {
-                    return null;
-                  }
-                }}
-              />
-            </div>
-          </form>
+          <div className="header-content">
+            <Grid columns={2} container stackable className="header-columns">
+              <Grid.Row>
+                <Grid.Column
+                  widescreen="2"
+                  tablet="2"
+                  className="col-left"
+                ></Grid.Column>
+                <Grid.Column widescreen="8" tablet="8" className="col-mid">
+                  <form
+                    onSubmit={(e) => {
+                      closeMenu();
+                      onSubmit(e);
+                    }}
+                  >
+                    {appConfig.title ? (
+                      <h2 className="searchApp-headline">{appConfig.title}</h2>
+                    ) : (
+                      ''
+                    )}
+                    {appConfig.subheadline ? (
+                      <h3 className="searchApp-subheadline">
+                        {appConfig.subheadline}
+                      </h3>
+                    ) : (
+                      ''
+                    )}
+                    <div
+                      className={cx(
+                        'sui-search-box',
+                        className,
+                        autocompleteClass,
+                      )}
+                    >
+                      <InputView
+                        mode={mode}
+                        onSubmit={onSubmit}
+                        onChange={(newValue) => {
+                          // To avoid over dispatching
+                          if (value === newValue) return;
+                          onChange(newValue);
+                        }}
+                        {...downshiftProps}
+                        getInputProps={(additionalProps) => {
+                          const { className, ...rest } = additionalProps || {};
+                          return getInputProps({
+                            placeholder:
+                              'Type in keywords or just ask a question',
+                            ...inputProps,
+                            className: cx(
+                              'sui-search-box__text-input',
+                              inputProps.className,
+                              className,
+                              focusedClass,
+                            ),
+                            ...rest,
+                          });
+                        }}
+                        getButtonProps={(additionalProps) => {
+                          const { className, ...rest } = additionalProps || {};
+                          return {
+                            type: 'submit',
+                            value: 'Search',
+                            className: cx(
+                              'button sui-search-box__submit',
+                              className,
+                            ),
+                            ...rest,
+                          };
+                        }}
+                        getAutocomplete={() => {
+                          if (
+                            useAutocomplete &&
+                            isOpen &&
+                            allAutocompletedItemsCount > 0
+                          ) {
+                            return (
+                              <AutocompleteView
+                                {...props}
+                                {...downshiftProps}
+                              />
+                            );
+                          } else {
+                            return null;
+                          }
+                        }}
+                      />
+                    </div>
+                  </form>
+                </Grid.Column>
+                <Grid.Column
+                  widescreen="2"
+                  tablet="2"
+                  className="col-left"
+                ></Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
         );
       }}
     </Downshift>
