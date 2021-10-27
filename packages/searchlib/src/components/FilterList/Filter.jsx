@@ -10,6 +10,12 @@ const Filter = (props) => {
   const { label } = appConfig.facets.find(
     ({ field }) => field === facetField,
   ) || { label: field.trim() };
+
+  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
+  const getClusterIcon = (title) => {
+    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  };
+
   return (
     <div className="filter-list-item">
       <div className="filter-name">
@@ -19,6 +25,7 @@ const Filter = (props) => {
         {values?.map((v, index) => {
           return (
             <Label key={index}>
+              <Icon name={getClusterIcon(v)} />
               <FilterValue
                 value={v}
                 field={field}
