@@ -25,7 +25,9 @@ const Filter = (props) => {
         {values?.map((v, index) => {
           return (
             <Label key={index}>
-              <Icon name={getClusterIcon(v)} />
+              {label === 'Content types' ? (
+                <Icon name={getClusterIcon(v)} />
+              ) : null}
               <FilterValue
                 value={v}
                 field={field}
