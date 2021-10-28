@@ -4,7 +4,6 @@ import { Grid, Container } from 'semantic-ui-react';
 import { showFacetsAsideAtom } from './state';
 import { isLandingPageAtom } from './../SearchView/state';
 import { useAtom } from 'jotai';
-import { SectionTabs } from '@eeacms/search/components';
 import InlineFilterList from './../FilterList/InlineFilterList';
 import { Ref } from 'semantic-ui-react';
 import { bodyContentRefAtom } from '@eeacms/search/state';
@@ -37,8 +36,6 @@ const FilterAsideLayout = (props) => {
           <div className="sui-layout-header__inner">{header}</div>
         </div>
       </Container>
-
-      <SectionTabs />
 
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">

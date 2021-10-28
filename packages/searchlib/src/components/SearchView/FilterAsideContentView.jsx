@@ -7,6 +7,7 @@ import {
   PagingInfo,
   DownloadButton,
 } from '@eeacms/search/components';
+import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 
@@ -41,6 +42,7 @@ export const FilterAsideContentView = (props) => {
   return (
     <>
       <AnswersList />
+      <SectionTabs />
       <div className="above-results">
         <ViewSelectorWithLabel
           views={availableResultViews}
