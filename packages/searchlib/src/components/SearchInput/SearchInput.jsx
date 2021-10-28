@@ -38,74 +38,111 @@ function SearchInput({
     <>
       <div className="search-input">
         <div className="terms-box">
-          <Icon name="search" size="large" color="grey" />
+          <div className="terms-box-left">
+            <Icon name="search" size="large" color="grey" />
+          </div>
+          <div className="search-terms">
+            {searchPhrases.map(
+              (phrase, i) =>
+                phrase &&
+                phrase.trim() && (
+                  <Label key={i} className="search-phrase">
+                    {phrase}{' '}
+                    <Icon
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSubmit(
+                          e,
+                          [
+                            ...searchPhrases.filter((p) => p !== phrase),
+                            currentTerm,
+                          ].join('|'),
+                          {
+                            deleteOneTerm: true,
+                          },
+                        );
 
-          <input
-            {...domProps}
-            value={currentTerm}
-            ref={inpRef}
-            className=""
-            onChange={(event) => {
-              setShowExtraFacets(false);
-              let {
-                target: { value },
-              } = event;
-              value = [...searchPhrases, value].join('|');
-              inputProps.onChange({ target: { value } });
-            }}
-            onKeyDown={(ev) => {
-              if (ev.key === 'Backspace') {
-                if (currentTerm === '' && searchPhrases.length > 0) {
-                  const lastPhrase = searchPhrases[searchPhrases.length - 1];
-                  const fakeEvent = {
-                    target: {
-                      value: `${searchPhrases
-                        .slice(0, searchPhrases.length - 1)
-                        .join('|')}|${lastPhrase}`,
-                    },
-                  };
-                  ev.preventDefault();
-                  inputProps.onChange(fakeEvent);
-                  return;
-                }
-              }
-
-              return inputProps.onKeyDown(ev);
-            }}
-            onBlur={() => {
-              // console.log('blur?');
-            }}
-          />
-
-          {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && (
-            <div className="ui button basic">
-              <Icon
-                name="delete"
-                role="button"
-                onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })}
-              />
-            </div>
-          )}
-
-          {getAutocomplete()}
-        </div>
-        <div className="input-controls">
-          <div
-            className={
-              'ui button basic show-extra-facets ' +
-              (showExtraFacets ? 'opened' : '')
-            }
-          >
-            <Icon
-              name="sliders"
-              role="button"
-              onClick={() => {
-                setShowExtraFacets(!showExtraFacets);
-              }}
-            />
+                        setTimeout(() => {
+                          inpRef.current && inpRef.current.focus();
+                        }, 500);
+                      }}
+                      name="trash"
+                      size="small"
+                    />
+                  </Label>
+                ),
+            )}
           </div>
 
-          <MicrophoneInput onChange={onChange} />
+          {searchPhrases.length === 0 ? (
+            <input
+              {...domProps}
+              value={currentTerm}
+              ref={inpRef}
+              className=""
+              placeholder={searchPhrases?.length ? null : domProps.placeholder}
+              onChange={(event) => {
+                setShowExtraFacets(false);
+                let {
+                  target: { value },
+                } = event;
+                value = [...searchPhrases, value].join('|');
+                inputProps.onChange({ target: { value } });
+              }}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Backspace') {
+                  if (currentTerm === '' && searchPhrases.length > 0) {
+                    const lastPhrase = searchPhrases[searchPhrases.length - 1];
+                    const fakeEvent = {
+                      target: {
+                        value: `${searchPhrases
+                          .slice(0, searchPhrases.length - 1)
+                          .join('|')}|${lastPhrase}`,
+                      },
+                    };
+                    ev.preventDefault();
+                    inputProps.onChange(fakeEvent);
+                    return;
+                  }
+                }
+
+                return inputProps.onKeyDown(ev);
+              }}
+              onBlur={() => {
+                // console.log('blur?');
+              }}
+            />
+          ) : (
+            ''
+          )}
+
+          <div className="input-controls">
+            {/* {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && ( */}
+            {/*   <div className="ui button basic"> */}
+            {/*     <Icon */}
+            {/*       name="delete" */}
+            {/*       role="button" */}
+            {/*       onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })} */}
+            {/*     /> */}
+            {/*   </div> */}
+            {/* )} */}
+
+            <div
+              className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
+            >
+              <Icon
+                name="sliders"
+                role="button"
+                onClick={() => {
+                  setShowExtraFacets(!showExtraFacets);
+                }}
+              />
+            </div>
+
+            {/* <MicrophoneInput onChange={onChange} /> */}
+          </div>
+
+          {getAutocomplete()}
         </div>
       </div>
 
@@ -118,39 +155,6 @@ function SearchInput({
           <IncludeArchivedFacet />
         </div>
       ) : null}
-
-      <div className="search-terms">
-        {searchPhrases.map(
-          (phrase, i) =>
-            phrase &&
-            phrase.trim() && (
-              <Label key={i} className="search-phrase">
-                {phrase}{' '}
-                <Icon
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onSubmit(
-                      e,
-                      [
-                        ...searchPhrases.filter((p) => p !== phrase),
-                        currentTerm,
-                      ].join('|'),
-                      {
-                        deleteOneTerm: true,
-                      },
-                    );
-
-                    setTimeout(() => {
-                      inpRef.current && inpRef.current.focus();
-                    }, 500);
-                  }}
-                  name="trash"
-                  size="small"
-                />
-              </Label>
-            ),
-        )}
-      </div>
     </>
   );
 }

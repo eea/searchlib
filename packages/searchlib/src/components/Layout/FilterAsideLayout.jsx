@@ -39,14 +39,16 @@ const FilterAsideLayout = (props) => {
       </Container>
 
       <SectionTabs />
-      <InlineFilterList defaultFilters={defaultFilters} />
 
       {showFacets ? (
         <Grid columns={2} container stackable className="body-content">
           <Ref innerRef={setRef}>
             <Grid.Row>
               <Grid.Column widescreen="2" tablet="2" className="col-left">
-                <div className={stateRef ? 'scrolled' : ''}>{sideContent}</div>
+                <div className={stateRef ? 'scrolled' : ''}>
+                  {sideContent}
+                  <InlineFilterList defaultFilters={defaultFilters} />
+                </div>
               </Grid.Column>
               <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
@@ -69,11 +71,9 @@ const FilterAsideLayout = (props) => {
             </Grid.Row>
           ) : (
             <Grid.Row>
-              <Grid.Column
-                widescreen="2"
-                tablet="2"
-                className="col-left"
-              ></Grid.Column>
+              <Grid.Column widescreen="2" tablet="2" className="col-left">
+                <InlineFilterList defaultFilters={defaultFilters} />
+              </Grid.Column>
               <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
