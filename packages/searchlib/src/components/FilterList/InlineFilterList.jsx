@@ -27,6 +27,7 @@ const InlineFilterList = (props) => {
         <Icon name="filter" />
         {showFacets ? 'Hide filters' : 'Show more filters'}
       </Button>
+
       {filters.length && !hideFilters ? (
         <Segment inverted className="filter-list">
           <Accordion inverted>

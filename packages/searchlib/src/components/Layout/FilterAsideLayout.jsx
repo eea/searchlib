@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Grid, Container } from 'semantic-ui-react';
-import { showFacetsAsideAtom } from './state';
+// import { showFacetsAsideAtom } from './state';
 import { isLandingPageAtom } from './../SearchView/state';
 import { useAtom } from 'jotai';
-import InlineFilterList from './../FilterList/InlineFilterList';
+// import InlineFilterList from './../FilterList/InlineFilterList';
 import { Ref } from 'semantic-ui-react';
 import { bodyContentRefAtom } from '@eeacms/search/state';
 
@@ -15,10 +15,10 @@ const FilterAsideLayout = (props) => {
     bodyHeader,
     header,
     sideContent,
-    appConfig,
+    // appConfig,
   } = props;
-  const { defaultFilters } = appConfig;
-  const [showFacets] = useAtom(showFacetsAsideAtom);
+  // const { defaultFilters } = appConfig;
+  // const [showFacets] = useAtom(showFacetsAsideAtom);
   const [isLandingPage] = useAtom(isLandingPageAtom);
 
   const [stateRef, setStateRef] = useAtom(bodyContentRefAtom);
@@ -37,28 +37,8 @@ const FilterAsideLayout = (props) => {
         </div>
       </Container>
 
-      {showFacets ? (
-        <Grid columns={2} container stackable className="body-content">
-          <Ref innerRef={setRef}>
-            <Grid.Row>
-              <Grid.Column widescreen="2" tablet="2" className="col-left">
-                <div className={stateRef ? 'scrolled' : ''}>
-                  {sideContent}
-                  <InlineFilterList defaultFilters={defaultFilters} />
-                </div>
-              </Grid.Column>
-              <Grid.Column widescreen="8" tablet="8" className="col-mid">
-                <div>{bodyHeader}</div>
-                <div>{bodyContent}</div>
-              </Grid.Column>
-              <Grid.Column widescreen="2" tablet="2" className="col-right">
-                <div> </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Ref>
-        </Grid>
-      ) : (
-        <Grid columns={2} container stackable className="body-content">
+      <Grid columns={2} container stackable className="body-content">
+        <Ref innerRef={setRef}>
           {isLandingPage ? (
             <Grid.Row>
               <Grid.Column widescreen="12" tablet="12" className="col-full">
@@ -69,7 +49,10 @@ const FilterAsideLayout = (props) => {
           ) : (
             <Grid.Row>
               <Grid.Column widescreen="2" tablet="2" className="col-left">
-                <InlineFilterList defaultFilters={defaultFilters} />
+                <div className={stateRef ? 'scrolled' : ''}>
+                  {sideContent}
+                  {/* <InlineFilterList defaultFilters={defaultFilters} /> */}
+                </div>
               </Grid.Column>
               <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
@@ -82,8 +65,8 @@ const FilterAsideLayout = (props) => {
               ></Grid.Column>
             </Grid.Row>
           )}
-        </Grid>
-      )}
+        </Ref>
+      </Grid>
 
       <Grid container className="body-footer">
         <div>{bodyFooter}</div>
