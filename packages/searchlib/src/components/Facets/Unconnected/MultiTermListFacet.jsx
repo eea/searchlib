@@ -126,6 +126,19 @@ const ViewComponent = (props) => {
               )
             }
           />
+
+          <ToggleSort
+            label="Alphabetical"
+            onToggle={() => toggleSort('value')}
+            on={sorting.sortOn === 'value'}
+            icon={
+              sorting.sortOrder === 'ascending' ? (
+                <Icon name="sort alphabet ascending" />
+              ) : (
+                <Icon name="sort alphabet descending" />
+              )
+            }
+          />
         </div>
       </HeaderWrapper>
       <ContentWrapper>
