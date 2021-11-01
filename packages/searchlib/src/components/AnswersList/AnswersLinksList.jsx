@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Label } from 'semantic-ui-react'; //, Icon, Accordion
+import { Label, Icon } from 'semantic-ui-react'; //, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { DateTime } from '@eeacms/search/components'; //, StringList
@@ -14,6 +14,11 @@ const extractDomain = (url) => {
 export default ({ filtered, appConfig }) => {
   const { horizontalCardViewParams } = appConfig;
   const { titleField, urlField } = horizontalCardViewParams;
+
+  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
+  const getClusterIcon = (title) => {
+    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  };
 
   return filtered.slice(0, 5).map((item, i) => {
     const result = convertHitToResult(
@@ -29,6 +34,7 @@ export default ({ filtered, appConfig }) => {
 
     return (
       <div key={i} className={cx({ primary: i === 0 })}>
+        <Icon name={getClusterIcon(result.objectProvides?.raw)} />
         <span className="answer__date">
           <DateTime format="DATE_MED" value={result['issued']?.raw} />
         </span>
