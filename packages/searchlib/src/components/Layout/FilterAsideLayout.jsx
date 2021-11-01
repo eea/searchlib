@@ -1,36 +1,21 @@
 import React from 'react';
 
 import { Grid, Container } from 'semantic-ui-react';
-// import { showFacetsAsideAtom } from './state';
 import { isLandingPageAtom } from './../SearchView/state';
 import { useAtom } from 'jotai';
-// import InlineFilterList from './../FilterList/InlineFilterList';
 import { Ref } from 'semantic-ui-react';
 import { bodyContentRefAtom } from '@eeacms/search/state';
+import cx from 'classnames';
 
 const FilterAsideLayout = (props) => {
-  const {
-    bodyContent,
-    bodyFooter,
-    bodyHeader,
-    header,
-    sideContent,
-    // appConfig,
-  } = props;
-  // const { defaultFilters } = appConfig;
-  // const [showFacets] = useAtom(showFacetsAsideAtom);
+  const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
   const [isLandingPage] = useAtom(isLandingPageAtom);
 
   const [stateRef, setStateRef] = useAtom(bodyContentRefAtom);
-  const setRef = React.useCallback(
-    (ref) => {
-      setStateRef(ref);
-    },
-    [setStateRef],
-  );
+  const setRef = React.useCallback(setStateRef, [setStateRef]);
 
   return (
-    <div>
+    <div className="filter-aside-layout">
       <Container>
         <div className="sui-layout-header">
           <div className="sui-layout-header__inner">{header}</div>
@@ -49,10 +34,7 @@ const FilterAsideLayout = (props) => {
           ) : (
             <Grid.Row>
               <Grid.Column widescreen="2" tablet="2" className="col-left">
-                <div className={stateRef ? 'scrolled' : ''}>
-                  {sideContent}
-                  {/* <InlineFilterList defaultFilters={defaultFilters} /> */}
-                </div>
+                <div className={cx({ scrolled: stateRef })}>{sideContent}</div>
               </Grid.Column>
               <Grid.Column widescreen="8" tablet="8" className="col-mid">
                 <div>{bodyHeader}</div>
