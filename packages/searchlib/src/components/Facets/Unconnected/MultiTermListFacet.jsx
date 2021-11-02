@@ -37,7 +37,7 @@ const FacetOptions = (props) => {
             return (
               <div className="by-letters" key={letter}>
                 <div className="letters-heading" key={letter + 'h'}>
-                  {letter}
+                  <span>{letter}</span>
                 </div>
                 <div className="letters-content" key={letter + 'c'}>
                   {groupedOptions[letter].map((option) => {
