@@ -14,7 +14,7 @@ function getFilterValueDisplay(filterValue) {
 }
 
 const FacetOptions = (props) => {
-  const { sortedOptions, onSelect, onRemove, label } = props;
+  const { sortedOptions, groupedOptions, onSelect, onRemove, label } = props;
   const { appConfig } = useAppConfig();
 
   const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
@@ -22,28 +22,79 @@ const FacetOptions = (props) => {
     return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
   };
 
+  let isGrouped = false;
+  if (Object.keys(groupedOptions).length > 0) {
+    if (groupedOptions.letters.length > 5) {
+      isGrouped = true;
+    }
+  }
+
   return (
     <div>
-      {sortedOptions.map((option) => {
-        const checked = option.selected;
-        return (
-          <Button
-            key={`${getFilterValueDisplay(option.value)}`}
-            className="term"
-            toggle
-            active={checked}
-            onClick={() =>
-              checked ? onRemove(option.value) : onSelect(option.value)
-            }
-          >
-            {label === 'Content types' ? (
-              <Icon name={getClusterIcon(option.value)} />
-            ) : null}
-            <span className="title">{getFilterValueDisplay(option.value)}</span>
-            <span className="count">{option.count.toLocaleString('en')}</span>
-          </Button>
-        );
-      })}
+      {isGrouped ? (
+        <>
+          {groupedOptions.letters.map((letter) => {
+            return (
+              <div className="by-letters" key={letter}>
+                <div className="letters-heading" key={letter + 'h'}>
+                  {letter}
+                </div>
+                <div className="letters-content" key={letter + 'c'}>
+                  {groupedOptions[letter].map((option) => {
+                    const checked = option.selected;
+                    return (
+                      <Button
+                        key={`${getFilterValueDisplay(option.value)}`}
+                        className="term"
+                        toggle
+                        active={checked}
+                        onClick={() =>
+                          checked
+                            ? onRemove(option.value)
+                            : onSelect(option.value)
+                        }
+                      >
+                        {label === 'Content types' ? (
+                          <Icon name={getClusterIcon(option.value)} />
+                        ) : null}
+                        <span className="title">
+                          {getFilterValueDisplay(option.value)}
+                        </span>
+                        <span className="count">
+                          {option.count.toLocaleString('en')}
+                        </span>
+                      </Button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        sortedOptions.map((option) => {
+          const checked = option.selected;
+          return (
+            <Button
+              key={`${getFilterValueDisplay(option.value)}`}
+              className="term"
+              toggle
+              active={checked}
+              onClick={() =>
+                checked ? onRemove(option.value) : onSelect(option.value)
+              }
+            >
+              {label === 'Content types' ? (
+                <Icon name={getClusterIcon(option.value)} />
+              ) : null}
+              <span className="title">
+                {getFilterValueDisplay(option.value)}
+              </span>
+              <span className="count">{option.count.toLocaleString('en')}</span>
+            </Button>
+          );
+        })
+      )}
       {sortedOptions.length < 1 && <div>No matching options</div>}
     </div>
   );
@@ -82,6 +133,19 @@ const ViewComponent = (props) => {
     },
   );
   const facetConfig = appConfig.facets.find((f) => f.field === field);
+
+  const byLetters = {};
+  if (sorting.sortOn === 'value') {
+    byLetters.letters = [];
+    sortedOptions.forEach((item) => {
+      const firstLetter = item.value[0];
+      if (!byLetters.letters.includes(firstLetter)) {
+        byLetters.letters.push(firstLetter);
+        byLetters[firstLetter] = [];
+      }
+      byLetters[firstLetter].push(item);
+    });
+  }
 
   return (
     <>
@@ -144,6 +208,7 @@ const ViewComponent = (props) => {
       <ContentWrapper>
         <FacetOptions
           sortedOptions={sortedOptions}
+          groupedOptions={byLetters}
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
