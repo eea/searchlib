@@ -24,7 +24,9 @@ const FacetOptions = (props) => {
 
   let isGrouped = false;
   if (Object.keys(groupedOptions).length > 0) {
-    if (groupedOptions.letters.length > 5) {
+    if (groupedOptions.letters.length >= 5 && sortedOptions.length >= 100) {
+      // Apply grouping by letters only if we have at least 5 groups and
+      // at least 100 options.
       isGrouped = true;
     }
   }
