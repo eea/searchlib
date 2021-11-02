@@ -34,8 +34,8 @@ const FacetOptions = (props) => {
             }
             //onRemove={() => onRemove(option.value)}
           >
-            <span class="title">{getFilterValueDisplay(option.value)}</span>
-            <span class="count">{option.count.toLocaleString('en')}</span>
+            <span className="title">{getFilterValueDisplay(option.value)}</span>
+            <span className="count">{option.count.toLocaleString('en')}</span>
           </Button>
         );
       })}
