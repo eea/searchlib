@@ -242,9 +242,7 @@ function clmsresolve(config) {
       component: CLMSContentView,
     },
     'CLMSCard.Group': {
-      component: (props) => (
-        <Card.Group {...props} stackable itemsPerRow={1} doubling />
-      ),
+      component: (props) => <div>{props.children}</div>,
     },
     CLMSCardItem: {
       component: CLMSCardItem,

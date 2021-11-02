@@ -15,10 +15,11 @@ const normalizeStr = (str) => {
 };
 
 export const ExternalLink = (props) => {
+  const tmp_href = props.href.replace('/api/en/', '/en/');
   return (
     <a
       className={props.className}
-      href={props.href}
+      href={tmp_href}
       target="_blank"
       rel="noreferrer"
       style={props.style}
