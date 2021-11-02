@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  Segment,
-  Rating,
-  Popup,
-  Button,
-  Dimmer,
-  Loader,
-} from 'semantic-ui-react'; //, Icon, Accordion
+import { Segment, Rating, Popup, Button } from 'semantic-ui-react'; //, Icon, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
@@ -95,7 +88,7 @@ score: 6.118757247924805
         <>
           <Segment className="answers-wrapper">
             <div className="answerCard">
-              <h3 className="answers__directAnswer">{filtered[0].answer}</h3>
+              {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
               <AnswerContext
                 item={primaryAnswer}
                 href={primaryResult[urlField]?.raw}

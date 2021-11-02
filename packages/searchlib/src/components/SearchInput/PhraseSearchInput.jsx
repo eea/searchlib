@@ -3,15 +3,16 @@
  * - autocomplete
  * - voice input
  * - search phrases
+ *   Note: right now the support for the phrases is in the process of being
+ *   refactored. This component is not guaranteed to work effectively.
  */
 import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
+import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
-
-// import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 
 function SearchInput({
   getAutocomplete,
@@ -117,19 +118,22 @@ function SearchInput({
             ''
           )}
 
-          <div className="input-controls">
-            {/* {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && ( */}
-            {/*   <div className="ui button basic"> */}
-            {/*     <Icon */}
-            {/*       name="delete" */}
-            {/*       role="button" */}
-            {/*       onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })} */}
-            {/*     /> */}
-            {/*   </div> */}
-            {/* )} */}
+          {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && (
+            <div className="ui button basic">
+              <Icon
+                name="delete"
+                role="button"
+                onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })}
+              />
+            </div>
+          )}
 
+          <div className="input-controls">
             <div
-              className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
+              className={
+                'ui button basic show-extra-facets ' +
+                (showExtraFacets ? 'opened' : '')
+              }
             >
               <Icon
                 name="sliders"
@@ -140,7 +144,7 @@ function SearchInput({
               />
             </div>
 
-            {/* <MicrophoneInput onChange={onChange} /> */}
+            <MicrophoneInput onChange={onChange} />
           </div>
 
           {getAutocomplete()}

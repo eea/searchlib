@@ -3,7 +3,6 @@ import { ResultsPerPage, Paging, Sorting } from '@elastic/react-search-ui';
 import {
   ViewSelectorWithLabel,
   SortingDropdownWithLabel,
-  AnswersList,
   PagingInfo,
   DownloadButton,
 } from '@eeacms/search/components';
@@ -41,7 +40,6 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
-      <AnswersList />
       <SectionTabs />
       <div className="above-results">
         <ViewSelectorWithLabel

@@ -34,10 +34,10 @@ export default ({ filtered, appConfig }) => {
 
     return (
       <div key={i} className={cx({ primary: i === 0 })}>
-        <Icon name={getClusterIcon(result.objectProvides?.raw)} />
         <span className="answer__date">
           <DateTime format="DATE_MED" value={result['issued']?.raw} />
         </span>
+        <Icon name={getClusterIcon(result.objectProvides?.raw)} />
         <ExternalLink href={highlightUrl(result[urlField]?.raw, item.answer)}>
           {result[titleField]?.raw}
         </ExternalLink>

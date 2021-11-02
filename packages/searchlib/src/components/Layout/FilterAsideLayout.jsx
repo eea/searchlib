@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import { Ref } from 'semantic-ui-react';
 import { bodyContentRefAtom } from '@eeacms/search/state';
 import cx from 'classnames';
+import { AnswersList } from '@eeacms/search/components';
 
 const FilterAsideLayout = (props) => {
   const { bodyContent, bodyFooter, bodyHeader, header, sideContent } = props;
@@ -19,6 +20,15 @@ const FilterAsideLayout = (props) => {
       <Container>
         <div className="sui-layout-header">
           <div className="sui-layout-header__inner">{header}</div>
+
+          <Grid columns={2} container stackable>
+            <Grid.Row>
+              <Grid.Column widescreen="2"></Grid.Column>
+              <Grid.Column widescreen="8">
+                <AnswersList />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       </Container>
 
