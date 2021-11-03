@@ -14,7 +14,14 @@ function getFilterValueDisplay(filterValue) {
 }
 
 const FacetOptions = (props) => {
-  const { sortedOptions, groupedOptions, onSelect, onRemove, label } = props;
+  const {
+    sortedOptions,
+    groupedOptionsByLetters,
+    groupedOptionsByNumbers,
+    onSelect,
+    onRemove,
+    label,
+  } = props;
   const { appConfig } = useAppConfig();
 
   const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
@@ -22,27 +29,45 @@ const FacetOptions = (props) => {
     return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
   };
 
-  let isGrouped = false;
-  if (Object.keys(groupedOptions).length > 0) {
-    if (groupedOptions.letters.length >= 5 && sortedOptions.length >= 100) {
+  let isGroupedByLetters = false;
+  if (Object.keys(groupedOptionsByLetters).length > 0) {
+    if (
+      groupedOptionsByLetters.letters.length >= 5 &&
+      sortedOptions.length >= 100
+    ) {
       // Apply grouping by letters only if we have at least 5 groups and
       // at least 100 options.
-      isGrouped = true;
+      isGroupedByLetters = true;
     }
   }
 
+  let isGroupedByNumbers = false;
+  if (Object.keys(groupedOptionsByNumbers).length > 0) {
+    if (
+      groupedOptionsByNumbers.numbers.length >= 5 &&
+      sortedOptions.length >= 10
+    ) {
+      // Apply grouping by numbers only if we have at least 5 groups and
+      // at least 10 options.
+      isGroupedByNumbers = true;
+    }
+  }
+
+  console.log(isGroupedByLetters);
+  console.log(isGroupedByNumbers);
+
   return (
     <div>
-      {isGrouped ? (
+      {isGroupedByLetters && (
         <>
-          {groupedOptions.letters.map((letter) => {
+          {groupedOptionsByLetters.letters.map((letter) => {
             return (
               <div className="by-letters" key={letter}>
                 <div className="letters-heading" key={letter + 'h'}>
                   <span>{letter}</span>
                 </div>
                 <div className="letters-content" key={letter + 'c'}>
-                  {groupedOptions[letter].map((option) => {
+                  {groupedOptionsByLetters[letter].map((option) => {
                     const checked = option.selected;
                     return (
                       <Button
@@ -73,7 +98,51 @@ const FacetOptions = (props) => {
             );
           })}
         </>
-      ) : (
+      )}
+
+      {isGroupedByNumbers && (
+        <>
+          {groupedOptionsByNumbers.numbers.map((number) => {
+            return (
+              <div className="by-letters" key={number}>
+                <div className="letters-heading" key={number + 'h'}>
+                  <span>>={number}</span>
+                </div>
+                <div className="letters-content" key={number + 'c'}>
+                  {groupedOptionsByNumbers[number].map((option) => {
+                    const checked = option.selected;
+                    return (
+                      <Button
+                        key={`${getFilterValueDisplay(option.value)}`}
+                        className="term"
+                        toggle
+                        active={checked}
+                        onClick={() =>
+                          checked
+                            ? onRemove(option.value)
+                            : onSelect(option.value)
+                        }
+                      >
+                        {label === 'Content types' ? (
+                          <Icon name={getClusterIcon(option.value)} />
+                        ) : null}
+                        <span className="title">
+                          {getFilterValueDisplay(option.value)}
+                        </span>
+                        <span className="count">
+                          {option.count.toLocaleString('en')}
+                        </span>
+                      </Button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {!(isGroupedByLetters || isGroupedByNumbers) &&
         sortedOptions.map((option) => {
           const checked = option.selected;
           return (
@@ -95,8 +164,7 @@ const FacetOptions = (props) => {
               <span className="count">{option.count.toLocaleString('en')}</span>
             </Button>
           );
-        })
-      )}
+        })}
       {sortedOptions.length < 1 && <div>No matching options</div>}
     </div>
   );
@@ -151,6 +219,25 @@ const ViewComponent = (props) => {
         byLetters[firstLetter] = [];
       }
       byLetters[firstLetter].push(item);
+    });
+  }
+
+  const numbersLimits = [1000, 500, 100, 50, 10, 1];
+  const byNumbers = {};
+  if (sorting.sortOn === 'count') {
+    byNumbers.numbers = [];
+    sortedOptions.forEach((item) => {
+      const count = item.count;
+      for (const number of numbersLimits) {
+        if (count >= number) {
+          if (!byNumbers.numbers.includes(number)) {
+            byNumbers.numbers.push(number);
+            byNumbers[number] = [];
+          }
+          byNumbers[number].push(item);
+          break;
+        }
+      }
     });
   }
 
@@ -215,7 +302,8 @@ const ViewComponent = (props) => {
       <ContentWrapper>
         <FacetOptions
           sortedOptions={sortedOptions}
-          groupedOptions={byLetters}
+          groupedOptionsByLetters={byLetters}
+          groupedOptionsByNumbers={byNumbers}
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
