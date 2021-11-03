@@ -2,7 +2,7 @@ import React from 'react';
 
 const useSort = (values, criterias, { defaultSortOn, defaultSortOrder }) => {
   const [sortOn, setSortOn] = React.useState(defaultSortOn);
-  const [sortOrder, setSortOrder] = React.useState(defaultSortOrder);
+  const [sortOrder, setSortOrder] = React.useState(defaultSortOrder[sortOn]);
 
   const toggleSort = (name) => {
     if (sortOn === name) {
@@ -10,7 +10,7 @@ const useSort = (values, criterias, { defaultSortOn, defaultSortOrder }) => {
       setSortOrder(sortOrder === 'ascending' ? 'descending' : 'ascending');
       return;
     } else {
-      setSortOrder(defaultSortOrder);
+      setSortOrder(defaultSortOrder[name]);
       setSortOn(name);
     }
   };

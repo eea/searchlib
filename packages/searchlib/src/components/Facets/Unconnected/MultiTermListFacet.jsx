@@ -131,9 +131,14 @@ const ViewComponent = (props) => {
     ['value', 'count'],
     {
       defaultSortOn: 'count',
-      defaultSortOrder: 'descending',
+      defaultSortOrder: {
+        // each criteria has its own default sort order
+        count: 'descending',
+        value: 'ascending',
+      },
     },
   );
+
   const facetConfig = appConfig.facets.find((f) => f.field === field);
 
   const byLetters = {};
