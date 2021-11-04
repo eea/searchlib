@@ -9,7 +9,7 @@ const Filter = (props) => {
   const facetField = field;
   const { label } = appConfig.facets.find(
     ({ field }) => field === facetField,
-  ) || { label: field.trim() };
+  ) || { label: field?.trim() };
 
   const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
   const getClusterIcon = (title) => {
