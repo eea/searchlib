@@ -25,7 +25,10 @@ const FilterResultEntry = (props) => {
     );
 
     return (
-      <div className="mlt-card">
+      <div className="mlt-card content">
+        <div className="header">
+          More like this
+        </div>
         <div className="meta">
           <DateTime format="DATE_MED" value={result.issued.raw} />
           &nbsp;|&nbsp;

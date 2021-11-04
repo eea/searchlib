@@ -8,9 +8,7 @@ const MoreLikeThis = (props) => {
   const filter = filters.find((el) => el.field === 'moreLikeThis');
 
   return (
-    <div className="mlt-filter">
-      <div className="header">More like this</div>
-
+    <div className="mlt-filter ui card facet active">
       <Filter
         {...filter}
         setFilter={setFilter}
