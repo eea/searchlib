@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import cx from 'classnames';
-import SearchInput from '../SearchInput/SearchInput';
-import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
+
+import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+import SearchInput from '../SearchInput/SearchInput';
 
 function SearchBoxView(props) {
   const { appConfig } = useAppConfig();

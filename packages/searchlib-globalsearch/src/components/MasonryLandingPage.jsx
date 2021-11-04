@@ -207,6 +207,7 @@ const LandingPage = (props) => {
       (bucket) => spatialWhitelist.indexOf(bucket.key) !== -1,
     ).length;
     const elements = landingDataRes.hits.hits;
+
     return (
       <div className="landing-page">
         <Masonry options={{ horizontalOrder: true }}>

@@ -3,6 +3,10 @@ import React from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from './../../state';
+import { getDisjunctiveFacetCounts } from '@eeacms/search';
+import buildStateFacets from '@eeacms/search/lib/search/state/facets';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import { landingPageDataAtom } from './state';
 
 import './tiles.less';
 
@@ -11,7 +15,7 @@ const getFacetConfig = (facets, name) => {
 };
 
 const LandingPage = (props) => {
-  const { appConfig, facets, children, setFilter } = props;
+  const { appConfig, children, setFilter } = props;
   const facetsConfig = appConfig.facets;
 
   const {
@@ -19,6 +23,8 @@ const LandingPage = (props) => {
     maxPerSection = 12,
     clusterIcons = {},
   } = appConfig.initialView.tilesLandingPageParams;
+
+  const sectionFacetFields = sections.map((s) => s.facetField);
   const [activeSection, setActiveSection] = React.useState(
     sections?.[0]?.facetField,
   );
@@ -27,10 +33,35 @@ const LandingPage = (props) => {
     return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
   };
 
-  const tiles =
-    facets?.[activeSection]?.[0]?.data?.slice(0, maxPerSection) || [];
-
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
+
+  const [landingPageData, setLandingPageData] = useAtom(landingPageDataAtom);
+
+  const tiles =
+    landingPageData?.[activeSection]?.[0]?.data?.slice(0, maxPerSection) || [];
+
+  useDeepCompareEffect(() => {
+    async function fetchFacets() {
+      let facets;
+
+      if (!landingPageData) {
+        const state = { filters: [] };
+        const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
+          state,
+          appConfig,
+          sectionFacetFields,
+        );
+        facets = buildStateFacets(disjunctiveFacetCounts, appConfig);
+      }
+
+      if (!landingPageData && facets) {
+        setLandingPageData(facets);
+      }
+    }
+    if (!landingPageData) {
+      fetchFacets();
+    }
+  }, [appConfig, sectionFacetFields, landingPageData, setLandingPageData]);
 
   return (
     <div className="landing-page-container">

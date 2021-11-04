@@ -37,7 +37,7 @@ export function getRangeFacet(options) {
   // TODO: do normalization here;
   const facetConfig = config.facets.find(({ field }) => field === fieldName);
 
-  let aggs_data = aggregations[fieldName].buckets.map(
+  let aggs_data = (aggregations[fieldName]?.buckets || []).map(
     ({ to, from, key, doc_count }) => ({
       // Boolean values and date values require using `key_as_string`
       value: {
@@ -56,6 +56,7 @@ export function getRangeFacet(options) {
           agg.value.from === fixed_range.from &&
           agg.value.to === fixed_range.to,
       );
+      if (!agg.length) return;
       agg[0].config = fixed_range;
       agg[0].value.rangeType = facetConfig.rangeType;
       sorted_aggs_data.push(agg[0]);

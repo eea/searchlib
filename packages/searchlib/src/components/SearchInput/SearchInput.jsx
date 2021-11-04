@@ -118,16 +118,6 @@ function SearchInput({
           )}
 
           <div className="input-controls">
-            {/* {(searchPhrases.filter((p) => !!p).length > 0 || currentTerm) && ( */}
-            {/*   <div className="ui button basic"> */}
-            {/*     <Icon */}
-            {/*       name="delete" */}
-            {/*       role="button" */}
-            {/*       onClick={(e) => onSubmit(e, '', { clearSearchTerm: true })} */}
-            {/*     /> */}
-            {/*   </div> */}
-            {/* )} */}
-
             <div
               className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
             >

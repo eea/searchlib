@@ -21,6 +21,7 @@ export const SearchView = (props) => {
     searchTerm,
     mode = 'view',
   } = props;
+  // console.log('props', props);
   const { defaultSearchText = '' } = appConfig;
 
   const [isLandingPage, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
@@ -38,7 +39,13 @@ export const SearchView = (props) => {
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
   const { defaultFilters } = appConfig;
-  const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
+  // const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
+  const wasInteracted = checkInteracted({
+    filters,
+    searchTerm, //: searchedTerm,
+    appConfig,
+  });
+  // console.log('searchTerm', { searchedTerm, wasInteracted });
 
   React.useEffect(() => {
     setIsLandingPageAtom(!wasInteracted);
@@ -47,7 +54,8 @@ export const SearchView = (props) => {
   const customClassName = isLandingPage ? 'landing-page' : 'simple-page';
 
   React.useEffect(() => {
-    if (!wasSearched) {
+    // TODO: use searchui alwaysSearchOnInitialLoad ?
+    if (!wasSearched && !InitialViewComponent) {
       const state = driver.URLManager.getStateFromURL();
       setSearchTerm(state.searchTerm || defaultSearchText);
 

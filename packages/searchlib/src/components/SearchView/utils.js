@@ -56,5 +56,12 @@ export const checkInteracted = (props) => {
   const normalizedDefaultFilters = normalizeDefaultFilters(defaultFilters);
   const normalizedFilters = normalizeFilters(filters);
   const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
-  return !filtersEqual || searchTerm;
+  // console.log({
+  //   filtersEqual,
+  //   normalizedDefaultFilters,
+  //   normalizedFilters,
+  //   defaultFilters,
+  //   filters,
+  // });
+  return filters.length === 0 ? false : !filtersEqual || searchTerm;
 };

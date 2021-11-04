@@ -1,6 +1,6 @@
 import { EXACT_PHRASES } from '@eeacms/search/constants';
 
-export function buildFullTextMatch(searchTerm, filters, config) {
+export function buildFullTextMatch(searchTerm = '', filters = [], config) {
   // const originalSearchTerm = searchTerm;
 
   const exactPhraseFilter = filters.find(

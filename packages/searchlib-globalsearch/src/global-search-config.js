@@ -1,9 +1,6 @@
 import {
   histogramFacet,
-  // suiFacet,
-  // suiRangeFacet,
   multiTermFacet,
-  // mergeConfig,
   makeRange,
   booleanFacet,
   fixedRangeFacet,
@@ -12,48 +9,8 @@ import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import typesWhitelist from './json/typesWhitelist.json';
-import contentTypeNormalize from './json/contentTypeNormalize.json';
 
-import {
-  getTodayWithTime,
-  // getGlobalsearchThumbUrl,
-  // getGlobalsearchIconUrl,
-} from './utils';
-
-const get_icons = (settings) => {
-  const icons = {};
-  settings.clusters.forEach((cluster) => {
-    icons[cluster.name] = cluster.icon;
-  });
-  return icons;
-};
-
-const build_runtime_mappings = (settings) => {
-  const clusters = settings.clusters
-    .map((cluster) => {
-      return (
-        '["name": "' +
-        cluster.name +
-        '", "values": ' +
-        JSON.stringify(cluster.values) +
-        ']'
-      );
-    })
-    .join(',');
-  const source =
-    'emit("_all_"); def clusters_settings = [' +
-    clusters +
-    "]; def vals = doc['" +
-    settings.field +
-    "']; def clusters = ['All']; for (val in vals) { for (cs in clusters_settings) { if (cs.values.contains(val)) { emit(cs.name) } } }";
-
-  const mapping = {};
-  mapping[settings.name] = {
-    type: 'keyword',
-    script: { source: source },
-  };
-  return mapping;
-};
+import { getTodayWithTime, build_runtime_mappings, get_icons } from './utils';
 
 const clusters = {
   name: 'op_cluster',
@@ -102,6 +59,9 @@ const globalSearchConfig = {
   enableNLP: true, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
   runtime_mappings: build_runtime_mappings(clusters),
+  useSearchPhrases: false,
+  searchAsYouType: false,
+
   extraQueryParams: {
     text_fields: [
       'title^2',

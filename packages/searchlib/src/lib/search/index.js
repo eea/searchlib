@@ -3,7 +3,10 @@
 
 export { default as buildRequest } from './query';
 export { default as buildState } from './state';
-export { default as applyDisjunctiveFaceting } from './query/applyDisjunctiveFaceting';
+export {
+  default as applyDisjunctiveFaceting,
+  getDisjunctiveFacetCounts,
+} from './query/applyDisjunctiveFaceting';
 export {
   getTermFilter,
   getRangeFilter,
@@ -20,4 +23,3 @@ export { getAutocompleteSuggestions } from './autocomplete/suggestions';
 
 export * from './query/aggregations';
 export * from './query/mltFilter';
-export * from './state/mltValue';
