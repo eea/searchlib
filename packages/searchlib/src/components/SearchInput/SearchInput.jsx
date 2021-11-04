@@ -22,6 +22,7 @@ function SearchInput({
   mode,
 }) {
   const inputProps = getInputProps();
+
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
   const searchTerm = inputProps.value;
 
@@ -118,6 +119,18 @@ function SearchInput({
           )}
 
           <div className="input-controls">
+            {(searchTerm || '').trim() && (
+              <div className="ui button basic">
+                <Icon
+                  name="close"
+                  role="button"
+                  onClick={() => {
+                    inputProps.onChange({ target: { value: '' } });
+                  }}
+                />
+              </div>
+            )}
+
             <div
               className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
             >
