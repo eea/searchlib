@@ -7,15 +7,15 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
 import Filter from './../../FilterList/Filter';
 
-const getFacetTotalCount = (facets, name) => {
-  const customFields = ['time_coverage', 'year'];
-  if (customFields.includes(name)) {
-    return <>&nbsp;</>;
-  }
-
-  return facets?.[name]?.[0]?.data?.length || 0;
-  // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
-};
+// const getFacetTotalCount = (facets, name) => {
+//   const customFields = ['time_coverage', 'year'];
+//   if (customFields.includes(name)) {
+//     return <>&nbsp;</>;
+//   }
+//
+//   return facets?.[name]?.[0]?.data?.length || 0;
+//   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
+// };
 
 function normalize_state(state) {
   let tmp_state = [];
@@ -114,9 +114,9 @@ const FacetWrapperComponent = (props) => {
   const searchContext = useSearchContext();
   const {
     filters = [],
-    facets = {},
     addFilter,
     removeFilter,
+    // facets = {},
     // setFilter,
   } = searchContext;
   const { field, label } = props;
@@ -160,7 +160,7 @@ const FacetWrapperComponent = (props) => {
           description={
             <div className="filter description">
               {filters.map((filter, index) => {
-                return filter.field == field ? (
+                return filter.field === field ? (
                   <Filter
                     key={index}
                     {...filter}

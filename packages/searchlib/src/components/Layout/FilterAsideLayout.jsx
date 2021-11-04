@@ -46,13 +46,13 @@ const FilterAsideLayout = (props) => {
               <Grid.Column widescreen="2" tablet="2" className="col-left">
                 <div className={cx({ scrolled: stateRef })}>{sideContent}</div>
               </Grid.Column>
-              <Grid.Column widescreen="8" tablet="8" className="col-mid">
+              <Grid.Column widescreen="8" tablet="10" className="col-mid">
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
               </Grid.Column>
               <Grid.Column
+                only="computer widescreen large screen"
                 widescreen="2"
-                tablet="2"
                 className="col-right"
               ></Grid.Column>
             </Grid.Row>
