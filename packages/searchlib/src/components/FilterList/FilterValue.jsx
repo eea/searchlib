@@ -1,5 +1,31 @@
 import React from 'react';
 
+function valueToString(value) {
+  switch (typeof value) {
+    case 'string':
+      return value;
+    case 'object':
+      if (value.type === 'range') {
+        return `${valueToString(value.from)} - ${valueToString(value.to)}`;
+      }
+      if (value.rangeType === 'fixed') {
+        return valueToString(value.name);
+      }
+      break;
+    case 'boolean':
+      return value;
+    case 'undefined':
+      return '';
+    default:
+      break;
+  }
+
+  // eslint-disable-next-line no-console
+  console.warn('Unknown value type', value);
+
+  return value.toString();
+}
+
 const FilterValue = (props) => {
   const { value, field, appConfig, registry } = props;
   const factoryName = appConfig.filters[field]?.factories?.filterList;
@@ -8,23 +34,7 @@ const FilterValue = (props) => {
     return <Component {...props} />;
   }
 
-  if (typeof value === 'string') return value;
-  if (typeof value === 'object') {
-    if (value.type === 'range') {
-      return `${value.from} - ${value.to}`;
-    }
-    if (value.rangeType === 'fixed') {
-      return `${value.name}`;
-    }
-  }
-  if (typeof value === 'boolean') {
-    return value;
-  }
-
-  // eslint-disable-next-line no-console
-  console.warn('Unknown value type', value);
-
-  return value.toString();
+  return valueToString(value);
 };
 
 export default FilterValue;
