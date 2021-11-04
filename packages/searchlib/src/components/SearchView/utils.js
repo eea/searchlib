@@ -49,13 +49,18 @@ export const normalizeFilters = (filters) => {
   return normalized;
 };
 
-export const checkInteracted = (props) => {
-  //const wasInteracted = filters.length > 0 || searchTerm;
-  const { filters, searchTerm, appConfig } = props;
+export const checkInteracted = ({
+  filters,
+  searchedTerm,
+  appConfig,
+  wasSearched,
+}) => {
   const { defaultFilters = {} } = appConfig;
   const normalizedDefaultFilters = normalizeDefaultFilters(defaultFilters);
   const normalizedFilters = normalizeFilters(filters);
   const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
+
+  //const wasInteracted = filters.length > 0 || searchTerm;
   // console.log({
   //   filtersEqual,
   //   normalizedDefaultFilters,
@@ -63,5 +68,11 @@ export const checkInteracted = (props) => {
   //   defaultFilters,
   //   filters,
   // });
-  return filters.length === 0 ? false : !filtersEqual || searchTerm;
+
+  return wasSearched
+    ? searchedTerm || !filtersEqual
+    : !(filters.length === 0 || filtersEqual);
+  // filters.length === 0 && !searchedTerm && !wasSearched
+  // ? false
+  // : !filtersEqual || searchedTerm;
 };

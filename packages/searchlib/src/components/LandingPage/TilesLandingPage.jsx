@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { Button, Icon } from 'semantic-ui-react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useAtom } from 'jotai';
-import { showFacetsAsideAtom } from './../../state';
+
+import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { getDisjunctiveFacetCounts } from '@eeacms/search';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 import { landingPageDataAtom } from './state';
 
 import './tiles.less';

@@ -1,11 +1,13 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { SearchContext } from '@elastic/react-search-ui';
+
 import { withAppConfig } from '@eeacms/search/lib/hocs';
 import { FacetsList, SearchBox, AppInfo } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
-import { SearchContext } from '@elastic/react-search-ui';
+
 import { checkInteracted } from './utils';
 import { BodyContent } from './BodyContent';
-import { useAtom } from 'jotai';
 import { isLandingPageAtom } from './state';
 
 export const SearchView = (props) => {
@@ -21,7 +23,6 @@ export const SearchView = (props) => {
     searchTerm,
     mode = 'view',
   } = props;
-  // console.log('props', props);
   const { defaultSearchText = '' } = appConfig;
 
   const [isLandingPage, setIsLandingPageAtom] = useAtom(isLandingPageAtom);
@@ -41,11 +42,11 @@ export const SearchView = (props) => {
   const { defaultFilters } = appConfig;
   // const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
   const wasInteracted = checkInteracted({
+    wasSearched,
     filters,
     searchTerm, //: searchedTerm,
     appConfig,
   });
-  // console.log('searchTerm', { searchedTerm, wasInteracted });
 
   React.useEffect(() => {
     setIsLandingPageAtom(!wasInteracted);

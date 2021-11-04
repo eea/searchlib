@@ -29,8 +29,6 @@ export const BodyContent = (props) => {
 
   const args = { ...props, setActiveViewId, activeViewId };
 
-  console.log('wasInteracted', { wasInteracted, InitialViewComponent });
-
   return (
     <Results
       shouldTrackClickThrough={true}
