@@ -59,11 +59,11 @@ const FacetOptions = (props) => {
         <>
           {groupedOptionsByLetters.letters.map((letter) => {
             return (
-              <div className="by-letters" key={letter}>
-                <div className="letters-heading" key={letter + 'h'}>
+              <div className="by-groups" key={letter}>
+                <div className="group-heading" key={letter + 'h'}>
                   <span>{letter}</span>
                 </div>
-                <div className="letters-content" key={letter + 'c'}>
+                <div className="group-content" key={letter + 'c'}>
                   {groupedOptionsByLetters[letter].map((option) => {
                     const checked = option.selected;
                     return (
@@ -99,13 +99,20 @@ const FacetOptions = (props) => {
 
       {isGroupedByNumbers && (
         <>
-          {groupedOptionsByNumbers.numbers.map((number) => {
+          {groupedOptionsByNumbers.numbers.map((number, index) => {
+            let label = '';
+            if (index === 0) {
+              label = `More than ${number}`;
+            } else {
+              const nextLimit = groupedOptionsByNumbers.numbers[index - 1];
+              label = `${number}...${nextLimit}`;
+            }
             return (
-              <div className="by-letters" key={number}>
-                <div className="letters-heading" key={number + 'h'}>
-                  <span>>={number}</span>
+              <div className="by-groups" key={number}>
+                <div className="group-heading" key={number + 'h'}>
+                  <span>{label}</span>
                 </div>
-                <div className="letters-content" key={number + 'c'}>
+                <div className="group-content" key={number + 'c'}>
                   {groupedOptionsByNumbers[number].map((option) => {
                     const checked = option.selected;
                     return (
