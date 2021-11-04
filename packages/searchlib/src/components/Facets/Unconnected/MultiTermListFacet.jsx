@@ -44,17 +44,14 @@ const FacetOptions = (props) => {
   let isGroupedByNumbers = false;
   if (Object.keys(groupedOptionsByNumbers).length > 0) {
     if (
-      groupedOptionsByNumbers.numbers.length >= 5 &&
-      sortedOptions.length >= 10
+      groupedOptionsByNumbers.numbers.length >= 3 &&
+      sortedOptions.length >= 50
     ) {
       // Apply grouping by numbers only if we have at least 5 groups and
-      // at least 10 options.
+      // at least 50 options.
       isGroupedByNumbers = true;
     }
   }
-
-  console.log(isGroupedByLetters);
-  console.log(isGroupedByNumbers);
 
   return (
     <div>
