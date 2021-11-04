@@ -26,35 +26,30 @@ const FilterResultEntry = (props) => {
 
     return (
       <div className="mlt-card">
-        <div className="col-left">
-          <div class="meta">
-            <DateTime format="DATE_MED" value={result.issued.raw} />
-            &nbsp;|&nbsp;
-            <StringList value={result.subject?.raw} />
-          </div>
-          <h4>
-            <a href={result.about.raw} target="_blank" rel="noreferrer">
-              <Icon name="external" size="small" />
-              {result.title.raw}
-            </a>
-          </h4>
-          <p>{result.description?.raw}</p>
+        <div className="meta">
+          <DateTime format="DATE_MED" value={result.issued.raw} />
+          &nbsp;|&nbsp;
+          <StringList value={result.subject?.raw} />
         </div>
-        <div className="col-right">
-          <Image
-            className="img-thumbnail"
-            src={thumbUrl}
-            wrapped
-            ui={false}
-            fluid
-            centered
-            style={{ backgroundImage: `url('${thumbUrl}')` }}
-            as={ExternalLink}
-            href={result.about.raw}
-            target="_blank"
-            rel="noreferrer"
-          />
-        </div>
+        <h4>
+          <a href={result.about.raw} target="_blank" rel="noreferrer">
+            <Icon name="external" size="small" />
+            {result.title.raw}
+          </a>
+        </h4>
+        <Image
+          className="img-thumbnail"
+          src={thumbUrl}
+          wrapped
+          ui={false}
+          fluid
+          centered
+          style={{ backgroundImage: `url('${thumbUrl}')` }}
+          as={ExternalLink}
+          href={result.about.raw}
+          target="_blank"
+          rel="noreferrer"
+        />
       </div>
     );
   }

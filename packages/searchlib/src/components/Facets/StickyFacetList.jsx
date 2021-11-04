@@ -1,5 +1,6 @@
 import React from 'react';
 import FacetsList from './FacetsList';
+import MoreLikeThis from './MoreLikeThis';
 import { Button, Card, Icon, Sticky } from 'semantic-ui-react';
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { useAtom } from 'jotai';
@@ -13,14 +14,17 @@ export default (props) => {
   return (
     <Sticky context={bodyRef}>
       {showFacets ? (
-        <FacetsList
-          defaultWraper={ModalFacetWrapper}
-          view={({ children }) => (
-            <Card.Group {...props} stackable itemsPerRow={1}>
-              {children}
-            </Card.Group>
-          )}
-        />
+        <>
+          <MoreLikeThis />
+          <FacetsList
+            defaultWraper={ModalFacetWrapper}
+            view={({ children }) => (
+              <Card.Group {...props} stackable itemsPerRow={1}>
+                {children}
+              </Card.Group>
+            )}
+          />
+        </>
       ) : (
         ''
       )}
