@@ -11,6 +11,7 @@ const MoreLikeThis = (props) => {
     <Filter
       {...filter}
       setFilter={setFilter}
+      customClass="more-like-this"
       noTitle={true}
       removeFilter={removeFilter}
       onClear={(field) => {

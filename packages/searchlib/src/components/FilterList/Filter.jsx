@@ -4,7 +4,15 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Label, Icon } from 'semantic-ui-react';
 
 const Filter = (props) => {
-  const { field, type, values, onClear, removeFilter, noTitle } = props;
+  const {
+    field,
+    type,
+    values,
+    onClear,
+    removeFilter,
+    noTitle,
+    customClass,
+  } = props;
   const { appConfig, registry } = useAppConfig();
   const facetField = field;
   const { label } = appConfig.facets.find(
@@ -17,7 +25,7 @@ const Filter = (props) => {
   };
 
   return (
-    <div className="filter-list-item">
+    <div className={`filter-list-item ${customClass ? customClass : ''}`}>
       <div className="filter-name">
         {!noTitle ? `${label}${type !== 'none' ? ` (${type})` : ''}:` : null}
       </div>
