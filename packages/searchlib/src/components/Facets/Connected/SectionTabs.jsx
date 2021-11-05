@@ -2,13 +2,18 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 
-import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+import {
+  useSearchContext,
+  useAppConfig,
+  useViews,
+} from '@eeacms/search/lib/hocs';
 import { isLandingPageAtom } from '@eeacms/search/state';
 
 const SectionTabs = (props) => {
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
   const [isLandingPage] = useAtom(isLandingPageAtom);
+  const views = useViews();
 
   const { contentSectionsParams = {} } = appConfig;
   if (!contentSectionsParams.enable || isLandingPage) return null;
@@ -27,20 +32,24 @@ const SectionTabs = (props) => {
     return section;
   });
 
+  const sectionMapping = Object.assign(
+    {},
+    ...contentSectionsParams.sections.map((s) => ({ [s.name]: s })),
+  );
+
   const allCount =
     sections.filter((section) => {
       return section.value === '_all_';
     })?.[0]?.count || sections.reduce((acc, { count }) => acc + count, 0);
 
-  sections = sections.filter((section) => {
-    return section.value !== '_all_';
-  });
+  sections = sections.filter((section) => section.value !== '_all_');
 
   return (
     <Menu className="content-section-tabs">
       <Menu.Item
         onClick={() => {
           searchContext.removeFilter(facetField, '', 'any');
+          views.reset();
         }}
         active={activeValues.length === 0}
       >
@@ -52,6 +61,9 @@ const SectionTabs = (props) => {
           active={activeValues.includes(value)}
           onClick={() => {
             searchContext.setFilter(facetField, value, 'any');
+            views.setActiveViewId(
+              sectionMapping[value].defaultResultView || 'listing',
+            );
           }}
         >
           {icon !== undefined && <Icon name={icon} />}

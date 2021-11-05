@@ -9,19 +9,14 @@ import {
 import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
+import { useViews } from '@eeacms/search/lib/hocs';
 
 import registry from '@eeacms/search/registry';
 
 export const FilterAsideContentView = (props) => {
-  const {
-    appConfig,
-    activeViewId,
-    setActiveViewId,
-    children,
-    filters,
-    searchTerm,
-  } = props;
+  const { appConfig, children, filters, searchTerm } = props;
   const { sortOptions, resultViews } = appConfig;
+  const { activeViewId, setActiveViewId } = useViews();
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
   const ResultViewComponent =
@@ -41,6 +36,7 @@ export const FilterAsideContentView = (props) => {
   return (
     <>
       <SectionTabs />
+
       <div className="above-results">
         <ViewSelectorWithLabel
           views={availableResultViews}
