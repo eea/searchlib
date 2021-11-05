@@ -208,6 +208,22 @@ const FacetWrapperComponent = (props) => {
         >
           Cancel
         </Button>
+        {state.length > 0 ? (
+          <Button
+            color="yellow"
+            onClick={() => {
+              console.log(state);
+              setIsOpened(false);
+              if (state.length) {
+                state.forEach((v) => {
+                  removeFilter(field, v, localFilterType);
+                });
+              }
+            }}
+          >
+            Clear
+          </Button>
+        ) : null }
         <Button
           content="Apply"
           labelPosition="right"
