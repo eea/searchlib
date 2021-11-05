@@ -1,5 +1,6 @@
 import React from 'react';
 
+// TODO: use this in StringList, unify value display
 function valueToString(value) {
   switch (typeof value) {
     case 'string':
