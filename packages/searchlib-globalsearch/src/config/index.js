@@ -1,5 +1,5 @@
 import { suiFacet, mergeConfig } from '@eeacms/search';
-import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './utils';
+import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './../utils';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
 import globalSearchConfig from './global-search-config.js';
 
@@ -16,7 +16,7 @@ export default function install(config) {
     ? JSON.parse(process.env.RAZZLE_ENV_CONFIG)
     : globalSearchConfig;
 
-  const pjson = require('../package.json');
+  const pjson = require('../../package.json');
   envConfig.app_name = pjson.name;
   envConfig.app_version = pjson.version;
 

@@ -191,3 +191,21 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
 
   return image;
 };
+
+export const get_cluster_icons = (settings) => {
+  const icons = {
+    fallback: {
+      name: 'fallback',
+      icon: 'file outline',
+    },
+  };
+  settings.clusters.forEach((cluster) => {
+    cluster.values.forEach((value) => {
+      icons[value] = {
+        cluster: cluster.name,
+        icon: cluster.icon,
+      };
+    });
+  });
+  return icons;
+};
