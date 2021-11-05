@@ -6,13 +6,18 @@ import { ModalFacetWrapper } from '@eeacms/search/components';
 import { useAtom } from 'jotai';
 import { bodyContentRefAtom } from '@eeacms/search/state';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
+import { useWindowDimensions } from '@eeacms/search/lib/hocs';
 
 export default (props) => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
+  const { width } = useWindowDimensions();
+  const isActive = width > 766;
+
+  // console.log(width, isActive);
 
   return (
-    <Sticky context={bodyRef}>
+    <Sticky context={bodyRef} active={isActive}>
       {showFacets ? (
         <>
           <MoreLikeThis />
