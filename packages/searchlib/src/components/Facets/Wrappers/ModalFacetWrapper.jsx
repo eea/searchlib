@@ -212,7 +212,6 @@ const FacetWrapperComponent = (props) => {
           <Button
             color="yellow"
             onClick={() => {
-              console.log(state);
               setIsOpened(false);
               if (state.length) {
                 state.forEach((v) => {
@@ -223,7 +222,7 @@ const FacetWrapperComponent = (props) => {
           >
             Clear
           </Button>
-        ) : null }
+        ) : null}
         <Button
           content="Apply"
           labelPosition="right"
