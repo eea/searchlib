@@ -25,6 +25,7 @@ const ViewSelectorWithLabel = (props) => {
       <span>
         Display as{' '}
         <Dropdown
+          key={active}
           inline
           options={viewOptions}
           defaultValue={active}
