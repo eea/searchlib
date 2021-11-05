@@ -25,33 +25,35 @@ const FilterResultEntry = (props) => {
     );
 
     return (
-      <div className="mlt-card content">
-        <div className="header">More like this</div>
-        <Image
-          className="img-thumbnail"
-          src={thumbUrl}
-          wrapped
-          ui={false}
-          fluid
-          centered
-          style={{ backgroundImage: `url('${thumbUrl}')` }}
-          as={ExternalLink}
-          href={result.about.raw}
-          target="_blank"
-          rel="noreferrer"
-        />
-        <div className="meta">
-          TODO Cluster icon |
-          <DateTime format="DATE_MED" value={result.issued.raw} />
-          &nbsp;|&nbsp;
-          <StringList value={result.subject?.raw} />
+      <div className="mlt-filter ui fluid card facet active">
+        <div className="mlt-card content">
+          <div className="header">More like this</div>
+          <Image
+            className="img-thumbnail"
+            src={thumbUrl}
+            wrapped
+            ui={false}
+            fluid
+            centered
+            style={{ backgroundImage: `url('${thumbUrl}')` }}
+            as={ExternalLink}
+            href={result.about.raw}
+            target="_blank"
+            rel="noreferrer"
+          />
+          <div className="meta">
+            TODO Cluster icon |
+            <DateTime format="DATE_MED" value={result.issued.raw} />
+            &nbsp;|&nbsp;
+            <StringList value={result.subject?.raw} />
+          </div>
+          <h4>
+            <a href={result.about.raw} target="_blank" rel="noreferrer">
+              <Icon name="external" size="small" />
+              {result.title.raw}
+            </a>
+          </h4>
         </div>
-        <h4>
-          <a href={result.about.raw} target="_blank" rel="noreferrer">
-            <Icon name="external" size="small" />
-            {result.title.raw}
-          </a>
-        </h4>
       </div>
     );
   }

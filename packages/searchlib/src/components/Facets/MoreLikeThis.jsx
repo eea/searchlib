@@ -8,19 +8,17 @@ const MoreLikeThis = (props) => {
   const filter = filters.find((el) => el.field === 'moreLikeThis');
 
   return (
-    <div className="mlt-filter ui card facet active">
-      <Filter
-        {...filter}
-        setFilter={setFilter}
-        noTitle={true}
-        removeFilter={removeFilter}
-        onClear={(field) => {
-          const activeFilters = filters.map(({ field }) => field);
-          const exclude = activeFilters.filter((name) => name !== field);
-          clearFilters(exclude);
-        }}
-      />
-    </div>
+    <Filter
+      {...filter}
+      setFilter={setFilter}
+      noTitle={true}
+      removeFilter={removeFilter}
+      onClear={(field) => {
+        const activeFilters = filters.map(({ field }) => field);
+        const exclude = activeFilters.filter((name) => name !== field);
+        clearFilters(exclude);
+      }}
+    />
   );
 };
 
