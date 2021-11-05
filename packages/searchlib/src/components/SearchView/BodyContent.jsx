@@ -1,14 +1,12 @@
 import React from 'react';
 import registry from '@eeacms/search/registry';
 import { Results, Result } from '@elastic/react-search-ui';
+import { useViews } from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
   const { resultViews } = appConfig;
-
-  const defaultViewId =
-    resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
-  const [activeViewId, setActiveViewId] = React.useState(defaultViewId);
+  const { activeViewId } = useViews();
 
   const itemViewProps = appConfig[`${activeViewId}ViewParams`];
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
@@ -27,8 +25,6 @@ export const BodyContent = (props) => {
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
-  const args = { ...props, setActiveViewId, activeViewId };
-
   return (
     <Results
       shouldTrackClickThrough={true}
@@ -36,17 +32,17 @@ export const BodyContent = (props) => {
         return wasInteracted ? (
           NoResultsComponent ? (
             children ? (
-              <ContentBodyView {...args}>{children}</ContentBodyView>
+              <ContentBodyView {...props}>{children}</ContentBodyView>
             ) : (
-              <NoResultsComponent {...args} />
+              <NoResultsComponent {...props} />
             )
           ) : (
-            <ContentBodyView {...args}>{children}</ContentBodyView>
+            <ContentBodyView {...props}>{children}</ContentBodyView>
           )
         ) : InitialViewComponent ? (
-          <InitialViewComponent {...args} />
+          <InitialViewComponent {...props} />
         ) : (
-          <ContentBodyView {...args}>{children}</ContentBodyView>
+          <ContentBodyView {...props}>{children}</ContentBodyView>
         );
       }}
       resultView={(props) => (

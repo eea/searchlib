@@ -8,16 +8,19 @@ export const clusters = {
       name: 'Visualizations',
       icon: 'chart area',
       values: ['EEAFigure', 'DavizVisualization', 'Infographic', 'Dashboard'],
+      defaultResultView: 'card',
     },
     {
       name: 'News',
       icon: 'newspaper outline',
       values: ['News', 'Report', 'Article'],
+      defaultResultView: 'table',
     },
     {
       name: 'Data',
       icon: 'table',
       values: ['ExternalDataSpec', 'Data'],
+      defaultResultView: 'table',
     },
   ],
 };
@@ -26,7 +29,7 @@ export const clusterIcons = get_cluster_icons(clusters);
 
 export default {
   contentUtilsParams: {
-    clusterIcons,
+    clusterIcons, // TODO: non-basic objects shouldn't be stored in config
   },
 
   contentSectionsParams: {
@@ -34,6 +37,7 @@ export default {
     enable: true,
     sectionFacetsField: 'op_cluster',
 
+    sections: clusters.clusters,
     icons: get_icons(clusters),
   },
 };
