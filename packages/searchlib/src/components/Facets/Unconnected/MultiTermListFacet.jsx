@@ -57,10 +57,13 @@ const FacetOptions = (props) => {
     <div>
       {isGroupedByLetters && (
         <>
-          {groupedOptionsByLetters.letters.map((letter) => {
+          {groupedOptionsByLetters.letters.map((letter, index) => {
             return (
               <div className="by-groups" key={letter}>
-                <div className="group-heading" key={letter + 'h'}>
+                <div
+                  className={`group-heading ${index === 0 ? 'first' : ''}`}
+                  key={letter + 'h'}
+                >
                   <span>{letter}</span>
                 </div>
                 <div className="group-content" key={letter + 'c'}>
@@ -109,8 +112,11 @@ const FacetOptions = (props) => {
             }
             return (
               <div className="by-groups" key={number}>
-                <div className="group-heading" key={number + 'h'}>
-                  <span>{label}</span>
+                <div
+                  className={`group-heading ${index === 0 ? 'first' : ''}`}
+                  key={number + 'h'}
+                >
+                  <span>{number}</span>
                 </div>
                 <div className="group-content" key={number + 'c'}>
                   {groupedOptionsByNumbers[number].map((option) => {
