@@ -1,6 +1,6 @@
 import React from 'react';
 import { Facet as SUIFacet } from '@elastic/react-search-ui';
-import { Card, Modal, Button } from 'semantic-ui-react'; // , Header, Image
+import { Card, Modal, Button, Icon } from 'semantic-ui-react'; // , Header, Image
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
@@ -208,21 +208,6 @@ const FacetWrapperComponent = (props) => {
         >
           Cancel
         </Button>
-        {state.length > 0 ? (
-          <Button
-            color="yellow"
-            onClick={() => {
-              setIsOpened(false);
-              if (state.length) {
-                state.forEach((v) => {
-                  removeFilter(field, v, localFilterType);
-                });
-              }
-            }}
-          >
-            Clear
-          </Button>
-        ) : null}
         <Button
           content="Apply"
           labelPosition="right"
@@ -239,6 +224,24 @@ const FacetWrapperComponent = (props) => {
           }}
           positive
         />
+        {state.length > 0 ? (
+          <a
+            href="/"
+            className="clear-filters"
+            onClick={(evt) => {
+              evt.preventDefault();
+              setIsOpened(false);
+              if (state.length) {
+                state.forEach((v) => {
+                  removeFilter(field, v, localFilterType);
+                });
+              }
+            }}
+          >
+            <Icon name="undo" />
+            Clear
+          </a>
+        ) : null}
       </Modal.Actions>
     </Modal>
   );
