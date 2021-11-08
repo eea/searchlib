@@ -4,6 +4,7 @@ import { RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
 // import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 function toFloat(value) {
   try {
@@ -26,7 +27,7 @@ function extractNumeric(value) {
   return value;
 }
 
-export const HistogramFacetComponent = (props) => {
+const ViewComponent = (props) => {
   const { data, ranges, onChange } = props;
 
   const range = getRangeStartEnd(ranges);
@@ -65,38 +66,65 @@ export const HistogramFacetComponent = (props) => {
     },
     [onChange, settings.max, settings.min],
   );
-
+  const {
+    className,
+    label,
+    onRemove,
+    onSelect,
+    options,
+    facets,
+    field,
+    HeaderWrapper = 'div',
+    ContentWrapper = 'div',
+  } = props;
+  const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
   return (
-    <div className="histogram-facet">
-      <div className="text-input">
-        <Input
-          type="number"
-          value={rangeStart}
-          onChange={(e, { value }) => setRangeStart(value)}
-          min={start}
-          max={end}
-        />
-        <Input
-          type="number"
-          value={rangeEnd}
-          onChange={(e, { value }) => setRangeEnd(value)}
-          min={start}
-          max={end}
-        />
-      </div>
-      <ResponsiveHistogramChart
-        {...props}
-        data={data}
-        activeRange={[rangeStart, rangeEnd]}
-      />
-      <RangeSlider
-        value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
-        multiple
-        color="red"
-        settings={{ ...settings, onChange: onChangeValue }}
-      />
-    </div>
+    <>
+      <HeaderWrapper>
+        <div className="fixedrange__facet__header">
+          <div className="facet-title">
+            <h3>{facetConfig?.title || label}</h3>
+          </div>
+        </div>
+      </HeaderWrapper>
+      <ContentWrapper>
+        <div className="histogram-facet">
+          <div className="text-input">
+            <Input
+              type="number"
+              value={rangeStart}
+              onChange={(e, { value }) => setRangeStart(value)}
+              min={start}
+              max={end}
+            />
+            <Input
+              type="number"
+              value={rangeEnd}
+              onChange={(e, { value }) => setRangeEnd(value)}
+              min={start}
+              max={end}
+            />
+          </div>
+          <ResponsiveHistogramChart
+            {...props}
+            data={data}
+            activeRange={[rangeStart, rangeEnd]}
+          />
+          <RangeSlider
+            value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
+            multiple
+            color="red"
+            settings={{ ...settings, onChange: onChangeValue }}
+          />
+        </div>
+      </ContentWrapper>
+    </>
   );
+};
+
+export const HistogramFacetComponent = (props) => {
+  return <ViewComponent {...props} />;
 };
 
 const HistogramFacet = (props) => {
