@@ -1,3 +1,11 @@
+/**
+ * A singleton object exposed as a module. Importing the registry is fine if
+ * you only read the `registry.resolve` part, as that's meant to be fixed and
+ * unique. The `searchui` part is meant to be mutable and should be read
+ * through the system by passing it down or using `useAppConfig().appConfig`
+ *
+ */
+
 import React from 'react';
 import { SearchBox } from '@elastic/react-search-ui';
 import MultiTermFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermFacet';
@@ -50,6 +58,7 @@ import {
   // getMLTValue,
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
+import { ResultModel } from '@eeacms/search/lib/models';
 
 const config = {
   resolve: {
@@ -188,6 +197,8 @@ const config = {
     DefaultFacetsList: {
       component: ({ children }) => <div className="facets">{children}</div>,
     },
+
+    ResultModel,
   },
 
   searchui: {
@@ -251,6 +262,11 @@ const config = {
         icons: {
           News: '',
         },
+      },
+
+      resultItemModel: {
+        // convert a ES hit to a usable result
+        factory: 'ResultModel',
       },
 
       filters: {

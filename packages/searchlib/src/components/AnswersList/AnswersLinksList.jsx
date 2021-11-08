@@ -4,7 +4,7 @@ import { Label, Icon } from 'semantic-ui-react'; //, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { DateTime } from '@eeacms/search/components'; //, StringList
-import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
+import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { highlightUrl } from './utils';
 
 const extractDomain = (url) => {
@@ -21,10 +21,7 @@ export default ({ filtered, appConfig }) => {
   };
 
   return filtered.slice(0, 5).map((item, i) => {
-    const result = convertHitToResult(
-      { ...item, _source: item.source },
-      appConfig.field_filters,
-    );
+    const result = buildResult({ ...item, _source: item.source }, appConfig);
     const date = Date.parse(result['issued']?.raw);
     const days = result && (Date.now() - date) / 1000 / 60 / 60 / 24;
     let expired =

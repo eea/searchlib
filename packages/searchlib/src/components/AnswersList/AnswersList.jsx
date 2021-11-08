@@ -3,7 +3,7 @@ import React from 'react';
 import { Segment, Rating, Popup, Button } from 'semantic-ui-react'; //, Icon, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
-import { convertHitToResult } from '@eeacms/search/lib/search/state/results';
+import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import AnswerBoxDetails from './AnswerBoxDetails';
 import { highlightUrl } from './utils';
@@ -69,9 +69,9 @@ score: 6.118757247924805
 
   const primaryAnswer = filtered?.[0];
   const primaryResult = primaryAnswer
-    ? convertHitToResult(
+    ? buildResult(
         { ...primaryAnswer, _source: primaryAnswer?.source },
-        appConfig.field_filters,
+        appConfig,
       )
     : null;
 
