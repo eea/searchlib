@@ -31,7 +31,7 @@ export const clusters = {
     {
       name: 'Others',
       icon: 'table',
-      values: ['Webpage', 'Organisation', 'FAQ', 'Video', 'Contract opportunity'],// this will be transformed in "single type clusters".
+      values: ['Webpage', 'Organisation', 'FAQ', 'Video', 'Contract opportunity', 'Glossary term'],// this will be transformed in "single type clusters".
       defaultResultView: 'card',
     },
   ],
