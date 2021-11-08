@@ -177,6 +177,23 @@ const FacetWrapperComponent = (props) => {
                   />
                 ) : null;
               })}
+              {state.length > 0 ? (
+                <a
+                  href="/"
+                  className="clear-filters"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    setIsOpened(false);
+                    if (state.length) {
+                      state.forEach((v) => {
+                        removeFilter(field, v, localFilterType);
+                      });
+                    }
+                  }}
+                >
+                  <Icon name="undo" title="Clear" />
+                </a>
+              ) : null}
             </div>
           }
           className={(isActive && 'facet active') || 'facet'}
