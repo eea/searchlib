@@ -1,3 +1,7 @@
+/**
+ * This is the display card for the "More like this" selection
+ *
+ */
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
@@ -37,20 +41,20 @@ const FilterResultEntry = (props) => {
             centered
             style={{ backgroundImage: `url('${thumbUrl}')` }}
             as={ExternalLink}
-            href={result.about.raw}
+            href={result.about?.raw}
             target="_blank"
             rel="noreferrer"
           />
           <div className="meta">
             TODO Cluster icon |
-            <DateTime format="DATE_MED" value={result.issued.raw} />
+            <DateTime format="DATE_MED" value={result.issued?.raw} />
             &nbsp;|&nbsp;
             <StringList value={result.subject?.raw} />
           </div>
           <h4>
             <a href={result.about.raw} target="_blank" rel="noreferrer">
               <Icon name="external" size="small" />
-              {result.title.raw}
+              {result.title?.raw}
             </a>
           </h4>
         </div>
