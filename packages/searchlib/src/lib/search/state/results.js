@@ -1,72 +1,10 @@
-function getHighlight(hit, fieldName) {
-  // if (hit._source.title === 'Rocky Mountain' && fieldName === 'title') {
-  //   window.hit = hit;
-  //   window.fieldName = fieldName;
-  // }
+import registry from '@eeacms/search/registry';
 
-  if (
-    !hit.highlight ||
-    !hit.highlight[fieldName] ||
-    hit.highlight[fieldName].length < 1
-  ) {
-    return;
-  }
-
-  return hit.highlight[fieldName][0];
+export function buildResult(hit, config, ...extras) {
+  const Model = registry.resolve[config.resultItemModel.factory];
+  return new Model(hit, config, ...extras);
 }
 
-const toObject = (field, value, snippet, field_filters) => {
-  const blacklist = field_filters[field]?.blacklist || [];
-  const whitelist = field_filters[field]?.whitelist || [];
-
-  if (!Array.isArray(value)) {
-    value = [value];
-  }
-
-  let filtered_value = value.filter((val) => blacklist.indexOf(val) === -1);
-  if (whitelist.length > 0) {
-    filtered_value = filtered_value.filter(
-      (val) => whitelist.indexOf(val) !== -1,
-    );
-  }
-
-  if (filtered_value.length === 1) {
-    filtered_value = filtered_value[0];
-  }
-
-  return { raw: filtered_value, ...(snippet && { snippet }) };
-};
-
-export const convertHitToResult = (record, field_filters) => {
-  const addEachKeyValueToObject = (acc, [key, value]) => ({
-    ...acc,
-    [key]: value,
-  });
-
-  const rec = Object.entries(record._source)
-    .map(([fieldName, fieldValue]) => [
-      fieldName,
-      toObject(
-        fieldName,
-        fieldValue,
-        getHighlight(record, fieldName),
-        field_filters,
-      ),
-    ])
-    .reduce(addEachKeyValueToObject, {});
-
-  rec.id = { raw: record._id || record.id }; // TODO: make sure to have ids
-
-  if (rec.source) {
-    // compatibility with haystack proxy
-    rec._source = rec.source;
-    delete rec._source;
-  }
-
-  rec._original = record;
-  return rec;
-};
-
-export default function buildResults(hits, field_filters = {}) {
-  return hits.map((hit) => convertHitToResult(hit, field_filters));
+export default function buildResults(hits, config, ...extras) {
+  return hits.map((hit) => buildResult(hit, config, ...extras));
 }

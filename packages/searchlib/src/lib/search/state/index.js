@@ -16,7 +16,7 @@ import buildResults from './results';
   We do similar things for facets and totals.
 */
 export default function buildState(response, resultsPerPage, config) {
-  const results = buildResults(response.hits.hits, config.field_filters);
+  const results = buildResults(response.hits.hits, config);
   const totalResults = buildTotalResults(response.hits);
   const totalPages = buildTotalPages(resultsPerPage, totalResults);
 
