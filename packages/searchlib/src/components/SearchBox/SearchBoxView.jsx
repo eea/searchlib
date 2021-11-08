@@ -77,7 +77,9 @@ function SearchBoxView(props) {
                     }}
                   >
                     {appConfig.title ? (
-                      <h2 className="searchApp-headline">{appConfig.title}</h2>
+                      <h2 className="searchApp-headline">
+                        <a href={window.location.href}> {appConfig.title} </a>
+                      </h2>
                     ) : (
                       ''
                     )}
