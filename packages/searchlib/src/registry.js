@@ -267,6 +267,16 @@ const config = {
       resultItemModel: {
         // convert a ES hit to a usable result
         factory: 'ResultModel',
+        urlField: 'about',
+        titleField: 'title',
+        metatypeField: 'objectProvides',
+        descriptionField: 'description',
+        tagsField: 'topic',
+        issuedField: 'issued',
+        getThumbnailUrl: 'getGlobalsearchThumbUrl',
+        getIconUrl: 'getGlobalsearchIconUrl',
+        fallbackThumbUrl:
+          'https://react.semantic-ui.com/images/wireframe/white-image.png',
       },
 
       filters: {
@@ -356,15 +366,7 @@ const config = {
       },
 
       horizontalCardViewParams: {
-        urlField: 'about',
-        titleField: 'title',
-        metatypeField: 'objectProvides',
-        descriptionField: 'description',
-        tagsField: 'topic',
-        issuedField: 'issued',
         enabled: true,
-        getThumbnailUrl: 'getGlobalsearchThumbUrl',
-        getIconUrl: 'getGlobalsearchIconUrl',
       },
       tableViewParams: {
         enabled: true,

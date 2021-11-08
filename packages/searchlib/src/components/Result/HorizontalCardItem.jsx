@@ -33,27 +33,22 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   removeFilter,
 }))((props) => {
   const { result, setFilter, removeFilter, showControls = true } = props;
-  const { appConfig, registry } = useAppConfig();
-  const days =
-    (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
+  const { appConfig } = useAppConfig();
+  const days = result.daysSinceIssued;
+  // const days = (Date.now() - Date.parse(result.issued)) / 1000 / 60 / 60 / 24;
 
-  let expired =
-    result['expires']?.raw !== undefined
-      ? Date.parse(result['expires']?.raw) < Date.now()
-      : false;
-
-  const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
-
-  const getThumb =
-    registry.resolve[thumbFactoryName] ||
-    ((result, config, fallback) => fallback);
-
-  const thumbUrl = getThumb(
-    result,
-    appConfig,
-    // TODO: use a configured default
-    'https://react.semantic-ui.com/images/wireframe/white-image.png',
-  );
+  // const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
+  //
+  // const getThumb =
+  //   registry.resolve[thumbFactoryName] ||
+  //   ((result, config, fallback) => fallback);
+  //
+  // const thumbUrl = getThumb(
+  //   result,
+  //   appConfig,
+  //   // TODO: use a configured default
+  //   'https://react.semantic-ui.com/images/wireframe/white-image.png',
+  // );
 
   const clusterIcons = appConfig.cardViewParams.clusterIcons;
   const getClusterIcon = (result) => {
@@ -64,7 +59,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   };
   const clusterIcon = getClusterIcon(result);
 
-  const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
+  // const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
+  const url = result.href;
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
   const source = url
     .replace('https://', '')
@@ -87,10 +83,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <Icon name={clusterIcon} />
             </span>
             <span className="date">
-              <DateTime
-                format="DATE_MED"
-                value={result[props.issuedField]?.raw}
-              />
+              <DateTime format="DATE_MED" value={result.issued} />
             </span>
             <span className="tags">
               <StringList value={result[props.tagsField]?.raw} />
@@ -115,9 +108,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <div className="col-left">
           <div className="details">
             <h3>
-              <ExternalLink href={url}>
-                {result[props.titleField]?.raw}
-              </ExternalLink>
+              <ExternalLink href={url}>{result.title}</ExternalLink>
               {days < 30 && (
                 <>
                   &nbsp;
@@ -126,7 +117,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                   </Label>
                 </>
               )}
-              {expired && (
+              {result.isExpired && (
                 <>
                   &nbsp;
                   <Label className="archived-item" horizontal>
@@ -145,7 +136,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <div className="col-right">
           <Image
             className="img-thumbnail"
-            src={thumbUrl}
+            src={result.thumbUrl}
             wrapped
             ui={false}
             fluid

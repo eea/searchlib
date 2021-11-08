@@ -1,3 +1,6 @@
+import registry from '@eeacms/search/registry';
+import { DateTime } from 'luxon';
+
 function getHighlight(hit, fieldName) {
   // if (hit._source.title === 'Rocky Mountain' && fieldName === 'title') {
   //   window.hit = hit;
@@ -50,7 +53,7 @@ export const convertHitToResult = (record, field_filters) => {
         fieldName,
         fieldValue,
         getHighlight(record, fieldName),
-        field_filters,
+        field_filters || {},
       ),
     ])
     .reduce(addEachKeyValueToObject, {});
@@ -67,14 +70,91 @@ export const convertHitToResult = (record, field_filters) => {
   return rec;
 };
 
-export class ResultModel {
-  extras = [];
+// constructor(record, config, field_filters) {
+//   super(record, config, field_filters);
+//   this.appConfig = config;
+//   this._original = record;
+//   this._result = convertHitToResult(
+//     record,
+//     field_filters || config.field_filters,
+//   );
+// }
+//
 
+export class BasicModel {
   constructor(record, config, field_filters) {
-    const filters = field_filters || config.field_filters || {};
-    this._original = record;
-    Object.assign(this, convertHitToResult(record, filters));
+    const basic = {
+      appConfig: config,
+      _original: record,
+      _result: convertHitToResult(
+        record,
+        field_filters || config.field_filters,
+      ),
+    };
 
-    this.extras.forEach((f) => f(this, config));
+    return new Proxy(basic, this);
+  }
+
+  get(target, name) {
+    if (target.hasOwnProperty(name)) return target[name];
+
+    const proto = Object.getPrototypeOf(this);
+    const descriptors = Object.getOwnPropertyDescriptors(proto);
+    // if (name === 'title') {
+    //   console.log('proto', { proto, target, name, this: this, descriptors });
+    // }
+    if (descriptors[name] && descriptors[name].get) {
+      const value = descriptors[name].get.bind(target).apply();
+      delete target[name];
+      target[name] = value;
+      return target[name];
+    } else {
+      return target._result[name];
+    }
+  }
+}
+
+export class ResultModel extends BasicModel {
+  get daysSinceIssued() {
+    const raw = this._result['issued']?.raw;
+    const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
+    const res = DateTime.local().diff(issued, 'days').as('days');
+    console.log('issued', { issued, res });
+    return res;
+  }
+
+  get issued() {
+    const raw = this._result['issued']?.raw;
+    return raw ? DateTime.fromISO(raw) : DateTime.local();
+  }
+
+  get expires() {
+    const raw = this._result['expires']?.raw;
+    return raw ? DateTime.fromISO(raw) : null;
+  }
+
+  get icon() {
+    //
+  }
+
+  get href() {
+    return this._result.about?.raw;
+  }
+
+  get title() {
+    return this._result.title.raw;
+  }
+
+  get thumbUrl() {
+    const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
+    const getThumb =
+      registry.resolve[thumbFactoryName] ||
+      ((result, config, fallback) => fallback);
+
+    return getThumb(this._result, this.appConfig);
+  }
+
+  get isExpired() {
+    return this.expires ? this.expires < DateTime.local() : false;
   }
 }
