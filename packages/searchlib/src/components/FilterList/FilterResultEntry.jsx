@@ -16,6 +16,11 @@ const FilterResultEntry = (props) => {
   const { appConfig, registry } = useAppConfig();
   const [result] = useAtom(moreLikeThisAtom);
 
+  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
+  const getClusterIcon = (title) => {
+    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  };
+
   if (result) {
     const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
     const getThumb =
@@ -46,7 +51,7 @@ const FilterResultEntry = (props) => {
             rel="noreferrer"
           />
           <div className="meta">
-            TODO Cluster icon |
+            <Icon name={getClusterIcon(result.objectProvides?.raw)} />
             <DateTime format="DATE_MED" value={result.issued?.raw} />
             &nbsp;|&nbsp;
             <StringList value={result.subject?.raw} />
