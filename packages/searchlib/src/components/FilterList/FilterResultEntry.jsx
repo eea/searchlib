@@ -44,7 +44,6 @@ const FilterResultEntry = (props) => {
             ui={false}
             fluid
             centered
-            style={{ backgroundImage: `url('${thumbUrl}')` }}
             as={ExternalLink}
             href={result.about?.raw}
             target="_blank"
