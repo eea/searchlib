@@ -119,7 +119,6 @@ export class ResultModel extends BasicModel {
     const raw = this._result['issued']?.raw;
     const issued = raw ? DateTime.fromISO(raw) : DateTime.local();
     const res = DateTime.local().diff(issued, 'days').as('days');
-    console.log('issued', { issued, res });
     return res;
   }
 
@@ -133,8 +132,16 @@ export class ResultModel extends BasicModel {
     return raw ? DateTime.fromISO(raw) : null;
   }
 
-  get icon() {
-    //
+  get metaCategories() {
+    return this._result.subject?.raw;
+  }
+
+  get clusterIcon() {
+    const clusterIcons = this.appConfig.contentUtilsParams.clusterIcons;
+    const getClusterIcon = (title) => {
+      return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+    };
+    return getClusterIcon(this._result.objectProvides?.raw);
   }
 
   get href() {

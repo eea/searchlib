@@ -14,11 +14,6 @@ const FilterResultEntry = (props) => {
   const { value } = props;
   const [result] = useAtom(moreLikeThisAtom);
 
-  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
-  const getClusterIcon = (title) => {
-    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
-  };
-
   if (result) {
     return (
       <div className="mlt-filter ui fluid card facet active">
@@ -38,15 +33,15 @@ const FilterResultEntry = (props) => {
             rel="noreferrer"
           />
           <div className="meta">
-            <Icon name={getClusterIcon(result.objectProvides?.raw)} />
-            <DateTime format="DATE_MED" value={result.issued?.raw} />
+            <Icon name={result.clusterIcon} />
+            <DateTime format="DATE_MED" value={result.issued} />
             &nbsp;|&nbsp;
-            <StringList value={result.subject?.raw} />
+            <StringList value={result.metaCategories} />
           </div>
           <h4>
-            <a href={result.about.raw} target="_blank" rel="noreferrer">
+            <a href={result.href} target="_blank" rel="noreferrer">
               <Icon name="external" size="small" />
-              {result.title?.raw}
+              {result.title}
             </a>
           </h4>
         </div>
