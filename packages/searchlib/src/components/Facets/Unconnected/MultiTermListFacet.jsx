@@ -283,8 +283,9 @@ const ViewComponent = (props) => {
           />
 
           <div className="order-controls">
+            <span className="label">Order:</span>
             <ToggleSort
-              label="Count"
+              label="By Count"
               onToggle={() => toggleSort('count')}
               on={sorting.sortOn === 'count'}
               icon={
