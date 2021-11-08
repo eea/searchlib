@@ -6,14 +6,14 @@ export const clusters = {
   clusters: [
     {
       name: 'News',
-      icon: 'newspaper outline',
-      values: ['News'],
+      icon: 'bullhorn',
+      values: ['News', 'Article'],
       defaultResultView: 'table',
     },
     {
-      name: 'Assessments',
-      icon: 'table',
-      values: ['Report', 'Indicator', 'Article', 'Briefing', 'Topic page', 'Country fact sheet'],
+      name: 'Publications',
+      icon: 'book',
+      values: ['Report', 'Indicator', 'Briefing', 'Topic page', 'Country fact sheet'],
       defaultResultView: 'table',
     },
     {
@@ -24,13 +24,13 @@ export const clusters = {
     },
     {
       name: 'Data',
-      icon: 'table',
+      icon: 'database',
       values: ['External data reference', 'Data set'],
       defaultResultView: 'table',
     },
     {
       name: 'Others',
-      icon: 'table',
+      icon: 'copy outline',
       values: ['Webpage', 'Organisation', 'FAQ', 'Video', 'Contract opportunity', 'Glossary term'],// this will be transformed in "single type clusters".
       defaultResultView: 'card',
     },
