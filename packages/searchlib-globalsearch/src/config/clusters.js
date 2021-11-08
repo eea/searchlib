@@ -7,32 +7,31 @@ export const clusters = {
     {
       name: 'News',
       icon: 'newspaper outline',
-      values: ['News', 'Article'],
+      values: ['News'],
       defaultResultView: 'table',
     },
     {
       name: 'Assessments',
       icon: 'table',
-      values: ['Report', 'Assessment', 'AssessmentPart'],
+      values: ['Report', 'Indicator', 'Article', 'Briefing', 'Topic page', 'Country fact sheet'],
       defaultResultView: 'table',
     },
     {
       name: 'Visualizations',
       icon: 'chart area',
-      values: ['EEAFigure', 'DavizVisualization', 'Infographic', 'Dashboard'],
+      values: ['Figure (chart/map)', 'Chart (interactive)', 'Infographic', 'Data dashboard', 'Map (interactive)'],
       defaultResultView: 'card',
     },
     {
       name: 'Data',
       icon: 'table',
-      values: ['ExternalDataSpec', 'Data'],
+      values: ['External data reference', 'Data set'],
       defaultResultView: 'table',
     },
-
     {
       name: 'Others',
       icon: 'table',
-      values: [],// this should be single content types.
+      values: ['Webpage', 'Organisation', 'FAQ', 'Video', 'Contract opportunity'],// this will be transformed in "single type clusters".
       defaultResultView: 'card',
     },
   ],
