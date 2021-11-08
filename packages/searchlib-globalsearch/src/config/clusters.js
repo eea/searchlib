@@ -5,16 +5,22 @@ export const clusters = {
   field: 'objectProvides',
   clusters: [
     {
+      name: 'News',
+      icon: 'newspaper outline',
+      values: ['News', 'Article'],
+      defaultResultView: 'table',
+    },
+    {
+      name: 'Assessments',
+      icon: 'table',
+      values: ['Report', 'Assessment', 'AssessmentPart'],
+      defaultResultView: 'table',
+    },
+    {
       name: 'Visualizations',
       icon: 'chart area',
       values: ['EEAFigure', 'DavizVisualization', 'Infographic', 'Dashboard'],
       defaultResultView: 'card',
-    },
-    {
-      name: 'News',
-      icon: 'newspaper outline',
-      values: ['News', 'Report', 'Article'],
-      defaultResultView: 'table',
     },
     {
       name: 'Data',
@@ -22,8 +28,17 @@ export const clusters = {
       values: ['ExternalDataSpec', 'Data'],
       defaultResultView: 'table',
     },
+
+    {
+      name: 'Others',
+      icon: 'table',
+      values: [],// this should be single content types.
+      defaultResultView: 'card',
+    },
   ],
 };
+
+// Add "Others", a menu with subgroups.
 
 export const clusterIcons = get_cluster_icons(clusters);
 
