@@ -100,9 +100,6 @@ export class BasicModel {
 
     const proto = Object.getPrototypeOf(this);
     const descriptors = Object.getOwnPropertyDescriptors(proto);
-    // if (name === 'title') {
-    //   console.log('proto', { proto, target, name, this: this, descriptors });
-    // }
     if (descriptors[name] && descriptors[name].get) {
       const value = descriptors[name].get.bind(target).apply();
       delete target[name];

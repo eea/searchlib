@@ -126,6 +126,7 @@ function SearchInput({
                   role="button"
                   onClick={() => {
                     inputProps.onChange({ target: { value: '' } });
+                    // onSubmit();
                   }}
                 />
               </div>

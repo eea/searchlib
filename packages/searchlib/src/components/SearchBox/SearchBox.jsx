@@ -122,7 +122,7 @@ export class SearchBoxContainer extends Component {
     //   ...options,
     // });
 
-    e.preventDefault();
+    e && e.preventDefault();
     setSearchTerm(searchTerm, {
       shouldClearFilters,
     });
@@ -253,7 +253,7 @@ export class SearchBoxContainer extends Component {
             handleOnSelectAutocomplete || this.defaultOnSelectAutocomplete,
           onSubmit: onSubmit
             ? (e) => {
-                e.preventDefault();
+                e && e.preventDefault();
                 onSubmit(searchTerm);
               }
             : this.handleSubmit,
