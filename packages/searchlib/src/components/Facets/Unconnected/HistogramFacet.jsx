@@ -111,12 +111,14 @@ const ViewComponent = (props) => {
             data={data}
             activeRange={[rangeStart, rangeEnd]}
           />
-          <RangeSlider
-            value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
-            multiple
-            color="red"
-            settings={{ ...settings, onChange: onChangeValue }}
-          />
+          <div className="range-slider-container">
+            <RangeSlider
+              value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
+              multiple
+              color="red"
+              settings={{ ...settings, onChange: onChangeValue }}
+            />
+          </div>
         </div>
       </ContentWrapper>
     </>
