@@ -64,11 +64,13 @@ function SearchBoxView(props) {
           <div className="header-content">
             <Grid columns={2} container stackable className="header-columns">
               <Grid.Row>
-                <Grid.Column
-                  widescreen="2"
-                  tablet="2"
-                  className="col-left"
-                ></Grid.Column>
+                <Grid.Column widescreen="2" tablet="2" className="col-left">
+                  <div className="search-logo">
+                    <a href={window.location.href}>
+                      <img src="https://via.placeholder.com/80" alt="logo" />
+                    </a>
+                  </div>
+                </Grid.Column>
                 <Grid.Column widescreen="8" tablet="8" className="col-mid">
                   <form
                     onSubmit={(e) => {
