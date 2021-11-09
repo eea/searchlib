@@ -1,6 +1,4 @@
 import React from 'react';
-import cx from 'classnames';
-import { Resizable } from '@eeacms/search/components'; // , FacetWrapper
 import { Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
@@ -11,7 +9,7 @@ function getFilterValueDisplay(filterValue) {
 }
 
 const FacetOptions = (props) => {
-  const { options, label, onSelect, onRemove } = props;
+  const { options, onSelect, onRemove } = props;
   return (
     <div className="sui-multi-checkbox-facet">
       {options.map((option) => {
@@ -45,7 +43,6 @@ const FacetOptions = (props) => {
 
 const ViewComponent = (props) => {
   const {
-    className,
     label,
     onRemove,
     onSelect,
