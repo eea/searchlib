@@ -41,6 +41,7 @@ function SearchBoxView(props) {
   const focusedClass = isFocused ? 'focus' : '';
   const AutocompleteView = autocompleteView || Autocomplete;
   const InputView = inputView || SearchInput;
+  const homeURL = '//' + window.location.host + window.location.pathname;
 
   return (
     <Downshift
@@ -66,7 +67,7 @@ function SearchBoxView(props) {
               <Grid.Row>
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
                   <div className="search-logo">
-                    <a href={window.location.href}>
+                    <a href={homeURL}>
                       <img src="https://via.placeholder.com/80" alt="logo" />
                     </a>
                   </div>
@@ -79,9 +80,7 @@ function SearchBoxView(props) {
                     }}
                   >
                     {appConfig.title ? (
-                      <h2 className="searchApp-headline">
-                        <a href={window.location.href}> {appConfig.title} </a>
-                      </h2>
+                      <h2 className="searchApp-headline">{appConfig.title}</h2>
                     ) : (
                       ''
                     )}
