@@ -67,21 +67,15 @@ const ViewComponent = (props) => {
         </div>
       </HeaderWrapper>
       <ContentWrapper>
-        <fieldset
-          className={cx('sui-facet searchlib-fixedrange-facet', className)}
-        >
-          {options.length < 1 && <div>No matching options</div>}
+        {options.length < 1 && <div>No matching options</div>}
 
-          <Resizable>
-            <FacetOptions
-              options={options}
-              label={label}
-              facets={facets}
-              onSelect={onSelect}
-              onRemove={onRemove}
-            />
-          </Resizable>
-        </fieldset>
+        <FacetOptions
+          options={options}
+          label={label}
+          facets={facets}
+          onSelect={onSelect}
+          onRemove={onRemove}
+        />
       </ContentWrapper>
     </>
   );
