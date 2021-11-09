@@ -158,7 +158,7 @@ const FacetWrapperComponent = (props) => {
           fluid
           header={
             <div className="header">
-              {label}
+              <span className="text">{label}</span>
               {state.length > 0 ? (
                 <span className="clear-filters">
                   <Icon

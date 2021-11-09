@@ -116,7 +116,7 @@ const FacetOptions = (props) => {
                   className={`group-heading ${index === 0 ? 'first' : ''}`}
                   key={number + 'h'}
                 >
-                  <span>{number}</span>
+                  <span>{label}</span>
                 </div>
                 <div className="group-content" key={number + 'c'}>
                   {groupedOptionsByNumbers[number].map((option) => {
