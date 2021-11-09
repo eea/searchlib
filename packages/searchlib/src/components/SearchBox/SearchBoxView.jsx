@@ -68,7 +68,10 @@ function SearchBoxView(props) {
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
                   <div className="search-logo">
                     <a href={homeURL}>
-                      <img src="https://via.placeholder.com/80" alt="logo" />
+                      <img
+                        src="https://www.eea.europa.eu/about-us/who/eea-logos/eea-compact-logos/eea-logo-compact-colours-en-png"
+                        alt="logo"
+                      />
                     </a>
                   </div>
                 </Grid.Column>
