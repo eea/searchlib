@@ -33,16 +33,18 @@ const Filter = (props) => {
         {values?.map((v, index) => {
           return (
             <Label key={index}>
-              {label === 'Content types' ? (
-                <Icon name={getClusterIcon(v)} />
-              ) : null}
-              <FilterValue
-                value={v}
-                field={field}
-                type={type}
-                appConfig={appConfig}
-                registry={registry}
-              />
+              <span className="text">
+                {label === 'Content types' ? (
+                  <Icon name={getClusterIcon(v)} />
+                ) : null}
+                <FilterValue
+                  value={v}
+                  field={field}
+                  type={type}
+                  appConfig={appConfig}
+                  registry={registry}
+                />
+              </span>
               <Icon
                 onClick={() => {
                   return values.length === 1
