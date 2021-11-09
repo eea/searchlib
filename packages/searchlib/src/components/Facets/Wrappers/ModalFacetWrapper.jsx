@@ -156,7 +156,28 @@ const FacetWrapperComponent = (props) => {
       trigger={
         <Card
           fluid
-          header={label}
+          header={
+            <div className="header">
+              {label}
+              {state.length > 0 ? (
+                <span className="clear-filters">
+                  <Icon
+                    title="Clear"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      setIsOpened(false);
+                      if (state.length) {
+                        state.forEach((v) => {
+                          removeFilter(field, v, localFilterType);
+                        });
+                      }
+                    }}
+                    name="delete"
+                  />
+                </span>
+              ) : null}
+            </div>
+          }
           description={
             <div className="filter description">
               {filters.map((filter, index) => {
@@ -177,23 +198,6 @@ const FacetWrapperComponent = (props) => {
                   />
                 ) : null;
               })}
-              {state.length > 0 ? (
-                <span className="clear-filters">
-                  <Icon
-                    title="Clear"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setIsOpened(false);
-                      if (state.length) {
-                        state.forEach((v) => {
-                          removeFilter(field, v, localFilterType);
-                        });
-                      }
-                    }}
-                    name="undo"
-                  />
-                </span>
-              ) : null}
             </div>
           }
           className={(isActive && 'facet active') || 'facet'}
@@ -255,7 +259,7 @@ const FacetWrapperComponent = (props) => {
               }
             }}
           >
-            <Icon name="undo" />
+            <Icon name="delete" />
             Clear
           </a>
         ) : null}
