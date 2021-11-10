@@ -23,8 +23,9 @@ const ViewSelectorWithLabel = (props) => {
   return (
     <div className="view-selector">
       <span>
-        Display as{' '}
         <Dropdown
+          text="Display as"
+          icon={iconNames[active]}
           key={active}
           inline
           options={viewOptions}
@@ -33,6 +34,7 @@ const ViewSelectorWithLabel = (props) => {
             onSetView(value);
           }}
         />
+        <Icon name="dropdown icon" />
       </span>
     </div>
   );
