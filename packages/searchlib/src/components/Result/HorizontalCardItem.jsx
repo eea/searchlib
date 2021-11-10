@@ -91,7 +91,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             {props.children ? props.children : <ResultContext {...props} />}
             <p className="source">
               <span>Source: </span>
-              <ExternalLink href={result.href}>{result.wesbite}</ExternalLink>
+              <ExternalLink href={result.href}>{result.website}</ExternalLink>
             </p>
           </div>
         </div>
