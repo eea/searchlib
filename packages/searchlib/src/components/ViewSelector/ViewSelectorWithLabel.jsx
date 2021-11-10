@@ -34,7 +34,7 @@ const ViewSelectorWithLabel = (props) => {
             onSetView(value);
           }}
         />
-        <Icon name="dropdown icon" />
+        <Icon name="dropdown" />
       </span>
     </div>
   );
