@@ -159,7 +159,7 @@ const FacetWrapperComponent = (props) => {
           header={
             <div className="header">
               <span className="text">{label}</span>
-              {state.length > 0 ? (
+              {state.length > 1 ? (
                 <span className="clear-filters">
                   <Icon
                     title="Clear"
@@ -245,7 +245,7 @@ const FacetWrapperComponent = (props) => {
           }}
           positive
         />
-        {state.length > 0 ? (
+        {state.length > 1 ? (
           <a
             href="/"
             className="clear-filters"
