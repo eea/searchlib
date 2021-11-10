@@ -33,7 +33,7 @@ const AnswerContext = ({ item, answerItem }) => {
       {pre}
       <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>
       {post}
-      <h4>
+      <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
           {item.title}

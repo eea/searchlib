@@ -8,7 +8,7 @@ import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { highlightUrl } from './utils';
 
 export default ({ filtered, appConfig }) => {
-  return filtered.slice(0, 5).map((item, i) => {
+  return filtered.slice(1, 5).map((item, i) => {
     const result = buildResult({ ...item, _source: item.source }, appConfig);
 
     return (

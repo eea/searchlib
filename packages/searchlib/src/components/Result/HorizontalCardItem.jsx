@@ -117,11 +117,3 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 const CardItem = (props) => <CardItemComponent {...props} />;
 
 export default CardItem;
-// const iconFactoryName = appConfig.cardViewParams.getIconUrl;
-// const getIcon = registry.resolve[iconFactoryName] || ((result, config, fallback) => fallback);
-// const iconUrl = getIcon(
-//   result,
-//   appConfig,
-//   // TODO: use a configured default
-//   'https://react.semantic-ui.com/images/wireframe/white-image.png',
-// );
