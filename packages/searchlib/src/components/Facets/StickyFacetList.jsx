@@ -42,7 +42,7 @@ export default (props) => {
         }}
       >
         <Icon name="filter" />
-        {showFacets ? 'Hide filters' : 'Show more filters'}
+        {showFacets ? 'Hide filters' : 'Filters'}
       </Button>
     </Sticky>
   );
