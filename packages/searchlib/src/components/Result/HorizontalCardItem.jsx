@@ -72,20 +72,14 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             <h3>
               <ExternalLink href={result.href}>{result.title}</ExternalLink>
               {result.isNew && (
-                <>
-                  &nbsp;
-                  <Label className="new-item" horizontal>
-                    New
-                  </Label>
-                </>
+                <Label className="new-item" horizontal>
+                  New
+                </Label>
               )}
               {result.isExpired && (
-                <>
-                  &nbsp;
-                  <Label className="archived-item" horizontal>
-                    Archived
-                  </Label>
-                </>
+                <Label className="archived-item" horizontal>
+                  Archived
+                </Label>
               )}
             </h3>
             {props.children ? props.children : <ResultContext {...props} />}
