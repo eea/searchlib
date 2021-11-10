@@ -25,9 +25,33 @@ const globalSearchConfig = {
   ...clusterParams,
 
   highlight: {
-    fields: {
-      // Measure_name: {},
-    },
+    fragment_size: 200,
+    number_of_fragments: 3,
+    fields: ['description'],
+    // fields: {
+    //   description: {
+    //     highlight_query: {
+    //       bool: {
+    //         must: {
+    //           match: {
+    //             description: {
+    //               query: 'water',
+    //             },
+    //           },
+    //         },
+    //         should: {
+    //           match_phrase: {
+    //             description: {
+    //               query: 'water',
+    //               slop: 1,
+    //               boost: 10.0,
+    //             },
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
   },
 
   sortOptions: [

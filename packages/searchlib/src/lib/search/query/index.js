@@ -21,6 +21,7 @@
 import { buildFullTextMatch } from './fullText';
 import { buildRequestFilter } from './filters';
 import { buildAggregationsQuery } from './aggregations';
+import { buildHighlight } from './highlight';
 
 function buildFrom(current, resultsPerPage) {
   if (!current || !resultsPerPage) return;
@@ -55,7 +56,6 @@ export default function buildRequest(state, config, includeAggs = false) {
     sortDirection,
     sortField,
   } = state;
-  // console.log('buildRequest', config);
 
   const sort = buildSort(sortDirection, sortField, config);
   const match = buildFullTextMatch(searchTerm, filters, config);
@@ -63,7 +63,7 @@ export default function buildRequest(state, config, includeAggs = false) {
   const from = buildFrom(current, resultsPerPage, config);
   const filter = buildRequestFilter(filters, config);
   const aggs = includeAggs ? buildAggregationsQuery(config) : {};
-  const { highlight } = config;
+  const highlight = buildHighlight(searchTerm, config);
 
   // console.log({ sort, match, size, from, filter, filters });
 
@@ -84,7 +84,7 @@ export default function buildRequest(state, config, includeAggs = false) {
         score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
     },
-    highlight,
+    ...highlight,
     aggs,
     ...(sort && { sort }),
     ...(size && { size }),

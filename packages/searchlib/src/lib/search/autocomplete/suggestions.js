@@ -1,7 +1,5 @@
 import runRequest from '@eeacms/search/lib/runRequest';
 
-import React from 'react';
-
 import uniq from 'lodash.uniq';
 
 const clean = (text) =>
