@@ -1,18 +1,12 @@
 import React from 'react';
-import { withSearch } from '@elastic/react-search-ui';
-import { Icon, Image, Label, Dropdown } from 'semantic-ui-react';
-import { DateTime, StringList } from '@eeacms/search/components';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { useAtom } from 'jotai';
-import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
+import { useAtom } from 'jotai';
+import { Icon, Image, Label, Dropdown } from 'semantic-ui-react';
+import { withSearch } from '@elastic/react-search-ui';
 
-const normalizeStr = (str) => {
-  let tmp = document.createElement('DIV');
-  tmp.innerHTML = str;
-  str = tmp.textContent || tmp.innerText || '';
-  return str;
-};
+import { DateTime, StringList } from '@eeacms/search/components';
+import { moreLikeThisAtom } from '@eeacms/search/state';
+import ResultContext from './ResultContext';
 
 export const ExternalLink = (props) => {
   return (
@@ -33,42 +27,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   removeFilter,
 }))((props) => {
   const { result, setFilter, removeFilter, showControls = true } = props;
-  const { appConfig } = useAppConfig();
-  const days = result.daysSinceIssued;
-  // const days = (Date.now() - Date.parse(result.issued)) / 1000 / 60 / 60 / 24;
 
-  // const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
-  //
-  // const getThumb =
-  //   registry.resolve[thumbFactoryName] ||
-  //   ((result, config, fallback) => fallback);
-  //
-  // const thumbUrl = getThumb(
-  //   result,
-  //   appConfig,
-  //   // TODO: use a configured default
-  //   'https://react.semantic-ui.com/images/wireframe/white-image.png',
-  // );
-
-  const clusterIcons = appConfig.cardViewParams.clusterIcons;
-  const getClusterIcon = (result) => {
-    return (
-      clusterIcons[result.objectProvides.raw]?.icon ||
-      clusterIcons.fallback.icon
-    );
-  };
-  const clusterIcon = getClusterIcon(result);
-
-  // const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
-  const url = result.href;
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
-  const source = url
-    .replace('https://', '')
-    .replace('http://', '')
-    .split('/')[0];
 
   const [hovered, setHovered] = React.useState(false);
-  const description = normalizeStr(result[props.descriptionField]?.raw || '');
 
   return (
     <>
@@ -79,14 +41,14 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       >
         <div className="col-full">
           <div className="meta">
-            <span className="cluster-icon">
-              <Icon name={clusterIcon} />
-            </span>
             <span className="date">
               <DateTime format="DATE_MED" value={result.issued} />
             </span>
+            <span className="cluster-icon">
+              <Icon name={result.clusterIcon} />
+            </span>
             <span className="tags">
-              <StringList value={result[props.tagsField]?.raw} />
+              <StringList value={result.metaTypes} />
             </span>
             {showControls && (
               <Dropdown icon="ellipsis vertical">
@@ -108,8 +70,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         <div className="col-left">
           <div className="details">
             <h3>
-              <ExternalLink href={url}>{result.title}</ExternalLink>
-              {days < 30 && (
+              <ExternalLink href={result.href}>{result.title}</ExternalLink>
+              {result.isNew && (
                 <>
                   &nbsp;
                   <Label className="new-item" horizontal>
@@ -126,10 +88,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 </>
               )}
             </h3>
-            {props.children ? props.children : <p>{description}</p>}
+            {props.children ? props.children : <ResultContext {...props} />}
             <p className="source">
               <span>Source: </span>
-              <ExternalLink href={url}>{source}</ExternalLink>
+              <ExternalLink href={result.href}>{result.wesbite}</ExternalLink>
             </p>
           </div>
         </div>
@@ -142,7 +104,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             fluid
             centered
             as={ExternalLink}
-            href={url}
+            href={result.href}
             target="_blank"
             rel="noreferrer"
           />

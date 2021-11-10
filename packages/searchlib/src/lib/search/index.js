@@ -23,3 +23,4 @@ export { getAutocompleteSuggestions } from './autocomplete/suggestions';
 
 export * from './query/aggregations';
 export * from './query/mltFilter';
+export * from './query/highlight';

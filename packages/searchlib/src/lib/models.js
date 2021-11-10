@@ -58,7 +58,7 @@ export const convertHitToResult = (record, field_filters) => {
     ])
     .reduce(addEachKeyValueToObject, {});
 
-  rec.id = { raw: record._id || record.id }; // TODO: make sure to have ids
+  rec.id = record._id || record.id;
 
   if (rec.source) {
     // compatibility with haystack proxy
@@ -66,20 +66,15 @@ export const convertHitToResult = (record, field_filters) => {
     delete rec._source;
   }
 
-  rec._original = record;
+  rec._meta = Object.assign(
+    {},
+    ...Object.keys(record)
+      .filter((n) => n !== '_source')
+      .map((n) => ({ [n]: record[n] })),
+  );
+
   return rec;
 };
-
-// constructor(record, config, field_filters) {
-//   super(record, config, field_filters);
-//   this.appConfig = config;
-//   this._original = record;
-//   this._result = convertHitToResult(
-//     record,
-//     field_filters || config.field_filters,
-//   );
-// }
-//
 
 export class BasicModel {
   constructor(record, config, field_filters) {
@@ -119,6 +114,10 @@ export class ResultModel extends BasicModel {
     return res;
   }
 
+  get isNew() {
+    return this.daysSinceIssued < 30;
+  }
+
   get issued() {
     const raw = this._result['issued']?.raw;
     return raw ? DateTime.fromISO(raw) : DateTime.local();
@@ -127,6 +126,16 @@ export class ResultModel extends BasicModel {
   get expires() {
     const raw = this._result['expires']?.raw;
     return raw ? DateTime.fromISO(raw) : null;
+  }
+
+  // get isExpired() {
+  //   return this.expires ? this.expires < DateTime.local() : false;
+  // }
+
+  get isExpired() {
+    return this._result?.['expires']?.raw
+      ? Date.parse(this._result['expires']?.raw) < Date.now()
+      : false;
   }
 
   get metaCategories() {
@@ -149,6 +158,11 @@ export class ResultModel extends BasicModel {
     return this._result.title.raw;
   }
 
+  get description() {
+    const fieldName = this.appConfig.resultItemModel.descriptionField;
+    return this._result[fieldName]?.raw;
+  }
+
   get thumbUrl() {
     const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
     const getThumb =
@@ -158,7 +172,20 @@ export class ResultModel extends BasicModel {
     return getThumb(this._result, this.appConfig);
   }
 
-  get isExpired() {
-    return this.expires ? this.expires < DateTime.local() : false;
+  get highlight() {
+    return this._result?._meta?.highlight;
+  }
+
+  get website() {
+    return this.href ? new URL(this.href).hostname : this.href;
+  }
+
+  get tags() {
+    const tagsField = this.appConfig.resultItemModel.tagsField;
+    return this._result[tagsField]?.raw;
+  }
+
+  get metaTypes() {
+    return this._result.objectProvides?.raw;
   }
 }

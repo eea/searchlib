@@ -13,13 +13,25 @@ export const clusters = {
     {
       name: 'Publications',
       icon: 'book',
-      values: ['Report', 'Indicator', 'Briefing', 'Topic page', 'Country fact sheet'],
+      values: [
+        'Report',
+        'Indicator',
+        'Briefing',
+        'Topic page',
+        'Country fact sheet',
+      ],
       defaultResultView: 'table',
     },
     {
       name: 'Visualizations',
       icon: 'chart area',
-      values: ['Figure (chart/map)', 'Chart (interactive)', 'Infographic', 'Data dashboard', 'Map (interactive)'],
+      values: [
+        'Figure (chart/map)',
+        'Chart (interactive)',
+        'Infographic',
+        'Data dashboard',
+        'Map (interactive)',
+      ],
       defaultResultView: 'card',
     },
     {
@@ -31,7 +43,14 @@ export const clusters = {
     {
       name: 'Others',
       icon: 'copy outline',
-      values: ['Webpage', 'Organisation', 'FAQ', 'Video', 'Contract opportunity', 'Glossary term'],// this will be transformed in "single type clusters".
+      values: [
+        'Webpage',
+        'Organisation',
+        'FAQ',
+        'Video',
+        'Contract opportunity',
+        'Glossary term',
+      ], // this will be transformed in "single type clusters".
       defaultResultView: 'card',
     },
   ],

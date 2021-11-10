@@ -15,8 +15,6 @@ export function buildFullTextMatch(searchTerm = '', filters = [], config) {
     searchTerm = searchTerm.join(' ');
   }
 
-  // console.log('search term', originalSearchTerm, searchTerm);
-
   return searchTerm
     ? Array.isArray(searchTerm)
       ? searchTerm.length > 0

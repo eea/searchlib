@@ -2,17 +2,19 @@ import React from 'react';
 
 import { Segment, Rating, Popup, Button } from 'semantic-ui-react'; //, Icon, Accordion
 
+import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+
 import AnswerBoxDetails from './AnswerBoxDetails';
-import { highlightUrl } from './utils';
 import AnswerLinksList from './AnswersLinksList';
 
+import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
 
-const AnswerContext = ({ item, href }) => {
-  const { full_context, answer } = item;
+const AnswerContext = ({ item, answerItem }) => {
+  const { full_context, answer } = answerItem;
 
   const start = (full_context || '').indexOf(answer);
 
@@ -27,20 +29,22 @@ const AnswerContext = ({ item, href }) => {
     : item.context.slice(item.offset_end, item.context.length);
 
   return (
-    <>
+    <div className="answer__primary">
       {pre}
-      <strong>
-        <ExternalLink href={highlightUrl(href, ans)}>{ans}</ExternalLink>
-      </strong>
+      <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>
       {post}
-    </>
+      <h4>
+        <ExternalLink href={highlightUrl(item.href, ans)}>
+          <SegmentedBreadcrumb href={item.href} />
+          {item.title}
+        </ExternalLink>
+      </h4>
+    </div>
   );
 };
 
 const AnswersList = (props) => {
   const { appConfig } = useAppConfig();
-  const { horizontalCardViewParams } = appConfig;
-  const { urlField } = horizontalCardViewParams;
   const { answers = [], loading, loaded, searchedTerm } = props;
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
@@ -89,10 +93,7 @@ score: 6.118757247924805
           <Segment className="answers-wrapper">
             <div className="answerCard">
               {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
-              <AnswerContext
-                item={primaryAnswer}
-                href={primaryResult[urlField]?.raw}
-              />
+              <AnswerContext item={primaryResult} answerItem={primaryAnswer} />
               <div className="answers__links">
                 <AnswerLinksList appConfig={appConfig} filtered={filtered} />
               </div>

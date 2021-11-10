@@ -29,8 +29,10 @@ import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
 import { Header } from './Result/ResultModal';
 import DefaultContentView from './SearchView/DefaultContentView';
+import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 
 export {
+  SegmentedBreadcrumb,
   FilterAsideLayout,
   MultiCheckboxFacet,
   CardItem,

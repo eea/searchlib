@@ -1,4 +1,6 @@
-const _highlight = (searchTerm, fieldName) => {
+import registry from '@eeacms/search/registry';
+
+export const highlightQueryBuilder = (searchTerm, fieldName) => {
   return {
     highlight_query: {
       bool: {
@@ -24,10 +26,14 @@ const _highlight = (searchTerm, fieldName) => {
 };
 
 export const buildHighlight = (searchTerm, config) => {
+  if (!searchTerm || !config.highlight) return {};
+
+  const _highlight = registry.resolve[config.highlight.queryBuilder.factory];
+
   return searchTerm && config.highlight?.fields
     ? {
         highlight: {
-          ...config.highlight,
+          ...config.highlight.queryParams,
           fields: Object.assign(
             {},
             ...config.highlight.fields.map((name) => ({

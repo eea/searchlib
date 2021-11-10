@@ -56,6 +56,7 @@ import {
   buildMLTFilter,
   // getHistogramFacet,
   // getMLTValue,
+  highlightQueryBuilder,
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
@@ -199,6 +200,7 @@ const config = {
     },
 
     ResultModel,
+    highlightQueryBuilder,
   },
 
   searchui: {
@@ -228,11 +230,16 @@ const config = {
       // when entering in search view, this will be the default search text
       defaultSearchText: '',
 
-      highlight: {
-        fragment_size: 200,
-        number_of_fragments: 1,
-        fields: {},
-      },
+      // highlight: {
+      //   queryParams: {
+      //     fragment_size: 200,
+      //     number_of_fragments: 3,
+      //   },
+      //   fields: ['description'],
+      //   queryBuilder: {
+      //     factory: 'highlightQueryBuilder',
+      //   },
+      // },
 
       facets: [], // interactive filtering components (facets)
       defaultFilters: {}, // filters that are applied by default
