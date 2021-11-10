@@ -18,6 +18,7 @@ const FacetOptions = (props) => {
     sortedOptions,
     groupedOptionsByLetters,
     groupedOptionsByNumbers,
+    sorting,
     onSelect,
     onRemove,
     label,
@@ -104,11 +105,21 @@ const FacetOptions = (props) => {
         <>
           {groupedOptionsByNumbers.numbers.map((number, index) => {
             let label = '';
-            if (index === 0) {
-              label = `More than ${number}`;
+            let nextLimit = 0;
+            if (sorting.sortOrder === 'descending') {
+              if (index === 0) {
+                label = `More than ${number}`;
+              } else {
+                nextLimit = groupedOptionsByNumbers.numbers[index - 1];
+                label = `${number}...${nextLimit}`;
+              }
             } else {
-              const nextLimit = groupedOptionsByNumbers.numbers[index - 1];
-              label = `${number}...${nextLimit}`;
+              nextLimit = groupedOptionsByNumbers.numbers[index + 1];
+              if (nextLimit === undefined) {
+                label = `More than ${number}`;
+              } else {
+                label = `${number}...${nextLimit}`;
+              }
             }
             return (
               <div className="by-groups" key={number}>
@@ -317,6 +328,7 @@ const ViewComponent = (props) => {
           sortedOptions={sortedOptions}
           groupedOptionsByLetters={byLetters}
           groupedOptionsByNumbers={byNumbers}
+          sorting={sorting}
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
