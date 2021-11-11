@@ -7,14 +7,20 @@ import { rebind, applyConfigurationSchema } from '@eeacms/search/lib/utils';
 import {
   onResultClick,
   onAutocompleteResultClick,
-  onAutocomplete,
-  onSearch,
+  bindOnAutocomplete,
+  bindOnSearch,
 } from '@eeacms/search/lib/request';
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
 export default function SearchApp(props) {
-  const { appName, registry, mode = 'view' } = props;
+  const {
+    appName,
+    registry,
+    mode = 'view',
+    paramOnSearch = bindOnSearch,
+    paramOnAutocomplete = bindOnAutocomplete,
+  } = props;
 
   const appConfig = React.useMemo(
     () => applyConfigurationSchema(rebind(registry.searchui[appName])),
@@ -25,17 +31,44 @@ export default function SearchApp(props) {
 
   // <ErrorBoundary>
   // </ErrorBoundary>
-  const searchFuncs = {
-    // TODO: these needs to be read from the registry
-    onResultClick: onResultClick.bind(appConfig),
-    onAutocompleteResultClick: onAutocompleteResultClick.bind(appConfig),
-    onAutocomplete: onAutocomplete.bind(appConfig),
-    onSearch: onSearch.bind(appConfig),
-  };
+  // const searchFuncs = {
+  //   // TODO: these needs to be read from the registry
+  //   onResultClick: onResultClick.bind(appConfig),
+  //   onAutocompleteResultClick: onAutocompleteResultClick.bind(appConfig),
+  //   onAutocomplete: onAutocomplete.bind(appConfig),
+  //   onSearch: onSearch.bind(appConfig),
+  // };
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const config = { ...appConfig, ...searchFuncs };
+  const boundOnSearch = React.useMemo(() => paramOnSearch(appConfig), [
+    appConfig,
+    paramOnSearch,
+  ]);
+  const onSearch = React.useCallback(
+    async (state) => {
+      setIsLoading(true);
+      const res = await boundOnSearch(state);
+      setIsLoading(false);
+      return res;
+    },
+    [boundOnSearch],
+  );
+
+  const onAutocomplete = React.useMemo(() => paramOnAutocomplete(appConfig), [
+    appConfig,
+    paramOnAutocomplete,
+  ]);
+
   return (
-    <SearchProvider config={config}>
+    <SearchProvider
+      config={{
+        ...appConfig,
+        onResultClick,
+        onAutocompleteResultClick,
+        onAutocomplete,
+        onSearch,
+      }}
+    >
       <WithSearch mapContextToProps={(context) => context}>
         {(params) => {
           return (
@@ -46,6 +79,7 @@ export default function SearchApp(props) {
                   appName={appName}
                   appConfig={appConfig}
                   mode={mode}
+                  isLoading={isLoading}
                 />
               </SearchContext.Provider>
             </AppConfigContext.Provider>

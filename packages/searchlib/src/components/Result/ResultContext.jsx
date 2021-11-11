@@ -11,11 +11,11 @@ const normalizeStr = (str) => {
 
 function Highlight(props) {
   const { fragments = {} } = props;
-  return Object.keys(fragments).map((name) => {
+  return Object.keys(fragments).map((name, i) => {
     return (
-      <p className={`highlight-${name}`}>
-        {fragments[name].map((f) => (
-          <span className="fragment">
+      <p className={`highlight-${name}`} key={`${i}-${name}`}>
+        {fragments[name].map((f, j) => (
+          <span className="fragment" key={`${i}-${j}-${name}`}>
             <span dangerouslySetInnerHTML={{ __html: f }} />
             {` ... `}
           </span>

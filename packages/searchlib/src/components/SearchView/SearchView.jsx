@@ -22,6 +22,7 @@ export const SearchView = (props) => {
     filters,
     searchTerm,
     mode = 'view',
+    isLoading,
   } = props;
   const { defaultSearchText = '' } = appConfig;
 
@@ -95,6 +96,7 @@ export const SearchView = (props) => {
 
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
+      {isLoading ? <h2>isLoading</h2> : ''}
       <Layout
         appConfig={appConfig}
         header={
