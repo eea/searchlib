@@ -69,7 +69,7 @@ export default function SearchApp(props) {
         onSearch,
       }}
     >
-      <WithSearch mapContextToProps={(context) => context}>
+      <WithSearch mapContextToProps={(context) => ({ ...context, isLoading })}>
         {(params) => {
           return (
             <AppConfigContext.Provider value={appConfigContext}>
@@ -79,7 +79,6 @@ export default function SearchApp(props) {
                   appName={appName}
                   appConfig={appConfig}
                   mode={mode}
-                  isLoading={isLoading}
                 />
               </SearchContext.Provider>
             </AppConfigContext.Provider>

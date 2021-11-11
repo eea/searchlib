@@ -6,7 +6,9 @@ import { Grid } from 'semantic-ui-react';
 
 import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
-import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+
+import Loader from '../Loaders';
 import SearchInput from '../SearchInput/SearchInput';
 import searchLogo from './search-logo.png';
 
@@ -42,6 +44,9 @@ function SearchBoxView(props) {
   const focusedClass = isFocused ? 'focus' : '';
   const AutocompleteView = autocompleteView || Autocomplete;
   const InputView = inputView || SearchInput;
+  const { isLoading } = useSearchContext();
+
+  // TODO: this shouldn't be done via react router
   const homeURL = '//' + window.location.host + window.location.pathname;
 
   return (
@@ -68,9 +73,13 @@ function SearchBoxView(props) {
               <Grid.Row>
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
                   <div className="search-logo">
-                    <a href={homeURL}>
-                      <img src={searchLogo} alt="logo" />
-                    </a>
+                    {isLoading ? (
+                      <Loader type="MutatingDots" visible={true} />
+                    ) : (
+                      <a href={homeURL}>
+                        <img src={searchLogo} alt="logo" />
+                      </a>
+                    )}
                   </div>
                 </Grid.Column>
                 <Grid.Column widescreen="8" tablet="8" className="col-mid">
