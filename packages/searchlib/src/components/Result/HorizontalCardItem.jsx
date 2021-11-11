@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
-import { Icon, Image, Label, Dropdown } from 'semantic-ui-react';
+import { Icon, Image, Label, Dropdown, Button } from 'semantic-ui-react';
 import { withSearch } from '@elastic/react-search-ui';
 
 import { DateTime, StringList } from '@eeacms/search/components';
@@ -51,19 +51,19 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               <StringList value={result.metaTypes} />
             </span>
             {showControls && (
-              <Dropdown icon="ellipsis vertical">
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => {
-                      removeFilter('lessLikeThis');
-                      setMoreLikeThis(result);
-                      setFilter('moreLikeThis', result._original._id, 'none');
-                    }}
-                  >
-                    More like this
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Button
+                className="mlt"
+                compact
+                color="green"
+                size="mini"
+                onClick={() => {
+                  removeFilter('lessLikeThis');
+                  setMoreLikeThis(result);
+                  setFilter('moreLikeThis', result._original._id, 'none');
+                }}
+              >
+                more like this
+              </Button>
             )}
           </div>
         </div>
