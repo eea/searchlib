@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumb } from 'semantic-ui-react';
 
-const URLBreadcrumb = ({ href }) => {
+const URLBreadcrumb = ({ href, maxSegments = 3 }) => {
   const url = new URL(href);
   const { pathname } = url;
   return (
@@ -10,6 +10,7 @@ const URLBreadcrumb = ({ href }) => {
       {pathname
         .split('/')
         .filter((s) => !!s)
+        .slice(0, maxSegments)
         .map((s) => (
           <>
             <Breadcrumb.Divider />
