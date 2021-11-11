@@ -1,6 +1,6 @@
 import React from 'react';
 import FacetsList from './FacetsList';
-import MoreLikeThis from './MoreLikeThis';
+import MoreLikeThis from './Connected/MoreLikeThis';
 import { Button, Card, Icon, Sticky } from 'semantic-ui-react';
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { useAtom } from 'jotai';

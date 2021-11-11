@@ -1,5 +1,5 @@
 import React from 'react';
-import Filter from './../FilterList/Filter';
+import Filter from '@eeacms/search/components/FilterList/Filter';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const MoreLikeThis = (props) => {
