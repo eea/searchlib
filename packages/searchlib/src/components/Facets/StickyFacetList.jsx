@@ -7,14 +7,19 @@ import { useAtom } from 'jotai';
 import { bodyContentRefAtom } from '@eeacms/search/state';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { useWindowDimensions } from '@eeacms/search/lib/hocs';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export default (props) => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
   const isActive = width > 766;
+  const searchContext = useSearchContext();
+  const hasFilters = searchContext.filters.length > 0;
 
-  // console.log(width, isActive);
+  React.useEffect(() => {
+    if (hasFilters) setShowFacets(true);
+  }, [hasFilters, setShowFacets]);
 
   return (
     <Sticky context={bodyRef} active={isActive}>
