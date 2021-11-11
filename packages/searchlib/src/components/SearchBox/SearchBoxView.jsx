@@ -72,15 +72,22 @@ function SearchBoxView(props) {
             <Grid columns={2} container stackable className="header-columns">
               <Grid.Row>
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
-                  <div className="search-logo">
-                    {isLoading ? (
-                      <Loader type="MutatingDots" visible={true} />
-                    ) : (
+                  {isLoading ? (
+                    <Loader
+                      type="MutatingDots"
+                      visible={true}
+                      secondaryColor="red"
+                      color="blue"
+                      width={100}
+                      height={100}
+                    />
+                  ) : (
+                    <div className="search-logo">
                       <a href={homeURL}>
                         <img src={searchLogo} alt="logo" />
                       </a>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </Grid.Column>
                 <Grid.Column widescreen="8" tablet="8" className="col-mid">
                   <form
