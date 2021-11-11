@@ -1,54 +1,55 @@
 /**
  * This is the display card for the "More like this" selection
- *
  */
+
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import { DateTime, StringList } from '@eeacms/search/components';
-import { ExternalLink } from './../Result/HorizontalCardItem';
+import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { Image } from 'semantic-ui-react';
+import { useResult } from '@eeacms/search/lib/hocs';
 
 const FilterResultEntry = (props) => {
   const { value } = props;
   const [result] = useAtom(moreLikeThisAtom);
+  const item = useResult(result, value);
 
-  if (result) {
-    return (
-      <div className="mlt-filter ui fluid card facet active">
-        <div className="mlt-card content">
-          <div className="header">More like this</div>
-          <Image
-            className="img-thumbnail"
-            src={result.thumbUrl}
-            wrapped
-            ui={false}
-            fluid
-            centered
-            style={{ backgroundImage: `url('${result.thumbUrl}')` }}
-            as={ExternalLink}
-            href={result.href}
-            target="_blank"
-            rel="noreferrer"
-          />
-          <div className="meta">
-            <Icon name={result.clusterIcon} />
-            <DateTime format="DATE_MED" value={result.issued} />
-            &nbsp;|&nbsp;
-            <StringList value={result.metaCategories} />
-          </div>
-          <h4>
-            <a href={result.href} target="_blank" rel="noreferrer">
-              <Icon name="external" size="small" />
-              {result.title}
-            </a>
-          </h4>
+  return item ? (
+    <div className="mlt-filter ui fluid card facet active">
+      <div className="mlt-card content">
+        <div className="header">More like this</div>
+        <Image
+          className="img-thumbnail"
+          src={item.thumbUrl}
+          wrapped
+          ui={false}
+          fluid
+          centered
+          style={{ backgroundImage: `url('${item.thumbUrl}')` }}
+          as={ExternalLink}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+        />
+        <h4>
+          <a href={item.href} target="_blank" rel="noreferrer">
+            <Icon name="external" size="small" />
+            {item.title}
+          </a>
+        </h4>
+        <div className="meta">
+          <DateTime format="DATE_MED" value={item.issued} />
+          &nbsp;
+          <Icon name={item.clusterIcon} />
+          <StringList value={item.metaTypes} />
         </div>
       </div>
-    );
-  }
-  return value;
+    </div>
+  ) : (
+    ''
+  );
 };
 
 export default FilterResultEntry;

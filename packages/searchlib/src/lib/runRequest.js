@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 
-export default async function runRequest(body, config, url) {
+export default async function runRequest(body, config, url, method = 'POST') {
   const { host, elastic_index } = config;
 
   // url = url || `${host}/${elastic_index}/_search`;
@@ -13,10 +13,14 @@ export default async function runRequest(body, config, url) {
     dest.pathname = `/${elastic_index}/_search`;
   }
 
+  let action = superagent.get;
+  if (method === 'POST') {
+    action = superagent.post;
+  }
+
   let resp;
   try {
-    resp = await superagent
-      .post(dest.toString())
+    resp = await action(dest.toString())
       .send(body)
       .set('accept', 'application/json');
     return resp;
