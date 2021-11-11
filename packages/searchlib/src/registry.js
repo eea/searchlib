@@ -37,12 +37,6 @@ import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterA
 import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
 import { Item, Card, Menu } from 'semantic-ui-react';
 import {
-  onResultClick,
-  onAutocompleteResultClick,
-  onAutocomplete,
-  onSearch,
-} from './lib/request';
-import {
   getTermFilter,
   getRangeFilter,
   getValueFacet,
@@ -211,10 +205,6 @@ const config = {
       subheadline: '', // text under the headline
       // debug: true,
       hasA11yNotifications: true,
-      onResultClick,
-      onAutocompleteResultClick,
-      onAutocomplete,
-      onSearch,
 
       // broad global layout (header, side, etc)
       layoutComponent: 'LeftColumnLayout', // The global layout component
