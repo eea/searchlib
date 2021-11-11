@@ -50,21 +50,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             <span className="tags">
               <StringList value={result.metaTypes} />
             </span>
-            {showControls && (
-              <Button
-                className="mlt"
-                compact
-                color="green"
-                size="mini"
-                onClick={() => {
-                  removeFilter('lessLikeThis');
-                  setMoreLikeThis(result);
-                  setFilter('moreLikeThis', result._original._id, 'none');
-                }}
-              >
-                more like this
-              </Button>
-            )}
           </div>
         </div>
         <div className="col-left">
@@ -80,6 +65,21 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 <Label className="archived-item" horizontal>
                   Archived
                 </Label>
+              )}
+              {showControls && (
+                <Button
+                  className="mlt"
+                  compact
+                  color="green"
+                  size="mini"
+                  onClick={() => {
+                    removeFilter('lessLikeThis');
+                    setMoreLikeThis(result);
+                    setFilter('moreLikeThis', result._original._id, 'none');
+                  }}
+                >
+                  more like this
+                </Button>
               )}
             </h3>
             {props.children ? props.children : <ResultContext {...props} />}
