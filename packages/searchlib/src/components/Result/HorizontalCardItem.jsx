@@ -1,11 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
-import { Icon, Image, Label, Dropdown, Button } from 'semantic-ui-react';
+import { Icon, Image, Label, Button } from 'semantic-ui-react';
 import { withSearch } from '@elastic/react-search-ui';
 
 import { DateTime, StringList } from '@eeacms/search/components';
-import { moreLikeThisAtom } from '@eeacms/search/state';
+import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 
 export const ExternalLink = (props) => {
@@ -29,6 +29,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const { result, setFilter, removeFilter, showControls = true } = props;
 
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
+  const [, setOpenFacets] = useAtom(showFacetsAsideAtom);
 
   const [hovered, setHovered] = React.useState(false);
 
@@ -76,6 +77,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                     removeFilter('lessLikeThis');
                     setMoreLikeThis(result);
                     setFilter('moreLikeThis', result._original._id, 'none');
+                    setOpenFacets(true);
                   }}
                 >
                   more like this
