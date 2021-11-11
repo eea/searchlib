@@ -66,6 +66,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 Archived
               </Label>
             )}
+          </h3>
+          {props.children ? props.children : <ResultContext {...props} />}
+          <p className="source">
+            <span>Source: </span>
+            <ExternalLink href={result.href}>{result.website}</ExternalLink>
+
             {showControls && (
               <Button
                 className="mlt"
@@ -82,11 +88,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 more like this
               </Button>
             )}
-          </h3>
-          {props.children ? props.children : <ResultContext {...props} />}
-          <p className="source">
-            <span>Source: </span>
-            <ExternalLink href={result.href}>{result.website}</ExternalLink>
           </p>
         </div>
       </div>
