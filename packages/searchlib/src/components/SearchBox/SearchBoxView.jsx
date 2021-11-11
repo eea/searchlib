@@ -8,6 +8,7 @@ import { Result, Autocomplete } from '@elastic/react-search-ui-views';
 
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 import SearchInput from '../SearchInput/SearchInput';
+import searchLogo from './search-logo.png';
 
 function SearchBoxView(props) {
   const { appConfig } = useAppConfig();
@@ -69,7 +70,7 @@ function SearchBoxView(props) {
                   <div className="search-logo">
                     <a href={homeURL}>
                       <img
-                        src="https://www.eea.europa.eu/about-us/who/eea-logos/eea-compact-logos/eea-logo-compact-colours-en-png"
+                        src={searchLogo}
                         alt="logo"
                       />
                     </a>
