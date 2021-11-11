@@ -1,13 +1,13 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { Button, Card, Icon, Sticky } from 'semantic-ui-react';
+
+import { ModalFacetWrapper } from '@eeacms/search/components';
+import { bodyContentRefAtom, showFacetsAsideAtom } from '@eeacms/search/state';
+import { useWindowDimensions, useSearchContext } from '@eeacms/search/lib/hocs';
+
 import FacetsList from './FacetsList';
 import MoreLikeThis from './Connected/MoreLikeThis';
-import { Button, Card, Icon, Sticky } from 'semantic-ui-react';
-import { ModalFacetWrapper } from '@eeacms/search/components';
-import { useAtom } from 'jotai';
-import { bodyContentRefAtom } from '@eeacms/search/state';
-import { showFacetsAsideAtom } from '@eeacms/search/state';
-import { useWindowDimensions } from '@eeacms/search/lib/hocs';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export default (props) => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
