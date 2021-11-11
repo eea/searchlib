@@ -1,10 +1,12 @@
 import React from 'react';
 import registry from '@eeacms/search/registry';
-import { Results, Result } from '@elastic/react-search-ui';
-import { useViews } from '@eeacms/search/lib/hocs';
+import { Results } from '@elastic/react-search-ui';
+import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {
   const { appConfig, wasInteracted } = props;
+  const searchContext = useSearchContext();
+  const { results = [] } = searchContext;
   const { resultViews } = appConfig;
   const { activeViewId } = useViews();
 
@@ -25,29 +27,37 @@ export const BodyContent = (props) => {
     appConfig.initialView?.factory &&
     registry.resolve[appConfig.initialView.factory].component;
 
-  return (
-    <Results
-      shouldTrackClickThrough={true}
-      view={({ children }) => {
-        return wasInteracted ? (
-          NoResultsComponent ? (
-            children ? (
-              <ContentBodyView {...props}>{children}</ContentBodyView>
-            ) : (
-              <NoResultsComponent {...props} />
-            )
-          ) : (
-            <ContentBodyView {...props}>{children}</ContentBodyView>
-          )
-        ) : InitialViewComponent ? (
-          <InitialViewComponent {...props} />
-        ) : (
-          <ContentBodyView {...props}>{children}</ContentBodyView>
+  return wasInteracted ? (
+    NoResultsComponent ? (
+      results.length ? (
+        <ContentBodyView {...props}>
+          {results.map((result, i) => (
+            <Item
+              key={`${i}-${result.id}`}
+              result={result}
+              {...itemViewProps}
+            />
+          ))}
+        </ContentBodyView>
+      ) : (
+        <NoResultsComponent {...props} />
+      )
+    ) : (
+      <ContentBodyView {...props}>
+        {results.map((result, i) => (
+          <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
+        ))}
+      </ContentBodyView>
+    )
+  ) : InitialViewComponent ? (
+    <InitialViewComponent {...props} />
+  ) : (
+    <ContentBodyView {...props}>
+      {results.map((result, i) => {
+        return (
+          <Item key={`${i}-${result.id}`} result={result} {...itemViewProps} />
         );
-      }}
-      resultView={(props) => (
-        <Result {...props} {...itemViewProps} view={Item} />
-      )}
-    />
+      })}
+    </ContentBodyView>
   );
 };

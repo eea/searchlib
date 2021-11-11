@@ -34,79 +34,77 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const [hovered, setHovered] = React.useState(false);
 
   return (
-    <>
-      <div
-        className={cx('search-result', { hovered })}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <div className="col-full">
-          <div className="meta">
-            <span className="date">
-              <DateTime format="DATE_MED" value={result.issued} />
-            </span>
-            <span className="cluster-icon">
-              <Icon name={result.clusterIcon} />
-            </span>
-            <span className="tags">
-              <StringList value={result.metaTypes} />
-            </span>
-          </div>
-        </div>
-        <div className="col-left">
-          <div className="details">
-            <h3>
-              <ExternalLink href={result.href}>{result.title}</ExternalLink>
-              {result.isNew && (
-                <Label className="new-item" horizontal>
-                  New
-                </Label>
-              )}
-              {result.isExpired && (
-                <Label className="archived-item" horizontal>
-                  Archived
-                </Label>
-              )}
-              {showControls && (
-                <Button
-                  className="mlt"
-                  compact
-                  color="green"
-                  size="mini"
-                  onClick={() => {
-                    removeFilter('lessLikeThis');
-                    setMoreLikeThis(result);
-                    setFilter('moreLikeThis', result._original._id, 'none');
-                    setOpenFacets(true);
-                  }}
-                >
-                  more like this
-                </Button>
-              )}
-            </h3>
-            {props.children ? props.children : <ResultContext {...props} />}
-            <p className="source">
-              <span>Source: </span>
-              <ExternalLink href={result.href}>{result.website}</ExternalLink>
-            </p>
-          </div>
-        </div>
-        <div className="col-right">
-          <Image
-            className="img-thumbnail"
-            src={result.thumbUrl}
-            wrapped
-            ui={false}
-            fluid
-            centered
-            as={ExternalLink}
-            href={result.href}
-            target="_blank"
-            rel="noreferrer"
-          />
+    <div
+      className={cx('search-result', { hovered })}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className="col-full">
+        <div className="meta">
+          <span className="date">
+            <DateTime format="DATE_MED" value={result.issued} />
+          </span>
+          <span className="cluster-icon">
+            <Icon name={result.clusterIcon} />
+          </span>
+          <span className="tags">
+            <StringList value={result.metaTypes} />
+          </span>
         </div>
       </div>
-    </>
+      <div className="col-left">
+        <div className="details">
+          <h3>
+            <ExternalLink href={result.href}>{result.title}</ExternalLink>
+            {result.isNew && (
+              <Label className="new-item" horizontal>
+                New
+              </Label>
+            )}
+            {result.isExpired && (
+              <Label className="archived-item" horizontal>
+                Archived
+              </Label>
+            )}
+            {showControls && (
+              <Button
+                className="mlt"
+                compact
+                color="green"
+                size="mini"
+                onClick={() => {
+                  removeFilter('lessLikeThis');
+                  setMoreLikeThis(result);
+                  setFilter('moreLikeThis', result._original._id, 'none');
+                  setOpenFacets(true);
+                }}
+              >
+                more like this
+              </Button>
+            )}
+          </h3>
+          {props.children ? props.children : <ResultContext {...props} />}
+          <p className="source">
+            <span>Source: </span>
+            <ExternalLink href={result.href}>{result.website}</ExternalLink>
+          </p>
+        </div>
+      </div>
+      <div className="col-right">
+        <Image
+          className="img-thumbnail"
+          src={result.thumbUrl}
+          wrapped
+          ui={false}
+          fluid
+          centered
+          as={ExternalLink}
+          href={result.href}
+          target="_blank"
+          rel="noreferrer"
+        />
+      </div>
+    </div>
   );
 });
 

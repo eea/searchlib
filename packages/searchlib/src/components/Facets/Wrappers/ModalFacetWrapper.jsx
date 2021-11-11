@@ -7,16 +7,6 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
 import Filter from './../../FilterList/Filter';
 
-// const getFacetTotalCount = (facets, name) => {
-//   const customFields = ['time_coverage', 'year'];
-//   if (customFields.includes(name)) {
-//     return <>&nbsp;</>;
-//   }
-//
-//   return facets?.[name]?.[0]?.data?.length || 0;
-//   // return facets?.[name]?.[0]?.data?.reduce((acc, { count }) => acc + count, 0);
-// };
-
 function normalize_state(state) {
   let tmp_state = [];
   let has_names = true;
@@ -112,13 +102,7 @@ const OptionsWrapper = (props) => {
 
 const FacetWrapperComponent = (props) => {
   const searchContext = useSearchContext();
-  const {
-    filters = [],
-    addFilter,
-    removeFilter,
-    // facets = {},
-    // setFilter,
-  } = searchContext;
+  const { filters = [], addFilter, removeFilter } = searchContext;
   const { field, label } = props;
   const [isOpened, setIsOpened] = React.useState();
 
@@ -130,7 +114,6 @@ const FacetWrapperComponent = (props) => {
     ? filters?.find((f) => f.field === field)?.type || fallback
     : fallback;
   const [localFilterType, setLocalFilterType] = React.useState(defaultValue);
-  // console.log('props', props);
 
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
@@ -269,16 +252,3 @@ const FacetWrapperComponent = (props) => {
 };
 
 export default FacetWrapperComponent;
-
-// const FacetWrapper = withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(FacetWrapperComponent);
-//
-// export default FacetWrapper;

@@ -5,7 +5,7 @@ import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Image
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
+// import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
 function getFilterValueDisplay(filterValue) {
   if (filterValue === undefined || filterValue === null) return '';
