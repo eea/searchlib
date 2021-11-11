@@ -69,10 +69,7 @@ function SearchBoxView(props) {
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
                   <div className="search-logo">
                     <a href={homeURL}>
-                      <img
-                        src={searchLogo}
-                        alt="logo"
-                      />
+                      <img src={searchLogo} alt="logo" />
                     </a>
                   </div>
                 </Grid.Column>
