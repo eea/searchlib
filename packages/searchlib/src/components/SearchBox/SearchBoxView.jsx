@@ -74,12 +74,10 @@ function SearchBoxView(props) {
                 <Grid.Column widescreen="2" tablet="2" className="col-left">
                   {isLoading ? (
                     <Loader
-                      type="MutatingDots"
+                      type="Watch"
                       visible={true}
                       secondaryColor="red"
-                      color="blue"
-                      width={100}
-                      height={100}
+                      color="green"
                     />
                   ) : (
                     <div className="search-logo">

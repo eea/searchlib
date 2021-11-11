@@ -10,6 +10,7 @@ import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 // import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 
@@ -22,6 +23,7 @@ function SearchInput({
   mode,
 }) {
   const inputProps = getInputProps();
+  const { setSearchTerm } = useSearchContext();
 
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
   const searchTerm = inputProps.value;
@@ -126,6 +128,7 @@ function SearchInput({
                   role="button"
                   onClick={() => {
                     inputProps.onChange({ target: { value: '' } });
+                    setSearchTerm('');
                     // onSubmit();
                   }}
                 />

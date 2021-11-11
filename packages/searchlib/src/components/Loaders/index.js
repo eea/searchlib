@@ -2,6 +2,7 @@ import React from 'react';
 
 import { MutatingDots } from './MutatingDots';
 import { Watch } from './Watch';
+import { RevolvingDot } from './RevolvingDot';
 
 const Spinner = {
   // 'Audio',
@@ -21,6 +22,7 @@ const Spinner = {
   // 'CradleLoader',
   Watch,
   MutatingDots,
+  RevolvingDot,
 };
 
 function componentName(type) {
