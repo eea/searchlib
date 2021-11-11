@@ -88,7 +88,7 @@ export default {
   tableViewParams: {
     titleField: 'title',
     urlField: 'about',
-    enabled: true,
+    enabled: false,
     columns: [
       {
         title: 'Title',

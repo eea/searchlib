@@ -8,7 +8,7 @@ export const clusters = {
       name: 'News',
       icon: 'bullhorn',
       values: ['News', 'Article'],
-      defaultResultView: 'table',
+      defaultResultView: 'horizontalCard',
     },
     {
       name: 'Publications',
@@ -20,7 +20,7 @@ export const clusters = {
         'Topic page',
         'Country fact sheet',
       ],
-      defaultResultView: 'table',
+      defaultResultView: 'horizontalCard',
     },
     {
       name: 'Visualizations',
@@ -38,7 +38,7 @@ export const clusters = {
       name: 'Data',
       icon: 'database',
       values: ['External data reference', 'Data set'],
-      defaultResultView: 'table',
+      defaultResultView: 'horizontalCard',
     },
     {
       name: 'Others',
@@ -51,7 +51,7 @@ export const clusters = {
         'Contract opportunity',
         'Glossary term',
       ], // this will be transformed in "single type clusters".
-      defaultResultView: 'card',
+      defaultResultView: 'horizontalCard',
     },
   ],
 };
@@ -62,7 +62,7 @@ export const clusterIcons = get_cluster_icons(clusters);
 
 export default {
   contentUtilsParams: {
-    clusterIcons, // TODO: non-basic objects shouldn't be stored in config
+    clusterIcons,
   },
 
   contentSectionsParams: {
