@@ -79,16 +79,21 @@ const OptionsWrapper = (props) => {
   } else {
     newOptions = tmp_state;
   }
+
+  const renderContent = React.useCallback(({ children }) => {
+    return (
+      <Modal.Content image scrolling>
+        {children}
+      </Modal.Content>
+    );
+  }, []);
+
   return (
     <View
       {...rest}
       {...searchContext}
       HeaderWrapper={Modal.Header}
-      ContentWrapper={({ children }) => (
-        <Modal.Content image scrolling>
-          {children}
-        </Modal.Content>
-      )}
+      ContentWrapper={renderContent}
       options={newOptions}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });

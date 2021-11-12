@@ -211,8 +211,6 @@ const ViewComponent = (props) => {
   } = props;
   const { appConfig } = useAppConfig();
 
-  // console.log('props', props);
-
   // const sortedOptions = sorted(options, sortOn, sortOrder);
 
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
