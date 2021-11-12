@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { Segment, Rating, Popup, Button } from 'semantic-ui-react'; //, Icon, Accordion
+import { Segment, Rating, Popup, Button, Icon } from 'semantic-ui-react'; //, Accordion
 
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { DateTime } from '@eeacms/search/components'; //, StringList
 
 import AnswerBoxDetails from './AnswerBoxDetails';
 import AnswerLinksList from './AnswersLinksList';
@@ -30,9 +31,10 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
+      <Icon name={item.clusterIcon} />
       {pre}
       <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>
-      {post}
+      {post} (<DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
