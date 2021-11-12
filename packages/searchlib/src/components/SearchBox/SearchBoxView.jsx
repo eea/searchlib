@@ -77,7 +77,7 @@ function SearchBoxView(props) {
                       type="Watch"
                       visible={true}
                       secondaryColor="red"
-                      color="green"
+                      color="#CCC"
                     />
                   ) : (
                     <div className="search-logo">
