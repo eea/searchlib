@@ -33,7 +33,7 @@ const Filter = (props) => {
         {values?.map((v, index) => {
           return (
             <Label key={index}>
-              <span className="text">
+              <span className="text" title={v}>
                 {label === 'Content types' ? (
                   <Icon name={getClusterIcon(v)} />
                 ) : null}
