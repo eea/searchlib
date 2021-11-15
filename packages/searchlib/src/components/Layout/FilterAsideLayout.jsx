@@ -21,7 +21,7 @@ const FilterAsideLayout = (props) => {
         <div className="sui-layout-header">
           <div className="sui-layout-header__inner">{header}</div>
 
-          <Grid columns={2} container stackable className="answers-section">
+          <Grid columns={2} stackable className="answers-section">
             <Grid.Row>
               <Grid.Column widescreen="2"></Grid.Column>
               <Grid.Column widescreen="8" className="answers-content">
