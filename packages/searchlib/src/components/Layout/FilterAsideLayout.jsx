@@ -17,7 +17,7 @@ const FilterAsideLayout = (props) => {
 
   return (
     <div className="filter-aside-layout">
-      <Container>
+      <div className="search-header-container">
         <div className="sui-layout-header">
           <div className="sui-layout-header__inner">{header}</div>
 
@@ -30,7 +30,7 @@ const FilterAsideLayout = (props) => {
             </Grid.Row>
           </Grid>
         </div>
-      </Container>
+      </div>
 
       <Grid columns={2} container stackable className="body-content">
         <Ref innerRef={setRef}>
