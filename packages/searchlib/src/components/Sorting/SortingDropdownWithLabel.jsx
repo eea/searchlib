@@ -21,7 +21,11 @@ const SortingViewComponent = (props) => {
     <div className="sorting">
       <span>
         <Dropdown
-          text={`Sort by ${activeLabel}`}
+          text={
+            <>
+              Sort by <span>{`${activeLabel}`}</span>
+            </>
+          }
           inline
           value={activeValue}
           options={sortOptions}
