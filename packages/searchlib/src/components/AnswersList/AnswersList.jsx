@@ -31,13 +31,13 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
-      <Icon name={item.clusterIcon} />
       {pre}
       <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>
       {post} (<DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
+          <Icon name={item.clusterIcon} />
           {item.title}
         </ExternalLink>
       </h4>
