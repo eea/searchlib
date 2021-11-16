@@ -6,6 +6,7 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
+import ResultContext from './ResultContext';
 
 const normalizeStr = (str) => {
   let tmp = document.createElement('DIV');
@@ -85,6 +86,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
 
   const [hovered, setHovered] = React.useState(false);
+
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
     <Card
@@ -133,7 +135,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             {result[props.titleField]?.raw || ''}
           </ExternalLink>
         </Card.Header>
-        <Card.Description>{description}</Card.Description>
+        <Card.Description>
+          {props.children ? props.children : <ResultContext {...props} />}
+        </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
