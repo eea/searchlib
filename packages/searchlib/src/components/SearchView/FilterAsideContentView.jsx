@@ -53,15 +53,15 @@ export const FilterAsideContentView = (props) => {
       <ResultViewComponent>{children}</ResultViewComponent>
 
       <div className="row">
-        <div>
-          <DownloadButton appConfig={appConfig} />
-        </div>
         <div className="search-body-footer">
           <div>
             {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
           </div>
           <Paging />
           <ResultsPerPage />
+          <div>
+            <DownloadButton appConfig={appConfig} />
+          </div>
         </div>
       </div>
     </>

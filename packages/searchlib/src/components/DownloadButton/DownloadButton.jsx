@@ -16,7 +16,7 @@ const DownloadButton = (props) => {
         value={JSON.stringify({ searchTerm, filters })}
       />
       <Button type="submit" className="download-btn">
-        Download
+        Download search results (CSV)
       </Button>
     </Form>
   );
