@@ -238,6 +238,7 @@ const FacetWrapperComponent = (props) => {
             href="/"
             className="clear-filters"
             onClick={(evt) => {
+              evt.preventDefault();
               if (state.length) {
                 dispatch({ type: 'reset', value: [] });
               }
