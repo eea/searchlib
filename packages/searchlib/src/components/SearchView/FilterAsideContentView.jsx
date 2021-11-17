@@ -57,7 +57,6 @@ export const FilterAsideContentView = (props) => {
           <DownloadButton appConfig={appConfig} />
         </div>
         <div className="search-body-footer">
-          <div></div>
           <div>
             {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
           </div>
