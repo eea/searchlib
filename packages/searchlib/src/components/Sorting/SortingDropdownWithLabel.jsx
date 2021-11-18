@@ -21,7 +21,7 @@ const SortingViewComponent = (props) => {
     <div className="sorting">
       <span>
         <Dropdown
-          text={
+          trigger={
             <>
               Sort by <span>{`${activeLabel}`}</span>
             </>
