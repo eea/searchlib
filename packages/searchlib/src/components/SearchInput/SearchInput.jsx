@@ -135,6 +135,7 @@ function SearchInput({
               </div>
             )}
 
+            {/*
             <div
               className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
             >
@@ -146,6 +147,7 @@ function SearchInput({
                 }}
               />
             </div>
+            */}
 
             {/* <MicrophoneInput onChange={onChange} /> */}
           </div>
@@ -154,7 +156,7 @@ function SearchInput({
         </div>
       </div>
 
-      {showExtraFacets ? (
+      {/*showExtraFacets ? (
         <div className="extra-facets">
           {searchPhrases.length > 0 &&
             searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
@@ -162,7 +164,7 @@ function SearchInput({
             )}
           <IncludeArchivedFacet />
         </div>
-      ) : null}
+      ) : null*/}
     </>
   );
 }

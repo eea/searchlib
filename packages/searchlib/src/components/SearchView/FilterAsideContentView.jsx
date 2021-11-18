@@ -10,6 +10,7 @@ import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import { useViews } from '@eeacms/search/lib/hocs';
+import IncludeArchivedFacet from './../SearchInput/IncludeArchivedFacet';
 
 import registry from '@eeacms/search/registry';
 
@@ -48,6 +49,7 @@ export const FilterAsideContentView = (props) => {
           sortOptions={sortOptions}
           view={SortingDropdownWithLabel}
         />
+        <IncludeArchivedFacet />
       </div>
 
       <ResultViewComponent>{children}</ResultViewComponent>
