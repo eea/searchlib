@@ -12,10 +12,10 @@ const URLBreadcrumb = ({ href, maxSegments = 3 }) => {
         .filter((s) => !!s)
         .slice(0, maxSegments)
         .map((s) => (
-          <>
-            <Breadcrumb.Divider />
-            <Breadcrumb.Section>{s}</Breadcrumb.Section>
-          </>
+          <div key={s + '2'}>
+            <Breadcrumb.Divider key={s} />
+            <Breadcrumb.Section key={s + '1'}>{s}</Breadcrumb.Section>
+          </div>
         ))}
     </Breadcrumb>
   );
