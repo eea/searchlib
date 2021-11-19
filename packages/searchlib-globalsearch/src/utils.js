@@ -152,7 +152,10 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
     image = result.about.raw + '/image_preview';
     has_img = true;
   }
-  if (result.about?.raw?.indexOf('://biodiversity.europa.eu') !== -1) {
+  if ((result.about?.raw?.indexOf('://biodiversity.europa.eu') !== -1) ||
+    (result.about?.raw?.indexOf('://forest.eea.europa.eu') !== -1) ||
+    (result.about?.raw?.indexOf('://climate-energy.eea.europa.eu') !== -1) ||
+    (result.about?.raw?.indexOf('://industry.eea.europa.eu') !== -1)) {
     if (result.image_preview) {
       image = result.image_preview.raw;
       has_img = true;
