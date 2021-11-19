@@ -52,19 +52,14 @@ const FilterAsideLayout = (props) => {
                 <div className={cx({ scrolled: stateRef })}>{sideContent}</div>
               </Grid.Column>
               <Grid.Column
-                widescreen="8"
-                tablet="8"
+                widescreen="10"
+                tablet="10"
                 computer="10"
                 className="col-mid"
               >
                 <div>{bodyHeader}</div>
                 <div>{bodyContent}</div>
               </Grid.Column>
-              <Grid.Column
-                only="computer widescreen large screen"
-                widescreen="2"
-                className="col-right"
-              ></Grid.Column>
             </Grid.Row>
           )}
         </Ref>
