@@ -33,6 +33,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const [hovered, setHovered] = React.useState(false);
 
+  let metaType = result.metaTypes || '';
+  if (metaType.length === 0) {
+    metaType = ['Other'];
+  }
+
   return (
     <div
       className={cx('search-result', { hovered })}
@@ -48,7 +53,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             <Icon name={result.clusterIcon} />
           </span>
           <span className="tags">
-            <StringList value={result.metaTypes} />
+            <StringList value={metaType} />
           </span>
         </div>
       </div>
