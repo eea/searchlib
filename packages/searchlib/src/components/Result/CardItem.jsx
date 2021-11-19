@@ -136,9 +136,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           </p>
         </Card.Meta>
         <Card.Header>
-          <ExternalLink href={url}>
-            {result[props.titleField]?.raw || ''}
-          </ExternalLink>
+          <ExternalLink href={url}>{result.title}</ExternalLink>
         </Card.Header>
         <Card.Description>
           {props.children ? props.children : <ResultContext {...props} />}
