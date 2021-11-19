@@ -220,7 +220,7 @@ services:
     environment:
       TZ: Europe/Copenhagen
     ports:
-    - 56837:9998/tcp
+    - 9998:9998/tcp
     # mem_limit: 4294967296
     # mem_reservation: 1073741824
     # labels:
