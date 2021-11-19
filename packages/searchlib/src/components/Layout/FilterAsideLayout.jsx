@@ -75,7 +75,7 @@ const FilterAsideLayout = (props) => {
           ></Grid.Column>
           <Grid.Column
             widescreen="8"
-            tablet="8"
+            tablet="12"
             computer="10"
             className="col-mid"
           >
