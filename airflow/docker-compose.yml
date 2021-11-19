@@ -215,6 +215,17 @@ services:
     volumes:
       - elastic-storage-volume:/usr/share/elasticsearch/data
 
+  tika:
+    image: apache/tika:2.1.0-full
+    environment:
+      TZ: Europe/Copenhagen
+    ports:
+    - 56837:9998/tcp
+    # mem_limit: 4294967296
+    # mem_reservation: 1073741824
+    # labels:
+    #   io.rancher.scheduler.affinity:host_label_ne: gpu=yes,reserved=yes
+    #   io.rancher.container.hostname_override: container_name
 
 volumes:
   crawler-config-volume:
