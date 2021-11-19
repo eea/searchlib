@@ -87,6 +87,11 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const [hovered, setHovered] = React.useState(false);
 
+  let metaType = result[props.metatypeField]?.raw || '';
+  if (metaType.length === 0) {
+    metaType = ['Other'];
+  }
+
   const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
     <Card
@@ -95,7 +100,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       onMouseLeave={() => setHovered(false)}
     >
       <Label className="meta-type">
-        <StringList value={result[props.metatypeField]?.raw || ''} />
+        <StringList value={metaType} />
       </Label>
 
       <Image
