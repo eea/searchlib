@@ -45,6 +45,8 @@ function SearchInput({
           <div className="terms-box-left">
             <Icon name="search" size="large" color="grey" />
           </div>
+
+          {/*
           <div className="search-terms">
             {searchPhrases.map(
               (phrase, i) =>
@@ -76,7 +78,7 @@ function SearchInput({
                   </Label>
                 ),
             )}
-          </div>
+          </div>*/}
 
           {searchPhrases.length === 0 ? (
             <input
