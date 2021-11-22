@@ -149,8 +149,8 @@ const FacetWrapperComponent = (props) => {
               <span className="text">{label}</span>
               {state.length > 1 ? (
                 <span className="clear-filters">
-                  <Icon
-                    title="Clear"
+                  <Button
+                    size="mini"
                     onClick={(evt) => {
                       evt.preventDefault();
                       setIsOpened(false);
@@ -160,8 +160,9 @@ const FacetWrapperComponent = (props) => {
                         });
                       }
                     }}
-                    name="delete"
-                  />
+                  >
+                    Clear
+                  </Button>
                 </span>
               ) : null}
             </div>
