@@ -9,8 +9,10 @@ import { Label, Icon } from 'semantic-ui-react';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
 import IncludeArchivedFacet from './IncludeArchivedFacet';
 import { useAtom } from 'jotai';
-import { showExtraFacetsAtom } from './state';
+import { showExtraFacetsAtom, triedDemoQuestionAtom } from './state';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useState } from 'react';
 
 // import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 
@@ -22,6 +24,8 @@ function SearchInput({
   onSubmit,
   mode,
 }) {
+  const { appConfig } = useAppConfig();
+
   const inputProps = getInputProps();
   const { setSearchTerm } = useSearchContext();
 
@@ -33,6 +37,10 @@ function SearchInput({
 
   const inpRef = React.useRef();
   const [showExtraFacets, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
+
+  const [triedDemoQuestion, setTriedDemoQuestion] = useAtom(
+    triedDemoQuestionAtom,
+  );
 
   React.useEffect(() => {
     mode === 'view' && inpRef.current && inpRef.current.focus();
@@ -157,6 +165,22 @@ function SearchInput({
           {getAutocomplete()}
         </div>
       </div>
+
+      {!triedDemoQuestion && appConfig.demoquestion ? (
+        <p className="demo-question">
+          <span>Example: </span>
+          <a
+            href="/"
+            onClick={(evt) => {
+              evt.preventDefault();
+              setTriedDemoQuestion(true);
+              setSearchTerm(appConfig.demoquestion);
+            }}
+          >
+            {appConfig.demoquestion}
+          </a>
+        </p>
+      ) : null}
 
       {/*showExtraFacets ? (
         <div className="extra-facets">

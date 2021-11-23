@@ -203,6 +203,7 @@ const config = {
       elastic_index: '_all',
       title: 'Search catalogue', // the main search app headline
       subheadline: '', // text under the headline
+      demoquestion: '', // Question used as example under the search input
       // debug: true,
       hasA11yNotifications: true,
 
