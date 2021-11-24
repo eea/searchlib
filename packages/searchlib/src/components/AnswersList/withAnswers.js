@@ -37,7 +37,7 @@ const withAnswers = (WrappedComponent) => {
     const isMounted = useIsMounted();
 
     useDeepCompareEffect(() => {
-      if (!isMounted) return;
+      // if (!isMounted) return;
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
@@ -50,17 +50,18 @@ const withAnswers = (WrappedComponent) => {
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
-            isMounted.current && dispatch({ type: 'loading' });
+            // isMounted.current &&
+            dispatch({ type: 'loading' });
 
             const response = await runRequest(requestBody, appConfig);
             const { body } = response;
             const { answers = [] } = body;
 
             if (!answers.length) {
-              if (isMounted.current) {
-                dispatch({ type: 'loaded', data: answers });
-                setSearchedTerm(searchTerm);
-              }
+              // if (isMounted.current) {
+              dispatch({ type: 'loaded', data: answers });
+              setSearchedTerm(searchTerm);
+              // }
               return;
             }
 
@@ -94,10 +95,10 @@ const withAnswers = (WrappedComponent) => {
                 ? acc
                 : [...acc, ans];
             }, []);
-            if (isMounted.current) {
-              dispatch({ type: 'loaded', data });
-              setSearchedTerm(searchTerm);
-            }
+            // if (isMounted.current) {
+            dispatch({ type: 'loaded', data });
+            setSearchedTerm(searchTerm);
+            // }
           }
         }, 100);
       }
