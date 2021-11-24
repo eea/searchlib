@@ -1,5 +1,9 @@
 import React from 'react';
-import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+import {
+  useAppConfig,
+  useSearchContext,
+  useIsMounted,
+} from '@eeacms/search/lib/hocs';
 import runRequest from '@eeacms/search/lib/runRequest';
 import {
   buildQuestionRequest,
@@ -30,8 +34,10 @@ const withAnswers = (WrappedComponent) => {
 
     const requestAtom = requestFamily({ searchTerm, filters });
     const [request, dispatch] = useAtom(requestAtom);
+    const isMounted = useIsMounted();
 
     useDeepCompareEffect(() => {
+      if (!isMounted) return;
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
@@ -44,15 +50,17 @@ const withAnswers = (WrappedComponent) => {
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
-            dispatch({ type: 'loading' });
+            isMounted.current && dispatch({ type: 'loading' });
 
             const response = await runRequest(requestBody, appConfig);
             const { body } = response;
             const { answers = [] } = body;
 
             if (!answers.length) {
-              dispatch({ type: 'loaded', data: answers });
-              setSearchedTerm(searchTerm);
+              if (isMounted.current) {
+                dispatch({ type: 'loaded', data: answers });
+                setSearchedTerm(searchTerm);
+              }
               return;
             }
 
@@ -86,12 +94,15 @@ const withAnswers = (WrappedComponent) => {
                 ? acc
                 : [...acc, ans];
             }, []);
-            dispatch({ type: 'loaded', data });
-            setSearchedTerm(searchTerm);
+            if (isMounted.current) {
+              dispatch({ type: 'loaded', data });
+              setSearchedTerm(searchTerm);
+            }
           }
         }, 100);
       }
     }, [
+      isMounted,
       appConfig,
       searchContext,
       searchTerm,
