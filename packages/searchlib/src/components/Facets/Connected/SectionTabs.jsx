@@ -9,6 +9,8 @@ import {
 } from '@eeacms/search/lib/hocs';
 import { isLandingPageAtom } from '@eeacms/search/state';
 
+const cmp = (a, b) => (a > b ? 1 : a === b ? 0 : a < b ? -1 : 0);
+
 const SectionTabs = (props) => {
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
@@ -20,6 +22,10 @@ const SectionTabs = (props) => {
 
   const { facets = {}, filters = [] } = searchContext;
   const facetField = contentSectionsParams.sectionFacetsField;
+
+  const sectionOrder = contentSectionsParams.sections.map(({ name }) => name);
+  // console.log(contentSectionsParams);
+
   let sections = facets?.[facetField]?.[0]?.data || [];
   const activeFilter = filters.find(({ field }) => field === facetField) || {};
   let activeValues = activeFilter.values || [];
@@ -43,6 +49,10 @@ const SectionTabs = (props) => {
     })?.[0]?.count || sections.reduce((acc, { count }) => acc + count, 0);
 
   sections = sections.filter((section) => section.value !== '_all_');
+  // console.log('sections', sections);
+  sections.sort((s1, s2) =>
+    cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
+  );
 
   return (
     <Menu className="content-section-tabs">

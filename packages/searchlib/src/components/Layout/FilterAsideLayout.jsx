@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Grid, Container } from 'semantic-ui-react';
-import { isLandingPageAtom } from './../SearchView/state';
+import { Grid } from 'semantic-ui-react';
+import { isLandingPageAtom } from '@eeacms/search/state';
 import { useAtom } from 'jotai';
 import { Ref } from 'semantic-ui-react';
 import { bodyContentRefAtom } from '@eeacms/search/state';
