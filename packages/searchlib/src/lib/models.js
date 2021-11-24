@@ -71,6 +71,11 @@ export const convertHitToResult = (record, field_filters) => {
   return rec;
 };
 
+/**
+ * Superclass for result models.
+ *
+ * It proxies the original hit. See ResultModel for example how to use this.
+ */
 export class BasicModel {
   constructor(record, config, field_filters) {
     const basic = {

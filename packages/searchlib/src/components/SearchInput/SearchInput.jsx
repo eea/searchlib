@@ -5,15 +5,16 @@
  * - search phrases
  */
 import React from 'react';
-import { Label, Icon } from 'semantic-ui-react';
-import ExactPhrasesFacet from './ExactPhrasesFacet';
-import IncludeArchivedFacet from './IncludeArchivedFacet';
+import { Icon } from 'semantic-ui-react';
+
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom, triedDemoQuestionAtom } from './state';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useState } from 'react';
 
+// import ExactPhrasesFacet from './ExactPhrasesFacet';
+// import IncludeArchivedFacet from './IncludeArchivedFacet';
 // import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 
 function SearchInput({
@@ -36,7 +37,7 @@ function SearchInput({
   const currentTerm = searchPhrases.pop();
 
   const inpRef = React.useRef();
-  const [showExtraFacets, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
+  const [, setShowExtraFacets] = useAtom(showExtraFacetsAtom);
 
   const [triedDemoQuestion, setTriedDemoQuestion] = useAtom(
     triedDemoQuestionAtom,

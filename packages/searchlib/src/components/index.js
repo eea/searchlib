@@ -1,3 +1,4 @@
+import Component from './Component/Component';
 import MultiCheckboxFacet from './Facets/Unconnected/MultiCheckboxFacet';
 import SectionTabs from './Facets/Connected/SectionTabs';
 import TableView from './Result/TableView';
@@ -32,6 +33,7 @@ import DefaultContentView from './SearchView/DefaultContentView';
 import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 
 export {
+  Component,
   SegmentedBreadcrumb,
   FilterAsideLayout,
   MultiCheckboxFacet,

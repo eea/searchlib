@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import SearchBoxView from './SearchBoxView';
 import { withSearch } from '@elastic/react-search-ui';
 
-// import { withSearch } from '..';
-// import { Result, Suggestion } from '../types';
-
 export class SearchBoxContainer extends Component {
   static propTypes = {
     // Props
