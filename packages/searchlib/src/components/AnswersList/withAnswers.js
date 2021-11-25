@@ -20,8 +20,8 @@ const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
     // console.log('search context', searchContext);
-
-    const { searchTerm = '', query_type, filters } = searchContext;
+    const { resultSearchTerm = '', query_type, filters } = searchContext;
+    const searchTerm = resultSearchTerm;
     const { appConfig } = useAppConfig();
     const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
     const {
