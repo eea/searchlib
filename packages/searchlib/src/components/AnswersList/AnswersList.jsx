@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { Segment, Rating, Popup, Button, Icon } from 'semantic-ui-react'; //, Accordion
+import {
+  Segment,
+  Rating,
+  Popup,
+  Button,
+  Icon,
+  Accordion,
+} from 'semantic-ui-react'; //, Accordion
 
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
@@ -107,35 +114,46 @@ score: 6.118757247924805
               <AnswerContext item={primaryResult} answerItem={primaryAnswer} />
             </div>
 
-            <div className="answers__bottom">
-              <Rating
-                rating={Math.round(5 * primaryAnswer.score)}
-                maxRating={5}
-                size="mini"
-                disabled
-              />
-              <div className="answers__bottom__spacer"></div>
-              <Button basic size="mini" onClick={() => setShowExpanded(true)}>
-                Expand
-              </Button>
-              <div className="answers__bottom__spacer"></div>
-              <Popup
-                trigger={
-                  <Button basic size="mini">
-                    Direct answer
+            <Accordion>
+              <Accordion.Title index={0} active={showExpanded}>
+                <div className="answers__bottom">
+                  <Rating
+                    rating={Math.round(5 * primaryAnswer.score)}
+                    maxRating={5}
+                    size="mini"
+                    disabled
+                  />
+                  <div className="answers__bottom__spacer"></div>
+                  <Button
+                    basic
+                    size="mini"
+                    onClick={() => setShowExpanded(!showExpanded)}
+                    disabled={filtered.slice(1).length === 0}
+                  >
+                    <Icon name="dropdown" />
+                    More
                   </Button>
-                }
-              >
-                <AnswerBoxDetails />
-              </Popup>
-            </div>
-
-            <div className="answers__links">
-              <AnswerLinksList
-                appConfig={appConfig}
-                filtered={showExpanded ? filtered : filtered.slice(0, 0)}
-              />
-            </div>
+                  <div className="answers__bottom__spacer"></div>
+                  <Popup
+                    trigger={
+                      <Button basic size="mini">
+                        Direct answer
+                      </Button>
+                    }
+                  >
+                    <AnswerBoxDetails />
+                  </Popup>
+                </div>
+              </Accordion.Title>
+              <Accordion.Content active={showExpanded}>
+                <div className="answers__links">
+                  <AnswerLinksList
+                    appConfig={appConfig}
+                    filtered={showExpanded ? filtered.slice(1) : []}
+                  />
+                </div>
+              </Accordion.Content>
+            </Accordion>
           </Segment>
         </>
       ) : (
