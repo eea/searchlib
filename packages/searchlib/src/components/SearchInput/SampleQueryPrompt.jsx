@@ -30,6 +30,7 @@ export default function SampleQueryPrompt() {
       <span>Try: </span>
       <Button
         as="a"
+        basic
         onClick={(evt) => {
           evt.preventDefault();
           // setTriedDemoQuestion(true);

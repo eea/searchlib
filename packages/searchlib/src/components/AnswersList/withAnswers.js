@@ -50,7 +50,6 @@ const withAnswers = (WrappedComponent) => {
 
           // TODO: this might not be perfect, can be desynced
           if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
-            // isMounted.current &&
             dispatch({ type: 'loading' });
 
             const response = await runRequest(requestBody, appConfig);
@@ -58,10 +57,8 @@ const withAnswers = (WrappedComponent) => {
             const { answers = [] } = body;
 
             if (!answers.length) {
-              // if (isMounted.current) {
               dispatch({ type: 'loaded', data: answers });
               setSearchedTerm(searchTerm);
-              // }
               return;
             }
 
@@ -73,14 +70,12 @@ const withAnswers = (WrappedComponent) => {
             // answers are already paraphrasings, so that we can group them
             // together. Ideally this should be moved in the NLP pipeline
 
-            const [simResp] = await Promise.all([
-              runRequest(
-                buildSimilarityRequest({ base, candidates }, appConfig),
-                appConfig,
-              ),
-            ]);
+            const simResp = await runRequest(
+              buildSimilarityRequest({ base, candidates }, appConfig),
+              appConfig,
+            );
 
-            const { predictions = [] } = simResp.body || {};
+            const { predictions = [], clusters = [] } = simResp.body || {};
             const data = [
               highestRatedAnswer,
               ...rest
@@ -95,10 +90,12 @@ const withAnswers = (WrappedComponent) => {
                 ? acc
                 : [...acc, ans];
             }, []);
-            // if (isMounted.current) {
-            dispatch({ type: 'loaded', data });
+
+            dispatch({
+              type: 'loaded',
+              data: { data, predictions, clusters, answers },
+            });
             setSearchedTerm(searchTerm);
-            // }
           }
         }, 100);
       }
@@ -117,7 +114,7 @@ const withAnswers = (WrappedComponent) => {
     return (
       <WrappedComponent
         {...props}
-        answers={request.data}
+        data={request.data}
         loading={request.loading}
         loaded={request.loaded}
         searchedTerm={searchedTerm}

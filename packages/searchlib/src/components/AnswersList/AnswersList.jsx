@@ -47,7 +47,8 @@ const AnswerContext = ({ item, answerItem }) => {
 
 const AnswersList = (props) => {
   const { appConfig } = useAppConfig();
-  const { answers = [], loading, loaded, searchedTerm } = props;
+  const { data = {}, loading, loaded, searchedTerm } = props;
+  const { answers = [] } = data || {};
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
   /*
