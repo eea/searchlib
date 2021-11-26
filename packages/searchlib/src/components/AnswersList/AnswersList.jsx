@@ -5,7 +5,7 @@ import { Segment, Rating, Popup, Button, Icon } from 'semantic-ui-react'; //, Ac
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, usePrevious } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
 
 import AnswerBoxDetails from './AnswerBoxDetails';
@@ -47,10 +47,12 @@ const AnswerContext = ({ item, answerItem }) => {
 
 const AnswersList = (props) => {
   const { appConfig } = useAppConfig();
+  const [showExpanded, setShowExpanded] = React.useState(false);
   const { data = {}, loading, loaded, searchedTerm } = props;
-  const { answers = [] } = data || {};
+  const { answers = [], predictions, clusters } = data || {};
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
+  const previousSearchTerm = usePrevious(searchTerm);
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -82,6 +84,12 @@ score: 6.118757247924805
       )
     : null;
 
+  React.useEffect(() => {
+    if (previousSearchTerm && previousSearchTerm !== searchTerm) {
+      setShowExpanded(false);
+    }
+  }, [previousSearchTerm, searchTerm]);
+
   return (
     <div className="answers-list">
       {showLoader ? (
@@ -97,10 +105,8 @@ score: 6.118757247924805
             <div className="answerCard">
               {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
               <AnswerContext item={primaryResult} answerItem={primaryAnswer} />
-              <div className="answers__links">
-                <AnswerLinksList appConfig={appConfig} filtered={filtered} />
-              </div>
             </div>
+
             <div className="answers__bottom">
               <Rating
                 rating={Math.round(5 * primaryAnswer.score)}
@@ -108,6 +114,10 @@ score: 6.118757247924805
                 size="mini"
                 disabled
               />
+              <div className="answers__bottom__spacer"></div>
+              <Button basic size="mini" onClick={() => setShowExpanded(true)}>
+                Expand
+              </Button>
               <div className="answers__bottom__spacer"></div>
               <Popup
                 trigger={
@@ -119,6 +129,13 @@ score: 6.118757247924805
                 <AnswerBoxDetails />
               </Popup>
             </div>
+
+            <div className="answers__links">
+              <AnswerLinksList
+                appConfig={appConfig}
+                filtered={showExpanded ? filtered : filtered.slice(0, 0)}
+              />
+            </div>
           </Segment>
         </>
       ) : (
@@ -129,16 +146,3 @@ score: 6.118757247924805
 };
 
 export default withAnswers(AnswersList);
-// console.log('filtered', { filtered, sliced: filtered?.slice(1) });
-// console.log('answers', {
-//   appConfig,
-//   answers,
-//   showLoader,
-//   searchedTerm,
-//   searchTerm,
-//   filtered,
-//   cutoff,
-// });
-// <Segment>
-//   <div className="loading-tip">Looking for semantic answers...</div>
-// </Segment>

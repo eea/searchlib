@@ -19,7 +19,6 @@ const timeoutRef = {};
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
-    // console.log('search context', searchContext);
     const { resultSearchTerm = '', query_type, filters } = searchContext;
     const searchTerm = resultSearchTerm;
     const { appConfig } = useAppConfig();
@@ -37,7 +36,6 @@ const withAnswers = (WrappedComponent) => {
     const isMounted = useIsMounted();
 
     useDeepCompareEffect(() => {
-      // if (!isMounted) return;
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
@@ -57,26 +55,33 @@ const withAnswers = (WrappedComponent) => {
             const { answers = [] } = body;
 
             if (!answers.length) {
-              dispatch({ type: 'loaded', data: answers });
+              dispatch({
+                type: 'loaded',
+                data: { data: [], answers: [], predictions: [], clusters: [] },
+              });
               setSearchedTerm(searchTerm);
               return;
             }
 
             const [highestRatedAnswer, ...rest] = answers;
-            const base = highestRatedAnswer.answer;
-            const candidates = rest.map(({ answer }) => answer);
-
-            // Take the highest rated response, determine which of the
-            // answers are already paraphrasings, so that we can group them
-            // together. Ideally this should be moved in the NLP pipeline
 
             const simResp = await runRequest(
-              buildSimilarityRequest({ base, candidates }, appConfig),
+              // Take the highest rated response, determine which of the
+              // answers are already paraphrasings, so that we can group them
+              // together. Ideally this should be moved in the NLP pipeline
+
+              buildSimilarityRequest(
+                {
+                  base: highestRatedAnswer.answer,
+                  candidates: rest.map(({ answer }) => answer),
+                },
+                appConfig,
+              ),
               appConfig,
             );
 
             const { predictions = [], clusters = [] } = simResp.body || {};
-            const data = [
+            const answersList = [
               highestRatedAnswer,
               ...rest
                 .map((ans, i) => [ans, predictions[i]?.score])
@@ -86,14 +91,16 @@ const withAnswers = (WrappedComponent) => {
                 .map(([ans, score]) => ans),
             ].reduce((acc, ans) => {
               // filter out duplicate results
-              return acc.findIndex((a) => a.id === ans.id) > -1
+              return acc.findIndex(
+                (a) => a.source?.about === ans.source?.about,
+              ) > -1
                 ? acc
                 : [...acc, ans];
             }, []);
 
             dispatch({
               type: 'loaded',
-              data: { data, predictions, clusters, answers },
+              data: { predictions, clusters, answers: answersList },
             });
             setSearchedTerm(searchTerm);
           }

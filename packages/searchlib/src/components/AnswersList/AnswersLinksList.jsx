@@ -8,23 +8,23 @@ import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { highlightUrl } from './utils';
 
 export default ({ filtered, appConfig }) => {
-  return filtered.slice(1, 5).map((item, i) => {
+  return filtered.map((item, i) => {
     const result = buildResult({ ...item, _source: item.source }, appConfig);
 
     return (
       <div key={i} className={cx({ primary: i === 0 })}>
-        <span className="answer__date">
-          <DateTime format="DATE_MED" value={result.issued} />
-        </span>
         <Icon name={result.clusterIcon} />
         <ExternalLink href={highlightUrl(result.href, item.answer)}>
           {result.title}
-        </ExternalLink>
+        </ExternalLink>{' '}
         <span className="answer__domain">
           Source:{' '}
           <ExternalLink href={highlightUrl(result.href, item.answer)}>
             {result.website}
-          </ExternalLink>
+          </ExternalLink>{' '}
+          <span className="answer__date">
+            (<DateTime format="DATE_MED" value={result.issued} />)
+          </span>
         </span>
         {result.isNew && (
           <Label className="new-item" horizontal>
