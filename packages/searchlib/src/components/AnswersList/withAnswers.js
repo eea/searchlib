@@ -150,7 +150,7 @@ const withAnswers = (WrappedComponent) => {
 
             dispatch({
               type: 'loaded',
-              data: { clusters, answers: validAnswers },
+              data: { clusters, answers: validAnswers, sortedClusters },
             });
             setSearchedTerm(searchTerm);
           }

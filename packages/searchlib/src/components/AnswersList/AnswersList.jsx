@@ -14,8 +14,6 @@ import AnswerLinksList from './AnswersLinksList';
 import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
 
-const MAX_COUNT = 5;
-
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context, answer } = answerItem;
 
@@ -49,8 +47,10 @@ const AnswerContext = ({ item, answerItem }) => {
 
 const AnswersList = (props) => {
   const { appConfig } = useAppConfig();
+  const [position, setPosition] = React.useState(0);
+
   const { data = {}, loading, loaded, searchedTerm } = props;
-  const { answers = [] } = data || {};
+  const { sortedClusters = [] } = data || {};
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
   /*
@@ -69,7 +69,7 @@ score: 6.118757247924805
   //
 
   const showLoader = loading && !loaded;
-  const filtered = answers;
+  const filtered = sortedClusters[position];
 
   const primaryAnswer = filtered?.[0];
   const primaryResult = primaryAnswer
@@ -89,7 +89,7 @@ score: 6.118757247924805
           </div>
         </Segment>
       ) : searchTerm && searchedTerm === searchTerm && filtered?.length ? (
-        <>
+        <div>
           <Segment className="answers-wrapper">
             <div className="answerCard">
               {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
@@ -126,7 +126,22 @@ score: 6.118757247924805
               </Popup>
             </div>
           </Segment>
-        </>
+
+          <div className="answers-bullets">
+            {Array(sortedClusters.length)
+              .fill(null)
+              .map((item, k) => (
+                <div
+                  onKeyDown={() => {}}
+                  tabIndex="-1"
+                  role="button"
+                  key={k}
+                  className={`bullet ${position === k ? 'active' : ''}`}
+                  onClick={() => setPosition(k)}
+                ></div>
+              ))}
+          </div>
+        </div>
       ) : (
         ''
       )}
