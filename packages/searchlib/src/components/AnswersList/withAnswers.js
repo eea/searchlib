@@ -19,9 +19,11 @@ const timeoutRef = {};
 const withAnswers = (WrappedComponent) => {
   const Wrapped = (props) => {
     const searchContext = useSearchContext();
+    const { appConfig } = useAppConfig();
+    const isMounted = useIsMounted();
+
     const { resultSearchTerm = '', query_type, filters } = searchContext;
     const searchTerm = resultSearchTerm;
-    const { appConfig } = useAppConfig();
     const [searchedTerm, setSearchedTerm] = React.useState(searchTerm);
     const {
       qa_queryTypes = [
@@ -33,7 +35,13 @@ const withAnswers = (WrappedComponent) => {
 
     const requestAtom = requestFamily({ searchTerm, filters });
     const [request, dispatch] = useAtom(requestAtom);
-    const isMounted = useIsMounted();
+
+    let cutoff = 0.1;
+    try {
+      cutoff = parseFloat(appConfig.nlp.qa.cutoffScore ?? 0.1);
+    } catch {
+      cutoff = 0.1;
+    }
 
     useDeepCompareEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
@@ -54,10 +62,14 @@ const withAnswers = (WrappedComponent) => {
             const { body } = response;
             const { answers = [] } = body;
 
-            if (!answers.length) {
+            const validAnswers = answers?.filter(
+              (item) => item.score >= cutoff,
+            );
+
+            if (!validAnswers.length) {
               dispatch({
                 type: 'loaded',
-                data: { data: [], answers: [], predictions: [], clusters: [] },
+                data: { data: [], answers: [], clusters: [] },
               });
               setSearchedTerm(searchTerm);
               return;
@@ -69,6 +81,9 @@ const withAnswers = (WrappedComponent) => {
               // Take the highest rated response, determine which of the
               // answers are already paraphrasings, so that we can group them
               // together. Ideally this should be moved in the NLP pipeline
+              //
+              // TODO: we sent the similarity request, but actually only use
+              // clusterization
 
               buildSimilarityRequest(
                 {
@@ -80,27 +95,62 @@ const withAnswers = (WrappedComponent) => {
               appConfig,
             );
 
-            const { predictions = [], clusters = [] } = simResp.body || {};
-            const answersList = [
-              highestRatedAnswer,
-              ...rest
-                .map((ans, i) => [ans, predictions[i]?.score])
-                .filter(
-                  ([, score]) => score > appConfig.nlp.similarity.cutoffScore,
-                )
-                .map(([ans, score]) => ans),
-            ].reduce((acc, ans) => {
-              // filter out duplicate results
-              return acc.findIndex(
-                (a) => a.source?.about === ans.source?.about,
-              ) > -1
-                ? acc
-                : [...acc, ans];
-            }, []);
+            const { clusters = [] } = simResp.body || {};
+
+            // form clusters of responses, ordered by the highest scoring
+            // member of the cluster. Inside each cluster we de-duplicate
+            // (don't list the same link twice)
+
+            const clusterMap = {};
+            clusters.forEach(([sent, clusterId]) => {
+              clusterMap[clusterId] = [...(clusterMap[clusterId] || []), sent];
+            });
+
+            const clusterizedAnswers = Object.assign(
+              {},
+              ...Object.keys(clusterMap).map((clusterId) => ({
+                [clusterId]: clusterMap[clusterId].reduce((acc, sent) => {
+                  return [
+                    ...acc,
+                    ...answers.filter((ans) => ans.answer === sent),
+                  ]
+                    .reduce((acc, ans) => {
+                      // filter out duplicate results (same URL)
+                      return acc.findIndex(
+                        (a) => a.source?.about === ans.source?.about,
+                      ) > -1
+                        ? acc
+                        : [...acc, ans];
+                    }, [])
+                    .sort((a, b) =>
+                      a.score > b.score ? -1 : a.score === b.score ? 0 : 1,
+                    );
+                }, []),
+              })),
+            );
+
+            const sortedClusters = Object.values(
+              clusterizedAnswers,
+            ).sort((batchA, batchB) =>
+              batchA[0]?.score > batchB[0]?.score
+                ? -1
+                : batchA[0]?.score === batchB[0]?.score
+                ? 0
+                : 1,
+            );
+
+            console.log('ans', {
+              answers,
+              clusters,
+              // aboveThresholdAnswers,
+              clusterMap,
+              clusterizedAnswers,
+              sortedClusters,
+            });
 
             dispatch({
               type: 'loaded',
-              data: { predictions, clusters, answers: answersList },
+              data: { clusters, answers: validAnswers },
             });
             setSearchedTerm(searchTerm);
           }
@@ -116,6 +166,7 @@ const withAnswers = (WrappedComponent) => {
       dispatch,
       request,
       filters,
+      cutoff,
     ]);
 
     return (

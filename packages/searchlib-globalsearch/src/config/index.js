@@ -75,5 +75,8 @@ export default function install(config) {
     }),
   ];
 
+  // promptQueries: []
+  // See https://taskman.eionet.europa.eu/issues/141161
+
   return config;
 }

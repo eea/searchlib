@@ -1,18 +1,11 @@
 import React from 'react';
 
-import {
-  Segment,
-  Rating,
-  Popup,
-  Button,
-  Icon,
-  Accordion,
-} from 'semantic-ui-react'; //, Accordion
+import { Segment, Rating, Popup, Button, Icon } from 'semantic-ui-react'; //, Accordion
 
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
-import { useAppConfig, usePrevious } from '@eeacms/search/lib/hocs';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { DateTime } from '@eeacms/search/components'; //, StringList
 
 import AnswerBoxDetails from './AnswerBoxDetails';
@@ -20,6 +13,8 @@ import AnswerLinksList from './AnswersLinksList';
 
 import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
+
+const MAX_COUNT = 5;
 
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context, answer } = answerItem;
@@ -54,12 +49,10 @@ const AnswerContext = ({ item, answerItem }) => {
 
 const AnswersList = (props) => {
   const { appConfig } = useAppConfig();
-  const [showExpanded, setShowExpanded] = React.useState(false);
   const { data = {}, loading, loaded, searchedTerm } = props;
-  const { answers = [], predictions, clusters } = data || {};
+  const { answers = [] } = data || {};
   const { searchContext } = props;
   const { searchTerm = '' } = searchContext;
-  const previousSearchTerm = usePrevious(searchTerm);
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -74,14 +67,9 @@ question: null
 score: 6.118757247924805
 */
   //
-  let cutoff = 0.1;
-  try {
-    cutoff = parseFloat(appConfig.nlp.qa.cutoffScore ?? 0.1);
-  } catch {
-    cutoff = 0.1;
-  }
+
   const showLoader = loading && !loaded;
-  const filtered = answers?.filter((item) => item.score >= cutoff);
+  const filtered = answers;
 
   const primaryAnswer = filtered?.[0];
   const primaryResult = primaryAnswer
@@ -90,12 +78,6 @@ score: 6.118757247924805
         appConfig,
       )
     : null;
-
-  React.useEffect(() => {
-    if (previousSearchTerm && previousSearchTerm !== searchTerm) {
-      setShowExpanded(false);
-    }
-  }, [previousSearchTerm, searchTerm]);
 
   return (
     <div className="answers-list">
@@ -112,48 +94,37 @@ score: 6.118757247924805
             <div className="answerCard">
               {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
               <AnswerContext item={primaryResult} answerItem={primaryAnswer} />
+              <div className="answers__links">
+                <AnswerLinksList
+                  appConfig={appConfig}
+                  filtered={
+                    filtered.slice(1, filtered.length)
+                    //     .slice(
+                    //   1,
+                    //   Math.min(filtered.length, MAX_COUNT),
+                    // )
+                  }
+                />
+              </div>
             </div>
-
-            <Accordion>
-              <Accordion.Title index={0} active={showExpanded}>
-                <div className="answers__bottom">
-                  <Rating
-                    rating={Math.round(5 * primaryAnswer.score)}
-                    maxRating={5}
-                    size="mini"
-                    disabled
-                  />
-                  <div className="answers__bottom__spacer"></div>
-                  <Button
-                    basic
-                    size="mini"
-                    onClick={() => setShowExpanded(!showExpanded)}
-                    disabled={filtered.slice(1).length === 0}
-                  >
-                    <Icon name="dropdown" />
-                    More
+            <div className="answers__bottom">
+              <Rating
+                rating={Math.round(5 * primaryAnswer.score)}
+                maxRating={5}
+                size="mini"
+                disabled
+              />
+              <div className="answers__bottom__spacer"></div>
+              <Popup
+                trigger={
+                  <Button basic size="mini">
+                    Direct answer
                   </Button>
-                  <div className="answers__bottom__spacer"></div>
-                  <Popup
-                    trigger={
-                      <Button basic size="mini">
-                        Direct answer
-                      </Button>
-                    }
-                  >
-                    <AnswerBoxDetails />
-                  </Popup>
-                </div>
-              </Accordion.Title>
-              <Accordion.Content active={showExpanded}>
-                <div className="answers__links">
-                  <AnswerLinksList
-                    appConfig={appConfig}
-                    filtered={showExpanded ? filtered.slice(1) : []}
-                  />
-                </div>
-              </Accordion.Content>
-            </Accordion>
+                }
+              >
+                <AnswerBoxDetails />
+              </Popup>
+            </div>
           </Segment>
         </>
       ) : (
