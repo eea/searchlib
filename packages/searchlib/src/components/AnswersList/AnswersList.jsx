@@ -14,6 +14,8 @@ import AnswerLinksList from './AnswersLinksList';
 import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
 
+const MAX_COUNT = 3;
+
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context, answer } = answerItem;
 
@@ -31,8 +33,8 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
-      {pre}
-      <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>
+      {pre}{' '}
+      <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>{' '}
       {post} (<DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
@@ -97,13 +99,9 @@ score: 6.118757247924805
               <div className="answers__links">
                 <AnswerLinksList
                   appConfig={appConfig}
-                  filtered={
-                    filtered.slice(1, filtered.length)
-                    //     .slice(
-                    //   1,
-                    //   Math.min(filtered.length, MAX_COUNT),
-                    // )
-                  }
+                  filtered={filtered
+                    .slice(1, filtered.length)
+                    .slice(1, Math.min(filtered.length, MAX_COUNT))}
                 />
               </div>
             </div>
@@ -127,20 +125,22 @@ score: 6.118757247924805
             </div>
           </Segment>
 
-          <div className="answers-bullets">
-            {Array(sortedClusters.length)
-              .fill(null)
-              .map((item, k) => (
-                <div
-                  onKeyDown={() => {}}
-                  tabIndex="-1"
-                  role="button"
-                  key={k}
-                  className={`bullet ${position === k ? 'active' : ''}`}
-                  onClick={() => setPosition(k)}
-                ></div>
-              ))}
-          </div>
+          {sortedClusters.length > 1 && (
+            <div className="answers-bullets">
+              {Array(sortedClusters.length)
+                .fill(null)
+                .map((item, k) => (
+                  <div
+                    onKeyDown={() => {}}
+                    tabIndex="-1"
+                    role="button"
+                    key={k}
+                    className={`bullet ${position === k ? 'active' : ''}`}
+                    onClick={() => setPosition(k)}
+                  ></div>
+                ))}
+            </div>
+          )}
         </div>
       ) : (
         ''
