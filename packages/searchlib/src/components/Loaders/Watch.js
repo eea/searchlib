@@ -76,8 +76,8 @@ Watch.propTypes = {
 };
 
 Watch.defaultProps = {
-  height: 80,
-  width: 80,
+  height: 50,
+  width: 50,
   color: 'green',
   label: 'audio-loading',
   radius: 48,
