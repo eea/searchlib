@@ -149,10 +149,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
-          <DateTime
-            format="DATE_MED"
-            value={result[props.issuedField]?.raw || ''}
-          />
+          <DateTime format="DATE_MED" value={result.issued} />
         </Card.Meta>
       </Card.Content>
       <Card.Content extra className="controls">
