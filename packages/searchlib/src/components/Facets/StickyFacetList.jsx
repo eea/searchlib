@@ -8,6 +8,7 @@ import { useWindowDimensions, useSearchContext } from '@eeacms/search/lib/hocs';
 
 import FacetsList from './FacetsList';
 import MoreLikeThis from './Connected/MoreLikeThis';
+import { ErrorBoundary } from '@elastic/react-search-ui';
 
 export default (props) => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
@@ -25,7 +26,9 @@ export default (props) => {
     <Sticky context={bodyRef} active={isActive}>
       {showFacets ? (
         <>
-          <MoreLikeThis />
+          <ErrorBoundary>
+            <MoreLikeThis />
+          </ErrorBoundary>
           <FacetsList
             defaultWraper={ModalFacetWrapper}
             view={({ children }) => (

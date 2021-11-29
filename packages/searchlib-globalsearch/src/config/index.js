@@ -75,8 +75,35 @@ export default function install(config) {
     }),
   ];
 
-  // promptQueries: []
-  // See https://taskman.eionet.europa.eu/issues/141161
+  config.searchui.promptQueries = [
+    'what is the status of our forests',
+    'what is PFAS?',
+    'how does PFAS get into human?',
+    'what is the cumulative surface area of the Natura 2000?',
+    'what percentage of europe population is connected to waste water treatement?',
+    'How is the status of fish species in Europe?',
+    'What is the BISE?',
+    'how much does transport contributes to GHG emissions in EU?',
+    'Which cities in Europe have the worst air quality?',
+    'What car is best for the environment?',
+    'What transport mode is best for the environment?',
+    'What EU legislation safeguards our water?',
+    'What is land accounting?',
+    'What countries had the highest land take in the EEA-39 between 2000 and 2018?',
+    'Why is urban sprawl bad?',
+    'what are controlled substances',
+    'what is plastic',
+    'What year did car manufacturers meet their binding emissions target?',
+    'What is the percentage of surface water bodies with less than good status?',
+    'What is the most common pollutant in water bodies in Europe?',
+    'Where can I access greenhouse gas data',
+    'What is the trend on greenhouse gas emissions from transport',
+    'what is the best transport mode',
+    'what are ecosystem services',
+    'bathing water quality',
+    'greenhouse gas emissions trends',
+    'waste generation trends',
+  ];
 
   return config;
 }

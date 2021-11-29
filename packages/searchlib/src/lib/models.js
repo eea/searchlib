@@ -41,7 +41,7 @@ export const convertHitToResult = (record, field_filters) => {
     [key]: value,
   });
 
-  const rec = Object.entries(record._source)
+  const rec = Object.entries(record._source || {})
     .map(([fieldName, fieldValue]) => [
       fieldName,
       toObject(
@@ -155,6 +155,9 @@ export class ResultModel extends BasicModel {
   }
 
   get title() {
+    if (!this._result?.title) {
+      console.log('result', this._result);
+    }
     return this._result.title.raw;
   }
 
