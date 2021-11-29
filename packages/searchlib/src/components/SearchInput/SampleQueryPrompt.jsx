@@ -7,7 +7,12 @@ export default function SampleQueryPrompt() {
   const { setSearchTerm } = useSearchContext();
 
   const { promptQueries, promptQueryInterval = 10000 } = appConfig;
-  let queries = (promptQueries || '').split('\n').filter((n) => !!n.trim());
+  let queries;
+  if (typeof promptQueries === 'string') {
+    queries = (promptQueries || '').split('\n').filter((n) => !!n.trim());
+  } else if (Array.isArray(promptQueries)) {
+    queries = promptQueries;
+  }
   const nrQueries = queries.length;
   // console.log(appConfig.promptQueries);
 
