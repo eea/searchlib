@@ -10,7 +10,7 @@ import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import { useViews } from '@eeacms/search/lib/hocs';
-import IncludeArchivedFacet from './../SearchInput/IncludeArchivedFacet';
+import IncludeArchivedFacet from '@eeacms/search/components/Facets/Connected/IncludeArchivedFacet';
 
 import registry from '@eeacms/search/registry';
 
