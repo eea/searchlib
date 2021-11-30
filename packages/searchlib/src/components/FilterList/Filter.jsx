@@ -32,7 +32,14 @@ const Filter = (props) => {
       <Label.Group>
         {values?.map((v, index) => {
           return (
-            <Label key={index}>
+            <Label
+              key={index}
+              onClick={() => {
+                return values.length === 1
+                  ? onClear(field)
+                  : removeFilter(field, v, type);
+              }}
+            >
               <span className="text" title={v}>
                 {label === 'Content types' ? (
                   <Icon name={getClusterIcon(v)} />
@@ -45,14 +52,7 @@ const Filter = (props) => {
                   registry={registry}
                 />
               </span>
-              <Icon
-                onClick={() => {
-                  return values.length === 1
-                    ? onClear(field)
-                    : removeFilter(field, v, type);
-                }}
-                name="delete"
-              />
+              <Icon name="delete" />
             </Label>
           );
         })}
