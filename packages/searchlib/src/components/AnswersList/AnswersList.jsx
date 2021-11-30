@@ -54,7 +54,7 @@ const AnswersList = (props) => {
   const { data = {}, loading, loaded, searchedTerm } = props;
   const { sortedClusters = [] } = data || {};
   const { searchContext } = props;
-  const { searchTerm = '' } = searchContext;
+  const { resultSearchTerm = '' } = searchContext;
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -90,7 +90,9 @@ score: 6.118757247924805
             <div className="color"></div>
           </div>
         </Segment>
-      ) : searchTerm && searchedTerm === searchTerm && filtered?.length ? (
+      ) : resultSearchTerm &&
+        searchedTerm === resultSearchTerm &&
+        filtered?.length ? (
         <div>
           <Segment className="answers-wrapper">
             <div className="answerCard">

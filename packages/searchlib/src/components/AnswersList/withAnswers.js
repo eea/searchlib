@@ -34,6 +34,7 @@ const withAnswers = (WrappedComponent) => {
     } = appConfig?.nlp?.qa || {};
 
     const requestAtom = requestFamily({ searchTerm, filters });
+    // console.log('filters', { filters, searchTerm, requestAtom, searchedTerm });
     const [request, dispatch] = useAtom(requestAtom);
 
     let cutoff = 0.1;
@@ -139,14 +140,14 @@ const withAnswers = (WrappedComponent) => {
                 : 1,
             );
 
-            console.log('ans', {
-              answers,
-              clusters,
-              // aboveThresholdAnswers,
-              clusterMap,
-              clusterizedAnswers,
-              sortedClusters,
-            });
+            // console.log('ans', {
+            //   answers,
+            //   clusters,
+            //   // aboveThresholdAnswers,
+            //   clusterMap,
+            //   clusterizedAnswers,
+            //   sortedClusters,
+            // });
 
             dispatch({
               type: 'loaded',
