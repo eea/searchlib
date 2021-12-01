@@ -21,14 +21,16 @@ export default function SampleQueryPrompt() {
     [nrQueries],
   );
   const [index, setIndex] = React.useState(randomizer());
+  const [paused, setPaused] = React.useState(false);
+  const timerRef = React.useRef();
 
   React.useEffect(() => {
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       const next = randomizer();
-      setIndex(next);
+      if (!paused) setIndex(next);
     }, promptQueryInterval);
-    return () => clearInterval(timer);
-  });
+    return () => clearInterval(timerRef.current);
+  }, [paused, promptQueryInterval, randomizer]);
 
   return promptQueries ? (
     <p className="demo-question">
@@ -36,6 +38,10 @@ export default function SampleQueryPrompt() {
       <Button
         as="a"
         basic
+        onMouseOver={() => setPaused(true)}
+        onMouseOut={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
         onClick={(evt) => {
           evt.preventDefault();
           // setTriedDemoQuestion(true);

@@ -35,7 +35,6 @@ export const requestFamily = atomFamily(
     ),
   (a, b) => {
     const res = isEqual(a, b);
-    console.log('isequal', { a, b, res });
     return res;
   },
 );
