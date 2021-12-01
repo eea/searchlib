@@ -47,7 +47,7 @@ const AnswerContext = ({ item, answerItem }) => {
   );
 };
 
-const AnswersList = (props) => {
+const AnswerBox = (props) => {
   const { appConfig } = useAppConfig();
   const [position, setPosition] = React.useState(0);
 
@@ -151,4 +151,4 @@ score: 6.118757247924805
   );
 };
 
-export default withAnswers(AnswersList);
+export default withAnswers(AnswerBox);

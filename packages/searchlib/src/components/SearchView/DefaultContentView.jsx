@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  ResultsPerPage,
-  Paging,
-  Sorting,
-  PagingInfo as SUIPagingInfo,
-} from '@elastic/react-search-ui';
+import { ResultsPerPage, Paging, Sorting } from '@elastic/react-search-ui';
 import {
   ViewSelector,
   FilterList,
   SortingDropdown,
-  AnswersList,
+  AnswerBox,
   DownloadButton,
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
@@ -35,7 +30,7 @@ export const DefaultContentView = (props) => {
   return (
     <>
       <FilterList />
-      <AnswersList />
+      <AnswerBox />
       <div className="above-results">
         <ViewSelector
           views={availableResultViews}

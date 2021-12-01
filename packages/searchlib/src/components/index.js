@@ -24,7 +24,7 @@ import SortingDropdown from './Sorting/SortingDropdown';
 import SortingDropdownWithLabel from './Sorting/SortingDropdownWithLabel';
 import FilterResultEntry from './FilterList/FilterResultEntry';
 import Resizable from './UI/Resizable';
-import AnswersList from './AnswersList/AnswersList';
+import AnswerBox from './AnswerBox/AnswerBox';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
@@ -59,7 +59,7 @@ export {
   SortingDropdownWithLabel,
   FilterResultEntry,
   Resizable,
-  AnswersList,
+  AnswerBox,
   DownloadButton,
   AppInfo,
   Header,
