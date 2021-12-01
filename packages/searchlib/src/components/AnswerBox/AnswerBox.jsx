@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { Segment, Rating, Popup, Button, Icon } from 'semantic-ui-react'; //, Accordion
+import {
+  Segment,
+  Rating,
+  Popup,
+  Button,
+  Icon,
+  Transition,
+} from 'semantic-ui-react'; //, Accordion
 
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
@@ -71,15 +78,7 @@ score: 6.118757247924805
   //
 
   const showLoader = loading && !loaded;
-  const filtered = sortedClusters[position];
-
-  const primaryAnswer = filtered?.[0];
-  const primaryResult = primaryAnswer
-    ? buildResult(
-        { ...primaryAnswer, _source: primaryAnswer?.source },
-        appConfig,
-      )
-    : null;
+  // const filtered = sortedClusters[position];
 
   return (
     <div className="answers-list">
@@ -92,40 +91,62 @@ score: 6.118757247924805
         </Segment>
       ) : resultSearchTerm &&
         searchedTerm === resultSearchTerm &&
-        filtered?.length ? (
+        sortedClusters.length ? (
         <div>
-          <Segment className="answers-wrapper">
-            <div className="answerCard">
-              {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
-              <AnswerContext item={primaryResult} answerItem={primaryAnswer} />
-              <div className="answers__links">
-                <AnswerLinksList
-                  appConfig={appConfig}
-                  filtered={filtered
-                    .slice(1, filtered.length)
-                    .slice(1, Math.min(filtered.length, MAX_COUNT))}
-                />
-              </div>
-            </div>
-            <div className="answers__bottom">
-              <Rating
-                rating={Math.round(5 * primaryAnswer.score)}
-                maxRating={5}
-                size="mini"
-                disabled
-              />
-              <div className="answers__bottom__spacer"></div>
-              <Popup
-                trigger={
-                  <Button basic size="mini">
-                    Direct answer
-                  </Button>
-                }
-              >
-                <AnswerBoxDetails />
-              </Popup>
-            </div>
-          </Segment>
+          <div animation="browse right">
+            {sortedClusters.map((filtered, i) => {
+              const primaryAnswer = filtered?.[0];
+              const primaryResult = primaryAnswer
+                ? buildResult(
+                    { ...primaryAnswer, _source: primaryAnswer?.source },
+                    appConfig,
+                  )
+                : null;
+
+              return (
+                <div
+                  key={i}
+                  style={{ display: position === i ? 'block' : 'none' }}
+                >
+                  <Segment className="answers-wrapper">
+                    <div className="answerCard">
+                      {/* <h3 className="answers__directAnswer">{filtered[0].answer}</h3> */}
+                      <AnswerContext
+                        item={primaryResult}
+                        answerItem={primaryAnswer}
+                      />
+                      <div className="answers__links">
+                        <AnswerLinksList
+                          appConfig={appConfig}
+                          filtered={filtered
+                            .slice(1, filtered.length)
+                            .slice(1, Math.min(filtered.length, MAX_COUNT))}
+                        />
+                      </div>
+                    </div>
+                    <div className="answers__bottom">
+                      <Rating
+                        rating={Math.round(5 * primaryAnswer.score)}
+                        maxRating={5}
+                        size="mini"
+                        disabled
+                      />
+                      <div className="answers__bottom__spacer"></div>
+                      <Popup
+                        trigger={
+                          <Button basic size="mini">
+                            Direct answer
+                          </Button>
+                        }
+                      >
+                        <AnswerBoxDetails />
+                      </Popup>
+                    </div>
+                  </Segment>
+                </div>
+              );
+            })}
+          </div>
 
           {sortedClusters.length > 1 && (
             <div className="answers-bullets">
