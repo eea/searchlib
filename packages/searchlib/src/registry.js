@@ -221,7 +221,7 @@ const config = {
       // when entering in search view, this will be the default search text
       defaultSearchText: '',
 
-      promptQueries: '', // offered as possible queries, in a prompt below text input. One per line
+      defaultPromptQueries: [], // offered as possible queries, in a prompt below text input. One per line
       promptQueryInterval: 20000,
 
       // highlight: {

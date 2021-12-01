@@ -2,19 +2,32 @@ import React from 'react';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import { Button } from 'semantic-ui-react';
 
+function toArray(s) {
+  let a = [];
+  if (typeof s === 'string') {
+    a = (s || '').split('\n').filter((n) => !!n.trim());
+  } else if (Array.isArray(s)) {
+    a = s;
+  }
+  return a;
+}
+
 export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
   const { setSearchTerm } = useSearchContext();
 
-  const { promptQueries, promptQueryInterval = 10000 } = appConfig;
-  let queries;
-  if (typeof promptQueries === 'string') {
-    queries = (promptQueries || '').split('\n').filter((n) => !!n.trim());
-  } else if (Array.isArray(promptQueries)) {
-    queries = promptQueries;
-  }
+  const {
+    defaultPromptQueries = [],
+    promptQueries,
+    promptQueryInterval = 10000,
+  } = appConfig;
+
+  const pqa = toArray(promptQueries);
+  const dpqa = toArray(defaultPromptQueries);
+
+  const queries = pqa.length ? pqa : dpqa.length ? dpqa : [];
+
   const nrQueries = queries.length;
-  // console.log(appConfig.promptQueries);
 
   const randomizer = React.useCallback(
     () => Math.max(Math.ceil(Math.random() * nrQueries) - 1, 0),
@@ -32,7 +45,7 @@ export default function SampleQueryPrompt() {
     return () => clearInterval(timerRef.current);
   }, [paused, promptQueryInterval, randomizer]);
 
-  return promptQueries ? (
+  return queries.length ? (
     <p className="demo-question">
       <span>Try: </span>
       <Button
