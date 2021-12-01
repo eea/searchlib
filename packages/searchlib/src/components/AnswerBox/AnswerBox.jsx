@@ -6,7 +6,7 @@ import {
   Popup,
   Button,
   Icon,
-  Transition,
+  // Transition,
 } from 'semantic-ui-react'; //, Accordion
 
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
@@ -24,19 +24,19 @@ import withAnswers from './withAnswers';
 const MAX_COUNT = 3;
 
 const AnswerContext = ({ item, answerItem }) => {
-  const { full_context, answer } = answerItem;
+  const { full_context = '', context, answer } = answerItem;
 
-  const start = (full_context || '').indexOf(answer);
+  const start = (full_context || context || '').indexOf(answer);
 
   const pre = full_context
     ? full_context.slice(0, start)
-    : item.context.slice(0, item.offset_start);
+    : context.slice(0, answerItem.offset_start);
   const ans = full_context
     ? answer
-    : item.context.slice(item.offset_start, item.offset_end);
+    : context.slice(answerItem.offset_start, answerItem.offset_end);
   const post = full_context
     ? full_context.slice(start + answer.length, full_context.length)
-    : item.context.slice(item.offset_end, item.context.length);
+    : context.slice(answerItem.offset_end, answerItem.context.length);
 
   return (
     <div className="answer__primary">
