@@ -154,6 +154,7 @@ score: 6.118757247924805
                 .fill(null)
                 .map((item, k) => (
                   <div
+                    aria-label={`Set answerbox page to: ${k + 1}`}
                     onKeyDown={() => {}}
                     tabIndex="-1"
                     role="button"
