@@ -80,6 +80,7 @@ score: 6.118757247924805
   const showLoader = loading && !loaded;
   // const filtered = sortedClusters[position];
 
+  console.log('pos', position);
   return (
     <div className="answers-list">
       {showLoader ? (
@@ -93,7 +94,26 @@ score: 6.118757247924805
         searchedTerm === resultSearchTerm &&
         sortedClusters.length ? (
         <div>
-          <div animation="browse right">
+          {sortedClusters.length > 1 && (
+            <Button.Group
+              size="mini"
+              attached="right"
+              floated="right"
+              color="blue"
+            >
+              <Button
+                icon="angle left"
+                disabled={position === 0}
+                onClick={() => setPosition(position - 1)}
+              />
+              <Button
+                icon="angle right"
+                disabled={position === sortedClusters.length - 1}
+                onClick={() => setPosition(position + 1)}
+              />
+            </Button.Group>
+          )}
+          <div>
             {sortedClusters.map((filtered, i) => {
               const primaryAnswer = filtered?.[0];
               const primaryResult = primaryAnswer
@@ -147,24 +167,6 @@ score: 6.118757247924805
               );
             })}
           </div>
-
-          {sortedClusters.length > 1 && (
-            <div className="answers-bullets">
-              {Array(sortedClusters.length)
-                .fill(null)
-                .map((item, k) => (
-                  <div
-                    aria-label={`Set answerbox page to: ${k + 1}`}
-                    onKeyDown={() => {}}
-                    tabIndex="-1"
-                    role="button"
-                    key={k}
-                    className={`bullet ${position === k ? 'active' : ''}`}
-                    onClick={() => setPosition(k)}
-                  ></div>
-                ))}
-            </div>
-          )}
         </div>
       ) : (
         ''
@@ -174,3 +176,22 @@ score: 6.118757247924805
 };
 
 export default withAnswers(AnswerBox);
+
+//
+// {sortedClusters.length > 1 && (
+//   <div className="answers-bullets">
+//     {Array(sortedClusters.length)
+//       .fill(null)
+//       .map((item, k) => (
+//         <div
+//           aria-label={`Set answerbox page to: ${k + 1}`}
+//           onKeyDown={() => {}}
+//           tabIndex="-1"
+//           role="button"
+//           key={k}
+//           className={`bullet ${position === k ? 'active' : ''}`}
+//           onClick={() => setPosition(k)}
+//         ></div>
+//       ))}
+//   </div>
+// )}

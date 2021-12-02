@@ -53,11 +53,7 @@ export const FilterAsideContentView = (props) => {
         />
       </div>
 
-      <div className="answers-section">
-        <div className="answers-content">
-          <AnswerBox />
-        </div>
-      </div>
+      <AnswerBox />
 
       <ResultViewComponent>{children}</ResultViewComponent>
 
