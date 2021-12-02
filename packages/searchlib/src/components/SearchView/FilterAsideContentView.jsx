@@ -39,17 +39,17 @@ export const FilterAsideContentView = (props) => {
       <SectionTabs />
 
       <div className="above-results">
-        <ViewSelectorWithLabel
-          views={availableResultViews}
-          active={activeViewId}
-          onSetView={setActiveViewId}
-        />
+        <IncludeArchivedFacet />
         <Sorting
           label={'Sort by '}
           sortOptions={sortOptions}
           view={SortingDropdownWithLabel}
         />
-        <IncludeArchivedFacet />
+        <ViewSelectorWithLabel
+          views={availableResultViews}
+          active={activeViewId}
+          onSetView={setActiveViewId}
+        />
       </div>
 
       <ResultViewComponent>{children}</ResultViewComponent>
