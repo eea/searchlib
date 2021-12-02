@@ -16,7 +16,7 @@ import registry from '@eeacms/search/registry';
 import { AnswerBox } from '@eeacms/search/components';
 
 export const FilterAsideContentView = (props) => {
-  const { appConfig, children, filters, searchTerm } = props;
+  const { appConfig, children, filters, searchTerm, current } = props;
   const { sortOptions, resultViews } = appConfig;
   const { activeViewId, setActiveViewId } = useViews();
 
@@ -53,7 +53,7 @@ export const FilterAsideContentView = (props) => {
         />
       </div>
 
-      <AnswerBox />
+      {current === 1 ? <AnswerBox /> : ''}
 
       <ResultViewComponent>{children}</ResultViewComponent>
 

@@ -78,9 +78,18 @@ score: 6.118757247924805
   //
 
   const showLoader = loading && !loaded;
-  // const filtered = sortedClusters[position];
 
-  console.log('pos', position);
+  if (
+    !(
+      showLoader ||
+      (resultSearchTerm &&
+        searchedTerm === resultSearchTerm &&
+        sortedClusters.length)
+    )
+  ) {
+    return null;
+  }
+
   return (
     <div className="answers-list">
       {showLoader ? (
