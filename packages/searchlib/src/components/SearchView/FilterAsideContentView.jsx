@@ -13,6 +13,7 @@ import { useViews } from '@eeacms/search/lib/hocs';
 import IncludeArchivedFacet from '@eeacms/search/components/Facets/Connected/IncludeArchivedFacet';
 
 import registry from '@eeacms/search/registry';
+import { AnswerBox } from '@eeacms/search/components';
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, children, filters, searchTerm } = props;
@@ -50,6 +51,12 @@ export const FilterAsideContentView = (props) => {
           active={activeViewId}
           onSetView={setActiveViewId}
         />
+      </div>
+
+      <div className="answers-section">
+        <div className="answers-content">
+          <AnswerBox />
+        </div>
       </div>
 
       <ResultViewComponent>{children}</ResultViewComponent>
