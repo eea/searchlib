@@ -104,12 +104,7 @@ score: 6.118757247924805
         sortedClusters.length ? (
         <div>
           {sortedClusters.length > 1 && (
-            <Button.Group
-              size="mini"
-              attached="right"
-              floated="right"
-              color="blue"
-            >
+            <Button.Group size="mini" floated="right" color="blue">
               <Button
                 icon="angle left"
                 disabled={position === 0}

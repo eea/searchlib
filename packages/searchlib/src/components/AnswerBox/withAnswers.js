@@ -76,7 +76,7 @@ const withAnswers = (WrappedComponent) => {
               return;
             }
 
-            const [highestRatedAnswer, ...rest] = answers;
+            const [highestRatedAnswer, ...rest] = validAnswers;
 
             const simResp = await runRequest(
               // Take the highest rated response, determine which of the
@@ -113,7 +113,7 @@ const withAnswers = (WrappedComponent) => {
                 [clusterId]: clusterMap[clusterId].reduce((acc, sent) => {
                   return [
                     ...acc,
-                    ...answers.filter((ans) => ans.answer === sent),
+                    ...validAnswers.filter((ans) => ans.answer === sent),
                   ]
                     .reduce((acc, ans) => {
                       // filter out duplicate results (same URL)
@@ -139,15 +139,6 @@ const withAnswers = (WrappedComponent) => {
                 ? 0
                 : 1,
             );
-
-            // console.log('ans', {
-            //   answers,
-            //   clusters,
-            //   // aboveThresholdAnswers,
-            //   clusterMap,
-            //   clusterizedAnswers,
-            //   sortedClusters,
-            // });
 
             dispatch({
               type: 'loaded',
