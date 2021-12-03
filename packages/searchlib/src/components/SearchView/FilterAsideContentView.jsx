@@ -35,37 +35,41 @@ export const FilterAsideContentView = (props) => {
 
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
 
+  const layoutMode = activeViewId === 'horizontalCard' ? 'fixed' : 'fullwidth';
+
   return (
     <>
       <SectionTabs />
 
-      <div className="above-results">
-        <IncludeArchivedFacet />
-        <Sorting
-          label={'Sort by '}
-          sortOptions={sortOptions}
-          view={SortingDropdownWithLabel}
-        />
-        <ViewSelectorWithLabel
-          views={availableResultViews}
-          active={activeViewId}
-          onSetView={setActiveViewId}
-        />
-      </div>
+      <div className={`results-layout ${layoutMode}`}>
+        <div className="above-results">
+          <IncludeArchivedFacet />
+          <Sorting
+            label={'Sort by '}
+            sortOptions={sortOptions}
+            view={SortingDropdownWithLabel}
+          />
+          <ViewSelectorWithLabel
+            views={availableResultViews}
+            active={activeViewId}
+            onSetView={setActiveViewId}
+          />
+        </div>
 
-      {current === 1 ? <AnswerBox /> : ''}
+        {current === 1 ? <AnswerBox /> : ''}
 
-      <ResultViewComponent>{children}</ResultViewComponent>
+        <ResultViewComponent>{children}</ResultViewComponent>
 
-      <div className="row">
-        <div className="search-body-footer">
-          <div>
-            {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
-          </div>
-          <Paging />
-          <ResultsPerPage />
-          <div>
-            <DownloadButton appConfig={appConfig} />
+        <div className="row">
+          <div className="search-body-footer">
+            <div>
+              {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
+            </div>
+            <Paging />
+            <ResultsPerPage />
+            <div>
+              <DownloadButton appConfig={appConfig} />
+            </div>
           </div>
         </div>
       </div>
