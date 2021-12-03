@@ -22,21 +22,25 @@ import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
 
 const MAX_COUNT = 3;
+const WHITESPACE_RE = /\n|\t/;
 
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context = '', context, answer } = answerItem;
 
   const start = (full_context || context || '').indexOf(answer);
 
-  const pre = full_context
+  const pre = (full_context
     ? full_context.slice(0, start)
-    : context.slice(0, answerItem.offset_start);
-  const ans = full_context
+    : context.slice(0, answerItem.offset_start)
+  ).replace(WHITESPACE_RE, '');
+  const ans = (full_context
     ? answer
-    : context.slice(answerItem.offset_start, answerItem.offset_end);
-  const post = full_context
+    : context.slice(answerItem.offset_start, answerItem.offset_end)
+  ).replace(WHITESPACE_RE, '');
+  const post = (full_context
     ? full_context.slice(start + answer.length, full_context.length)
-    : context.slice(answerItem.offset_end, answerItem.context.length);
+    : context.slice(answerItem.offset_end, answerItem.context.length)
+  ).replace(WHITESPACE_RE, '');
 
   return (
     <div className="answer__primary">
