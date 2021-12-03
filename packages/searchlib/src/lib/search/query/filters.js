@@ -13,25 +13,24 @@ const isFunction = (value) =>
  *
  */
 export function buildRequestFilter(filters, config) {
-  let boolFilters = [];
-  config.facets?.forEach((facet) => {
-    if (facet.factory === 'BooleanFacet') {
-      let shouldAdd = true;
-      filters.forEach((filter) => {
-        if (filter.field === facet.field) {
-          shouldAdd = false;
-        }
-      });
-      if (shouldAdd) {
-        boolFilters.push({
-          field: facet.field,
-          values: [false],
-        });
-      }
-    }
-  });
+  const boolFilters = (config.facets || []).reduce(
+    (acc, facet) =>
+      filters.find((filter) => filter.field === facet.field)
+        ? [
+            ...acc,
+            {
+              field: facet.field,
+              values: [false],
+            },
+          ]
+        : acc,
+    [],
+  );
 
-  if (!filters && !config.permanentFilters && !boolFilters) return;
+  if (
+    !(filters.length || config.permanentFilters?.length || boolFilters.length)
+  )
+    return;
 
   const facetsMap = Object.assign(
     {},
@@ -40,18 +39,15 @@ export function buildRequestFilter(filters, config) {
     }),
   );
 
-  const appliedFilters = [];
-  filters = filters.reduce((acc, filter) => {
+  const appliedFilters = filters.reduce((acc, filter) => {
     if (Object.keys(facetsMap).includes(filter.field)) {
       const f = facetsMap[filter.field].buildFilter(filter, config);
       if (f) {
-        appliedFilters.push(filter.field);
         return [...acc, f];
       }
     }
 
     if (Object.keys(config.filters).includes(filter.field)) {
-      appliedFilters.push(filter.field);
       const { registryConfig } = config.filters[filter.field].factories;
       const { buildFilter } = registry.resolve[registryConfig];
       const f = buildFilter(filter, config);
@@ -60,9 +56,12 @@ export function buildRequestFilter(filters, config) {
 
     return acc;
   }, []);
+
+  const appliedFilterIds = appliedFilters.map((f) => f.field);
+
   // apply default values from configured filters;
-  config.facets.forEach((facet) => {
-    if (!appliedFilters.includes(facet.field) && facet.defaultValues) {
+  const appliedFiltersWithDefaults = config.facets.reduce((acc, facet) => {
+    if (!appliedFilterIds.includes(facet.field) && facet.defaultValues) {
       const filterValue = facetsMap[facet.field].buildFilter(
         {
           ...facet,
@@ -70,25 +69,22 @@ export function buildRequestFilter(filters, config) {
         },
         config,
       );
-      filterValue && filters.push(filterValue);
+      if (filterValue) return [...acc, filterValue];
     }
-  });
+    return acc;
+  }, appliedFilters);
 
-  if (filters.length < 1) return;
+  (config.permanentFilters || []).forEach((f) =>
+    appliedFiltersWithDefaults.push(isFunction(f) ? f() : f),
+  );
 
-  if (config.permanentFilters?.length > 0) {
-    filters = filters.concat(
-      config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
-    );
-  }
-  if (boolFilters.length > 0) {
-    boolFilters.forEach((filter) => {
-      const f = facetsMap[filter.field].buildFilter(filter, config);
-      filters.push(f);
-    });
-  }
+  boolFilters.forEach((filter) =>
+    appliedFiltersWithDefaults.push(
+      facetsMap[filter.field].buildFilter(filter, config),
+    ),
+  );
 
-  return filters;
+  return appliedFiltersWithDefaults.length ? appliedFiltersWithDefaults : null;
 }
 
 export function getTermFilterValue(field, fieldValue) {
