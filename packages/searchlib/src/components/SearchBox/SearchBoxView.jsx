@@ -87,7 +87,7 @@ function SearchBoxView(props) {
                     </div>
                   )}
                 </Grid.Column>
-                <Grid.Column widescreen="8" tablet="8" className="col-mid">
+                <Grid.Column widescreen="10" tablet="10" className="col-mid">
                   <form
                     onSubmit={(e) => {
                       closeMenu();
@@ -169,11 +169,6 @@ function SearchBoxView(props) {
                     </div>
                   </form>
                 </Grid.Column>
-                <Grid.Column
-                  widescreen="2"
-                  tablet="2"
-                  className="col-left"
-                ></Grid.Column>
               </Grid.Row>
             </Grid>
           </div>
