@@ -44,9 +44,12 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
-      {pre}{' '}
-      <ExternalLink href={highlightUrl(item.href, ans)}>{ans}</ExternalLink>{' '}
-      {post} (<DateTime format="DATE_MED" value={item.issued} />)
+      <span dangerouslySetInnerHTML={{ __html: pre }}></span>
+      <ExternalLink href={highlightUrl(item.href, ans)}>
+        <span dangerouslySetInnerHTML={{ __html: ans }}></span>
+      </ExternalLink>{' '}
+      <span dangerouslySetInnerHTML={{ __html: post }}></span> (
+      <DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
