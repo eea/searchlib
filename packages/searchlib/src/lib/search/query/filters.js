@@ -84,7 +84,9 @@ export function buildRequestFilter(filters, config) {
     ),
   );
 
-  return appliedFiltersWithDefaults.length ? appliedFiltersWithDefaults : null;
+  return appliedFiltersWithDefaults.length
+    ? appliedFiltersWithDefaults.filter((f) => !!f)
+    : null;
 }
 
 export function getTermFilterValue(field, fieldValue) {
