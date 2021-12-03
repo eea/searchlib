@@ -92,7 +92,7 @@ const facets = [
     // TODO: implement split in buckets
     ranges: makeRange({
       step: 1,
-      normalRange: [1958, 2021],
+      normalRange: [1958, 2022],
       includeOutlierStart: false,
       includeOutlierEnd: false,
     }),
