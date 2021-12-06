@@ -42,15 +42,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     registry.resolve[thumbFactoryName] ||
     ((result, config, fallback) => fallback);
 
-  const clusterIcons = appConfig.cardViewParams.clusterIcons;
-  const getClusterIcon = (result) => {
-    return (
-      clusterIcons[result.objectProvides.raw]?.icon ||
-      clusterIcons.fallback.icon
-    );
-  };
-  const clusterIcon = getClusterIcon(result);
-
   const iconFactoryName = appConfig.cardViewParams.getIconUrl;
   const getIcon =
     registry.resolve[iconFactoryName] ||
@@ -136,7 +127,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       </Card.Content>
       <Card.Content extra>
         <Card.Meta>
-          <StringList value={result[props.tagsField]?.raw} />
+          <StringList value={result.tags} />
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>
@@ -183,7 +174,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             compact
             icon={
               <div className="card-icon">
-                <Icon name={clusterIcon} size="mini" />
+                <Icon name={result.clusterIcon} size="mini" />
               </div>
             }
           ></Button>
