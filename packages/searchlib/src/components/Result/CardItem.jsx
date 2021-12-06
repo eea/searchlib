@@ -36,10 +36,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   // console.log('props', props);
   const { result, setFilter, removeFilter } = props;
   const { appConfig, registry } = useAppConfig();
-  const days =
-    (Date.now() - Date.parse(result['issued']?.raw)) / 1000 / 60 / 60 / 24;
-  // console.log('card props', props, appConfig);
-
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
 
   const getThumb =
@@ -111,7 +107,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
         target="_blank"
         rel="noreferrer"
         label={
-          (days < 30 && (
+          (result.daysSinceIssued < 30 && (
             <Label color="yellow" ribbon="right">
               New
             </Label>
