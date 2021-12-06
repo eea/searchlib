@@ -54,13 +54,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
-  const iconUrl = getIcon(
-    result,
-    appConfig,
-    // TODO: use a configured default
-    'https://react.semantic-ui.com/images/wireframe/white-image.png',
-  );
-
   const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
   const source = url
     .replace('https://', '')
@@ -75,7 +68,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     metaType = ['Other'];
   }
 
-  const description = normalizeStr(result[props.descriptionField]?.raw || '');
   return (
     <Card
       className={cx('card-item', { hovered })}
