@@ -54,7 +54,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
     'https://react.semantic-ui.com/images/wireframe/white-image.png',
   );
 
-  const url = props.urlField ? result[props.urlField]?.raw : result.id?.raw;
+  const url = props.urlField ? result[props.urlField]?.raw : result.id;
   const source = url
     .replace('https://', '')
     .replace('http://', '')
@@ -160,7 +160,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             floated="right"
             target="_blank"
             as="a"
-            href={result.id.raw}
+            href={result.id}
             circular
             size="mini"
             compact

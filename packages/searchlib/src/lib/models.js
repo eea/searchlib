@@ -114,6 +114,10 @@ export class ResultModel extends BasicModel {
     return res;
   }
 
+  get id() {
+    return this.id?.raw;
+  }
+
   get isNew() {
     return this.daysSinceIssued < 30;
   }
