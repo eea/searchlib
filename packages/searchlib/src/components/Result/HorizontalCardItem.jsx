@@ -53,6 +53,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             <Icon name={result.clusterIcon} />
           </span>
           <span className="tags">
+            <StringList value={result.clusterName} />
+            <Icon name="angle right" />
             <StringList value={metaType} />
           </span>
         </div>

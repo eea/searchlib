@@ -154,6 +154,14 @@ export class ResultModel extends BasicModel {
     return getClusterIcon(this._result.objectProvides?.raw);
   }
 
+  get clusterName() {
+    const clusterIcons = this.appConfig.contentUtilsParams.clusterIcons;
+    const getClusterName = (title) => {
+      return clusterIcons[title]?.cluster || 'Others';
+    };
+    return getClusterName(this._result.objectProvides?.raw);
+  }
+
   get href() {
     return this._result.about?.raw;
   }
