@@ -158,7 +158,7 @@ export class ResultModel extends BasicModel {
     if (!this._result?.title) {
       console.log('result', this._result);
     }
-    return this._result.title.raw;
+    return this._result.title?.raw;
   }
 
   get description() {
