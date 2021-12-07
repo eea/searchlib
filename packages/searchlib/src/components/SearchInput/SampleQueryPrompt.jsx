@@ -47,7 +47,7 @@ export default function SampleQueryPrompt() {
 
   return queries.length ? (
     <p className="demo-question">
-      <span>Try: </span>
+      <span>Try search for: </span>
       <Button
         as="a"
         basic
