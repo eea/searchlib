@@ -1,4 +1,4 @@
-import { get_cluster_icons, get_icons } from '../utils';
+import { get_cluster_icons, get_cluster_icons_dict, get_icons } from '../utils';
 
 export const clusters = {
   name: 'op_cluster',
@@ -59,10 +59,24 @@ export const clusters = {
 // Add "Others", a menu with subgroups.
 
 export const clusterIcons = get_cluster_icons(clusters);
+export const clusterIconsDict = get_cluster_icons_dict(clusters);
 
 export default {
   contentUtilsParams: {
     clusterIcons,
+    iconsDicts: {
+      'Content types': clusterIconsDict,
+      Websites: {
+        fallback: 'globe',
+        'EEA Website (www.eea.europa.eu)': 'globe',
+        'BISE (biodiversity.europa.eu)': 'leaf',
+        'WISE Marine (water.europa.eu/marine)': 'anchor',
+        'Energy (climate-energy.eea.europa.eu)': 'bolt',
+        'WISE Freshwater (water.europa.eu/freshwater)': 'tint',
+        'FISE (forest.eea.europa.eu)': 'tree',
+        'Industry (industry.eea.europa.eu)': 'industry',
+      },
+    },
   },
 
   contentSectionsParams: {

@@ -25,10 +25,11 @@ const FacetOptions = (props) => {
   } = props;
   const { appConfig } = useAppConfig();
 
-  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
-  const getClusterIcon = (title) => {
-    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  const icons = appConfig.contentUtilsParams.iconsDicts[label];
+  const getIcon = (title) => {
+    return icons[title] || icons.fallback;
   };
+  const hasIcons = icons !== undefined;
 
   let isGroupedByLetters = false;
   if (Object.keys(groupedOptionsByLetters).length > 0) {
@@ -82,8 +83,8 @@ const FacetOptions = (props) => {
                             : onSelect(option.value)
                         }
                       >
-                        {label === 'Content types' ? (
-                          <Icon name={getClusterIcon(option.value)} />
+                        {hasIcons ? (
+                          <Icon name={getIcon(option.value)} />
                         ) : null}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
@@ -144,8 +145,8 @@ const FacetOptions = (props) => {
                             : onSelect(option.value)
                         }
                       >
-                        {label === 'Content types' ? (
-                          <Icon name={getClusterIcon(option.value)} />
+                        {hasIcons ? (
+                          <Icon name={getIcon(option.value)} />
                         ) : null}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
@@ -176,9 +177,7 @@ const FacetOptions = (props) => {
                 checked ? onRemove(option.value) : onSelect(option.value)
               }
             >
-              {label === 'Content types' ? (
-                <Icon name={getClusterIcon(option.value)} />
-              ) : null}
+              {hasIcons ? <Icon name={getIcon(option.value)} /> : null}
               <span className="title">
                 {getFilterValueDisplay(option.value)}
               </span>

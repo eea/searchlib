@@ -220,3 +220,16 @@ export const get_cluster_icons = (settings) => {
   });
   return icons;
 };
+
+export const get_cluster_icons_dict = (settings) => {
+  const icons = {
+    fallback: 'file outline',
+  };
+
+  settings.clusters.forEach((cluster) => {
+    cluster.values.forEach((value) => {
+      icons[value] = cluster.icon;
+    });
+  });
+  return icons;
+};
