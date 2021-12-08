@@ -201,6 +201,13 @@ export class ResultModel extends BasicModel {
   }
 
   get metaTypes() {
+    // TODO: why no type for some results?
+    // if (this._result.objectProvides.raw.length == 0) {
+    //   console.log(this._result);
+    //   // objectProvides:
+    //   //   raw: []
+    //   //   [[Prototype]]: Object
+    // }
     return this._result.objectProvides?.raw;
   }
 }
