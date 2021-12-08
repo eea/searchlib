@@ -54,8 +54,12 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           </span>
           <span className="tags">
             <StringList value={result.clusterName} />
-            <Icon name="angle right" />
-            <StringList value={metaType} />
+            {metaType !== result.clusterName && (
+              <>
+                <Icon name="angle right" />
+                <StringList value={metaType} />
+              </>
+            )}
           </span>
         </div>
       </div>

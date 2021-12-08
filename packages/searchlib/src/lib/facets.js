@@ -79,7 +79,7 @@ export const multiTermFacet = ({
 };
 
 export const booleanFacet = (options) => {
-  const { field, label, on, ...params } = isFunction(options)
+  const { field, label, on, off, ...params } = isFunction(options)
     ? options()
     : options;
 
@@ -87,6 +87,7 @@ export const booleanFacet = (options) => {
     field,
     label,
     on,
+    off,
     factory: 'BooleanFacet',
     showInFacetsList: true,
     ...params,
