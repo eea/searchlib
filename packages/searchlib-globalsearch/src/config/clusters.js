@@ -77,6 +77,8 @@ export default {
         'WISE Freshwater (water.europa.eu/freshwater)': 'water-logo.png',
         'FISE (forest.eea.europa.eu)': 'forest-logo.png',
         'Industry (industry.eea.europa.eu)': 'industry-logo.png',
+        'Climate-adapt (climate-adapt.eea.europa.eu)': 'climate-adapt-logo.png',
+        'Eionet (eionet.europa.eu)': 'eionet-logo.png',
       },
     },
   },
