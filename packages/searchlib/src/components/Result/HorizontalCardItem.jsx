@@ -35,7 +35,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   let metaType = result.metaTypes || '';
   if (metaType.length === 0) {
-    metaType = ['Other'];
+    metaType = 'Others';
   }
 
   return (
