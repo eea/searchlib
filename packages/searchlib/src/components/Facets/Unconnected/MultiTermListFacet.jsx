@@ -3,7 +3,7 @@ import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
 import { ToggleSort } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Image
+import { Checkbox, Button, Image } from 'semantic-ui-react'; // , Header
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
@@ -12,6 +12,23 @@ function getFilterValueDisplay(filterValue) {
   if (filterValue.hasOwnProperty('name')) return filterValue.name;
   return String(filterValue);
 }
+
+const FacetOptionIcon = (props) => {
+  const { icons, value } = props;
+
+  const getIcon = (title) => {
+    return icons[title] || icons.fallback;
+  };
+  const iconType = icons.type || 'icons';
+
+  if (iconType === 'icons') {
+    return <Icon name={getIcon(value)} />;
+  }
+
+  if (iconType === 'images') {
+    return <Image className="facet-option-icon" src={require('./../images/' + getIcon(value))} />;
+  }
+};
 
 const FacetOptions = (props) => {
   const {
@@ -26,9 +43,6 @@ const FacetOptions = (props) => {
   const { appConfig } = useAppConfig();
 
   const icons = appConfig.contentUtilsParams.iconsDicts[label];
-  const getIcon = (title) => {
-    return icons[title] || icons.fallback;
-  };
   const hasIcons = icons !== undefined;
 
   let isGroupedByLetters = false;
@@ -84,7 +98,7 @@ const FacetOptions = (props) => {
                         }
                       >
                         {hasIcons ? (
-                          <Icon name={getIcon(option.value)} />
+                          <FacetOptionIcon icons={icons} value={option.value} />
                         ) : null}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
@@ -146,7 +160,7 @@ const FacetOptions = (props) => {
                         }
                       >
                         {hasIcons ? (
-                          <Icon name={getIcon(option.value)} />
+                          <FacetOptionIcon icons={icons} value={option.value} />
                         ) : null}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
@@ -177,7 +191,9 @@ const FacetOptions = (props) => {
                 checked ? onRemove(option.value) : onSelect(option.value)
               }
             >
-              {hasIcons ? <Icon name={getIcon(option.value)} /> : null}
+              {hasIcons ? (
+                <FacetOptionIcon icons={icons} value={option.value} />
+              ) : null}
               <span className="title">
                 {getFilterValueDisplay(option.value)}
               </span>
