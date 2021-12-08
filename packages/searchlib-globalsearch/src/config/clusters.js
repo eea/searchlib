@@ -30,6 +30,7 @@ export const clusters = {
         'Chart (interactive)',
         'Infographic',
         'Data dashboard',
+        'Dashboard',
         'Map (interactive)',
       ],
       defaultResultView: 'card',
