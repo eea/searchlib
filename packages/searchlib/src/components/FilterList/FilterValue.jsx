@@ -1,4 +1,5 @@
 import React from 'react';
+import { Component } from '@eeacms/search/components';
 
 // TODO: use this in StringList, unify value display
 function valueToString(value) {
@@ -28,11 +29,10 @@ function valueToString(value) {
 }
 
 const FilterValue = (props) => {
-  const { value, field, appConfig, registry } = props;
+  const { value, field, appConfig } = props;
   const factoryName = appConfig.filters[field]?.factories?.filterList;
   if (factoryName) {
-    const Component = registry.resolve[factoryName].component;
-    return <Component {...props} />;
+    return <Component factoryName={factoryName} {...props} />;
   }
 
   return valueToString(value);
