@@ -26,7 +26,13 @@ const FacetOptionIcon = (props) => {
   }
 
   if (iconType === 'images') {
-    return <Image className="facet-option-icon" src={require('./../images/' + getIcon(value))} />;
+    // WIP, TODO use this: return <LogoImage image={getIcon(value)} />;
+    return (
+      <Image
+        className="facet-option-icon"
+        src={require('./../images/' + getIcon(value))}
+      />
+    );
   }
 };
 

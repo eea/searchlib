@@ -78,6 +78,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               </Label>
             )}
           </h3>
+          <p className="tags">
+            <StringList value={result.tags} />
+          </p>
           {props.children ? props.children : <ResultContext {...props} />}
           <p className="source">
             <span>Source: </span>
