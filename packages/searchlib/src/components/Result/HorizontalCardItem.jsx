@@ -7,6 +7,7 @@ import { withSearch } from '@elastic/react-search-ui';
 import { DateTime, StringList } from '@eeacms/search/components';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
+import { SegmentedBreadcrumb } from '@eeacms/search/components';
 
 export const ExternalLink = (props) => {
   return (
@@ -103,6 +104,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               </Button>
             )}
           </p>
+          <SegmentedBreadcrumb href={result.href} />
         </div>
       </div>
       <div className="col-right">
