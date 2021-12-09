@@ -166,6 +166,10 @@ export class ResultModel extends BasicModel {
     return this._result.about?.raw;
   }
 
+  get source() {
+    return this._result.cluster_name?.raw;
+  }
+
   get title() {
     if (!this._result?.title) {
       console.log('result', this._result);
