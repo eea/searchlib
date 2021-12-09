@@ -11,7 +11,7 @@ import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardIte
 import { Image } from 'semantic-ui-react';
 import { useResult } from '@eeacms/search/lib/hocs';
 
-const FilterResultEntry = (props) => {
+const MoreLikeThisEntry = (props) => {
   const { value } = props;
   const [result] = useAtom(moreLikeThisAtom);
   const item = useResult(result, value);
@@ -52,4 +52,4 @@ const FilterResultEntry = (props) => {
   );
 };
 
-export default FilterResultEntry;
+export default MoreLikeThisEntry;

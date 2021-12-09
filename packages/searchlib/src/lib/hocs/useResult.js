@@ -30,7 +30,9 @@ export const useResult = (initial, id) => {
 
     const doIt = async () => {
       const dest = new URL(appConfig.host);
-      dest.pathname = `${appConfig.elastic_index}/_doc/${id}`;
+      dest.pathname = `${appConfig.elastic_index}/_doc/${encodeURIComponent(
+        id,
+      )}`;
       const resp = await runRequest({}, appConfig, dest, 'get');
       const result = buildResult(resp.body, appConfig, registry);
       setDocData(result);
