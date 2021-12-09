@@ -77,6 +77,11 @@ export default {
           title: 'Languages',
           facetField: 'language',
         },
+        {
+          id: 'website',
+          title: 'Sources',
+          facetField: 'cluster_name',
+        },
       ],
     },
   },

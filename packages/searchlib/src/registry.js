@@ -20,7 +20,7 @@ import {
   RightColumnLayout,
   TableRowItem,
   TableView,
-  FilterResultEntry,
+  MoreLikeThisEntry,
   MultiCheckboxFacet,
   ModalFacetWrapper,
   FilterAsideLayout,
@@ -156,8 +156,8 @@ const config = {
     RightColumnLayout: {
       component: RightColumnLayout,
     },
-    FilterResultEntry: {
-      component: FilterResultEntry,
+    MoreLikeThisEntry: {
+      component: MoreLikeThisEntry,
     },
     SimpleSearchInput: {
       component: SimpleSearchInput,
@@ -287,7 +287,7 @@ const config = {
           fields: ['title', 'text'],
           factories: {
             registryConfig: 'MoreLikeThis',
-            filterList: 'FilterResultEntry',
+            filterList: 'MoreLikeThisEntry',
           },
         },
         // lessLikeThis: {

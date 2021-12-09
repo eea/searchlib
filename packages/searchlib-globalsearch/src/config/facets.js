@@ -79,7 +79,7 @@ const facets = [
     field: 'cluster_name',
     isFilterable: false,
     isMulti: true,
-    label: 'Websites',
+    label: 'Sources',
     wrapper: 'ModalFacetWrapper',
     factory: 'MultiTermListFacet',
   }),

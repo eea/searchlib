@@ -22,7 +22,7 @@ import RangeSlider from './UI/RangeSlider';
 import PagingInfo from './PagingInfo/PagingInfo';
 import SortingDropdown from './Sorting/SortingDropdown';
 import SortingDropdownWithLabel from './Sorting/SortingDropdownWithLabel';
-import FilterResultEntry from './FilterList/FilterResultEntry';
+import MoreLikeThisEntry from './FilterList/MoreLikeThisEntry';
 import Resizable from './UI/Resizable';
 import AnswerBox from './AnswerBox/AnswerBox';
 import DownloadButton from './DownloadButton/DownloadButton';
@@ -57,7 +57,7 @@ export {
   PagingInfo,
   SortingDropdown,
   SortingDropdownWithLabel,
-  FilterResultEntry,
+  MoreLikeThisEntry,
   Resizable,
   AnswerBox,
   DownloadButton,

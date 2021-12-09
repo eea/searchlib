@@ -67,7 +67,7 @@ export default {
     clusterIcons,
     iconsDicts: {
       'Content types': clusterIconsDict,
-      Websites: {
+      Sources: {
         type: 'images',
         fallback: 'website-logo.png',
         'EEA Website (www.eea.europa.eu)': 'eea-logo.png',
