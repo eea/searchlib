@@ -1,17 +1,19 @@
 import React from 'react';
 import Filter from './Filter';
 import { Divider, Segment, Accordion, Button, Icon } from 'semantic-ui-react';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { isLandingPageAtom } from './../SearchView/state';
 
 const InlineFilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = useSearchContext();
-  const { defaultFilterValues } = props;
+
   const [isOpened, setIsOpened] = React.useState(false);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const [isLandingPage] = useAtom(isLandingPageAtom);
+  const { appConfig } = useAppConfig();
+  const { facets } = appConfig;
   const hideFilters = true; // TODO Show/Hide filters + Reset + Sort + Display - in the same component
 
   return !isLandingPage ? (
@@ -50,14 +52,25 @@ const InlineFilterList = (props) => {
                   e.stopPropagation();
                   e.preventDefault();
                   clearFilters();
-                  Object.keys(defaultFilterValues).map((filter, index) => {
-                    setFilter(
-                      filter,
-                      defaultFilterValues[filter]?.value,
-                      defaultFilterValues[filter]?.type,
-                    );
-                    return true;
+
+                  facets.forEach((facet) => {
+                    if (facet.default) {
+                      setFilter(
+                        facet.field,
+                        facet.default.values,
+                        facet.default.type || 'any',
+                      );
+                    }
                   });
+
+                  // Object.keys(defaultFilterValues).map((filter, index) => {
+                  //   setFilter(
+                  //     filter,
+                  //     defaultFilterValues[filter]?.value,
+                  //     defaultFilterValues[filter]?.type,
+                  //   );
+                  //   return true;
+                  // });
                 }}
               >
                 Reset

@@ -91,6 +91,7 @@ const facets = [
     label: 'Sources',
     wrapper: 'ModalFacetWrapper',
     factory: 'MultiTermListFacet',
+    filterListComponent: 'WebsiteFilterListComponent',
   }),
   histogramFacet({
     wrapper: 'ModalFacetWrapper',

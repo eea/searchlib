@@ -1,5 +1,6 @@
 import { suiFacet, mergeConfig } from '@eeacms/search';
 import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './../utils';
+import WebsiteFilterListComponent from './../components/WebsiteFilterListComponent';
 import contentTypeNormalize from './json/contentTypeNormalize.json';
 import globalSearchConfig from './global-search-config.js';
 
@@ -63,6 +64,9 @@ export default function install(config) {
   config.resolve.getGlobalsearchThumbUrl = getGlobalsearchThumbUrl(
     contentTypeNormalize,
   );
+  config.resolve.WebsiteFilterListComponent = {
+    component: WebsiteFilterListComponent,
+  };
 
   // config.resolve.LandingPage = { component: LandingPage };
 
