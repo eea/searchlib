@@ -10,7 +10,6 @@ const truthy = (val) => {
 
 export const BooleanFacetComponent = (props) => {
   const {
-    // addFilter,
     setFilter,
     filters,
     removeFilter,
@@ -39,13 +38,5 @@ export const BooleanFacetComponent = (props) => {
     </div>
   );
 };
-
-// import { withSearch } from '@elastic/react-search-ui';
-// const Facet = withSearch(({ filters, addFilter, removeFilter, setFilter }) => ({
-//   filters,
-//   addFilter,
-//   removeFilter,
-//   setFilter,
-// }))(BooleanFacetComponent);
 
 export default BooleanFacetComponent;

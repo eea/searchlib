@@ -16,6 +16,15 @@ const facets = [
     isMulti: true,
     label: 'More like this',
     showInFacetsList: false,
+    filterListComponent: 'MoreLikeThisEntry',
+
+    // registryConfig: 'MoreLikeThis',
+    // moreLikeThis: {
+    //   enabled: true,
+    //   fields: ['title', 'text'],
+    //   factories: {
+    //   },
+    // },
   }),
   multiTermFacet({
     field: 'topic',
@@ -23,9 +32,9 @@ const facets = [
     isMulti: true,
     label: 'Topics',
     factory: 'MultiTermListFacet',
-    // factory: 'sui.Facet',
     wrapper: 'ModalFacetWrapper',
     show: 10000,
+    // factory: 'sui.Facet',
   }),
   multiTermFacet({
     field: 'spatial',
@@ -167,6 +176,10 @@ const facets = [
       //        { to: -0.0001, key: 'Unknown' },
     ],
     factory: 'ModalFixedRangeFacet',
+    default: {
+      value: { name: 'All', rangeType: 'fixed' },
+      type: 'any',
+    },
   }),
   multiTermFacet({
     wrapper: 'ModalFacetWrapper',
@@ -174,25 +187,35 @@ const facets = [
     isFilterable: false,
     isMulti: true,
     label: 'Language',
-    defaultValues: ['en'],
+    default: {
+      values: ['en'],
+      type: 'any',
+    },
     factory: 'MultiTermListFacet',
   }),
   booleanFacet(() => ({
-    field: 'Include archived content',
+    field: 'IncludeArchived',
     label: 'Include archived content',
+    id: 'archived-facet',
     showInFacetsList: false,
+    showInSecondaryFacetsList: true,
+
+    // we want this to be applied by default
+    // when the facet is checked, then apply the `on` key:
     off: {
       constant_score: {
         filter: {
           bool: {
             should: [
               { bool: { must_not: { exists: { field: 'expires' } } } },
+              // Functions should be supported in the buildFilters
               { range: { expires: { gte: getTodayWithTime() } } },
             ],
           },
         },
       },
     },
+    on: null,
   })),
 
   /*    multiTermFacet({

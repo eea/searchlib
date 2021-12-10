@@ -5,6 +5,10 @@
 
 import { isFunction } from '@eeacms/search/utils';
 
+const defaults = {
+  filterListComponent: 'FilterResultEntry',
+};
+
 export const histogramFacet = ({
   field,
   label,
@@ -12,6 +16,7 @@ export const histogramFacet = ({
   ...params
 }) => {
   return {
+    ...defaults,
     field,
     factory: 'HistogramFacet',
     label: label || field,
@@ -30,6 +35,7 @@ export const suiFacet = ({
   ...params
 }) => {
   return {
+    ...defaults,
     field,
     factory: 'searchui.Facet',
     label: label || field,
@@ -49,6 +55,7 @@ export const suiRangeFacet = ({
   ...params
 }) => {
   return {
+    ...defaults,
     field,
     factory: 'searchui.RangeFacet',
     label: label || field,
@@ -67,6 +74,7 @@ export const multiTermFacet = ({
   ...params
 }) => {
   return {
+    ...defaults,
     field,
     factory: 'MultiTermFacet',
     label: label || field,
@@ -84,6 +92,7 @@ export const booleanFacet = (options) => {
     : options;
 
   return {
+    ...defaults,
     field,
     label,
     on,
@@ -102,6 +111,7 @@ export const fixedRangeFacet = ({
   ...params
 }) => {
   return {
+    ...defaults,
     field,
     factory: 'FixedRangeFacet',
     label: label || field,

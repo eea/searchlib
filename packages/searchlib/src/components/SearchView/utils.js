@@ -28,11 +28,12 @@ export function isObject(object) {
 export const normalizeDefaultFilters = (filters) => {
   let normalized = {};
   Object.keys(filters).forEach((key) => {
-    normalized[key] = {};
-    normalized[key].type = filters[key].type;
-    normalized[key].values = Array.isArray(filters[key].value)
-      ? filters[key].value.sort()
-      : [filters[key].value];
+    normalized[key] = {
+      type: filters[key].type,
+      values: Array.isArray(filters[key].value)
+        ? filters[key].value.sort()
+        : [filters[key].value],
+    };
   });
   return normalized;
 };
@@ -40,11 +41,12 @@ export const normalizeDefaultFilters = (filters) => {
 export const normalizeFilters = (filters) => {
   let normalized = {};
   filters.forEach((filter) => {
-    normalized[filter.field] = {};
-    normalized[filter.field].type = filter.type;
-    normalized[filter.field].values = Array.isArray(filter.values)
-      ? filter.values.sort()
-      : [filter.values];
+    normalized[filter.field] = {
+      type: filter.type,
+      values: Array.isArray(filter.values)
+        ? filter.values.sort()
+        : [filter.values],
+    };
   });
   return normalized;
 };
@@ -55,24 +57,12 @@ export const checkInteracted = ({
   appConfig,
   wasSearched,
 }) => {
-  const { defaultFilters = {} } = appConfig;
-  const normalizedDefaultFilters = normalizeDefaultFilters(defaultFilters);
+  const { defaultFilterValues = {} } = appConfig;
+  const normalizedDefaultFilters = normalizeDefaultFilters(defaultFilterValues);
   const normalizedFilters = normalizeFilters(filters);
   const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
-
-  //const wasInteracted = filters.length > 0 || searchTerm;
-  // console.log({
-  //   filtersEqual,
-  //   normalizedDefaultFilters,
-  //   normalizedFilters,
-  //   defaultFilters,
-  //   filters,
-  // });
 
   return wasSearched
     ? searchedTerm || !filtersEqual
     : !(filters.length === 0 || filtersEqual);
-  // filters.length === 0 && !searchedTerm && !wasSearched
-  // ? false
-  // : !filtersEqual || searchedTerm;
 };

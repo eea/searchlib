@@ -8,7 +8,7 @@ import { isLandingPageAtom } from './../SearchView/state';
 
 const InlineFilterList = (props) => {
   const { filters, clearFilters, setFilter, removeFilter } = useSearchContext();
-  const { defaultFilters } = props;
+  const { defaultFilterValues } = props;
   const [isOpened, setIsOpened] = React.useState(false);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const [isLandingPage] = useAtom(isLandingPageAtom);
@@ -50,11 +50,11 @@ const InlineFilterList = (props) => {
                   e.stopPropagation();
                   e.preventDefault();
                   clearFilters();
-                  Object.keys(defaultFilters).map((filter, index) => {
+                  Object.keys(defaultFilterValues).map((filter, index) => {
                     setFilter(
                       filter,
-                      defaultFilters[filter]?.value,
-                      defaultFilters[filter]?.type,
+                      defaultFilterValues[filter]?.value,
+                      defaultFilterValues[filter]?.type,
                     );
                     return true;
                   });

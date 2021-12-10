@@ -30,6 +30,7 @@ import SimpleSearchInput from '@eeacms/search/components/SearchInput/SimpleSearc
 import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import StickyFacetList from '@eeacms/search/components/Facets/StickyFacetList';
+import SecondaryFacetsList from '@eeacms/search/components/Facets/SecondaryFacetsList';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -192,6 +193,15 @@ const config = {
     DefaultFacetsList: {
       component: ({ children }) => <div className="facets">{children}</div>,
     },
+    SecondaryFacetsList: {
+      component: SecondaryFacetsList,
+    },
+
+    FilterResultEntry: {
+      component: ({ value }) => (
+        <div className="filterResultEntry">{value}</div>
+      ),
+    },
 
     ResultModel,
     highlightQueryBuilder,
@@ -236,7 +246,7 @@ const config = {
       // },
 
       facets: [], // interactive filtering components (facets)
-      defaultFilters: {}, // filters that are applied by default
+      defaultFilterValues: {}, // filters that are applied by default
 
       enableNLP: false, // enables NLP capabilities
       nlp: {
@@ -280,25 +290,26 @@ const config = {
           'https://react.semantic-ui.com/images/wireframe/white-image.png',
       },
 
-      filters: {
-        // registration of filter options
-        moreLikeThis: {
-          enabled: true,
-          fields: ['title', 'text'],
-          factories: {
-            registryConfig: 'MoreLikeThis',
-            filterList: 'MoreLikeThisEntry',
-          },
-        },
-        // lessLikeThis: {
-        //   enabled: true,
-        //   fields: ['title', 'text'],
-        //   factories: {
-        //     registryConfig: 'LessLikeThis',
-        //     filterList: 'FilterResultEntry',
-        //   },
-        // },
-      },
+      // Deprecated. No need for this, use facets with showInFacetsList: false
+      // filters: {
+      //   // registration of filter options
+      //   // moreLikeThis: {
+      //   //   enabled: true,
+      //   //   fields: ['title', 'text'],
+      //   //   factories: {
+      //   //     registryConfig: 'MoreLikeThis',
+      //   //     filterList: 'MoreLikeThisEntry',
+      //   //   },
+      //   // },
+      //   // lessLikeThis: {
+      //   //   enabled: true,
+      //   //   fields: ['title', 'text'],
+      //   //   factories: {
+      //   //     registryConfig: 'LessLikeThis',
+      //   //     filterList: 'FilterResultEntry',
+      //   //   },
+      //   // },
+      // },
 
       autocomplete: {
         include_searchterm: true,

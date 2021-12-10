@@ -10,10 +10,9 @@ import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
 import { useViews } from '@eeacms/search/lib/hocs';
-import IncludeArchivedFacet from '@eeacms/search/components/Facets/Connected/IncludeArchivedFacet';
 
 import registry from '@eeacms/search/registry';
-import { AnswerBox } from '@eeacms/search/components';
+import { AnswerBox, Component } from '@eeacms/search/components';
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, children, filters, searchTerm, current } = props;
@@ -43,7 +42,7 @@ export const FilterAsideContentView = (props) => {
 
       <div className={`results-layout ${layoutMode}`}>
         <div className="above-results">
-          <IncludeArchivedFacet />
+          <Component factoryName="SecondaryFacetsList" {...props} />
           <Sorting
             label={'Sort by '}
             sortOptions={sortOptions}

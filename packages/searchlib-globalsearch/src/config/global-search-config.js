@@ -7,6 +7,11 @@ import query from './query';
 import filters from './filters';
 import download from './download';
 
+import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
+import spatialWhitelist from './json/spatialWhitelist.json';
+import placesBlacklist from './json/placesBlacklist.json';
+import typesWhitelist from './json/typesWhitelist.json';
+
 const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
@@ -23,6 +28,22 @@ const globalSearchConfig = {
   ...filters,
   ...download,
   ...clusterParams,
+
+  // these are used to "clean" the values in the results.
+  field_filters: {
+    type: {
+      whitelist: typesWhitelist,
+    },
+    objectProvides: {
+      whitelist: objectProvidesWhitelist,
+    },
+    spatial: {
+      whitelist: spatialWhitelist,
+    },
+    places: {
+      blacklist: placesBlacklist,
+    },
+  },
 
   highlight: {
     queryParams: {

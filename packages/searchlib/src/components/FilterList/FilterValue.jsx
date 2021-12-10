@@ -30,7 +30,8 @@ function valueToString(value) {
 
 const FilterValue = (props) => {
   const { value, field, appConfig } = props;
-  const factoryName = appConfig.filters[field]?.factories?.filterList;
+  const factoryName = appConfig.facets.find((facet) => facet.field === field)
+    .filterListComponent;
   if (factoryName) {
     return <Component factoryName={factoryName} {...props} />;
   }

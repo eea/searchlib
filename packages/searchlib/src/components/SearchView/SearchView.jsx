@@ -39,7 +39,7 @@ export const SearchView = (props) => {
   // const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
-  const { defaultFilters } = appConfig;
+  const { defaultFilterValues } = appConfig;
   // const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
   const wasInteracted = checkInteracted({
     wasSearched,
@@ -70,10 +70,10 @@ export const SearchView = (props) => {
         setSort(state.sortField, state.sortDirection);
       }
 
-      if (defaultFilters) {
+      if (defaultFilterValues) {
         const presetFilters = state?.filters?.map((filter) => filter.field);
-        Object.keys(defaultFilters).forEach((k) => {
-          const { value, type = 'any' } = defaultFilters[k];
+        Object.keys(defaultFilterValues).forEach((k) => {
+          const { value, type = 'any' } = defaultFilterValues[k];
           if (!presetFilters || presetFilters?.indexOf(k) === -1) {
             addFilter(k, value, type);
           }
@@ -90,7 +90,7 @@ export const SearchView = (props) => {
     setCurrent,
     setSort,
     InitialViewComponent,
-    defaultFilters,
+    defaultFilterValues,
   ]);
 
   return (

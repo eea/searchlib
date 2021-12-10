@@ -13,83 +13,45 @@ const isFunction = (value) =>
  *
  */
 export function buildRequestFilter(filters, config) {
-  const boolFilters = (config.facets || []).reduce(
-    (acc, facet) =>
-      filters.find((filter) => filter.field === facet.field)
-        ? [
-            ...acc,
-            {
-              field: facet.field,
-              values: [false],
-            },
-          ]
-        : acc,
-    [],
+  if (!(filters.length || config.permanentFilters?.length)) return;
+
+  // a field:value map
+  const _fieldToFilterValueMap = Object.assign(
+    {},
+    ...filters.map((filter) => ({ [filter.field]: filter })),
   );
 
-  if (
-    !(filters.length || config.permanentFilters?.length || boolFilters.length)
-  )
-    return;
-
-  const facetsMap = Object.assign(
+  const _configuredFacets = Object.assign(
     {},
-    ...config.facets?.map((facet) => {
-      return { [facet.field]: registry.resolve[facet.factory] };
+    ...config.facets?.map((facetConfig) => {
+      return {
+        [facetConfig.field]: {
+          ...registry.resolve[facetConfig.factory],
+          ...facetConfig,
+          // value: registry.resolve[facetConfig.factory].buildFilter
+        },
+      };
     }),
   );
 
-  const appliedFilters = filters.reduce((acc, filter) => {
-    if (Object.keys(facetsMap).includes(filter.field)) {
-      const f = facetsMap[filter.field].buildFilter(filter, config);
-      if (f) {
-        return [...acc, f];
-      }
-    }
-
-    if (Object.keys(config.filters).includes(filter.field)) {
-      const { registryConfig } = config.filters[filter.field].factories;
-      const { buildFilter } = registry.resolve[registryConfig];
-      const f = buildFilter(filter, config);
-      return [...acc, f];
-    }
-
-    return acc;
-  }, []);
-
-  const appliedFilterIds = appliedFilters.map((f) => f.field);
-
-  // apply default values from configured filters;
-  const appliedFiltersWithDefaults = config.facets.reduce((acc, facet) => {
-    if (!appliedFilterIds.includes(facet.field) && facet.defaultValues) {
-      const filterValue = facetsMap[facet.field].buildFilter(
-        {
-          ...facet,
-          values: facet.defaultValues,
-        },
-        config,
-      );
-      if (filterValue) return [...acc, filterValue];
-    }
-    return acc;
-  }, appliedFilters);
-
-  (config.permanentFilters || []).forEach((f) =>
-    appliedFiltersWithDefaults.push(isFunction(f) ? f() : f),
-  );
-
-  boolFilters.forEach((filter) =>
-    appliedFiltersWithDefaults.push(
-      facetsMap[filter.field].buildFilter(filter, config),
+  const requestFilters = [
+    ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
+      facetConfig.buildFilter(
+        _fieldToFilterValueMap[fieldName] ??
+          (facetConfig.defaultValue
+            ? {
+                field: fieldName,
+                ...facetConfig.default,
+              }
+            : null),
+        facetConfig,
+      ),
     ),
-  );
+    ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
+  ].filter((f) => !!f);
 
-  const res = appliedFiltersWithDefaults.length
-    ? appliedFiltersWithDefaults.filter((f) => !!f)
-    : null;
-
-  console.log('final', res);
-  return res;
+  console.log('requestFilters', requestFilters);
+  return requestFilters;
 }
 
 export function getTermFilterValue(field, fieldValue) {
@@ -107,6 +69,9 @@ export function getTermFilterValue(field, fieldValue) {
 
 export function getTermFilter(filter) {
   // Construct ES DSL query for term facets
+
+  if (!filter) return;
+  // console.log('termfilter', filter);
 
   if (filter.type === 'any') {
     return {
@@ -130,6 +95,8 @@ export function getTermFilter(filter) {
 
 export function getRangeFilter(filter) {
   // Construct ES DSL query for range facets
+  if (!filter) return;
+
   if (filter.type === 'any') {
     return {
       bool: {
@@ -164,7 +131,9 @@ export function getHistogramFilter(filter) {
   return getRangeFilter(filter);
 }
 
-export function getBooleanFilter(filter, config) {
-  const facet = config.facets.find(({ field }) => field === filter.field);
-  return filter.values[0] ? facet.on : facet.off;
+export function getBooleanFilter(filter, facetConfig) {
+  const value = filter ? filter.values[0] : false;
+
+  const res = value ? facetConfig.on : facetConfig.off;
+  return res;
 }
