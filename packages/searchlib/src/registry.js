@@ -55,6 +55,7 @@ import {
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
+import { valueToString } from './lib/utils';
 
 const config = {
   resolve: {
@@ -199,7 +200,7 @@ const config = {
 
     FilterResultEntry: {
       component: ({ value }) => (
-        <div className="filterResultEntry">{value}</div>
+        <div className="filterResultEntry">{valueToString(value)}</div>
       ),
     },
 

@@ -163,3 +163,29 @@ export function deepEqual(object1, object2) {
 
   return true;
 }
+
+export function valueToString(value) {
+  switch (typeof value) {
+    case 'string':
+      return value;
+    case 'object':
+      if (value.type === 'range') {
+        return `${valueToString(value.from)} - ${valueToString(value.to)}`;
+      }
+      if (value.rangeType === 'fixed') {
+        return valueToString(value.name);
+      }
+      break;
+    case 'boolean':
+      return value;
+    case 'undefined':
+      return '';
+    default:
+      break;
+  }
+
+  // eslint-disable-next-line no-console
+  console.warn('Unknown value type', value);
+
+  return value.toString();
+}
