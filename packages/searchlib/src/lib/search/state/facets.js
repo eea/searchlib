@@ -13,6 +13,7 @@ export default function buildStateFacets(aggregations, config) {
     {},
     ...facets.map((facet) => {
       const { getValue } = facetsMap[facet.field];
+      if (!getValue) return {};
       const value = getValue({
         aggregations,
         fieldName: facet.field,

@@ -18,18 +18,4 @@ export default {
       },
     }),
   ],
-
-  // default filter values
-  // TODO: this needs to be removed and the configuration plugged into each of
-  // the facets
-  // defaultFilterValues: {
-  // language: {
-  //   value: 'en',
-  //   type: 'any',
-  // },
-  // readingTime: {
-  //   value: { name: 'All', rangeType: 'fixed' },
-  //   type: 'any',
-  // },
-  // },
 };

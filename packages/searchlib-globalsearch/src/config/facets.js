@@ -13,18 +13,19 @@ const facets = [
   multiTermFacet({
     field: 'moreLikeThis',
     isFilterable: true,
-    isMulti: true,
+    isMulti: false,
     label: 'More like this',
     showInFacetsList: false,
     filterListComponent: 'MoreLikeThisEntry',
+    factory: 'MoreLikeThis',
+    condition: 'like',
+    queryParams: {
+      fields: ['title', 'text'],
+      min_term_freq: 1,
+      max_query_terms: 12,
+    },
 
     // registryConfig: 'MoreLikeThis',
-    // moreLikeThis: {
-    //   enabled: true,
-    //   fields: ['title', 'text'],
-    //   factories: {
-    //   },
-    // },
   }),
   multiTermFacet({
     field: 'topic',
@@ -178,7 +179,7 @@ const facets = [
     ],
     factory: 'ModalFixedRangeFacet',
     default: {
-      value: { name: 'All', rangeType: 'fixed' },
+      values: [{ name: 'All', rangeType: 'fixed' }],
       type: 'any',
     },
   }),
@@ -230,3 +231,16 @@ const facets = [
 export default {
   facets,
 };
+// default filter values
+// TODO: this needs to be removed and the configuration plugged into each of
+// the facets
+// defaultFilterValues: {
+// language: {
+//   value: 'en',
+//   type: 'any',
+// },
+// readingTime: {
+//   value: { name: 'All', rangeType: 'fixed' },
+//   type: 'any',
+// },
+// },

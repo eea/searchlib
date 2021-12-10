@@ -2,12 +2,12 @@ import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
 import { Icon, Image, Label, Button } from 'semantic-ui-react';
-import { withSearch } from '@elastic/react-search-ui';
 
 import { DateTime, StringList } from '@eeacms/search/components';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const ExternalLink = (props) => {
   return (
@@ -23,11 +23,10 @@ export const ExternalLink = (props) => {
   );
 };
 
-const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
-  setFilter,
-  removeFilter,
-}))((props) => {
-  const { result, setFilter, removeFilter, showControls = true } = props;
+const CardItem = (props) => {
+  const { result, showControls = true } = props;
+  const context = useSearchContext();
+  const { setFilter, removeFilter, setSearchTerm } = context;
 
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
   const [, setOpenFacets] = useAtom(showFacetsAsideAtom);
@@ -98,6 +97,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
                 size="mini"
                 onClick={() => {
                   removeFilter('lessLikeThis');
+                  setSearchTerm('');
                   setMoreLikeThis(result);
                   setFilter('moreLikeThis', result._original._id, 'none');
                   setOpenFacets(true);
@@ -125,8 +125,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
       </div>
     </div>
   );
-});
-
-const CardItem = (props) => <CardItemComponent {...props} />;
+};
 
 export default CardItem;

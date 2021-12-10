@@ -7,7 +7,7 @@ export const buildAggregationsQuery = (config) => {
     {},
     ...facets.map((facet) => {
       const { buildRequest } = registry.resolve[facet.factory];
-      return buildRequest(facet, config, true); // include the aggregations
+      return buildRequest ? buildRequest(facet, config, true) : {}; // include the aggregations
     }),
   );
 

@@ -61,6 +61,7 @@ const config = {
   resolve: {
     'searchui.Facet': {
       component: MultiCheckboxFacet,
+
       // the facet aggregation part
       buildRequest: buildTermFacetAggregationRequest,
 
@@ -113,10 +114,10 @@ const config = {
       getValue: getRangeFacet,
     },
     MoreLikeThis: {
-      buildFilter: buildMLTFilter('like'),
+      buildFilter: buildMLTFilter, // ('like'),
     },
     LessLikeThis: {
-      buildFilter: buildMLTFilter('unlike'),
+      buildFilter: buildMLTFilter, // ('unlike'),
     },
     'Item.Group': {
       component: Item.Group,
