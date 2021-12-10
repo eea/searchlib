@@ -1,44 +1,28 @@
 import {
-  // histogramFacet,
-  // suiFacet,
-  // suiRangeFacet,
-  multiTermFacet,
-  mergeConfig,
-  // makeRange,
-  // booleanFacet,
-  // fixedRangeFacet,
-} from '@eeacms/search';
-
-import {
-  getTodayWithTime,
-  // getGlobalsearchThumbUrl,
-  // getGlobalsearchIconUrl,
-} from './utils';
-
-import {
-  CLMSSearchBoxView,
-  CLMSSearchInput,
-  CLMSLayout,
-  CLMSContentView,
   CLMSCardItem,
+  CLMSContentView,
+  CLMSLayout,
   CLMSModalFacetWrapper,
   CLMSMultiTermListFacet,
+  CLMSSearchBoxView,
+  CLMSSearchInput,
   CLMSSortingDropdown,
   CLMSSortingDropdownWrapper,
-  // CLMSVerticalCardsModalFacets,
 } from './components/CLMS';
-
-import { ModalFacetWrapper } from '@eeacms/search/components';
-import { Card } from 'semantic-ui-react';
-
 import {
+  buildTermFacetAggregationRequest,
   getTermFilter,
   getValueFacet,
-  buildTermFacetAggregationRequest,
 } from '@eeacms/search/lib/search';
-import FacetsList from '@eeacms/search/components/Facets/FacetsList';
+import { mergeConfig, multiTermFacet } from '@eeacms/search';
 
+import { Card } from 'semantic-ui-react';
+import FacetsList from '@eeacms/search/components/Facets/FacetsList';
+import { ModalFacetWrapper } from '@eeacms/search/components';
+import React from 'react';
+import { getTodayWithTime } from './utils';
 import globalSearchConfig from './global-search-config.js';
+
 function clmssearchui(config) {
   const baseFacet = {
     isFilterable: true,
