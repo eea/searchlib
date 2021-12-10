@@ -85,7 +85,10 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           {props.children ? props.children : <ResultContext {...props} />}
           <p className="source">
             <span>Source: </span>
-            <ExternalLink href={result.href}>{result.source}</ExternalLink>
+            <ExternalLink href={result.href}>
+              {result.source}
+              <SegmentedBreadcrumb href={result.href} short={true} />
+            </ExternalLink>
 
             {showControls && (
               <Button
@@ -104,7 +107,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
               </Button>
             )}
           </p>
-          <SegmentedBreadcrumb href={result.href} />
         </div>
       </div>
       <div className="col-right">

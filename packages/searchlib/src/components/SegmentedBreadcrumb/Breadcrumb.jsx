@@ -1,10 +1,20 @@
 import React from 'react';
 import { Breadcrumb } from 'semantic-ui-react';
 
-const URLBreadcrumb = ({ href, maxSegments = 3 }) => {
+const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
   const url = new URL(href);
   const { pathname } = url;
-  return (
+  return short ? (
+    <span className="breadcrumb">
+      {pathname
+        .split('/')
+        .filter((s) => !!s)
+        .slice(0, maxSegments)
+        .map((s) => (
+          <span key={s + '2'}> / {s}</span>
+        ))}
+    </span>
+  ) : (
     <Breadcrumb>
       <Breadcrumb.Section>{`${url.origin}`}</Breadcrumb.Section>
       {pathname
