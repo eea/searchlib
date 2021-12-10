@@ -7,6 +7,7 @@ import { FacetsList, SearchBox, AppInfo } from '@eeacms/search/components';
 import registry from '@eeacms/search/registry';
 
 import { checkInteracted } from './utils';
+import { getDefaultFilterValues } from '@eeacms/search/lib/utils';
 import { BodyContent } from './BodyContent';
 import { isLandingPageAtom } from './state';
 
@@ -39,7 +40,13 @@ export const SearchView = (props) => {
   // const itemViewProps = listingViewDef.params;
   const Layout = registry.resolve[appConfig.layoutComponent].component;
 
-  const { defaultFilterValues } = appConfig;
+  const { facets } = appConfig;
+
+  const defaultFilterValues = React.useMemo(
+    () => getDefaultFilterValues(facets),
+    [facets],
+  );
+
   // const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
   const wasInteracted = checkInteracted({
     wasSearched,
@@ -73,9 +80,9 @@ export const SearchView = (props) => {
       if (defaultFilterValues) {
         const presetFilters = state?.filters?.map((filter) => filter.field);
         Object.keys(defaultFilterValues).forEach((k) => {
-          const { value, type = 'any' } = defaultFilterValues[k];
+          const { values, type = 'any' } = defaultFilterValues[k];
           if (!presetFilters || presetFilters?.indexOf(k) === -1) {
-            addFilter(k, value, type);
+            addFilter(k, values, type);
           }
         });
       }
@@ -85,12 +92,12 @@ export const SearchView = (props) => {
     wasSearched,
     setSearchTerm,
     defaultSearchText,
+    defaultFilterValues,
     driver,
     addFilter,
     setCurrent,
     setSort,
     InitialViewComponent,
-    defaultFilterValues,
   ]);
 
   return (

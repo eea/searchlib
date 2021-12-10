@@ -28,7 +28,6 @@ export function buildRequestFilter(filters, config) {
         [facetConfig.field]: {
           ...registry.resolve[facetConfig.factory],
           ...facetConfig,
-          // value: registry.resolve[facetConfig.factory].buildFilter
         },
       };
     }),
@@ -50,7 +49,6 @@ export function buildRequestFilter(filters, config) {
     ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
   ].filter((f) => !!f);
 
-  console.log('requestFilters', requestFilters);
   return requestFilters;
 }
 

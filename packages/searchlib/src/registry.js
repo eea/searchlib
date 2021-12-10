@@ -246,7 +246,6 @@ const config = {
       // },
 
       facets: [], // interactive filtering components (facets)
-      defaultFilterValues: {}, // filters that are applied by default
 
       enableNLP: false, // enables NLP capabilities
       nlp: {
