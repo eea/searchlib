@@ -125,9 +125,7 @@ export function getRangeFilter(filter) {
   }
 }
 
-export function getHistogramFilter(filter) {
-  return getRangeFilter(filter);
-}
+export const getHistogramFilter = getRangeFilter;
 
 export function getBooleanFilter(filter, facetConfig) {
   const value = filter ? filter.values[0] : false;
