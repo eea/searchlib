@@ -8,10 +8,12 @@ import {
   DownloadButton,
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useViews } from '@eeacms/search/lib/hocs';
 
 export const DefaultContentView = (props) => {
   const { appConfig, registry } = useAppConfig();
-  const { activeViewId, setActiveViewId, children } = props;
+  const { children } = props;
+  const { activeViewId, setActiveViewId } = useViews();
   const { sortOptions, resultViews } = appConfig;
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
