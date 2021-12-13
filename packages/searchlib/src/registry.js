@@ -36,6 +36,7 @@ import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardI
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
 import FilterAsideContentView from '@eeacms/search/components/SearchView/FilterAsideContentView';
 import TilesLandingPage from '@eeacms/search/components/LandingPage/TilesLandingPage';
+import DefaultFilterValue from '@eeacms/search/components/FilterList/FilterValue';
 import { Item, Card, Menu } from 'semantic-ui-react';
 import {
   getTermFilter,
@@ -199,10 +200,8 @@ const config = {
       component: SecondaryFacetsList,
     },
 
-    FilterResultEntry: {
-      component: ({ value }) => (
-        <div className="filterResultEntry">{valueToString(value)}</div>
-      ),
+    DefaultFilterValue: {
+      component: DefaultFilterValue,
     },
 
     ResultModel,

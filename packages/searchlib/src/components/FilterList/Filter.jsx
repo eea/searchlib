@@ -1,8 +1,7 @@
 import React from 'react';
-import FilterValue from './FilterValue';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { Icon } from '@eeacms/search/components';
-import { Label, Icon as UiIcon } from 'semantic-ui-react';
+import { Component } from '@eeacms/search/components';
+import { Label } from 'semantic-ui-react';
 
 const Filter = (props) => {
   const {
@@ -20,15 +19,6 @@ const Filter = (props) => {
     ({ field }) => field === facetField,
   ) || { label: field?.trim() };
 
-  // console.log('props', props);
-  // const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
-  // const getClusterIcon = (title) => {
-  //   return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
-  // };
-  //{label === 'Content types' ? (
-  //  <Icon name={getClusterIcon(v)} />
-  //) : null}
-
   return (
     <div className={`filter-list-item ${customClass ? customClass : ''}`}>
       <div className="filter-name">
@@ -36,31 +26,22 @@ const Filter = (props) => {
       </div>
       <Label.Group>
         {values?.map((v, index) => {
-          const facetConfig =
-            appConfig.facets.find((facet) => facet.field === field) || {};
-          const { iconsFamily } = facetConfig;
-          // console.log(facetConfig, iconsFamily, v);
+          const filterValueFactoryName =
+            appConfig.facets.find((facet) => facet.field === field)
+              .filterListComponent || 'DefaultFilterValue';
           return (
-            <Label
+            <Component
               key={index}
-              onClick={() => {
-                return values.length === 1
-                  ? onClear(field)
-                  : removeFilter(field, v, type);
-              }}
-            >
-              <span className="text filterValue" title={v}>
-                {iconsFamily && <Icon family={iconsFamily} type={v} />}
-                <FilterValue
-                  value={v}
-                  field={field}
-                  type={type}
-                  appConfig={appConfig}
-                  registry={registry}
-                />
-              </span>
-              <UiIcon name="delete" />
-            </Label>
+              factoryName={filterValueFactoryName}
+              value={v}
+              values={values}
+              field={field}
+              type={type}
+              appConfig={appConfig}
+              registry={registry}
+              onClear={onClear}
+              removeFilter={removeFilter}
+            />
           );
         })}
       </Label.Group>

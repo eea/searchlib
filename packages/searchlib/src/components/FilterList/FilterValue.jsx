@@ -1,17 +1,39 @@
 import React from 'react';
-import { Component } from '@eeacms/search/components';
 import { valueToString } from '@eeacms/search/lib/utils';
+import { Label, Icon as UiIcon } from 'semantic-ui-react';
+import { Icon } from '@eeacms/search/components';
 
-// TODO: use this in StringList, unify value display
 const FilterValue = (props) => {
-  const { value, field, appConfig } = props;
-  const factoryName = appConfig.facets.find((facet) => facet.field === field)
-    .filterListComponent;
-  if (factoryName) {
-    return <Component factoryName={factoryName} {...props} />;
-  }
+  const {
+    value,
+    values,
+    field,
+    type,
+    appConfig,
+    onClear,
+    removeFilter,
+  } = props;
+  const facetConfig =
+    appConfig.facets.find((facet) => facet.field === field) || {};
+  const { iconsFamily } = facetConfig;
 
-  return valueToString(value);
+  return (
+    <Label
+      onClick={() => {
+        return values.length === 1
+          ? onClear(field)
+          : removeFilter(field, value, type);
+      }}
+    >
+      {iconsFamily && (
+        <Icon family={iconsFamily} type={value} className="facet-option-icon" />
+      )}
+      <span className="text filterValue" title={value}>
+        {valueToString(value)}
+      </span>
+      <UiIcon name="delete" />
+    </Label>
+  );
 };
 
 export default FilterValue;

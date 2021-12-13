@@ -6,7 +6,7 @@
 import { isFunction } from '@eeacms/search/utils';
 
 const defaults = {
-  filterListComponent: 'FilterResultEntry',
+  // filterListComponent: 'FilterResultEntry',
 };
 
 export const histogramFacet = ({
