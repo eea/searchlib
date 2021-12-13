@@ -5,7 +5,6 @@ import {
   Rating,
   Popup,
   Button,
-  Icon,
   // Transition,
 } from 'semantic-ui-react'; //, Accordion
 
@@ -13,7 +12,7 @@ import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { DateTime } from '@eeacms/search/components'; //, StringList
+import { Icon, DateTime } from '@eeacms/search/components'; //, StringList
 
 import AnswerBoxDetails from './AnswerBoxDetails';
 import AnswerLinksList from './AnswersLinksList';
@@ -53,7 +52,7 @@ const AnswerContext = ({ item, answerItem }) => {
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
-          <Icon name={item.clusterIcon} />
+          <Icon family="Content types" {...item.clusterIcon} />
           {item.title}
         </ExternalLink>
       </h4>

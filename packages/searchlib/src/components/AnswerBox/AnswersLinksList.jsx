@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
-import { Label, Icon } from 'semantic-ui-react'; //, Accordion
+import { Label } from 'semantic-ui-react'; //, Accordion
 
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
-import { DateTime } from '@eeacms/search/components'; //, StringList
+import { Icon, DateTime } from '@eeacms/search/components'; //, StringList
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { highlightUrl } from './utils';
 
@@ -13,7 +13,7 @@ export default ({ filtered, appConfig }) => {
 
     return (
       <div key={i} className={cx({ primary: i === 0 })}>
-        <Icon name={result.clusterIcon} />
+        <Icon family="Content types" {...result.clusterIcon} />
         <ExternalLink href={highlightUrl(result.href, item.answer)}>
           {result.title}
         </ExternalLink>{' '}

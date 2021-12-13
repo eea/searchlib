@@ -33,6 +33,8 @@ const CardItem = (props) => {
 
   const [hovered, setHovered] = React.useState(false);
 
+  // console.log('result', result.metaTypes, result._result);
+
   let metaType = result.metaTypes || '';
   if (metaType.length === 0) {
     metaType = 'Others';
