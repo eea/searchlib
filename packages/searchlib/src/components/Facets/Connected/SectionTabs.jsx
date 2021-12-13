@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
+import { Icon } from '@eeacms/search/components';
 import { useAtom } from 'jotai';
 
 import {
@@ -24,7 +25,6 @@ const SectionTabs = (props) => {
   const facetField = contentSectionsParams.sectionFacetsField;
 
   const sectionOrder = contentSectionsParams.sections.map(({ name }) => name);
-  // console.log(contentSectionsParams);
 
   let sections = facets?.[facetField]?.[0]?.data || [];
   const activeFilter = filters.find(({ field }) => field === facetField) || {};
@@ -32,11 +32,6 @@ const SectionTabs = (props) => {
   if (!Array.isArray(activeValues)) {
     activeValues = [activeValues];
   }
-
-  sections = sections.map((section) => {
-    section.icon = contentSectionsParams.icons[section.value];
-    return section;
-  });
 
   const sectionMapping = Object.assign(
     {},
@@ -49,7 +44,6 @@ const SectionTabs = (props) => {
     })?.[0]?.count || sections.reduce((acc, { count }) => acc + count, 0);
 
   sections = sections.filter((section) => section.value !== '_all_');
-  // console.log('sections', sections);
   sections.sort((s1, s2) =>
     cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
   );
@@ -65,7 +59,7 @@ const SectionTabs = (props) => {
       >
         {`All (${allCount})`}
       </Menu.Item>
-      {sections.map(({ value, count, icon }) => (
+      {sections.map(({ value, count }) => (
         <Menu.Item
           key={value}
           active={activeValues.includes(value)}
@@ -76,7 +70,7 @@ const SectionTabs = (props) => {
             );
           }}
         >
-          {icon !== undefined && <Icon name={icon} />}
+          <Icon type={value} family="Content types" />
           <span className="title">{value}</span>
           <span className="count">({count})</span>
         </Menu.Item>

@@ -147,19 +147,18 @@ export class ResultModel extends BasicModel {
   }
 
   get clusterIcon() {
-    const clusterIcons = this.appConfig.contentUtilsParams.clusterIcons;
-    const getClusterIcon = (title) => {
-      return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
-    };
-    return getClusterIcon(this._result.objectProvides?.raw);
+    const clusterIcons = this.appConfig.icons['Content types'];
+    const type = this._result.objectProvides?.raw;
+    const icon = clusterIcons[type] || clusterIcons.fallback;
+    return icon;
   }
 
   get clusterName() {
-    const clusterIcons = this.appConfig.contentUtilsParams.clusterIcons;
-    const getClusterName = (title) => {
-      return clusterIcons[title]?.cluster || 'Others';
-    };
-    return getClusterName(this._result.objectProvides?.raw);
+    return (
+      this.appConfig.contentSectionsParams.clusterMapping[
+        this._result.objectProvides?.raw
+      ] || 'Others'
+    );
   }
 
   get href() {

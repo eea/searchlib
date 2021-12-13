@@ -248,6 +248,13 @@ const config = {
       // },
 
       facets: [], // interactive filtering components (facets)
+      icons: {
+        default: {
+          // a registry of icons. An icon is like:
+          // { name: 'some sui icon identifier', ...extraprops}
+          // or: {url: 'http://webpack-resolved-path', ...extraprops}
+        },
+      },
 
       enableNLP: false, // enables NLP capabilities
       nlp: {

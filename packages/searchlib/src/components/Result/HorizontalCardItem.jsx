@@ -1,9 +1,9 @@
 import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
-import { Icon, Image, Label, Button } from 'semantic-ui-react';
+import { Image, Label, Button } from 'semantic-ui-react';
 
-import { DateTime, StringList } from '@eeacms/search/components';
+import { Icon, DateTime, StringList } from '@eeacms/search/components';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
@@ -50,7 +50,7 @@ const CardItem = (props) => {
             <DateTime format="DATE_MED" value={result.issued} />
           </span>
           <span className="cluster-icon">
-            <Icon name={result.clusterIcon} />
+            <Icon {...result.clusterIcon} />
           </span>
           <span className="tags">
             <StringList value={result.clusterName} />

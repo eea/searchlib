@@ -1,9 +1,8 @@
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { ToggleSort } from '@eeacms/search/components';
+import { ToggleSort, Icon } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Checkbox, Button, Image } from 'semantic-ui-react'; // , Header
+import { Checkbox, Button } from 'semantic-ui-react'; // , Header
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
@@ -13,29 +12,6 @@ function getFilterValueDisplay(filterValue) {
   return String(filterValue);
 }
 
-const FacetOptionIcon = (props) => {
-  const { icons, value } = props;
-
-  const getIcon = (title) => {
-    return icons[title] || icons.fallback;
-  };
-  const iconType = icons.type || 'icons';
-
-  if (iconType === 'icons') {
-    return <Icon name={getIcon(value)} />;
-  }
-
-  if (iconType === 'images') {
-    // WIP, TODO use this: return <LogoImage image={getIcon(value)} />;
-    return (
-      <Image
-        className="facet-option-icon"
-        src={require('./../images/' + getIcon(value))}
-      />
-    );
-  }
-};
-
 const FacetOptions = (props) => {
   const {
     sortedOptions,
@@ -44,12 +20,9 @@ const FacetOptions = (props) => {
     sorting,
     onSelect,
     onRemove,
-    label,
+    iconsFamily,
   } = props;
-  const { appConfig } = useAppConfig();
-
-  const icons = appConfig.contentUtilsParams.iconsDicts[label];
-  const hasIcons = icons !== undefined;
+  console.log(props);
 
   let isGroupedByLetters = false;
   if (Object.keys(groupedOptionsByLetters).length > 0) {
@@ -103,9 +76,13 @@ const FacetOptions = (props) => {
                             : onSelect(option.value)
                         }
                       >
-                        {hasIcons ? (
-                          <FacetOptionIcon icons={icons} value={option.value} />
-                        ) : null}
+                        {iconsFamily && (
+                          <Icon
+                            family={iconsFamily}
+                            type={option.value}
+                            className="facet-option-icon"
+                          />
+                        )}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
                         </span>
@@ -165,9 +142,13 @@ const FacetOptions = (props) => {
                             : onSelect(option.value)
                         }
                       >
-                        {hasIcons ? (
-                          <FacetOptionIcon icons={icons} value={option.value} />
-                        ) : null}
+                        {iconsFamily && (
+                          <Icon
+                            family={iconsFamily}
+                            type={option.value}
+                            className="facet-option-icon"
+                          />
+                        )}
                         <span className="title">
                           {getFilterValueDisplay(option.value)}
                         </span>
@@ -197,9 +178,13 @@ const FacetOptions = (props) => {
                 checked ? onRemove(option.value) : onSelect(option.value)
               }
             >
-              {hasIcons ? (
-                <FacetOptionIcon icons={icons} value={option.value} />
-              ) : null}
+              {iconsFamily && (
+                <Icon
+                  family={iconsFamily}
+                  type={option.value}
+                  className="facet-option-icon"
+                />
+              )}
               <span className="title">
                 {getFilterValueDisplay(option.value)}
               </span>
@@ -229,7 +214,9 @@ const ViewComponent = (props) => {
     field,
     HeaderWrapper = 'div',
     ContentWrapper = 'div',
+    iconsFamily,
   } = props;
+  console.log('pp', props);
   const { appConfig } = useAppConfig();
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
@@ -351,6 +338,7 @@ const ViewComponent = (props) => {
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
+          iconsFamily={iconsFamily}
         />
         <fieldset
           className={cx('sui-facet searchlib-multiterm-facet', className)}

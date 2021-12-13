@@ -1,7 +1,8 @@
 import React from 'react';
 import FilterValue from './FilterValue';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { Label, Icon } from 'semantic-ui-react';
+import { Icon } from '@eeacms/search/components';
+import { Label, Icon as UiIcon } from 'semantic-ui-react';
 
 const Filter = (props) => {
   const {
@@ -19,10 +20,14 @@ const Filter = (props) => {
     ({ field }) => field === facetField,
   ) || { label: field?.trim() };
 
-  const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
-  const getClusterIcon = (title) => {
-    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
-  };
+  // console.log('props', props);
+  // const clusterIcons = appConfig.contentUtilsParams.clusterIcons;
+  // const getClusterIcon = (title) => {
+  //   return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+  // };
+  //{label === 'Content types' ? (
+  //  <Icon name={getClusterIcon(v)} />
+  //) : null}
 
   return (
     <div className={`filter-list-item ${customClass ? customClass : ''}`}>
@@ -31,6 +36,10 @@ const Filter = (props) => {
       </div>
       <Label.Group>
         {values?.map((v, index) => {
+          const facetConfig =
+            appConfig.facets.find((facet) => facet.field === field) || {};
+          const { iconsFamily } = facetConfig;
+          // console.log(facetConfig, iconsFamily, v);
           return (
             <Label
               key={index}
@@ -40,10 +49,8 @@ const Filter = (props) => {
                   : removeFilter(field, v, type);
               }}
             >
-              <span className="text" title={v}>
-                {label === 'Content types' ? (
-                  <Icon name={getClusterIcon(v)} />
-                ) : null}
+              <span className="text filterValue" title={v}>
+                {iconsFamily && <Icon family={iconsFamily} type={v} />}
                 <FilterValue
                   value={v}
                   field={field}
@@ -52,7 +59,7 @@ const Filter = (props) => {
                   registry={registry}
                 />
               </span>
-              <Icon name="delete" />
+              <UiIcon name="delete" />
             </Label>
           );
         })}

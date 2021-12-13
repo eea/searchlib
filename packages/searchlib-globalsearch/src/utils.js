@@ -1,11 +1,11 @@
-export const get_icons = (settings) => {
-  const icons = {};
-  settings.clusters.forEach((cluster) => {
-    icons[cluster.name] = cluster.icon;
-  });
-  return icons;
-};
-
+// export const get_icons = (settings) => {
+//   const icons = {};
+//   settings.clusters.forEach((cluster) => {
+//     icons[cluster.name] = cluster.icon;
+//   });
+//   return icons;
+// };
+//
 export const build_runtime_mappings = (settings) => {
   const clusters = settings.clusters
     .map((cluster) => {
@@ -206,8 +206,7 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
 export const get_cluster_icons = (settings) => {
   const icons = {
     fallback: {
-      name: 'fallback',
-      icon: 'file outline',
+      name: 'file outline',
     },
   };
   settings.clusters.forEach((cluster) => {
@@ -221,15 +220,20 @@ export const get_cluster_icons = (settings) => {
   return icons;
 };
 
+/**
+ * Returns a mapping of clusterName: {...icon...}. See registry/icons for more
+ * info
+ */
 export const get_cluster_icons_dict = (settings) => {
-  const icons = {
-    fallback: 'file outline',
-  };
-
-  settings.clusters.forEach((cluster) => {
-    cluster.values.forEach((value) => {
-      icons[value] = cluster.icon;
-    });
-  });
-  return icons;
+  return Object.assign(
+    {
+      fallback: { name: 'file outline' },
+    },
+    ...settings.clusters.map((cluster) =>
+      Object.assign(
+        {},
+        ...cluster.values.map((value) => ({ [value]: cluster.icon })),
+      ),
+    ),
+  );
 };

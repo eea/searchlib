@@ -1,4 +1,4 @@
-import { get_cluster_icons, get_cluster_icons_dict, get_icons } from '../utils';
+import { get_cluster_icons_dict, get_cluster_icons } from '../utils';
 
 export const clusters = {
   name: 'op_cluster',
@@ -6,13 +6,13 @@ export const clusters = {
   clusters: [
     {
       name: 'News',
-      icon: 'bullhorn',
+      icon: { name: 'bullhorn' },
       values: ['News', 'Article'],
       defaultResultView: 'horizontalCard',
     },
     {
       name: 'Publications',
-      icon: 'book',
+      icon: { name: 'book' },
       values: [
         'Report',
         'Indicator',
@@ -24,7 +24,7 @@ export const clusters = {
     },
     {
       name: 'Visualizations',
-      icon: 'chart area',
+      icon: { name: 'chart area' },
       values: [
         'Figure (chart/map)',
         'Chart (interactive)',
@@ -37,13 +37,13 @@ export const clusters = {
     },
     {
       name: 'Data',
-      icon: 'database',
+      icon: { name: 'database' },
       values: ['External data reference', 'Data set'],
       defaultResultView: 'horizontalCard',
     },
     {
       name: 'Others',
-      icon: 'copy outline',
+      icon: { name: 'copy outline' },
       values: [
         'Webpage',
         'Organisation',
@@ -60,25 +60,38 @@ export const clusters = {
 // Add "Others", a menu with subgroups.
 
 export const clusterIcons = get_cluster_icons(clusters);
-export const clusterIconsDict = get_cluster_icons_dict(clusters);
 
 export default {
-  contentUtilsParams: {
-    clusterIcons,
-    iconsDicts: {
-      'Content types': clusterIconsDict,
-      Sources: {
-        type: 'images',
-        fallback: 'website-logo.png',
-        'EEA Website (www.eea.europa.eu)': 'eea-logo.png',
-        'BISE (biodiversity.europa.eu)': 'bise-logo.png',
-        'WISE Marine (water.europa.eu/marine)': 'wise-logo.png',
-        'Energy (climate-energy.eea.europa.eu)': 'energy-logo.png',
-        'WISE Freshwater (water.europa.eu/freshwater)': 'water-logo.png',
-        'FISE (forest.eea.europa.eu)': 'forest-logo.png',
-        'Industry (industry.eea.europa.eu)': 'industry-logo.png',
-        'Climate-adapt (climate-adapt.eea.europa.eu)': 'climate-adapt-logo.png',
-        'Eionet (eionet.europa.eu)': 'eionet-logo.png',
+  icons: {
+    'Content types': get_cluster_icons_dict(clusters),
+    Sources: {
+      fallback: 'website-logo.png',
+      'EEA Website (www.eea.europa.eu)': {
+        url: require('../static/eea-logo.png'),
+      },
+      'BISE (biodiversity.europa.eu)': {
+        url: require('../static/bise-logo.png'),
+      },
+      'WISE Marine (water.europa.eu/marine)': {
+        url: require('../static/wise-logo.png'),
+      },
+      'Energy (climate-energy.eea.europa.eu)': {
+        url: require('../static/energy-logo.png'),
+      },
+      'WISE Freshwater (water.europa.eu/freshwater)': {
+        url: require('../static/water-logo.png'),
+      },
+      'FISE (forest.eea.europa.eu)': {
+        url: require('../static/forest-logo.png'),
+      },
+      'Industry (industry.eea.europa.eu)': {
+        url: require('../static/industry-logo.png'),
+      },
+      'Climate-adapt (climate-adapt.eea.europa.eu)': {
+        url: require('../static/climate-adapt-logo.png'),
+      },
+      'Eionet (eionet.europa.eu)': {
+        url: require('../static/eionet-logo.png'),
       },
     },
   },
@@ -87,8 +100,12 @@ export default {
     // This enables the content as section tabs
     enable: true,
     sectionFacetsField: 'op_cluster',
-
     sections: clusters.clusters,
-    icons: get_icons(clusters),
+    clusterMapping: Object.assign(
+      {},
+      ...clusters.clusters.map(({ name, values }) =>
+        Object.assign({}, ...values.map((v) => ({ [v]: name }))),
+      ),
+    ),
   },
 };

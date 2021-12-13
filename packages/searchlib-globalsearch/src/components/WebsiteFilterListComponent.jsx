@@ -1,15 +1,14 @@
-import React from 'react';
-import LogoImage from './LogoImage';
-
-const WebsiteFilterListComponent = (props) => {
-  const { value } = props;
-  // console.log('props', props);
-  return (
-    <span>
-      <LogoImage websiteName={value} />
-      {value}
-    </span>
-  );
-};
-
-export default WebsiteFilterListComponent;
+// import React from 'react';
+// import { Icon } from '@eeacms/search';
+//
+// const WebsiteFilterListComponent = (props) => {
+//   const { value } = props;
+//   return (
+//     <span>
+//       <Icon family="Sources" type={value} className="facet-option-icon" />
+//       {value}
+//     </span>
+//   );
+// };
+//
+// export default WebsiteFilterListComponent;
