@@ -59,12 +59,12 @@ const globalSearchConfig = {
   sortOptions: [
     {
       name: 'Title a-z',
-      value: 'title',
+      value: 'title.index',
       direction: 'asc',
     },
     {
       name: 'Title z-a',
-      value: 'title',
+      value: 'title.index',
       direction: 'desc',
     },
     {

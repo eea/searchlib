@@ -56,7 +56,7 @@ import {
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
-import { valueToString } from './lib/utils';
+// import { valueToString } from './lib/utils';
 
 const config = {
   resolve: {
