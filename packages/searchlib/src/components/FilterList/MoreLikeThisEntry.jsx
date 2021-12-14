@@ -3,10 +3,9 @@
  */
 
 import React from 'react';
-import { Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
-import { DateTime, StringList } from '@eeacms/search/components';
+import { DateTime, StringList, Icon } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { Image } from 'semantic-ui-react';
 import { useResult } from '@eeacms/search/lib/hocs';
@@ -42,7 +41,7 @@ const MoreLikeThisEntry = (props) => {
         <div className="meta">
           <DateTime format="DATE_MED" value={item.issued} />
           &nbsp;
-          <Icon name={item.clusterIcon} />
+          <Icon family="Content types" type={item.metaTypes} />
           <StringList value={item.metaTypes} />
         </div>
       </div>
