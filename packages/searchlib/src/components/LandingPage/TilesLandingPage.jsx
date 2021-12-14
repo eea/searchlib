@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useAtom } from 'jotai';
 
@@ -8,6 +8,7 @@ import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { getDisjunctiveFacetCounts } from '@eeacms/search';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { landingPageDataAtom } from './state';
+import { Icon } from '@eeacms/search/components';
 
 import './tiles.less';
 
@@ -31,7 +32,7 @@ const LandingPage = (props) => {
   );
 
   const getClusterIcon = (title) => {
-    return clusterIcons[title]?.icon || clusterIcons.fallback.icon;
+    return clusterIcons[title]?.icon?.name || clusterIcons.fallback.name;
   };
 
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
@@ -94,6 +95,7 @@ const LandingPage = (props) => {
               );
               setShowFacets(true);
             };
+
             return (
               <div
                 key={topic.value}
@@ -106,7 +108,7 @@ const LandingPage = (props) => {
                 <div className="content">
                   <div className="header">
                     {activeSection === 'objectProvides' ? (
-                      <Icon name={getClusterIcon(topic.value)} />
+                      <Icon family="Content types" name={getClusterIcon(topic.value)} />
                     ) : null}
                     {topic.value}
                   </div>
