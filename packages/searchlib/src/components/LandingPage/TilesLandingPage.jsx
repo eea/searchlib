@@ -23,17 +23,12 @@ const LandingPage = (props) => {
   const {
     sections = [],
     maxPerSection = 12,
-    clusterIcons = {},
   } = appConfig.initialView.tilesLandingPageParams;
 
   const sectionFacetFields = sections.map((s) => s.facetField);
   const [activeSection, setActiveSection] = React.useState(
     sections?.[0]?.facetField,
   );
-
-  const getClusterIcon = (title) => {
-    return clusterIcons[title]?.icon?.name || clusterIcons.fallback.name;
-  };
 
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
 
@@ -108,10 +103,7 @@ const LandingPage = (props) => {
                 <div className="content">
                   <div className="header">
                     {activeSection === 'objectProvides' ? (
-                      <Icon
-                        family="Content types"
-                        name={getClusterIcon(topic.value)}
-                      />
+                      <Icon family="Content types" type={topic.value} />
                     ) : null}
                     {activeSection === 'cluster_name' ? (
                       <Icon
