@@ -1,12 +1,13 @@
 import React from 'react';
 import { withSearch } from '@elastic/react-search-ui';
-import { Button, Card, Icon, Image, Label } from 'semantic-ui-react';
+import { Button, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
 import ResultContext from './ResultContext';
+import { Icon } from '@eeacms/search/components';
 
 const normalizeStr = (str) => {
   let tmp = document.createElement('DIV');
@@ -40,11 +41,6 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const getThumb =
     registry.resolve[thumbFactoryName] ||
-    ((result, config, fallback) => fallback);
-
-  const iconFactoryName = appConfig.cardViewParams.getIconUrl;
-  const getIcon =
-    registry.resolve[iconFactoryName] ||
     ((result, config, fallback) => fallback);
 
   const thumbUrl = getThumb(
@@ -166,7 +162,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             compact
             icon={
               <div className="card-icon">
-                <Icon name={result.clusterIcon} size="mini" />
+                <Icon {...result.clusterIcon} size="mini" />
               </div>
             }
           ></Button>
