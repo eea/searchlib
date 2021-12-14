@@ -108,7 +108,17 @@ const LandingPage = (props) => {
                 <div className="content">
                   <div className="header">
                     {activeSection === 'objectProvides' ? (
-                      <Icon family="Content types" name={getClusterIcon(topic.value)} />
+                      <Icon
+                        family="Content types"
+                        name={getClusterIcon(topic.value)}
+                      />
+                    ) : null}
+                    {activeSection === 'cluster_name' ? (
+                      <Icon
+                        family="Sources"
+                        type={topic.value}
+                        className="facet-option-icon"
+                      />
                     ) : null}
                     {topic.value}
                   </div>
