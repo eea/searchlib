@@ -65,7 +65,9 @@ export default {
   icons: {
     'Content types': get_cluster_icons_dict(clusters),
     Sources: {
-      fallback: 'website-logo.png',
+      fallback: {
+        url: require('../static/website-logo.png'),
+      },
       'EEA Website (www.eea.europa.eu)': {
         url: require('../static/eea-logo.png'),
       },
