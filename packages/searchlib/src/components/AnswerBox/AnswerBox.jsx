@@ -124,6 +124,7 @@ score: 6.118757247924805
             </Button.Group>
           )}
           <div>
+            <h2>{searchedTerm}</h2>
             {sortedClusters.map((filtered, i) => {
               const primaryAnswer = filtered?.[0];
               const primaryResult = primaryAnswer

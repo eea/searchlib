@@ -1,6 +1,5 @@
 import React from 'react';
 import registry from '@eeacms/search/registry';
-import { Results } from '@elastic/react-search-ui';
 import { useViews, useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const BodyContent = (props) => {

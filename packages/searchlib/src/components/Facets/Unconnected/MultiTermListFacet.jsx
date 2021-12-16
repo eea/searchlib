@@ -22,7 +22,6 @@ const FacetOptions = (props) => {
     onRemove,
     iconsFamily,
   } = props;
-  console.log(props);
 
   let isGroupedByLetters = false;
   if (Object.keys(groupedOptionsByLetters).length > 0) {

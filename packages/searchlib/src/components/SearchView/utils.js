@@ -1,13 +1,12 @@
 import {
   getDefaultFilterValues,
-  normalizedDefaultFilters,
   normalizeFilters,
   deepEqual,
 } from '@eeacms/search/lib/utils';
 
 export const checkInteracted = ({
   filters,
-  searchedTerm,
+  searchTerm,
   appConfig,
   wasSearched,
 }) => {
@@ -17,6 +16,6 @@ export const checkInteracted = ({
   const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
 
   return wasSearched
-    ? searchedTerm || !filtersEqual
-    : !(filters.length === 0 || filtersEqual);
+    ? searchTerm || !filtersEqual
+    : searchTerm || !(filters.length === 0 || filtersEqual);
 };
