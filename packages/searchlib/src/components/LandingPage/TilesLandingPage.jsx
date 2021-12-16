@@ -34,8 +34,16 @@ const LandingPage = (props) => {
 
   const [landingPageData, setLandingPageData] = useAtom(landingPageDataAtom);
 
-  const tiles =
-    landingPageData?.[activeSection]?.[0]?.data?.slice(0, maxPerSection) || [];
+  const getTiles = (maxPerSection) => {
+    const result = landingPageData?.[activeSection]?.[0]?.data || [];
+    let shorted = false;
+    if (result.length > maxPerSection) {
+      shorted = true;
+    }
+    return [shorted, result.slice(0, maxPerSection)];
+  };
+
+  const [shorted, tiles] = getTiles(maxPerSection);
 
   useDeepCompareEffect(() => {
     async function fetchFacets() {
@@ -124,6 +132,11 @@ const LandingPage = (props) => {
             );
           })}
         </div>
+        {shorted ? (
+          <div className="info">
+            <p>Only first {maxPerSection} items are displayed.</p>
+          </div>
+        ) : null}
         {children}
       </div>
     </div>
