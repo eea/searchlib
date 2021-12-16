@@ -17,7 +17,7 @@ const DimmerFacets = (props) => {
 
   return (
     <div>
-      <Dimmer active={active} verticalAlign="top" page>
+      <Dimmer active={active} verticalAlign="top" page className="facet-dimmer">
         {showFacets ? (
           <>
             <ErrorBoundary>
