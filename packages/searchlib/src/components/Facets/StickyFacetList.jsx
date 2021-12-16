@@ -17,12 +17,7 @@ const DimmerFacets = (props) => {
 
   return (
     <div>
-      <Dimmer
-        active={active}
-        onClickOutside={() => setActive(false)}
-        verticalAlign="top"
-        page
-      >
+      <Dimmer active={active} verticalAlign="top" page>
         {showFacets ? (
           <>
             <ErrorBoundary>
@@ -40,13 +35,25 @@ const DimmerFacets = (props) => {
         ) : (
           ''
         )}
+
+        <Button.Group>
+          <Button
+            className="show-filters"
+            toggle
+            onClick={() => {
+              setActive(false);
+            }}
+          >
+            <Icon name="filter" />
+            Hide Filters
+          </Button>
+        </Button.Group>
       </Dimmer>
 
       <Button.Group>
         <Button
           className="show-filters"
           toggle
-          active={setActive}
           onClick={() => {
             setActive(true);
           }}
