@@ -18,7 +18,13 @@ const Icon = (props) => {
   }
 
   if (country) {
-    return <Flag name={country.toLowerCase()} />;
+    const countryAlias = {
+      Czechia: 'Czech Republic',
+    };
+
+    let countryName = countryAlias[country] || country;
+
+    return <Flag name={countryName.toLowerCase()} />;
   }
 
   const icons = appConfig.icons[family];
