@@ -3,6 +3,7 @@ import { withSearch } from '@elastic/react-search-ui';
 import { Button, Card, Image, Label } from 'semantic-ui-react';
 import { DateTime, StringList } from '@eeacms/search';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import cx from 'classnames';
@@ -35,7 +36,9 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
   removeFilter,
 }))((props) => {
   // console.log('props', props);
-  const { result, setFilter, removeFilter } = props;
+  const { result } = props;
+  const context = useSearchContext();
+  const { setFilter, removeFilter, setSearchTerm } = context;
   const { appConfig, registry } = useAppConfig();
   const thumbFactoryName = appConfig.cardViewParams.getThumbnailUrl;
 
@@ -132,6 +135,7 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
             size="mini"
             onClick={() => {
               removeFilter('lessLikeThis');
+              setSearchTerm('');
               setMoreLikeThis(result);
               setFilter('moreLikeThis', result._original._id, 'none');
             }}
