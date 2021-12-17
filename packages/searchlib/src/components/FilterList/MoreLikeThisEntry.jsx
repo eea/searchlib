@@ -7,18 +7,31 @@ import { useAtom } from 'jotai';
 import { moreLikeThisAtom } from '@eeacms/search/state';
 import { DateTime, StringList, Icon } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
-import { Image } from 'semantic-ui-react';
+import { Image, Button } from 'semantic-ui-react';
 import { useResult } from '@eeacms/search/lib/hocs';
 
 const MoreLikeThisEntry = (props) => {
-  const { value } = props;
+  const { value, field, type, removeFilter } = props;
   const [result] = useAtom(moreLikeThisAtom);
   const item = useResult(result, value);
 
   return item ? (
     <div className="mlt-filter ui fluid card facet active">
       <div className="mlt-card content">
-        <div className="header">More like this</div>
+        <div className="header">
+          <span className="text">More like this</span>
+          <span className="clear-filters">
+            <Button
+              size="mini"
+              onClick={(evt) => {
+                evt.preventDefault();
+                removeFilter(field, value, type);
+              }}
+            >
+              Clear
+            </Button>
+          </span>
+        </div>
         <Image
           className="img-thumbnail"
           src={item.thumbUrl}
