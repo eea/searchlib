@@ -116,7 +116,7 @@ export default (props) => {
   const isSmallScreen = width < 600;
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
-  const enableDimmer = false; // WIP - true to see the changes on small screen
+  const enableDimmer = true; // WIP - true to see the changes on small screen
 
   React.useEffect(() => {
     if (hasFilters) setShowFacets(true);
