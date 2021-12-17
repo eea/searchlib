@@ -120,6 +120,12 @@ const LandingPage = (props) => {
                         className="facet-option-icon"
                       />
                     ) : null}
+                    {activeSection === 'spatial' ? (
+                      <Icon
+                        country={topic.value}
+                        className="facet-option-icon"
+                      />
+                    ) : null}
                     {topic.value}
                   </div>
                 </div>
