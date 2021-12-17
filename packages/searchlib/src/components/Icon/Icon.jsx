@@ -20,6 +20,8 @@ const Icon = (props) => {
   const countryFlag = (country) => {
     const countryAlias = {
       Czechia: 'Czech Republic',
+      'North Macedonia': 'Macedonia',
+      'British Indian Ocean Territory': 'United Kingdom',
     };
 
     let countryName = countryAlias[country] || country;
