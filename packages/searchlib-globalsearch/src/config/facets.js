@@ -46,6 +46,7 @@ const facets = [
     wrapper: 'ModalFacetWrapper',
     show: 10000,
     factory: 'MultiTermListFacet',
+    iconsFamily: 'Countries',
   }),
   multiTermFacet({
     field: 'op_cluster',

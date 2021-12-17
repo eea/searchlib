@@ -17,7 +17,7 @@ const Icon = (props) => {
     return <Image src={url} {...rest} />;
   }
 
-  if (country) {
+  const countryFlag = (country) => {
     const countryAlias = {
       Czechia: 'Czech Republic',
     };
@@ -25,6 +25,10 @@ const Icon = (props) => {
     let countryName = countryAlias[country] || country;
 
     return <Flag name={countryName.toLowerCase()} />;
+  };
+
+  if (country) {
+    return countryFlag(country);
   }
 
   const icons = appConfig.icons[family];
@@ -34,6 +38,8 @@ const Icon = (props) => {
     <UiIcon name={icon.name} {...rest} />
   ) : icon.url ? (
     <Image src={icon.url} {...rest} />
+  ) : icon.country ? (
+    countryFlag(type) // icon.country is a placeholder, we already have the name
   ) : null;
 };
 

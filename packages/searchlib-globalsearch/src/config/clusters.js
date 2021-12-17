@@ -96,6 +96,11 @@ export default {
         url: require('../static/eionet-logo.png'),
       },
     },
+    Countries: {
+      fallback: {
+        country: 'placeholder',
+      },
+    },
   },
 
   contentSectionsParams: {
