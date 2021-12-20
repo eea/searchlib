@@ -19,7 +19,9 @@ const MoreLikeThisEntry = (props) => {
     <div className="mlt-filter ui fluid card facet active">
       <div className="mlt-card content">
         <div className="header">
-          <span className="text">More like this</span>
+          <span className="text" title="More like this">
+            More like this
+          </span>
           <span className="clear-filters">
             <Button
               size="mini"
