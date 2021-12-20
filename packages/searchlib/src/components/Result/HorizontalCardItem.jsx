@@ -8,6 +8,7 @@ import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { firstWords } from './utils';
 
 export const ExternalLink = (props) => {
   return (
@@ -17,6 +18,7 @@ export const ExternalLink = (props) => {
       target="_blank"
       rel="noreferrer"
       style={props.style}
+      title={props.title}
     >
       {props.children}
     </a>
@@ -68,7 +70,9 @@ const CardItem = (props) => {
       <div className="col-left">
         <div className="details">
           <h3>
-            <ExternalLink href={result.href}>{result.title}</ExternalLink>
+            <ExternalLink href={result.href} title={result.title}>
+              {firstWords(result.title, 12)}
+            </ExternalLink>
             {result.isNew && (
               <Label className="new-item" horizontal>
                 New
