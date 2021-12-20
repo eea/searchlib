@@ -26,7 +26,7 @@ const DimmerFacets = (props) => {
             <FacetsList
               defaultWraper={ModalFacetWrapper}
               view={({ children }) => (
-                <Card.Group {...props} stackable itemsPerRow={1}>
+                <Card.Group stackable itemsPerRow={1}>
                   {children}
                 </Card.Group>
               )}
@@ -84,7 +84,7 @@ const NormalFacets = (props) => {
           <FacetsList
             defaultWraper={ModalFacetWrapper}
             view={({ children }) => (
-              <Card.Group {...props} stackable itemsPerRow={1}>
+              <Card.Group stackable itemsPerRow={1}>
                 {children}
               </Card.Group>
             )}
