@@ -65,6 +65,9 @@ const CardItem = (props) => {
               </>
             )}
           </span>
+          <span className="tags-list">
+            <StringList value={result.tags} />
+          </span>
         </div>
       </div>
       <div className="col-left">
@@ -84,10 +87,6 @@ const CardItem = (props) => {
               </Label>
             )}
           </h3>
-          <p className="tags">
-            <StringList value={result.tags} />
-          </p>
-          {props.children ? props.children : <ResultContext {...props} />}
           <p className="source">
             <span>Source: </span>
             <ExternalLink href={result.href}>
@@ -113,6 +112,7 @@ const CardItem = (props) => {
               </Button>
             )}
           </p>
+          {props.children ? props.children : <ResultContext {...props} />}
         </div>
       </div>
       <div className="col-right">
