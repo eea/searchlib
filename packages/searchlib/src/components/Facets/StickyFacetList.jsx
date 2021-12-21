@@ -113,10 +113,9 @@ export default (props) => {
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
   const isActive = width > 766;
-  const isSmallScreen = width < 600;
+  const isSmallScreen = width <= 766;
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
-  const enableDimmer = true; // WIP - true to see the changes on small screen
 
   React.useEffect(() => {
     if (hasFilters) setShowFacets(true);
@@ -124,7 +123,7 @@ export default (props) => {
 
   return (
     <>
-      {isSmallScreen && enableDimmer ? (
+      {isSmallScreen ? (
         <DimmerFacets props={props} />
       ) : (
         <NormalFacets props={props} />
