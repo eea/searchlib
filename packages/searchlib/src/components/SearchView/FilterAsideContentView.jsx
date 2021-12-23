@@ -6,6 +6,7 @@ import {
   PagingInfo,
   DownloadButton,
 } from '@eeacms/search/components';
+import PagingPrevNext from './../PagingInfo/PagingPrevNext';
 import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
@@ -33,6 +34,7 @@ export const FilterAsideContentView = (props) => {
   ];
 
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
+  const useNewPaging = false; // WIP - use true to activate new paging
 
   const layoutMode = activeViewId === 'horizontalCard' ? 'fixed' : 'fullwidth';
 
@@ -60,6 +62,12 @@ export const FilterAsideContentView = (props) => {
         <ResultViewComponent>{children}</ResultViewComponent>
 
         <div className="row">
+          <div className="test-new-paging">
+            {wasInteracted && useNewPaging ? (
+              <SUIPagingInfo view={PagingPrevNext} />
+            ) : null}
+          </div>
+
           <div className="search-body-footer">
             <div>
               {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
