@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 import cx from 'classnames';
 
@@ -13,20 +14,17 @@ function PagingPrevNext({
 }) {
   return (
     <div className={cx('sui-paging-info', className)} {...rest}>
-      Results {start} - {end} of {totalResults}
-      {searchTerm && (
-        <>
-          {' '}
-          for:{' '}
-          <em>
-            {searchTerm.split('|').map((phrase, i) => (
-              <React.Fragment key={i}>
-                <u>{phrase}</u>{' '}
-              </React.Fragment>
-            ))}
-          </em>
-        </>
-      )}
+      {start > 1 ? (
+        <Button className="prev" compact color="green" size="mini">
+          back
+        </Button>
+      ) : null}
+      Results {start} - {end} of {totalResults}{' '}
+      {end < totalResults ? (
+        <Button className="next" compact color="green" size="mini">
+          next
+        </Button>
+      ) : null}
     </div>
   );
 }
