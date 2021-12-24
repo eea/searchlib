@@ -4,6 +4,12 @@ import { Breadcrumb } from 'semantic-ui-react';
 const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
   const url = new URL(href);
   const { pathname } = url;
+
+  let index = 0;
+  const newKey = () => {
+    return index++;
+  };
+
   return short ? (
     <span className="breadcrumb">
       {pathname
@@ -11,7 +17,7 @@ const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
         .filter((s) => !!s)
         .slice(0, maxSegments)
         .map((s) => (
-          <span key={s + '2'}> / {s}</span>
+          <span key={s + '2' + newKey()}> / {s}</span>
         ))}
     </span>
   ) : (
@@ -22,9 +28,11 @@ const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
         .filter((s) => !!s)
         .slice(0, maxSegments)
         .map((s) => (
-          <div key={s + '2'}>
-            <Breadcrumb.Divider key={s} />
-            <Breadcrumb.Section key={s + '1'}>{s}</Breadcrumb.Section>
+          <div key={s + '2' + newKey()}>
+            <Breadcrumb.Divider key={s + newKey()} />
+            <Breadcrumb.Section key={s + '1' + newKey()}>
+              {s}
+            </Breadcrumb.Section>
           </div>
         ))}
     </Breadcrumb>
