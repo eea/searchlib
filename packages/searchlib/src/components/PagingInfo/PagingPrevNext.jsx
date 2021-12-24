@@ -13,16 +13,23 @@ function PagingPrevNext({
   totalResults,
   ...rest
 }) {
+  const goToNext = () => {
+    console.log('WIP next');
+  };
+
+  const goToPrev = () => {
+    console.log('WIP prev');
+  };
+
   return (
     <div className={cx('sui-paging-info', className)} {...rest}>
       {start > 1 ? (
         <Button
+          onClick={() => goToPrev()}
           className="prev"
           compact
           color="green"
           size="mini"
-          as={Link}
-          to="/prev"
         >
           <Icon name="angle double left" />
           back
@@ -31,14 +38,13 @@ function PagingPrevNext({
       Results {start} - {end} of {totalResults}{' '}
       {end < totalResults ? (
         <Button
+          onClick={() => goToNext()}
           className="next"
           compact
           color="green"
           size="mini"
-          as={Link}
-          to="/next"
         >
-          next
+          prev
           <Icon name="angle double right" />
         </Button>
       ) : null}
