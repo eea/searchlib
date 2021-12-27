@@ -1,5 +1,6 @@
 import React from 'react';
-import { ResultsPerPage, Paging, Sorting } from '@elastic/react-search-ui';
+import { ResultsPerPage, Paging as OldPaging, Sorting } from '@elastic/react-search-ui';
+import Paging from './../Paging/Paging';
 import {
   ViewSelectorWithLabel,
   SortingDropdownWithLabel,
@@ -64,7 +65,9 @@ export const FilterAsideContentView = (props) => {
         <div className="row">
           <div className="test-new-paging">
             {wasInteracted && useNewPaging ? (
-              <SUIPagingInfo view={PagingPrevNext} />
+              <>
+                <Paging />
+              </>
             ) : null}
           </div>
 
@@ -72,7 +75,7 @@ export const FilterAsideContentView = (props) => {
             <div>
               {wasInteracted ? <SUIPagingInfo view={PagingInfo} /> : null}
             </div>
-            <Paging />
+            <OldPaging />
             <ResultsPerPage />
             <div>
               <DownloadButton appConfig={appConfig} />
