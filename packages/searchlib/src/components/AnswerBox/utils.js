@@ -8,3 +8,12 @@ export const highlightUrl = (url, text) => {
   //   end,
   // )}`;
 };
+
+// simplify configuration, to pass it to the middleware and avoid "entity too
+// large" errors
+export const filterNLPConfig = (config) => {
+  const whitelist = ['elastic_index', 'host'];
+  return Object.keys(config).reduce((acc, k) => {
+    return whitelist.includes(k) ? { ...acc, [k]: config[k] } : acc;
+  }, {});
+};

@@ -1,4 +1,5 @@
 import { buildRequestFilter } from '@eeacms/search/lib/search/query/filters';
+import { filterNLPConfig } from './utils';
 
 export const buildClassifyQuestionRequest = (state, appConfig) => {
   const { searchTerm } = state;
@@ -45,7 +46,7 @@ export const buildQuestionRequest = (state, config) => {
     track_total_hits: false,
     params: {
       use_dp: config.nlp.qa.use_dp || false,
-      config,
+      config: filterNLPConfig(config),
       DensePassageRetriever: {
         top_k: parseInt(config.nlp.qa.topk_retriever || 10),
         index: config.nlp.qa.dpr_index,
