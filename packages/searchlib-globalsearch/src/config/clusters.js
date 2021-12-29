@@ -102,6 +102,40 @@ export default {
       'Eionet (eionet.europa.eu)': {
         url: require('../static/eionet-logo.png'),
       },
+
+      'ETC on Air Pollution, Transport, Noise and Industrial Pollution (www.eionet.europa.eu/etcs/etc-atni)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Biological Diversity (www.eionet.europa.eu/etcs/etc-bd)': {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Climate Change Impacts, Vulnerability and Adaptation (www.eionet.europa.eu/etcs/etc-cca)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Climate Change Mitigation and Energy (www.eionet.europa.eu/etcs/etc-cme)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Inland, Coastal and Marine Waters (www.eionet.europa.eu/etcs/etc-icm)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Urban, Land and Soil Systems (www.eionet.europa.eu/etcs/etc-uls)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
+
+      'ETC on Waste and Materials in Green Economy (www.eionet.europa.eu/etcs/etc-wmge)':
+      {
+        url: require('../static/eionet-logo.png'),
+      },
     },
     Countries: {
       fallback: {
