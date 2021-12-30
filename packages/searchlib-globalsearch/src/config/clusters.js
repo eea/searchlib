@@ -58,6 +58,7 @@ export const clusters = {
         'Research and knowledge project',
         'Information portal',
         'Tool',
+        'Case study',
       ], // this will be transformed in "single type clusters".
       defaultResultView: 'horizontalCard',
     },
