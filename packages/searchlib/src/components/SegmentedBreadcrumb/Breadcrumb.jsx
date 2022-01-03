@@ -1,7 +1,13 @@
 import React from 'react';
 import { Breadcrumb } from 'semantic-ui-react';
+import { firstChars } from './../Result/utils';
 
-const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
+const URLBreadcrumb = ({
+  href,
+  maxSegments = 3,
+  short = false,
+  maxChars = 10,
+}) => {
   const url = new URL(href);
   const { pathname } = url;
 
@@ -10,15 +16,18 @@ const URLBreadcrumb = ({ href, maxSegments = 3, short = false }) => {
     return index++;
   };
 
+  const generateSimpleBreadcrumb = (pathname) => {
+    const result = pathname
+      .split('/')
+      .filter((s) => !!s)
+      .slice(0, maxSegments)
+      .map((s) => ` / ${s}`);
+    return result.join('');
+  };
+
   return short ? (
-    <span className="breadcrumb">
-      {pathname
-        .split('/')
-        .filter((s) => !!s)
-        .slice(0, maxSegments)
-        .map((s) => (
-          <span key={s + '2' + newKey()}> / {s}</span>
-        ))}
+    <span className="breadcrumb" title={generateSimpleBreadcrumb(pathname)}>
+      {firstChars(generateSimpleBreadcrumb(pathname), maxChars)}
     </span>
   ) : (
     <Breadcrumb>

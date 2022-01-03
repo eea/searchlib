@@ -8,7 +8,7 @@ import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { firstWords } from './utils';
+import { firstWords, firstChars } from './utils';
 
 export const ExternalLink = (props) => {
   return (
@@ -90,8 +90,12 @@ const CardItem = (props) => {
           <p className="source">
             <span>Source: </span>
             <ExternalLink href={result.href}>
-              {result.source}
-              <SegmentedBreadcrumb href={result.href} short={true} />
+              <span title={result.source}>{firstWords(result.source, 3)}</span>
+              <SegmentedBreadcrumb
+                href={result.href}
+                short={true}
+                maxChars={40}
+              />
             </ExternalLink>
 
             {showControls && (

@@ -7,3 +7,12 @@ export const firstWords = (text, wordsNumber) => {
     return text;
   }
 };
+
+export const firstChars = (text, charsNumber) => {
+  const suffix = ' ...';
+  if (text.length > charsNumber) {
+    return text.substring(0, charsNumber) + suffix;
+  } else {
+    return text;
+  }
+};
