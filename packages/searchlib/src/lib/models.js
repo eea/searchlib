@@ -166,6 +166,10 @@ export class ResultModel extends BasicModel {
   }
 
   get source() {
+    let source = this._result.cluster_name?.raw;
+    if (Array.isArray(source)) {
+      return source.join(' ');
+    }
     return this._result.cluster_name?.raw;
   }
 
