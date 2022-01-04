@@ -7,7 +7,6 @@ import {
   PagingInfo,
   DownloadButton,
 } from '@eeacms/search/components';
-import PagingPrevNext from './../PagingInfo/PagingPrevNext';
 import { SectionTabs } from '@eeacms/search/components';
 import { checkInteracted } from './utils';
 import { PagingInfo as SUIPagingInfo } from '@elastic/react-search-ui';
