@@ -23,9 +23,7 @@ function Paging({ className, resultsPerPage, onChange, ...rest }) {
           <Button
             onClick={() => goToPrev()}
             className="prev"
-            compact
             color="green"
-            size="mini"
           >
             <Icon name="angle double left" />
             back
@@ -36,9 +34,7 @@ function Paging({ className, resultsPerPage, onChange, ...rest }) {
           <Button
             onClick={() => goToNext()}
             className="next"
-            compact
             color="green"
-            size="mini"
           >
             next
             <Icon name="angle double right" />
