@@ -14,6 +14,7 @@ import ViewSelector from './ViewSelector/ViewSelector';
 import ViewSelectorWithLabel from './ViewSelector/ViewSelectorWithLabel';
 import CardItem from './Result/CardItem';
 import StringList from './StringList/StringList';
+import TagsList from './TagsList/TagsList';
 import DateTime from './DateTime/DateTime';
 import ToggleSort from './ToggleSort/ToggleSort';
 import AccordionFacetWrapper from './Facets/Wrappers/AccordionFacetWrapper';
@@ -47,6 +48,7 @@ export {
   LeftColumnLayout,
   RightColumnLayout,
   StringList,
+  TagsList,
   TableRowItem,
   TableView,
   ToggleSort,

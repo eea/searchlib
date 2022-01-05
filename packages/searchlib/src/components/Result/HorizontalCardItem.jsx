@@ -3,12 +3,17 @@ import cx from 'classnames';
 import { useAtom } from 'jotai';
 import { Image, Label, Button } from 'semantic-ui-react';
 
-import { Icon, DateTime, StringList } from '@eeacms/search/components';
+import {
+  Icon,
+  DateTime,
+  StringList,
+  TagsList,
+} from '@eeacms/search/components';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { firstWords, firstChars } from './utils';
+import { firstWords } from './utils';
 
 export const ExternalLink = (props) => {
   return (
@@ -66,7 +71,7 @@ const CardItem = (props) => {
             )}
           </span>
           <span className="tags-list">
-            <StringList value={result.tags} />
+            <TagsList value={result.tags} />
           </span>
         </div>
       </div>
