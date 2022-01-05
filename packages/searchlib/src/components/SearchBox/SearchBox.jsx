@@ -112,17 +112,18 @@ export class SearchBoxContainer extends Component {
         searchTerm = `${searchTerm}|`;
     }
 
-    // console.log(`handle submit`, {
-    //   submittedSearchTerm,
-    //   propsSearchTerm: this.props.searchTerm,
-    //   searchTerm,
-    //   ...options,
-    // });
+    console.log(`handle submit`, {
+      submittedSearchTerm,
+      propsSearchTerm: this.props.searchTerm,
+      searchTerm,
+      ...options,
+    });
 
     e && e.preventDefault();
     setSearchTerm(searchTerm, {
       shouldClearFilters,
     });
+    this.props.setSort('', '');
   };
 
   handleChange = (value) => {
@@ -275,12 +276,14 @@ export default withSearch(
     autocompletedSuggestions,
     searchTerm,
     setSearchTerm,
+    setSort,
     trackAutocompleteClickThrough,
   }) => ({
     autocompletedResults,
     autocompletedSuggestions,
     searchTerm,
     setSearchTerm,
+    setSort,
     trackAutocompleteClickThrough,
   }),
 )(SearchBoxContainer);
