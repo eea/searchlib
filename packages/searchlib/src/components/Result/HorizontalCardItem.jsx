@@ -8,7 +8,7 @@ import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
-import { firstWords, firstChars } from './utils';
+import { firstWords } from './utils';
 
 export const ExternalLink = (props) => {
   return (

@@ -56,6 +56,8 @@ export default {
     tilesLandingPageParams: {
       maxPerSection: 30,
       clusterIcons,
+      sortField: 'issued.date',
+      sortDirection: 'desc',
       sections: [
         {
           id: 'topics',
