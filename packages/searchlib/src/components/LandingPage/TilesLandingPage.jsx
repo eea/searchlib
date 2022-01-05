@@ -17,12 +17,14 @@ const getFacetConfig = (facets, name) => {
 };
 
 const LandingPage = (props) => {
-  const { appConfig, children, setFilter } = props;
+  const { appConfig, children, setFilter, setSort } = props;
   const facetsConfig = appConfig.facets;
 
   const {
     sections = [],
     maxPerSection = 12,
+    sortField,
+    sortDirection,
   } = appConfig.initialView.tilesLandingPageParams;
 
   const sectionFacetFields = sections.map((s) => s.facetField);
@@ -96,6 +98,7 @@ const LandingPage = (props) => {
                 topic.value,
                 getFacetConfig(facetsConfig, activeSection).filterType,
               );
+              setSort(sortField, sortDirection);
               setShowFacets(true);
             };
 

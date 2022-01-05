@@ -1,4 +1,5 @@
 export const firstWords = (text, wordsNumber) => {
+  text = text || '';
   const suffix = ' ...';
   const words = text.split(' ');
   if (words.length > wordsNumber) {
@@ -9,6 +10,7 @@ export const firstWords = (text, wordsNumber) => {
 };
 
 export const firstChars = (text, charsNumber) => {
+  text = text || '';
   const suffix = ' ...';
   if (text.length > charsNumber) {
     return text.substring(0, charsNumber) + suffix;
