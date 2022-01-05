@@ -14,7 +14,7 @@ function toArray(s) {
 
 export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
-  const { setSearchTerm } = useSearchContext();
+  const { setSearchTerm, setSort } = useSearchContext();
 
   const {
     defaultPromptQueries = [],
@@ -59,6 +59,7 @@ export default function SampleQueryPrompt() {
           evt.preventDefault();
           // setTriedDemoQuestion(true);
           setSearchTerm(queries[index]);
+          setSort('', '');
         }}
         key={queries[index]}
       >

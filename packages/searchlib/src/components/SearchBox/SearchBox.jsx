@@ -112,12 +112,12 @@ export class SearchBoxContainer extends Component {
         searchTerm = `${searchTerm}|`;
     }
 
-    console.log(`handle submit`, {
-      submittedSearchTerm,
-      propsSearchTerm: this.props.searchTerm,
-      searchTerm,
-      ...options,
-    });
+    // console.log(`handle submit`, {
+    //   submittedSearchTerm,
+    //   propsSearchTerm: this.props.searchTerm,
+    //   searchTerm,
+    //   ...options,
+    // });
 
     e && e.preventDefault();
     setSearchTerm(searchTerm, {
