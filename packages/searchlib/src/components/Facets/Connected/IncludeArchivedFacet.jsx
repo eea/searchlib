@@ -1,6 +1,5 @@
 import React from 'react';
 import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
-// import { INCLUDE_ARCHIVED } from '@eeacms/search/constants';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const IncludeArchivedFacet = (props) => {

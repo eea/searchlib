@@ -8,7 +8,7 @@ import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { getDisjunctiveFacetCounts } from '@eeacms/search';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
 import { landingPageDataAtom } from './state';
-import { Icon } from '@eeacms/search/components';
+import { Icon, Term } from '@eeacms/search/components';
 
 import './tiles.less';
 
@@ -129,7 +129,7 @@ const LandingPage = (props) => {
                         className="facet-option-icon"
                       />
                     ) : null}
-                    {topic.value}
+                    <Term term={topic.value} field={activeSection} />
                   </div>
                 </div>
                 <div className="extra content">
