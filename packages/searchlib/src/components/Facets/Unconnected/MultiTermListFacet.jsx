@@ -215,7 +215,7 @@ const ViewComponent = (props) => {
     ContentWrapper = 'div',
     iconsFamily,
   } = props;
-  console.log('pp', props);
+  // console.log('pp', props);
   const { appConfig } = useAppConfig();
 
   // const sortedOptions = sorted(options, sortOn, sortOrder);
@@ -330,14 +330,15 @@ const ViewComponent = (props) => {
       </HeaderWrapper>
       <ContentWrapper>
         <FacetOptions
-          sortedOptions={sortedOptions}
+          field={field}
           groupedOptionsByLetters={byLetters}
           groupedOptionsByNumbers={byNumbers}
-          sorting={sorting}
-          label={label}
-          onSelect={onSelect}
-          onRemove={onRemove}
           iconsFamily={iconsFamily}
+          label={label}
+          onRemove={onRemove}
+          onSelect={onSelect}
+          sortedOptions={sortedOptions}
+          sorting={sorting}
         />
         <fieldset
           className={cx('sui-facet searchlib-multiterm-facet', className)}
