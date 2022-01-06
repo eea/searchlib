@@ -47,6 +47,8 @@ const CardItem = (props) => {
     metaType = 'Others';
   }
 
+  const classColLeft = result.hasImage ? 'col-left' : 'col-left no-image';
+
   return (
     <div
       className={cx('search-result', { hovered })}
@@ -75,7 +77,7 @@ const CardItem = (props) => {
           </span>
         </div>
       </div>
-      <div className="col-left">
+      <div className={classColLeft}>
         <div className="details">
           <h3>
             <ExternalLink href={result.href} title={result.title}>
@@ -124,20 +126,22 @@ const CardItem = (props) => {
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
       </div>
-      <div className="col-right">
-        <Image
-          className="img-thumbnail"
-          src={result.thumbUrl}
-          wrapped
-          ui={false}
-          fluid
-          centered
-          as={ExternalLink}
-          href={result.href}
-          target="_blank"
-          rel="noreferrer"
-        />
-      </div>
+      {result.hasImage ? (
+        <div className="col-right">
+          <Image
+            className="img-thumbnail"
+            src={result.thumbUrl}
+            wrapped
+            ui={false}
+            fluid
+            centered
+            as={ExternalLink}
+            href={result.href}
+            target="_blank"
+            rel="noreferrer"
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

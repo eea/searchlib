@@ -185,6 +185,15 @@ export class ResultModel extends BasicModel {
     return this._result[fieldName]?.raw;
   }
 
+  get hasImage() {
+    // WIP, TODO: we need a way to define real images vs fallback
+    // and I am not sure we can do it at this level.
+    // Example of a fallback image:
+    // https://www.eea.europa.eu/help/faq/what-is-the-status-of/image_preview
+    // return parseInt(1 + Math.random() * 3) === 1;
+    return true;
+  }
+
   get thumbUrl() {
     const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
     const getThumb =
