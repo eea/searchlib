@@ -12,7 +12,7 @@ import {
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
 import { SegmentedBreadcrumb } from '@eeacms/search/components';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useWindowDimensions, useSearchContext } from '@eeacms/search/lib/hocs';
 import { firstWords } from './utils';
 
 export const ExternalLink = (props) => {
@@ -48,6 +48,9 @@ const CardItem = (props) => {
   }
 
   const classColLeft = result.hasImage ? 'col-left' : 'col-left no-image';
+
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < 1000;
 
   return (
     <div
@@ -105,7 +108,7 @@ const CardItem = (props) => {
               />
             </ExternalLink>
 
-            {showControls && (
+            {showControls && !isSmallScreen && (
               <Button
                 className="mlt"
                 compact
@@ -120,6 +123,23 @@ const CardItem = (props) => {
                 }}
               >
                 more like this
+              </Button>
+            )}
+            {showControls && isSmallScreen && (
+              <Button
+                className="mlt-alternative"
+                icon
+                size="mini"
+                compact
+                onClick={() => {
+                  removeFilter('lessLikeThis');
+                  setSearchTerm('');
+                  setMoreLikeThis(result);
+                  setFilter('moreLikeThis', result._original._id, 'none');
+                  setOpenFacets(true);
+                }}
+              >
+                <Icon name="ellipsis vertical" />
               </Button>
             )}
           </p>
