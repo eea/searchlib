@@ -20,22 +20,14 @@ function Paging({ className, resultsPerPage, onChange, ...rest }) {
     <>
       <div className="wip">
         {current > 1 ? (
-          <Button
-            onClick={() => goToPrev()}
-            className="prev"
-            color="green"
-          >
+          <Button onClick={() => goToPrev()} className="prev" color="green">
             <Icon name="angle double left" />
             back
           </Button>
         ) : null}
         <SUIPagingInfo view={PagingPrevNext} />
         {current < totalPages ? (
-          <Button
-            onClick={() => goToNext()}
-            className="next"
-            color="green"
-          >
+          <Button onClick={() => goToNext()} className="next" color="green">
             next
             <Icon name="angle double right" />
           </Button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ResultsPerPage, Sorting } from '@elastic/react-search-ui';
+import ResultsPerPageSelector from './../ResultsPerPageSelector/ResultsPerPageSelector';
 import Paging from './../Paging/Paging';
 import {
   ViewSelectorWithLabel,
@@ -66,7 +67,7 @@ export const FilterAsideContentView = (props) => {
                 </>
               ) : null}
             </div>
-            <ResultsPerPage />
+            <ResultsPerPageSelector />
             <div>
               <DownloadButton appConfig={appConfig} />
             </div>
