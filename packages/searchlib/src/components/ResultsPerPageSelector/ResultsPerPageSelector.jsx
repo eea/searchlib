@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Icon } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const ResultsPerPageSelector = (props) => {
@@ -18,7 +18,7 @@ const ResultsPerPageSelector = (props) => {
     <div className="results-selector">
       <span>
         <Dropdown
-          text={`${resultsPerPage} results/page`}
+          text={`${resultsPerPage} results / page`}
           key={resultsPerPage}
           inline
           options={options}
