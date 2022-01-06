@@ -1,3 +1,7 @@
+/**
+ * A component to render the content clusters
+ */
+
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Icon } from '@eeacms/search/components';
