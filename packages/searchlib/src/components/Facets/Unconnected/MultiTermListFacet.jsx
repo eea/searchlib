@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { ToggleSort, Icon } from '@eeacms/search/components';
+import { ToggleSort, Icon, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { Checkbox, Button } from 'semantic-ui-react'; // , Header
 import { useAppConfig } from '@eeacms/search/lib/hocs';
@@ -21,6 +21,7 @@ const FacetOptions = (props) => {
     onSelect,
     onRemove,
     iconsFamily,
+    field,
   } = props;
 
   let isGroupedByLetters = false;
@@ -61,7 +62,7 @@ const FacetOptions = (props) => {
                   <span>{letter}</span>
                 </div>
                 <div className="group-content" key={letter + 'c'}>
-                  {groupedOptionsByLetters[letter].map((option) => {
+                  {groupedOptionsByLetters[letter].map((option, i) => {
                     const checked = option.selected;
                     return (
                       <Button
@@ -83,7 +84,7 @@ const FacetOptions = (props) => {
                           />
                         )}
                         <span className="title">
-                          {getFilterValueDisplay(option.value)}
+                          <Term term={option.value} field={field} />
                         </span>
                         <span className="count">
                           {option.count.toLocaleString('en')}
@@ -127,7 +128,7 @@ const FacetOptions = (props) => {
                   <span>{label}</span>
                 </div>
                 <div className="group-content" key={number + 'c'}>
-                  {groupedOptionsByNumbers[number].map((option) => {
+                  {groupedOptionsByNumbers[number].map((option, i) => {
                     const checked = option.selected;
                     return (
                       <Button
@@ -149,7 +150,7 @@ const FacetOptions = (props) => {
                           />
                         )}
                         <span className="title">
-                          {getFilterValueDisplay(option.value)}
+                          <Term term={option.value} field={field} />
                         </span>
                         <span className="count">
                           {option.count.toLocaleString('en')}
@@ -185,7 +186,7 @@ const FacetOptions = (props) => {
                 />
               )}
               <span className="title">
-                {getFilterValueDisplay(option.value)}
+                <Term term={option.value} field={field} />
               </span>
               <span className="count">{option.count.toLocaleString('en')}</span>
             </Button>
