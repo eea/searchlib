@@ -1,7 +1,7 @@
 import React from 'react';
 import { valueToString } from '@eeacms/search/lib/utils';
 import { Label, Icon as UiIcon } from 'semantic-ui-react';
-import { Icon } from '@eeacms/search/components';
+import { Icon, Term } from '@eeacms/search/components';
 
 const FilterValue = (props) => {
   const {
@@ -29,7 +29,7 @@ const FilterValue = (props) => {
         <Icon family={iconsFamily} type={value} className="facet-option-icon" />
       )}
       <span className="text filterValue" title={value}>
-        {valueToString(value)}
+        <Term term={valueToString(value)} field={field} />
       </span>
       <UiIcon name="delete" />
     </Label>
