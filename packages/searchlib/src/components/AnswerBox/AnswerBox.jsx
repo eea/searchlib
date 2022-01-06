@@ -43,24 +43,29 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
-      <span dangerouslySetInnerHTML={{ __html: pre }}></span>
-      <ExternalLink href={highlightUrl(item.href, ans)}>
-        <span dangerouslySetInnerHTML={{ __html: ans }}></span>
-        <Popup
-          trigger={
-            <Rating
-              rating={Math.round(5 * answerItem.score)}
-              maxRating={5}
-              size="mini"
-              disabled
-            />
-          }
-        >
-          <AnswerBoxDetails />
-        </Popup>
-      </ExternalLink>{' '}
-      <span dangerouslySetInnerHTML={{ __html: post }}></span> (
-      <DateTime format="DATE_MED" value={item.issued} />)
+      <p>
+        <span dangerouslySetInnerHTML={{ __html: pre }}></span>
+        <ExternalLink href={highlightUrl(item.href, ans)}>
+          <span
+            dangerouslySetInnerHTML={{ __html: ans }}
+            className="scored_link"
+          ></span>
+          <Popup
+            trigger={
+              <Rating
+                rating={Math.round(5 * answerItem.score)}
+                maxRating={5}
+                size="mini"
+                disabled
+              />
+            }
+          >
+            <AnswerBoxDetails />
+          </Popup>
+        </ExternalLink>{' '}
+        <span dangerouslySetInnerHTML={{ __html: post }}></span> (
+        <DateTime format="DATE_MED" value={item.issued} />)
+      </p>
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
