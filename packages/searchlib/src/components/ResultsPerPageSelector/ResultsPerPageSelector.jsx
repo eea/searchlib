@@ -3,8 +3,6 @@ import { Dropdown, Icon } from 'semantic-ui-react';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const ResultsPerPageSelector = (props) => {
-  // const { views, active, onSetView } = props;
-
   const defaultProps = [20, 40, 60];
 
   const options = defaultProps.map((item) => ({
@@ -17,7 +15,7 @@ const ResultsPerPageSelector = (props) => {
   const { resultsPerPage, setResultsPerPage } = searchContext;
 
   return (
-    <div className="view-selector">
+    <div className="results-selector">
       <span>
         <Dropdown
           text={`${resultsPerPage} results/page`}
@@ -26,7 +24,7 @@ const ResultsPerPageSelector = (props) => {
           options={options}
           defaultValue={resultsPerPage}
           onChange={(e, { value }) => {
-            searchContext.setResultsPerPage(value);
+            setResultsPerPage(value);
           }}
         />
         <Icon name="dropdown" />
