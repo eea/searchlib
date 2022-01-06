@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { Button, Card, Dimmer, Icon, Sticky } from 'semantic-ui-react';
-import { Checkbox, Grid, Menu, Segment, Sidebar } from 'semantic-ui-react';
+// import { Checkbox, Grid, Menu, Segment, Sidebar } from 'semantic-ui-react';
 
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { bodyContentRefAtom, showFacetsAsideAtom } from '@eeacms/search/state';
@@ -13,7 +13,7 @@ import { ErrorBoundary } from '@elastic/react-search-ui';
 
 const DimmerFacets = (props) => {
   const [active, setActive] = React.useState(false);
-  const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
+  const [showFacets] = useAtom(showFacetsAsideAtom);
 
   return (
     <div>
@@ -71,8 +71,8 @@ const NormalFacets = (props) => {
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
   const isActive = width > 766;
-  const searchContext = useSearchContext();
-  const hasFilters = searchContext.filters.length > 0;
+  // const searchContext = useSearchContext();
+  // const hasFilters = searchContext.filters.length > 0;
 
   return (
     <Sticky context={bodyRef} active={isActive}>
@@ -109,10 +109,10 @@ const NormalFacets = (props) => {
 };
 
 export default (props) => {
-  const [bodyRef] = useAtom(bodyContentRefAtom);
-  const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
+  // const [bodyRef] = useAtom(bodyContentRefAtom);
+  const [, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
-  const isActive = width > 766;
+  // const isActive = width > 766;
   const isSmallScreen = width <= 766;
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
