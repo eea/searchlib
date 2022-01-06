@@ -27,7 +27,6 @@ const ResultsPerPageSelector = (props) => {
             setResultsPerPage(value);
           }}
         />
-        <Icon name="dropdown" />
       </span>
     </div>
   );
