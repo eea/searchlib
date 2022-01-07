@@ -26,7 +26,7 @@ export const bindOnAutocomplete = (config) =>
 
 export const bindOnSearch = (config) =>
   async function onSearch(state) {
-    console.log('onsearch');
+    console.log('onsearch', state);
     const { resultsPerPage } = state;
     const requestBody = buildRequest(state, config);
     // console.log('onSearch', { requestBody, config, state });
@@ -49,5 +49,5 @@ export const bindOnSearch = (config) =>
       config,
     );
 
-    return newState; //{ ...state, ...newState };
+    return { filters: state.filters, ...newState }; //{ ...state, ...newState };
   };
