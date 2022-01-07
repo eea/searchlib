@@ -269,7 +269,7 @@ const ViewComponent = (props) => {
   }
 
   const customClass =
-    'facet' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
+    'facet-' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
 
   return (
     <>
