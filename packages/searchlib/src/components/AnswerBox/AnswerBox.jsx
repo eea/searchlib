@@ -43,29 +43,12 @@ const AnswerContext = ({ item, answerItem }) => {
 
   return (
     <div className="answer__primary">
-      <p>
-        <span dangerouslySetInnerHTML={{ __html: pre }}></span>
-        <ExternalLink href={highlightUrl(item.href, ans)}>
-          <span
-            dangerouslySetInnerHTML={{ __html: ans }}
-            className="scored_link"
-          ></span>
-          <Popup
-            trigger={
-              <Rating
-                rating={Math.round(5 * answerItem.score)}
-                maxRating={5}
-                size="mini"
-                disabled
-              />
-            }
-          >
-            <AnswerBoxDetails />
-          </Popup>
-        </ExternalLink>{' '}
-        <span dangerouslySetInnerHTML={{ __html: post }}></span> (
-        <DateTime format="DATE_MED" value={item.issued} />)
-      </p>
+      <span dangerouslySetInnerHTML={{ __html: pre }}></span>
+      <ExternalLink href={highlightUrl(item.href, ans)}>
+        <span dangerouslySetInnerHTML={{ __html: ans }}></span>
+      </ExternalLink>{' '}
+      <span dangerouslySetInnerHTML={{ __html: post }}></span> (
+      <DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
@@ -150,9 +133,6 @@ score: 6.118757247924805
                     appConfig,
                   )
                 : null;
-              const links = filtered
-                .slice(1, filtered.length)
-                .slice(1, Math.min(filtered.length, MAX_COUNT));
 
               return (
                 <div
@@ -166,16 +146,32 @@ score: 6.118757247924805
                         item={primaryResult}
                         answerItem={primaryAnswer}
                       />
-                      {links.length ? (
-                        <div className="answers__links">
-                          <AnswerLinksList
-                            appConfig={appConfig}
-                            filtered={links}
-                          />
-                        </div>
-                      ) : (
-                        ''
-                      )}
+                      <div className="answers__links">
+                        <AnswerLinksList
+                          appConfig={appConfig}
+                          filtered={filtered
+                            .slice(1, filtered.length)
+                            .slice(1, Math.min(filtered.length, MAX_COUNT))}
+                        />
+                      </div>
+                    </div>
+                    <div className="answers__bottom">
+                      <Rating
+                        rating={Math.round(5 * primaryAnswer.score)}
+                        maxRating={5}
+                        size="mini"
+                        disabled
+                      />
+                      <div className="answers__bottom__spacer"></div>
+                      <Popup
+                        trigger={
+                          <Button basic size="mini">
+                            Direct answer
+                          </Button>
+                        }
+                      >
+                        <AnswerBoxDetails />
+                      </Popup>
                     </div>
                   </Segment>
                 </div>
