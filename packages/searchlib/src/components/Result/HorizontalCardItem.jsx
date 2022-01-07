@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
-import { Image, Label, Button } from 'semantic-ui-react';
+import { Image, Label, Button, Dropdown } from 'semantic-ui-react';
 
 import {
   Icon,
@@ -97,7 +97,7 @@ const CardItem = (props) => {
               </Label>
             )}
           </h3>
-          <p className="source">
+          <div className="source">
             <span>Source: </span>
             <ExternalLink href={result.href}>
               <span title={result.source} className="source">
@@ -128,23 +128,21 @@ const CardItem = (props) => {
               </Button>
             )}
             {showControls && isSmallScreen && (
-              <Button
-                className="mlt-alternative"
-                icon
-                size="mini"
-                compact
-                onClick={() => {
-                  removeFilter('lessLikeThis');
-                  setSearchTerm('');
-                  setMoreLikeThis(result);
-                  setFilter('moreLikeThis', result._original._id, 'none');
-                  setOpenFacets(true);
-                }}
-              >
-                <Icon name="ellipsis vertical" />
-              </Button>
+              <Dropdown icon="ellipsis vertical">
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      removeFilter('lessLikeThis');
+                      setMoreLikeThis(result);
+                      setFilter('moreLikeThis', result._original._id, 'none');
+                    }}
+                  >
+                    More like this
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
-          </p>
+          </div>
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
       </div>
