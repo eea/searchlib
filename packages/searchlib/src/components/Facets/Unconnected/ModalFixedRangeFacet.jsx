@@ -53,7 +53,7 @@ const ViewComponent = (props) => {
     ContentWrapper = 'div',
   } = props;
   const { appConfig } = useAppConfig();
-  const facetConfig = appConfig.facets.find((f) => f.field === field);
+  const facetConfig = appConfig.facets.find((f) => (f.id || f.field) === field);
   return (
     <>
       <HeaderWrapper>
@@ -79,20 +79,7 @@ const ViewComponent = (props) => {
 };
 
 const ModalFixedRangeFacetComponent = (props) => {
-  //<FacetWrapper {...props} view={(props) => } />
   return <ViewComponent {...props} />;
 };
 
 export default ModalFixedRangeFacetComponent;
-
-// import { withSearch } from '@elastic/react-search-ui';
-// export default withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(ModalFixedRangeFacetComponent);

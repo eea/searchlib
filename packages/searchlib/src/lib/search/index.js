@@ -9,12 +9,14 @@ export {
 } from './query/applyDisjunctiveFaceting';
 export {
   getTermFilter,
+  getDateRangeFilter,
   getRangeFilter,
   getHistogramFilter,
   getBooleanFilter,
 } from './query/filters';
 export {
   getValueFacet,
+  getDateRangeFacet,
   getRangeFacet,
   getHistogramFacet,
   getBooleanFacet,

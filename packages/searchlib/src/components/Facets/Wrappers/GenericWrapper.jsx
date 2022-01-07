@@ -1,5 +1,3 @@
-import React from 'react';
+import Facet from '../Facet';
 
-export default function GenericFacetWrapper({ view: ViewComponent, ...rest }) {
-  return <ViewComponent {...rest} />;
-}
+export default Facet;

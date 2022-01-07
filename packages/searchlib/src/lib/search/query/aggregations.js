@@ -61,3 +61,4 @@ export const buildRangeFacetAggregationRequest = (facet) => {
 };
 
 export const buildBooleanFacetRequest = (facet) => {};
+export const buildDateRangeFacetAggregationRequest = (facet) => {};

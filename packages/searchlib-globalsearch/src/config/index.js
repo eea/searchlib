@@ -1,3 +1,4 @@
+import React from 'react';
 import { suiFacet, mergeConfig } from '@eeacms/search';
 import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './../utils';
 
@@ -68,6 +69,10 @@ export default function install(config) {
   );
   // config.resolve.WebsiteFilterListComponent = {
   //   component: WebsiteFilterListComponent,
+  // };
+  // config.resolve.FreshnessRangeFacet = {
+  //   ...config.resolve.FixedRangeFacet,
+  //   component: (props) => <div>Mumu</div>,
   // };
 
   // config.resolve.LandingPage = { component: LandingPage };

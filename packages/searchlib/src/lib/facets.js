@@ -98,6 +98,7 @@ export const booleanFacet = (options) => {
     on,
     off,
     factory: 'BooleanFacet',
+    wrapper: 'DummySUIFacetWrapper',
     showInFacetsList: true,
     ...params,
   };
@@ -114,6 +115,26 @@ export const fixedRangeFacet = ({
     ...defaults,
     field,
     factory: 'FixedRangeFacet',
+    label: label || field,
+    showInFacetsList: true,
+    filterType,
+    isFilterable,
+    ...params,
+  };
+};
+
+export const dateRangeFacet = ({
+  field,
+  label,
+  filterType = 'any',
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    ...defaults,
+    field,
+    factory: 'DateRangeFacet',
+    wrapper: 'DummySUIFacetWrapper',
     label: label || field,
     showInFacetsList: true,
     filterType,

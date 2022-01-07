@@ -1,4 +1,4 @@
-export default {
+const vocab = {
   language: {
     ar: 'العربية (ar)',
     bg: 'Български (bg)',
@@ -35,3 +35,5 @@ export default {
     tr: 'Türkçe (tr)',
   },
 };
+
+export default { vocab };

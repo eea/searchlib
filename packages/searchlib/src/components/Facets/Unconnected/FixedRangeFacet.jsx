@@ -76,21 +76,8 @@ const ViewComponent = (props) => {
   );
 };
 
-const FixedRangeFacetComponent = (props) => {
-  //<FacetWrapper {...props} view={(props) => } />
-  return <ViewComponent {...props} />;
-};
+// const FixedRangeFacetComponent = (props) => {
+//   return <ViewComponent {...props} />;
+// };
 
-export default FixedRangeFacetComponent;
-
-// import { withSearch } from '@elastic/react-search-ui';
-// export default withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(FixedRangeFacetComponent);
+export default ViewComponent;

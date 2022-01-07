@@ -6,7 +6,7 @@ import views from './views';
 import query from './query';
 import filters from './filters';
 import download from './download';
-import vocab from './vocabulary';
+import vocabs from './vocabulary';
 
 import objectProvidesWhitelist from './json/objectProvidesWhitelist.json';
 import spatialWhitelist from './json/spatialWhitelist.json';
@@ -23,7 +23,7 @@ const globalSearchConfig = {
   useSearchPhrases: false,
   searchAsYouType: false,
 
-  vocab,
+  ...vocabs,
   ...facets,
   ...views,
   ...query,

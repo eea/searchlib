@@ -1,15 +1,40 @@
 import {
-  histogramFacet,
-  multiTermFacet,
-  makeRange,
   booleanFacet,
+  dateRangeFacet,
   fixedRangeFacet,
+  histogramFacet,
+  makeRange,
+  multiTermFacet,
 } from '@eeacms/search';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
 import { getTodayWithTime } from '../utils';
 
 const facets = [
+  booleanFacet(() => ({
+    field: 'IncludeArchived',
+    label: 'Include archived content',
+    id: 'archived-facet',
+    showInFacetsList: false,
+    showInSecondaryFacetsList: true,
+
+    // we want this to be applied by default
+    // when the facet is checked, then apply the `on` key:
+    off: {
+      constant_score: {
+        filter: {
+          bool: {
+            should: [
+              { bool: { must_not: { exists: { field: 'expires' } } } },
+              // Functions should be supported in the buildFilters
+              { range: { expires: { gte: getTodayWithTime() } } },
+            ],
+          },
+        },
+      },
+    },
+    on: null,
+  })),
   multiTermFacet({
     field: 'moreLikeThis',
     isFilterable: true,
@@ -185,6 +210,27 @@ const facets = [
       type: 'any',
     },
   }),
+  dateRangeFacet({
+    id: 'freshness',
+    field: 'issued',
+    label: 'Freshness',
+    showInFacetsList: false,
+    showInSecondaryFacetsList: true,
+    rangeType: 'dateRange',
+    isMulti: false,
+    ranges: [
+      { key: 'All time' },
+      { key: 'Last week' },
+      { key: 'Last month' },
+      { key: 'Large year' },
+    ],
+    factory: 'DateRangeFilter',
+    isFilter: true, // filters don't need facet options to show up
+    // default: {
+    //   values: [{ name: 'All', rangeType: 'fixed' }],
+    //   type: 'any',
+    // },
+  }),
   multiTermFacet({
     wrapper: 'ModalFacetWrapper',
     field: 'language',
@@ -197,50 +243,6 @@ const facets = [
     },
     factory: 'MultiTermListFacet',
   }),
-  // fixedRangeFacet({
-  //   field: 'freshness',
-  //   label: 'Freshness',
-  //   showInFacetsList: false,
-  //   showInSecondaryFacetsList: true,
-  //   rangeType: 'fixed',
-  //   isMulti: false,
-  //   ranges: [
-  //     { key: 'All' },
-  //     { from: 0, to: 4.99999, key: 'Short (<5 minutes)' },
-  //     { from: 5, to: 24.9999, key: 'Medium (5-25 minutes)' },
-  //     { from: 25, to: 10000, key: 'Large (25+ minutes)' },
-  //     //        { to: -0.0001, key: 'Unknown' },
-  //   ],
-  //   factory: 'UnconnectedFixedRangeFacet',
-  //   default: {
-  //     values: [{ name: 'All', rangeType: 'fixed' }],
-  //     type: 'any',
-  //   },
-  // }),
-  booleanFacet(() => ({
-    field: 'IncludeArchived',
-    label: 'Include archived content',
-    id: 'archived-facet',
-    showInFacetsList: false,
-    showInSecondaryFacetsList: true,
-
-    // we want this to be applied by default
-    // when the facet is checked, then apply the `on` key:
-    off: {
-      constant_score: {
-        filter: {
-          bool: {
-            should: [
-              { bool: { must_not: { exists: { field: 'expires' } } } },
-              // Functions should be supported in the buildFilters
-              { range: { expires: { gte: getTodayWithTime() } } },
-            ],
-          },
-        },
-      },
-    },
-    on: null,
-  })),
 
   /*    multiTermFacet({
           showInFacetsList: false,

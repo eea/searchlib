@@ -77,3 +77,7 @@ export function getRangeFacet(options) {
 export function getHistogramFacet(aggregations, fieldName) {}
 
 export function getBooleanFacet(options) {}
+
+export function getDateRangeFacet(options, fieldName) {
+  console.log('getDateRangeFacet', options, fieldName);
+}

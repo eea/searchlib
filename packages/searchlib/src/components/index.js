@@ -1,4 +1,5 @@
 import Component from './Component/Component';
+import Facet from './Facets/Facet';
 import Term from './Term/Term';
 import Icon from './Icon/Icon';
 import MultiCheckboxFacet from './Facets/Unconnected/MultiCheckboxFacet';
@@ -37,6 +38,7 @@ import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 
 export {
   Component,
+  Facet,
   Icon,
   Term,
   SegmentedBreadcrumb,

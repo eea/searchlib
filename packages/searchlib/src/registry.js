@@ -12,6 +12,8 @@ import MultiTermFacet from '@eeacms/search/components/Facets/Unconnected/MultiTe
 import MultiTermListFacet from '@eeacms/search/components/Facets/Unconnected/MultiTermListFacet';
 import HistogramFacet from '@eeacms/search/components/Facets/Unconnected/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
+import DropdownFixedRangeFilter from '@eeacms/search/components/Filters/DropdownFixedRangeFilter';
+import FilterWrapper from '@eeacms/search/components/Filters/FilterWrapper';
 import FixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/FixedRangeFacet';
 import ModalFixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/ModalFixedRangeFacet';
 import {
@@ -43,10 +45,13 @@ import {
   getRangeFilter,
   getValueFacet,
   getRangeFacet,
+  getDateRangeFilter,
+  getDateRangeFacet,
   getHistogramFilter,
   getBooleanFilter,
   getBooleanFacet,
   buildTermFacetAggregationRequest,
+  buildDateRangeFacetAggregationRequest,
   buildHistogramFacetAggregationRequest,
   buildRangeFacetAggregationRequest,
   buildMLTFilter,
@@ -83,6 +88,13 @@ const config = {
       buildRequest: buildRangeFacetAggregationRequest,
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
+    },
+    DateRangeFilter: {
+      component: DropdownFixedRangeFilter,
+      wrapper: FilterWrapper,
+      buildRequest: buildDateRangeFacetAggregationRequest, //not implemented
+      buildFilter: getDateRangeFilter,
+      getValue: getDateRangeFacet,
     },
     ModalFixedRangeFacet: {
       component: ModalFixedRangeFacet,
@@ -202,6 +214,11 @@ const config = {
 
     DefaultFilterValue: {
       component: DefaultFilterValue,
+    },
+    DummySUIFacetWrapper: {
+      component: ({ view: ViewComponent, ...rest }) => (
+        <ViewComponent {...rest} />
+      ),
     },
 
     ResultModel,

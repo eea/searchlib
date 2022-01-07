@@ -25,7 +25,7 @@ export function buildRequestFilter(filters, config) {
     {},
     ...config.facets?.map((facetConfig) => {
       return {
-        [facetConfig.field]: {
+        [facetConfig.id || facetConfig.field]: {
           ...registry.resolve[facetConfig.factory],
           ...facetConfig,
         },
@@ -36,10 +36,10 @@ export function buildRequestFilter(filters, config) {
   const requestFilters = [
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
       facetConfig.buildFilter(
-        _fieldToFilterValueMap[fieldName] ??
+        _fieldToFilterValueMap[facetConfig.field] ??
           (facetConfig.defaultValue
             ? {
-                field: fieldName,
+                field: facetConfig.field,
                 ...facetConfig.default,
               }
             : null),
@@ -48,6 +48,8 @@ export function buildRequestFilter(filters, config) {
     ),
     ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
   ].filter((f) => !!f);
+
+  // console.log(_configuredFacets, requestFilters);
 
   return requestFilters;
 }
@@ -93,6 +95,41 @@ export function getTermFilter(filter) {
 
 export function getRangeFilter(filter) {
   // Construct ES DSL query for range facets
+  if (!filter) return;
+
+  if (filter.type === 'any') {
+    return {
+      bool: {
+        should: filter.values.map((filterValue) => ({
+          range: {
+            [filter.field]: {
+              ...(filterValue.to && { to: filterValue.to }),
+              ...(filterValue.to && { from: filterValue.from }),
+            },
+          },
+        })),
+        minimum_should_match: 1,
+      },
+    };
+  } else if (filter.type === 'all') {
+    return {
+      bool: {
+        filter: filter.values.map((filterValue) => ({
+          range: {
+            [filter.field]: {
+              ...(filterValue.to && { to: filterValue.to }),
+              ...(filterValue.to && { from: filterValue.from }),
+            },
+          },
+        })),
+      },
+    };
+  }
+}
+
+export function getDateRangeFilter(filter) {
+  // Construct ES DSL query for range facets
+  console.log('date range filter', filter);
   if (!filter) return;
 
   if (filter.type === 'any') {
