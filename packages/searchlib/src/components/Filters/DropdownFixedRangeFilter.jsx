@@ -2,22 +2,25 @@ import React from 'react';
 import cx from 'classnames';
 import { Dropdown } from 'semantic-ui-react';
 
-function getFilterValueDisplay(filterValue) {
-  if (filterValue === undefined || filterValue === null) return '';
-  if (filterValue.hasOwnProperty('name')) return filterValue.name;
-  return String(filterValue);
-}
-
 const ViewComponent = (props) => {
-  const { className, label, onRemove, onSelect, options } = props;
-  // console.log('options', props);
-  return <div>Date range facet here</div>;
+  const { className, label, id, field, filters, appConfig } = props;
 
-  const value = (props.values?.[0] || props.default?.values?.[0])?.name;
+  const filter = filters.find(
+    (f) => (f.id && f.id === id) || f.field === field,
+  );
+  const filterConfig = appConfig.facets.find(
+    (f) => (f.id || f.field) === field,
+  );
 
-  console.log('hello');
+  const options = filterConfig.ranges.map(({ key, label }) => ({
+    text: label || key,
+    value: key,
+  }));
 
-  // TODO: fix classname
+  const { setFilter, removeFilter } = props;
+
+  let value = (filter?.values || filterConfig['default'].values)?.[0];
+  // value = filterConfig.isMulti ? value : value[0];
 
   return (
     <div className={cx(className, 'sorting')}>
@@ -29,14 +32,11 @@ const ViewComponent = (props) => {
             </>
           }
           inline
-          options={options.map(({ value, config }) => ({
-            text: getFilterValueDisplay(value),
-            value: config?.key || getFilterValueDisplay(value),
-          }))}
+          options={options}
           value={value}
           onChange={(e, opt) => {
-            onRemove(value);
-            onSelect(opt.value);
+            removeFilter(field, value, 'any');
+            setFilter(field, opt.value, 'any');
           }}
         />
       </span>

@@ -211,7 +211,6 @@ const facets = [
     },
   }),
   dateRangeFacet({
-    id: 'freshness',
     field: 'issued',
     label: 'Freshness',
     showInFacetsList: false,
@@ -222,14 +221,14 @@ const facets = [
       { key: 'All time' },
       { key: 'Last week' },
       { key: 'Last month' },
-      { key: 'Large year' },
+      { key: 'Last year' },
     ],
     factory: 'DateRangeFilter',
     isFilter: true, // filters don't need facet options to show up
-    // default: {
-    //   values: [{ name: 'All', rangeType: 'fixed' }],
-    //   type: 'any',
-    // },
+    default: {
+      values: ['All time'],
+      type: 'any',
+    },
   }),
   multiTermFacet({
     wrapper: 'ModalFacetWrapper',

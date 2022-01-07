@@ -1,6 +1,5 @@
 /**
- * A replacement for the SUIFacet class that knows that facet fields can be aliased
- * (basically, identify them with facetConfig.id instead of facetConfig.field.
+ * Unfinished!!!
  *
  */
 
@@ -25,7 +24,7 @@ const FilterContainer = (props) => {
     ...rest
   } = props;
   const searchContext = useSearchContext();
-  // console.log('s', searchContext);
+  console.log('s', field);
 
   const { filters, facets, addFilter, removeFilter, setFilter } = searchContext;
 

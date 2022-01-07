@@ -13,7 +13,7 @@ import MultiTermListFacet from '@eeacms/search/components/Facets/Unconnected/Mul
 import HistogramFacet from '@eeacms/search/components/Facets/Unconnected/HistogramFacet';
 import BooleanFacet from '@eeacms/search/components/Facets/Unconnected/BooleanFacet';
 import DropdownFixedRangeFilter from '@eeacms/search/components/Filters/DropdownFixedRangeFilter';
-import FilterWrapper from '@eeacms/search/components/Filters/FilterWrapper';
+// import FilterWrapper from '@eeacms/search/components/Filters/FilterWrapper';
 import FixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/FixedRangeFacet';
 import ModalFixedRangeFacet from '@eeacms/search/components/Facets/Unconnected/ModalFixedRangeFacet';
 import {
@@ -91,7 +91,7 @@ const config = {
     },
     DateRangeFilter: {
       component: DropdownFixedRangeFilter,
-      wrapper: FilterWrapper,
+      // wrapper: FilterWrapper,
       buildRequest: buildDateRangeFacetAggregationRequest, //not implemented
       buildFilter: getDateRangeFilter,
       getValue: getDateRangeFacet,
