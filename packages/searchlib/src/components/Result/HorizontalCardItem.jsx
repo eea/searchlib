@@ -100,7 +100,9 @@ const CardItem = (props) => {
           <p className="source">
             <span>Source: </span>
             <ExternalLink href={result.href}>
-              <span title={result.source}>{firstWords(result.source, 3)}</span>
+              <span title={result.source} className="source">
+                {firstWords(result.source, 3)}
+              </span>
               <SegmentedBreadcrumb
                 href={result.href}
                 short={true}
