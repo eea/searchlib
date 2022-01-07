@@ -268,9 +268,12 @@ const ViewComponent = (props) => {
     });
   }
 
+  const customClass =
+    'facet' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
+
   return (
     <>
-      <HeaderWrapper>
+      <HeaderWrapper className={customClass}>
         <div className="multitermlist__facet__header">
           <div className="facet-title">
             <h3>{facetConfig?.title || label}</h3>
@@ -330,20 +333,24 @@ const ViewComponent = (props) => {
         </div>
       </HeaderWrapper>
       <ContentWrapper>
-        <FacetOptions
-          field={field}
-          groupedOptionsByLetters={byLetters}
-          groupedOptionsByNumbers={byNumbers}
-          iconsFamily={iconsFamily}
-          label={label}
-          onRemove={onRemove}
-          onSelect={onSelect}
-          sortedOptions={sortedOptions}
-          sorting={sorting}
-        />
         <fieldset
-          className={cx('sui-facet searchlib-multiterm-facet', className)}
+          className={cx(
+            'sui-facet searchlib-multiterm-facet',
+            className,
+            customClass,
+          )}
         >
+          <FacetOptions
+            field={field}
+            groupedOptionsByLetters={byLetters}
+            groupedOptionsByNumbers={byNumbers}
+            iconsFamily={iconsFamily}
+            label={label}
+            onRemove={onRemove}
+            onSelect={onSelect}
+            sortedOptions={sortedOptions}
+            sorting={sorting}
+          />
           {showMore && (
             <button
               type="button"
