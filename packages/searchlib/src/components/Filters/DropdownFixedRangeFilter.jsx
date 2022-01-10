@@ -22,6 +22,7 @@ const ViewComponent = (props) => {
   let value = (filter?.values || filterConfig['default'].values)?.[0];
   // value = filterConfig.isMulti ? value : value[0];
 
+  // TODO: fix styling
   return (
     <div className={cx(className, 'sorting')}>
       <span>
@@ -35,8 +36,8 @@ const ViewComponent = (props) => {
           options={options}
           value={value}
           onChange={(e, opt) => {
-            removeFilter(field, value, 'any');
-            setFilter(field, opt.value, 'any');
+            removeFilter(field, value, filterConfig.filterType);
+            setFilter(field, opt.value, filterConfig.filterType);
           }}
         />
       </span>

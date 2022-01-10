@@ -16,7 +16,7 @@ export {
 } from './query/filters';
 export {
   getValueFacet,
-  getDateRangeFacet,
+  // getDateRangeFacet,
   getRangeFacet,
   getHistogramFacet,
   getBooleanFacet,

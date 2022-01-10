@@ -127,39 +127,72 @@ export function getRangeFilter(filter) {
   }
 }
 
-export function getDateRangeFilter(filter) {
+const splitter_re = /(?<now>now)\s?(?<op>[\+|\-])\s?(?<count>\d+)(?<quantifier>\w)/;
+
+const DAY = 86400000; // 1000 * 60 * 60 * 24
+
+export function getDateRangeFilter(filter, filterConfig) {
   // Construct ES DSL query for range facets
-  console.log('date range filter', filter);
   if (!filter) return;
 
-  if (filter.type === 'any') {
-    return {
-      bool: {
-        should: filter.values.map((filterValue) => ({
-          range: {
-            [filter.field]: {
-              ...(filterValue.to && { to: filterValue.to }),
-              ...(filterValue.to && { from: filterValue.from }),
-            },
+  // should = "or", filter = "and"
+  const minus = (x, y) => x - y;
+  const plus = (x, y) => x + y;
+
+  const toDays = (quantifier) =>
+    quantifier === 'd'
+      ? (x) => x * 1
+      : quantifier === 'w'
+      ? (x) => x * 7
+      : quantifier === 'm'
+      ? (x) => x * 30
+      : quantifier === 'y'
+      ? (x) => x * 365
+      : (x) => x * 1;
+
+  const toRange = (name) => {
+    if (!name) return {};
+    const now = new Date().getTime();
+    const match = name.match(splitter_re);
+    let { op, count, quantifier } = match.groups;
+    op = op === '-' ? minus : plus;
+    const other = op(now, toDays(quantifier)(parseInt(count)) * DAY);
+    const to = op === '-' ? other : now;
+    const from = op === '-' ? now : other;
+    return { to, from };
+  };
+
+  const res =
+    filter.type === 'any'
+      ? {
+          bool: {
+            should: filter.values.map((filterValue) => ({
+              range: {
+                [filter.field]: toRange(
+                  filterConfig.ranges.find((f) => f.key === filterValue).calc,
+                ),
+              },
+            })),
+            minimum_should_match: 1,
           },
-        })),
-        minimum_should_match: 1,
-      },
-    };
-  } else if (filter.type === 'all') {
-    return {
-      bool: {
-        filter: filter.values.map((filterValue) => ({
-          range: {
-            [filter.field]: {
-              ...(filterValue.to && { to: filterValue.to }),
-              ...(filterValue.to && { from: filterValue.from }),
-            },
+        }
+      : filter.type === 'all'
+      ? {
+          bool: {
+            filter: filter.values.map((filterValue) => ({
+              range: {
+                [filter.field]: toRange(
+                  filterConfig.ranges.find((f) => f.key === filterValue).calc,
+                ),
+              },
+            })),
           },
-        })),
-      },
-    };
-  }
+        }
+      : {};
+
+  // console.log('date range filter', { filter, filterConfig, res });
+
+  return res;
 }
 
 export const getHistogramFilter = getRangeFilter;

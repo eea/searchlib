@@ -46,7 +46,7 @@ import {
   getValueFacet,
   getRangeFacet,
   getDateRangeFilter,
-  getDateRangeFacet,
+  // getDateRangeFacet,
   getHistogramFilter,
   getBooleanFilter,
   getBooleanFacet,
@@ -89,12 +89,12 @@ const config = {
       buildFilter: getRangeFilter,
       getValue: getRangeFacet,
     },
-    DateRangeFilter: {
+    DropdownRangeFilter: {
       component: DropdownFixedRangeFilter,
       // wrapper: FilterWrapper,
       buildRequest: buildDateRangeFacetAggregationRequest, //not implemented
       buildFilter: getDateRangeFilter,
-      getValue: getDateRangeFacet,
+      // getValue: getDateRangeFacet,
     },
     ModalFixedRangeFacet: {
       component: ModalFixedRangeFacet,
@@ -263,7 +263,9 @@ const config = {
       //   },
       // },
 
-      facets: [], // interactive filtering components (facets)
+      facets: [
+        //
+      ], // interactive filtering components (facets)
       icons: {
         default: {
           // a registry of icons. An icon is like:

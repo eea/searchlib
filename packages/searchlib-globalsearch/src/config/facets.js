@@ -211,20 +211,21 @@ const facets = [
     },
   }),
   dateRangeFacet({
-    field: 'issued',
+    field: 'issued.date',
     label: 'Freshness',
+    isFilter: true, // filters don't need facet options to show up
     showInFacetsList: false,
     showInSecondaryFacetsList: true,
-    rangeType: 'dateRange',
+    // rangeType: 'dateRange',
     isMulti: false,
     ranges: [
       { key: 'All time' },
-      { key: 'Last week' },
-      { key: 'Last month' },
-      { key: 'Last year' },
+      { key: 'Last week', calc: 'now-7d' },
+      { key: 'Last month', calc: 'now-30d' },
+      { key: 'Last 3 months', calc: 'now-90d' },
+      { key: 'Last year', calc: 'now-365d' },
     ],
-    factory: 'DateRangeFilter',
-    isFilter: true, // filters don't need facet options to show up
+    factory: 'DropdownRangeFilter',
     default: {
       values: ['All time'],
       type: 'any',

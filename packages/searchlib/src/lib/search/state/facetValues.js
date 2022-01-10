@@ -78,6 +78,6 @@ export function getHistogramFacet(aggregations, fieldName) {}
 
 export function getBooleanFacet(options) {}
 
-export function getDateRangeFacet(options, fieldName) {
-  console.log('getDateRangeFacet', options, fieldName);
-}
+// export function getDateRangeFacet(options, fieldName) {
+//   console.log('getDateRangeFacet', options, fieldName);
+// }
