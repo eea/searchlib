@@ -150,16 +150,25 @@ export function getDateRangeFilter(filter, filterConfig) {
       ? (x) => x * 365
       : (x) => x * 1;
 
-  const toRange = (name) => {
+  const toDate = (name) => {
     if (!name) return {};
     const now = new Date().getTime();
+    if (name === 'now') return now;
     const match = name.match(splitter_re);
     let { op, count, quantifier } = match.groups;
     op = op === '-' ? minus : plus;
     const other = op(now, toDays(quantifier)(parseInt(count)) * DAY);
-    const to = op === '-' ? other : now;
-    const from = op === '-' ? now : other;
-    return { to, from };
+    return other;
+    // const to = op === '-' ? other : now;
+    // const from = op === '-' ? now : other;
+    // return { to, from };
+  };
+
+  const toRangeFilter = (filterValue) => {
+    const found = filterConfig.ranges.find((f) => f.key === filterValue);
+    return found.to && found.from
+      ? { to: toDate(found.to), from: toDate(found.from) }
+      : {};
   };
 
   const res =
@@ -168,9 +177,7 @@ export function getDateRangeFilter(filter, filterConfig) {
           bool: {
             should: filter.values.map((filterValue) => ({
               range: {
-                [filter.field]: toRange(
-                  filterConfig.ranges.find((f) => f.key === filterValue).calc,
-                ),
+                [filter.field]: toRangeFilter(filterValue),
               },
             })),
             minimum_should_match: 1,
@@ -181,16 +188,14 @@ export function getDateRangeFilter(filter, filterConfig) {
           bool: {
             filter: filter.values.map((filterValue) => ({
               range: {
-                [filter.field]: toRange(
-                  filterConfig.ranges.find((f) => f.key === filterValue).calc,
-                ),
+                [filter.field]: toRangeFilter(filterValue),
               },
             })),
           },
         }
       : {};
 
-  // console.log('date range filter', { filter, filterConfig, res });
+  // console.log('date range filter', { res, filter, filterConfig });
 
   return res;
 }

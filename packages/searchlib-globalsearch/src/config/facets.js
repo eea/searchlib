@@ -220,11 +220,11 @@ const facets = [
     isMulti: false,
     ranges: [
       { key: 'All time' },
-      { key: 'Last week', calc: 'now-1w' },
-      { key: 'Last month', calc: 'now-1m' },
-      { key: 'Last 3 months', calc: 'now-3m' },
-      { key: 'Last year', calc: 'now-1y' },
-      { key: 'Last 2 years', calc: 'now-2y' },
+      { key: 'Last week', from: 'now-1w', to: 'now' },
+      { key: 'Last month', from: 'now-1m', to: 'now' },
+      { key: 'Last 3 months', from: 'now-3m', to: 'now' },
+      { key: 'Last year', from: 'now-1y', to: 'now' },
+      { key: 'Last 2 years', from: 'now-2y', to: 'now' },
     ],
     factory: 'DropdownRangeFilter',
     default: {
