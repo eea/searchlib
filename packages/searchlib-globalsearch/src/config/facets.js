@@ -105,14 +105,6 @@ const facets = [
     factory: 'MultiTermListFacet',
   }),
   multiTermFacet({
-    field: 'organisation',
-    isFilterable: false,
-    isMulti: true,
-    label: 'Organisation involved',
-    wrapper: 'ModalFacetWrapper',
-    factory: 'MultiTermListFacet',
-  }),
-  multiTermFacet({
     field: 'cluster_name',
     isFilterable: false,
     isMulti: true,
