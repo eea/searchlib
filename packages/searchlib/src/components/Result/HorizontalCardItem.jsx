@@ -129,7 +129,7 @@ const CardItem = (props) => {
             )}
             {showControls && isSmallScreen && (
               <Dropdown icon="ellipsis vertical">
-                <Dropdown.Menu>
+                <Dropdown.Menu className="mlt">
                   <Dropdown.Item
                     onClick={() => {
                       removeFilter('lessLikeThis');
