@@ -57,8 +57,8 @@ const SectionTabs = (props) => {
   const tabSize = (title) => {
     return title.length * 10 + 120;
   };
-  const noLeftCol = width < 750 ? 150 : 0;
-  const tolerance = 190 - noLeftCol;
+  const noLeftCol = width < 770 ? 150 : 0;
+  const tolerance = 230 - noLeftCol;
 
   let visibleSections = [];
   let hiddenSections = [];
@@ -117,9 +117,22 @@ const SectionTabs = (props) => {
       {enableFeature && hiddenSections.length > 0 && (
         <Dropdown item text="More">
           <Dropdown.Menu>
-            <Dropdown.Item icon="edit" text="Edit Profile" />
-            <Dropdown.Item icon="globe" text="Choose Language" />
-            <Dropdown.Item icon="settings" text="Account Settings" />
+            {hiddenSections.map(({ value, count }) => (
+              <Dropdown.Item
+                key={value}
+                active={activeValues.includes(value)}
+                onClick={() => {
+                  searchContext.setFilter(facetField, value, 'any');
+                  views.setActiveViewId(
+                    sectionMapping[value].defaultResultView || 'listing',
+                  );
+                }}
+              >
+                <Icon type={value} family="Content types" />
+                <span className="title">{value}</span>
+                <span className="count">({count})</span>
+              </Dropdown.Item>
+            ))}
           </Dropdown.Menu>
         </Dropdown>
       )}
