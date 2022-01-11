@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { Dropdown } from 'semantic-ui-react';
+import { useWindowDimensions } from '@eeacms/search/lib/hocs';
 
 const ViewComponent = (props) => {
   const { className, label, id, field, filters, appConfig } = props;
@@ -19,6 +20,14 @@ const ViewComponent = (props) => {
 
   const { setFilter, removeFilter } = props;
 
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < 1000;
+
+  let labelText = label;
+  if (isSmallScreen) {
+    labelText = '';
+  }
+
   let value = (filter?.values || filterConfig['default'].values)?.[0];
   // value = filterConfig.isMulti ? value : value[0];
 
@@ -29,7 +38,7 @@ const ViewComponent = (props) => {
         <Dropdown
           trigger={
             <>
-              {label} <span>{value}</span>
+              {labelText} <span>{value}</span>
             </>
           }
           inline

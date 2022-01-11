@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
+import { useWindowDimensions } from '@eeacms/search/lib/hocs';
 
 const ViewSelectorWithLabel = (props) => {
   const { views, active, onSetView } = props;
@@ -20,11 +21,19 @@ const ViewSelectorWithLabel = (props) => {
     value: view.id,
   }));
 
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < 1000;
+
+  let label = 'Display as';
+  if (isSmallScreen) {
+    label = ' ';
+  }
+
   return (
     <div className="view-selector">
       <span>
         <Dropdown
-          text="Display as"
+          text={label}
           icon={iconNames[active]}
           key={active}
           inline
