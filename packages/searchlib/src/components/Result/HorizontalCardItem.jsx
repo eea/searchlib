@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
-import { Image, Label, Button, Dropdown } from 'semantic-ui-react';
+import { Label, Button, Dropdown } from 'semantic-ui-react';
 
 import {
   Icon,

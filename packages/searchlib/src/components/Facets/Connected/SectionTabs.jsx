@@ -3,11 +3,12 @@
  */
 
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 import { Icon } from '@eeacms/search/components';
 import { useAtom } from 'jotai';
 
 import {
+  useWindowDimensions,
   useSearchContext,
   useAppConfig,
   useViews,
@@ -17,6 +18,7 @@ import { isLandingPageAtom } from '@eeacms/search/state';
 const cmp = (a, b) => (a > b ? 1 : a === b ? 0 : a < b ? -1 : 0);
 
 const SectionTabs = (props) => {
+  const { width } = useWindowDimensions();
   const searchContext = useSearchContext();
   const { appConfig } = useAppConfig();
   const [isLandingPage] = useAtom(isLandingPageAtom);
@@ -52,6 +54,39 @@ const SectionTabs = (props) => {
     cmp(sectionOrder.indexOf(s1.value), sectionOrder.indexOf(s2.value)),
   );
 
+  const tabSize = (title) => {
+    return title.length * 10 + 120;
+  };
+  const noLeftCol = width < 750 ? 150 : 0;
+  const tolerance = 190 - noLeftCol;
+
+  let visibleSections = [];
+  let hiddenSections = [];
+  console.log('---------------------------');
+  console.log('Window width:', width);
+  let totalWidth = 0;
+  for (let section of sections) {
+    let tabS = tabSize(section.value);
+    totalWidth += tabS;
+
+    if (totalWidth + tolerance > width) {
+      console.log('HIDDEN:', section.value, tabS);
+      section.hidden = true;
+      hiddenSections.push(section);
+    } else {
+      console.log(section.value, tabS);
+      section.hidden = false;
+      visibleSections.push(section);
+    }
+  }
+  console.log('Tabs total width:', totalWidth);
+  console.log(sections);
+  const enableFeature = false; // WIP use it to test the partial solution
+
+  if (enableFeature) {
+    sections = visibleSections;
+  }
+
   return (
     <Menu className="content-section-tabs">
       <Menu.Item
@@ -79,6 +114,15 @@ const SectionTabs = (props) => {
           <span className="count">({count})</span>
         </Menu.Item>
       ))}
+      {enableFeature && hiddenSections.length > 0 && (
+        <Dropdown item text="More">
+          <Dropdown.Menu>
+            <Dropdown.Item icon="edit" text="Edit Profile" />
+            <Dropdown.Item icon="globe" text="Choose Language" />
+            <Dropdown.Item icon="settings" text="Account Settings" />
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
     </Menu>
   );
 };
