@@ -148,18 +148,20 @@ const CardItem = (props) => {
       </div>
       {result.hasImage ? (
         <div className="col-right">
-          <Image
-            className="img-thumbnail"
-            src={result.thumbUrl}
-            wrapped
-            ui={false}
-            fluid
-            centered
-            as={ExternalLink}
+          <a
+            className={`centered fluid image img-thumbnail`}
             href={result.href}
             target="_blank"
             rel="noreferrer"
-          />
+          >
+            <img
+              alt={result.href}
+              src={result.thumbUrl}
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </a>
         </div>
       ) : null}
     </div>
