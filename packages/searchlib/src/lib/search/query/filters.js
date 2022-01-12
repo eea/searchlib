@@ -82,12 +82,9 @@ export function getTermFilter(filter) {
     }
     filter_type = filter.type.split(',')[0];
   }
-  console.log(filter_type);
-  if (exact) {
-    console.log(exact);
-  }
-  if (filter.type === 'any') {
-    return {
+
+  if (filter_type === 'any') {
+    let query = {
       bool: {
         should: filter.values.map((filterValue) => ({
           term: getTermFilterValue(filter.field, filterValue),
@@ -95,14 +92,25 @@ export function getTermFilter(filter) {
         minimum_should_match: 1,
       },
     };
-  } else if (filter.type === 'all') {
-    return {
+    if (exact) {
+      query.bool.must = { term: {} };
+      query.bool.must.term['items_count_' + filter.field] = 1;
+    }
+    return query;
+  } else if (filter_type === 'all') {
+    let query = {
       bool: {
         filter: filter.values.map((filterValue) => ({
           term: getTermFilterValue(filter.field, filterValue),
         })),
       },
     };
+    if (exact) {
+      query.bool.must = { term: {} };
+      query.bool.must.term['items_count_' + filter.field] =
+        filter.values.length;
+    }
+    return query;
   }
 }
 
