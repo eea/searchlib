@@ -37,12 +37,12 @@ export function buildRequestFilter(filters, config) {
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
       facetConfig.buildFilter(
         _fieldToFilterValueMap[facetConfig.field] ??
-          (facetConfig.defaultValue
-            ? {
-                field: facetConfig.field,
-                ...facetConfig.default,
-              }
-            : null),
+        (facetConfig.defaultValue
+          ? {
+            field: facetConfig.field,
+            ...facetConfig.default,
+          }
+          : null),
         facetConfig,
       ),
     ),
@@ -69,10 +69,23 @@ export function getTermFilterValue(field, fieldValue) {
 
 export function getTermFilter(filter) {
   // Construct ES DSL query for term facets
-
   if (!filter) return;
   // console.log('termfilter', filter);
-
+  let exact = false;
+  let filter_type = filter.type
+  if (filter_type) {
+    if (
+      filter_type.split(',').length > 1 &&
+      filter_type.split(',')[1] === 'exact'
+    ) {
+      exact = true;
+    }
+    filter_type = filter.type.split(',')[0];
+  }
+  console.log(filter_type);
+  if (exact) {
+    console.log(exact);
+  }
   if (filter.type === 'any') {
     return {
       bool: {
@@ -143,12 +156,12 @@ export function getDateRangeFilter(filter, filterConfig) {
     quantifier === 'd'
       ? (x) => x * 1
       : quantifier === 'w'
-      ? (x) => x * 7
-      : quantifier === 'm'
-      ? (x) => x * 30
-      : quantifier === 'y'
-      ? (x) => x * 365
-      : (x) => x * 1;
+        ? (x) => x * 7
+        : quantifier === 'm'
+          ? (x) => x * 30
+          : quantifier === 'y'
+            ? (x) => x * 365
+            : (x) => x * 1;
 
   const toDate = (name) => {
     if (!name) return {};
@@ -174,17 +187,17 @@ export function getDateRangeFilter(filter, filterConfig) {
   const res =
     filter.type === 'any'
       ? {
-          bool: {
-            should: filter.values.map((filterValue) => ({
-              range: {
-                [filter.field]: toRangeFilter(filterValue),
-              },
-            })),
-            minimum_should_match: 1,
-          },
-        }
+        bool: {
+          should: filter.values.map((filterValue) => ({
+            range: {
+              [filter.field]: toRangeFilter(filterValue),
+            },
+          })),
+          minimum_should_match: 1,
+        },
+      }
       : filter.type === 'all'
-      ? {
+        ? {
           bool: {
             filter: filter.values.map((filterValue) => ({
               range: {
@@ -193,7 +206,7 @@ export function getDateRangeFilter(filter, filterConfig) {
             })),
           },
         }
-      : {};
+        : {};
 
   // console.log('date range filter', { res, filter, filterConfig });
 

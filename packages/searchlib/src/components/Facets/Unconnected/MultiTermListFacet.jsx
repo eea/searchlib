@@ -215,6 +215,8 @@ const ViewComponent = (props) => {
     HeaderWrapper = 'div',
     ContentWrapper = 'div',
     iconsFamily,
+    onChangeFilterExact,
+    filterExact = '',
   } = props;
   // console.log('pp', props);
   const { appConfig } = useAppConfig();
@@ -270,7 +272,7 @@ const ViewComponent = (props) => {
 
   const customClass =
     'facet-' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
-
+  console.log('asd');
   return (
     <>
       <HeaderWrapper className={customClass}>
@@ -301,6 +303,16 @@ const ViewComponent = (props) => {
               onChangeFilterType(checked ? 'all' : 'any');
             }}
           />
+
+          <Checkbox
+            toggle
+            label="Exact"
+            checked={filterExact === 'exact'}
+            onChange={(e, { checked }) => {
+              onChangeFilterExact(checked ? 'exact' : '');
+            }}
+          />
+
 
           <div className="order-controls">
             <span className="label">Order:</span>
