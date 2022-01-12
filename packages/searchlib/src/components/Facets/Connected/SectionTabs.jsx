@@ -62,26 +62,20 @@ const SectionTabs = (props) => {
 
   let visibleSections = [];
   let hiddenSections = [];
-  console.log('---------------------------');
-  console.log('Window width:', width);
   let totalWidth = 0;
   for (let section of sections) {
     let tabS = tabSize(section.value);
     totalWidth += tabS;
 
     if (totalWidth + tolerance > width) {
-      console.log('HIDDEN:', section.value, tabS);
       section.hidden = true;
       hiddenSections.push(section);
     } else {
-      console.log(section.value, tabS);
       section.hidden = false;
       visibleSections.push(section);
     }
   }
-  console.log('Tabs total width:', totalWidth);
-  console.log(sections);
-  const enableFeature = false; // WIP use it to test the partial solution
+  const enableFeature = true; // WIP use it to test the partial solution
 
   if (enableFeature) {
     sections = visibleSections;
