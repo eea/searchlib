@@ -34,6 +34,25 @@ const vocab = {
     sv: 'Svenska (sv)',
     tr: 'Türkçe (tr)',
   },
+  cluster_name: {
+    eea: 'European Environment Agency',
+    fise: 'Forest Information System for Europe',
+    bise: 'Biodiversity Information System for Europe',
+    industry: 'European Industrial Emissions Portal',
+    energy: 'Climate and Energy in the EU',
+    cca: 'Climate Adaptation Platform',
+    ias: 'Invasive Alien Species',
+    'wise-freshwater': 'Fresh Water Information System for Europe',
+    'wise-marine': 'Marine Water Information System for Europe',
+    etc: 'European Environment Information and Observation Network (Eionet)',
+    'etc-atni': 'ETC on Air Pollution, Transport, Noise and Industrial Pollution',
+    'etc-bd': 'ETC on Biological Diversity',
+    'etc-cca': 'ETC on Climate Change Impacts, Vulnerability and Adaptation',
+    'etc-cme': 'ETC on Climate Change Mitigation and Energy',
+    'etc-icm': 'ETC on Inland, Coastal and Marine Waters',
+    'etc-uls': 'ETC on Urban, Land and Soil Systems',
+    'etc-wmge': 'ETC on Waste and Materials in Green Economy',
+  },
 };
 
 export default { vocab };

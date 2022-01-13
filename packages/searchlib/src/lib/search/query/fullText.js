@@ -38,6 +38,7 @@ export function buildFullTextMatch(searchTerm = '', filters = [], config) {
       : {
           multi_match: {
             query: searchTerm,
+            minimum_should_match: '75%',
             fields: [
               // TODO: use in the above query
               ...(config.extraQueryParams?.text_fields || [
