@@ -92,4 +92,3 @@ Distribution and package setup:
   * To use the shells, include two distributed libs: main library + shell dist,
     then use from plan JS
   * main library can be used directly from React
-
