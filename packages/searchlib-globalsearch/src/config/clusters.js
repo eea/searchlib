@@ -76,65 +76,61 @@ export default {
       fallback: {
         url: require('../static/website-logo.png'),
       },
-      'EEA Website (www.eea.europa.eu)': {
+      eea: {
         url: require('../static/eea-logo.png'),
       },
-      'BISE (biodiversity.europa.eu)': {
+      ias: {
+        url: require('../static/website-logo.png'),
+      },
+      bise: {
         url: require('../static/bise-logo.png'),
       },
-      'WISE Marine (water.europa.eu/marine)': {
+      'wise-marine': {
         url: require('../static/wise-logo.png'),
       },
-      'Energy (climate-energy.eea.europa.eu)': {
+      energy: {
         url: require('../static/energy-logo.png'),
       },
-      'WISE Freshwater (water.europa.eu/freshwater)': {
+      'wise-freshwater': {
         url: require('../static/water-logo.png'),
       },
-      'FISE (forest.eea.europa.eu)': {
+      fise: {
         url: require('../static/forest-logo.png'),
       },
-      'Industry (industry.eea.europa.eu)': {
+      industry: {
         url: require('../static/industry-logo.png'),
       },
-      'Climate-adapt (climate-adapt.eea.europa.eu)': {
+      cca: {
         url: require('../static/climate-adapt-logo.png'),
       },
-      'Eionet (eionet.europa.eu)': {
+      etc: {
+        url: require('../static/eionet-logo.png'),
+      },
+      'etc-atni': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Air Pollution, Transport, Noise and Industrial Pollution (www.eionet.europa.eu/etcs/etc-atni)':
-      {
+      'etc-bd': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Biological Diversity (www.eionet.europa.eu/etcs/etc-bd)': {
+      'etc-cca': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Climate Change Impacts, Vulnerability and Adaptation (www.eionet.europa.eu/etcs/etc-cca)':
-      {
+      'etc-cme': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Climate Change Mitigation and Energy (www.eionet.europa.eu/etcs/etc-cme)':
-      {
+      'etc-icm': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Inland, Coastal and Marine Waters (www.eionet.europa.eu/etcs/etc-icm)':
-      {
+      'etc-uls': {
         url: require('../static/eionet-logo.png'),
       },
 
-      'ETC on Urban, Land and Soil Systems (www.eionet.europa.eu/etcs/etc-uls)':
-      {
-        url: require('../static/eionet-logo.png'),
-      },
-
-      'ETC on Waste and Materials in Green Economy (www.eionet.europa.eu/etcs/etc-wmge)':
-      {
+      'etc-wmge': {
         url: require('../static/eionet-logo.png'),
       },
     },
