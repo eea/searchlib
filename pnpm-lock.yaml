@@ -3050,7 +3050,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.11.1
-      '@babel/helper-plugin-utils': 7.13.0
+      '@babel/helper-plugin-utils': 7.14.5
     dev: true
 
   /@babel/plugin-syntax-nullish-coalescing-operator/7.8.3_@babel+core@7.12.3:
@@ -10771,7 +10771,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.7.0_2778563dec678cea839c19aeb5611de0
+      webpack-cli: 4.7.0
 
   /@webpack-cli/serve/1.4.0_9930b48f97fc6c2f231530b534a67c62:
     resolution: {integrity: sha512-xgT/HqJ+uLWGX+Mzufusl3cgjAcnqYYskaB7o0vRcwOEfuu6hMzSILQpnIzFMGsTaeaX4Nnekl+6fadLbl1/Vg==}
@@ -14467,7 +14467,7 @@ packages:
     peerDependencies:
       react: '>=0.14.9'
     dependencies:
-      '@babel/runtime': 7.14.0
+      '@babel/runtime': 7.14.6
       compute-scroll-into-view: 1.0.17
       prop-types: 15.7.2
       react: 17.0.2
@@ -26197,7 +26197,7 @@ packages:
       tapable: 1.1.3
       terser-webpack-plugin: 1.4.5_webpack@4.46.0
       watchpack: 1.7.5
-      webpack-cli: 4.7.0_2778563dec678cea839c19aeb5611de0
+      webpack-cli: 4.7.0_webpack@4.46.0
       webpack-sources: 1.4.3
 
   /webpackbar/4.0.0_webpack@4.46.0:
