@@ -80,7 +80,7 @@ export default {
         url: require('../static/eea-logo.png'),
       },
       ias: {
-        url: require('../static/website-logo.png'),
+        url: require('../static/ias-logo'),
       },
       bise: {
         url: require('../static/bise-logo.png'),
