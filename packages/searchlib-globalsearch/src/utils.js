@@ -233,6 +233,7 @@ export const get_cluster_icons_dict = (settings) => {
       Object.assign(
         {},
         ...cluster.values.map((value) => ({ [value]: cluster.icon })),
+        { [cluster.name]: cluster.icon },
       ),
     ),
   );
