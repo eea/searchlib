@@ -70,6 +70,7 @@ export const buildQuestionRequest = (state, config) => {
                   multi_match: {
                     // eslint-disable-next-line
                     query: question,
+                    minimum_should_match: '75%',
                     fields: [
                       // TODO: use in the above query
                       ...(config.extraQueryParams?.text_fields || [
