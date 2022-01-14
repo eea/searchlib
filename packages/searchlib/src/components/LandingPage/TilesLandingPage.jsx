@@ -56,7 +56,7 @@ const LandingPage = (props) => {
           filters: sections
             ?.filter((f) => f.filterType === 'any:exact')
             .map(({ facetField, filterType = 'any' }) => ({
-              field: `items_count_${facetField}`,
+              field: facetField,
               values: [],
               type: filterType,
             })),

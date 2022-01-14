@@ -51,9 +51,7 @@ export function buildRequestFilter(filters, config) {
 
   const requestFilters = Object.keys(_fieldToFilterValueMap)
     .filter((fname) => Object.keys(_configuredFacets).indexOf(fname) === -1)
-    .map((fname) => ({
-      [fname]: getTermFilter(_fieldToFilterValueMap[fname]),
-    }));
+    .map((fname) => getTermFilter(_fieldToFilterValueMap[fname]));
 
   const res = [...configuredFilters, ...requestFilters];
   // console.log('res', requestFilters);
