@@ -61,6 +61,7 @@ const LandingPage = (props) => {
               type: filterType,
             })),
         };
+        console.log('state', state);
         const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
           state,
           appConfig,

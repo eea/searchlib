@@ -216,7 +216,7 @@ const ViewComponent = (props) => {
     ContentWrapper = 'div',
     iconsFamily,
     onChangeFilterExact,
-    filterExact = '',
+    filterExact,
     enableExact = false,
   } = props;
   // console.log('pp', props);
@@ -307,9 +307,9 @@ const ViewComponent = (props) => {
             <Checkbox
               toggle
               label="Exact"
-              checked={filterExact === 'exact'}
+              checked={!!filterExact}
               onChange={(e, { checked }) => {
-                onChangeFilterExact(checked ? 'exact' : '');
+                onChangeFilterExact(checked);
               }}
             />
           )}
