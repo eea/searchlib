@@ -55,7 +55,7 @@ export default {
     factory: 'TilesLandingPage',
     tilesLandingPageParams: {
       maxPerSection: 30,
-      clusterIcons,
+      // clusterIcons,
       sortField: 'issued.date',
       sortDirection: 'desc',
       sections: [
@@ -68,6 +68,7 @@ export default {
           id: 'countries',
           title: 'Countries',
           facetField: 'spatial',
+          filterType: 'any,exact',
         },
         {
           id: 'types',

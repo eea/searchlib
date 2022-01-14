@@ -12,13 +12,13 @@ import { Icon, Term } from '@eeacms/search/components';
 
 import './tiles.less';
 
-const getFacetConfig = (facets, name) => {
-  return facets.find((facet) => facet.field === name);
+const getFacetConfig = (sections, name) => {
+  return sections?.find((facet) => facet.facetField === name);
 };
 
 const LandingPage = (props) => {
   const { appConfig, children, setFilter, setSort } = props;
-  const facetsConfig = appConfig.facets;
+  // const facetsConfig = appConfig.facets;
 
   const {
     sections = [],
@@ -96,7 +96,7 @@ const LandingPage = (props) => {
               setFilter(
                 activeSection,
                 topic.value,
-                getFacetConfig(facetsConfig, activeSection).filterType,
+                getFacetConfig(sections, activeSection).filterType || 'any',
               );
               setSort(sortField, sortDirection);
               setShowFacets(true);
@@ -151,4 +151,5 @@ const LandingPage = (props) => {
     </div>
   );
 };
+
 export default LandingPage;

@@ -313,7 +313,6 @@ const ViewComponent = (props) => {
             }}
           />
 
-
           <div className="order-controls">
             <span className="label">Order:</span>
             <ToggleSort

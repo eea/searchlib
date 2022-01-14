@@ -188,18 +188,3 @@ const ViewComponent = (props) => {
 };
 
 export default ViewComponent;
-
-// const Component = (props) => (
-//   <MultiTypeFacetWrapper {...props} view={ViewComponent} />
-// );
-// import { withSearch } from '@elastic/react-search-ui';
-// export default withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(Component);

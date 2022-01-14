@@ -37,12 +37,12 @@ export function buildRequestFilter(filters, config) {
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
       facetConfig.buildFilter(
         _fieldToFilterValueMap[facetConfig.field] ??
-        (facetConfig.defaultValue
-          ? {
-            field: facetConfig.field,
-            ...facetConfig.default,
-          }
-          : null),
+          (facetConfig.defaultValue
+            ? {
+                field: facetConfig.field,
+                ...facetConfig.default,
+              }
+            : null),
         facetConfig,
       ),
     ),
@@ -70,82 +70,47 @@ export function getTermFilterValue(field, fieldValue) {
 export function getTermFilter(filter) {
   // Construct ES DSL query for term facets
   if (!filter) return;
-  // console.log('termfilter', filter);
-  let exact = false;
-  let filter_type = filter.type
-  if (filter_type) {
-    if (
-      filter_type.split(',').length > 1 &&
-      filter_type.split(',')[1] === 'exact'
-    ) {
-      exact = true;
-    }
-    filter_type = filter.type.split(',')[0];
-  }
+  let [filter_type, exact] = (filter.type || '').split(':');
 
-  if (filter_type === 'any') {
-    let query = {
-      bool: {
-        should: filter.values.map((filterValue) => ({
-          term: getTermFilterValue(filter.field, filterValue),
-        })),
-        minimum_should_match: 1,
-      },
-    };
-    if (exact) {
-      query.bool.must = { term: {} };
-      query.bool.must.term['items_count_' + filter.field] = 1;
-    }
-    return query;
-  } else if (filter_type === 'all') {
-    let query = {
-      bool: {
-        filter: filter.values.map((filterValue) => ({
-          term: getTermFilterValue(filter.field, filterValue),
-        })),
-      },
-    };
-    if (exact) {
-      query.bool.must = { term: {} };
-      query.bool.must.term['items_count_' + filter.field] =
-        filter.values.length;
-    }
-    return query;
-  }
+  const op = filter_type === 'any' ? 'should' : 'must';
+  let query = {
+    bool: {
+      [op]: filter.values.map((filterValue) => ({
+        term: getTermFilterValue(filter.field, filterValue),
+      })),
+      minimum_should_match: 1,
+      ...(exact
+        ? {
+            must: {
+              term: {
+                ['items_count_' + filter.field]: 1,
+              },
+            },
+          }
+        : {}),
+    },
+  };
+  return query;
 }
 
 export function getRangeFilter(filter) {
   // Construct ES DSL query for range facets
   if (!filter) return;
 
-  if (filter.type === 'any') {
-    return {
-      bool: {
-        should: filter.values.map((filterValue) => ({
-          range: {
-            [filter.field]: {
-              ...(filterValue.to && { to: filterValue.to }),
-              ...(filterValue.to && { from: filterValue.from }),
-            },
+  const op = filter.type === 'any' ? 'should' : 'filter';
+  return {
+    bool: {
+      [op]: filter.values.map((filterValue) => ({
+        range: {
+          [filter.field]: {
+            ...(filterValue.to && { to: filterValue.to }),
+            ...(filterValue.to && { from: filterValue.from }),
           },
-        })),
-        minimum_should_match: 1,
-      },
-    };
-  } else if (filter.type === 'all') {
-    return {
-      bool: {
-        filter: filter.values.map((filterValue) => ({
-          range: {
-            [filter.field]: {
-              ...(filterValue.to && { to: filterValue.to }),
-              ...(filterValue.to && { from: filterValue.from }),
-            },
-          },
-        })),
-      },
-    };
-  }
+        },
+      })),
+      minimum_should_match: 1,
+    },
+  };
 }
 
 const splitter_re = /(?<now>now)\s?(?<op>[\+|\-])\s?(?<count>\d+)(?<quantifier>\w)/;
@@ -164,12 +129,12 @@ export function getDateRangeFilter(filter, filterConfig) {
     quantifier === 'd'
       ? (x) => x * 1
       : quantifier === 'w'
-        ? (x) => x * 7
-        : quantifier === 'm'
-          ? (x) => x * 30
-          : quantifier === 'y'
-            ? (x) => x * 365
-            : (x) => x * 1;
+      ? (x) => x * 7
+      : quantifier === 'm'
+      ? (x) => x * 30
+      : quantifier === 'y'
+      ? (x) => x * 365
+      : (x) => x * 1;
 
   const toDate = (name) => {
     if (!name) return {};
@@ -180,9 +145,6 @@ export function getDateRangeFilter(filter, filterConfig) {
     op = op === '-' ? minus : plus;
     const other = op(now, toDays(quantifier)(parseInt(count)) * DAY);
     return other;
-    // const to = op === '-' ? other : now;
-    // const from = op === '-' ? now : other;
-    // return { to, from };
   };
 
   const toRangeFilter = (filterValue) => {
@@ -192,31 +154,17 @@ export function getDateRangeFilter(filter, filterConfig) {
       : {};
   };
 
-  const res =
-    filter.type === 'any'
-      ? {
-        bool: {
-          should: filter.values.map((filterValue) => ({
-            range: {
-              [filter.field]: toRangeFilter(filterValue),
-            },
-          })),
-          minimum_should_match: 1,
+  const op = filter.type === 'any' ? 'should' : 'filter';
+  const res = {
+    bool: {
+      [op]: filter.values.map((filterValue) => ({
+        range: {
+          [filter.field]: toRangeFilter(filterValue),
         },
-      }
-      : filter.type === 'all'
-        ? {
-          bool: {
-            filter: filter.values.map((filterValue) => ({
-              range: {
-                [filter.field]: toRangeFilter(filterValue),
-              },
-            })),
-          },
-        }
-        : {};
-
-  // console.log('date range filter', { res, filter, filterConfig });
+      })),
+      minimum_should_match: 1,
+    },
+  };
 
   return res;
 }

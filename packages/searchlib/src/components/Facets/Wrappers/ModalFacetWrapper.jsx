@@ -121,12 +121,19 @@ const FacetWrapperComponent = (props) => {
     : fallback;
   //debugger;
   const defaultTypeValue = defaultValue ? defaultValue.split(',')[0] : '';
-  const defaultExactValue = defaultValue ? (defaultValue.split(',').length > 1 ? defaultValue.split(',')[1] : '') : '';
+  const defaultExactValue = defaultValue
+    ? defaultValue.split(',').length > 1
+      ? defaultValue.split(',')[1]
+      : ''
+    : '';
 
-  const [localFilterType, setLocalFilterType] = React.useState(defaultTypeValue);
+  const [localFilterType, setLocalFilterType] = React.useState(
+    defaultTypeValue,
+  );
 
-  const [localFilterExact, setLocalFilterExact] =
-    React.useState(defaultExactValue);
+  const [localFilterExact, setLocalFilterExact] = React.useState(
+    defaultExactValue,
+  );
 
   const initialValue =
     (filters.find((f) => f.field === field) || {})?.values || [];
@@ -137,8 +144,8 @@ const FacetWrapperComponent = (props) => {
     !initialValue
       ? []
       : Array.isArray(initialValue)
-        ? initialValue
-        : [initialValue],
+      ? initialValue
+      : [initialValue],
   );
 
   const { clearFilters, setFilter } = useSearchContext();
@@ -162,12 +169,11 @@ const FacetWrapperComponent = (props) => {
                   <Button
                     size="mini"
                     onClick={(evt) => {
-                      debugger;
                       evt.preventDefault();
                       setIsOpened(false);
                       let tmp_type = localFilterType;
                       if (localFilterExact === 'exact') {
-                        tmp_type = tmp_type + ',exact';
+                        tmp_type = tmp_type + ':exact';
                       }
                       if (state.length) {
                         state.forEach((v) => {
@@ -205,7 +211,7 @@ const FacetWrapperComponent = (props) => {
             </div>
           }
           className={(isActive && 'facet active') || 'facet'}
-          onClick={() => { }}
+          onClick={() => {}}
         />
       }
     >
@@ -243,15 +249,17 @@ const FacetWrapperComponent = (props) => {
             setIsOpened(false);
             removeFilter(field, '', 'any');
             removeFilter(field, '', 'all');
-            removeFilter(field, '', 'any,exact');
-            removeFilter(field, '', 'all,exact');
+            removeFilter(field, '', 'any:exact');
+            removeFilter(field, '', 'all:exact');
             if (state.length) {
               state.forEach((v) => {
-                let tmp_type = localFilterType;
-                if (localFilterExact === 'exact') {
-                  tmp_type = tmp_type + ',exact';
-                }
-                addFilter(field, v, tmp_type);
+                addFilter(
+                  field,
+                  v,
+                  `${localFilterType}${
+                    localFilterExact === 'exact' ? ':exact' : ''
+                  }`,
+                );
               });
             }
           }}
