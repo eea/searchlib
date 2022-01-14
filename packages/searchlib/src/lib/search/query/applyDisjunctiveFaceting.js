@@ -19,7 +19,7 @@ function removeFilterByName(state, facetName) {
   const validNames = [facetName, `items_count_${facetName}`];
   return {
     ...state,
-    filters: state.filters.filter((f) => validNames.indexOf(f.field) > -1),
+    filters: state.filters.filter((f) => validNames.indexOf(f.field) === -1),
   };
 }
 
