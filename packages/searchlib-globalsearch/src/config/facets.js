@@ -72,6 +72,7 @@ const facets = [
     show: 10000,
     factory: 'MultiTermListFacet',
     iconsFamily: 'Countries',
+    enableExact: true,
   }),
   multiTermFacet({
     field: 'op_cluster',
