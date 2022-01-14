@@ -65,6 +65,7 @@ const LandingPage = (props) => {
           state,
           appConfig,
           sectionFacetFields,
+          true,
         );
         facets = buildStateFacets(disjunctiveFacetCounts, appConfig);
       }

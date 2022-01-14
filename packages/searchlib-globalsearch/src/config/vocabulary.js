@@ -45,7 +45,8 @@ const vocab = {
     'wise-freshwater': 'Fresh Water Information System for Europe',
     'wise-marine': 'Marine Water Information System for Europe',
     etc: 'European Environment Information and Observation Network (Eionet)',
-    'etc-atni': 'ETC on Air Pollution, Transport, Noise and Industrial Pollution',
+    'etc-atni':
+      'ETC on Air Pollution, Transport, Noise and Industrial Pollution',
     'etc-bd': 'ETC on Biological Diversity',
     'etc-cca': 'ETC on Climate Change Impacts, Vulnerability and Adaptation',
     'etc-cme': 'ETC on Climate Change Mitigation and Energy',

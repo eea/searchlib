@@ -15,11 +15,10 @@ function combineAggregationsFromResponses(responses) {
 // facet values would collapse to just one value, which is whatever you have
 // filtered on in that facet.
 function removeFilterByName(state, facetName) {
-  // items_count_ is to support exact facets
-  const validNames = [facetName, `items_count_${facetName}`];
+  console.log(state.filters)
   return {
     ...state,
-    filters: state.filters.filter((f) => validNames.indexOf(f.field) === -1),
+    filters: state.filters.filter((f) => f.field !== facetName),
   };
 }
 
@@ -43,17 +42,22 @@ export async function getDisjunctiveFacetCounts(
   state,
   config,
   disjunctiveFacets,
+  skipRemoveSelf = false,
 ) {
   const responses = await Promise.all(
     // Note that this could be optimized by *not* executing a request if not
     // filter is currently applied for that field. Kept simple here for
     // clarity.
     (disjunctiveFacets || config.disjunctiveFacets).map((facetName) => {
-      let newState = removeFilterByName(state, facetName);
+      let newState = state;
+      if (!skipRemoveSelf) {
+        newState = removeFilterByName(state, facetName);
+      }
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
-      // console.log('req', { facetName, body, newState });
+
+      //console.log('req', { facetName, body, newState });
       return runRequest(body, config);
     }),
   );
@@ -71,8 +75,17 @@ export async function getDisjunctiveFacetCounts(
  *
  * @return {Promise<Object>} A map of updated aggregation counts for the specified facet names
  */
-export default async function applyDisjunctiveFaceting(json, state, config) {
-  const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(state, config);
+export default async function applyDisjunctiveFaceting(
+  json,
+  state,
+  config,
+  skipRemoveSelf = false,
+) {
+  const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
+    state,
+    config,
+    skipRemoveSelf,
+  );
 
   return {
     ...json,
