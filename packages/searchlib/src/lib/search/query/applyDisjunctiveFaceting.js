@@ -15,9 +15,11 @@ function combineAggregationsFromResponses(responses) {
 // facet values would collapse to just one value, which is whatever you have
 // filtered on in that facet.
 function removeFilterByName(state, facetName) {
+  // items_count_ is to support exact facets
+  const validNames = [facetName, `items_count_${facetName}`];
   return {
     ...state,
-    filters: state.filters.filter((f) => f.field !== facetName),
+    filters: state.filters.filter((f) => validNames.indexOf(f.field) > -1),
   };
 }
 
@@ -51,6 +53,7 @@ export async function getDisjunctiveFacetCounts(
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
+      // console.log('req', { facetName, body, newState });
       return runRequest(body, config);
     }),
   );

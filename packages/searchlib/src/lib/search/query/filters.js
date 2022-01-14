@@ -33,7 +33,7 @@ export function buildRequestFilter(filters, config) {
     }),
   );
 
-  const requestFilters = [
+  const configuredFilters = [
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
       facetConfig.buildFilter(
         _fieldToFilterValueMap[facetConfig.field] ??
@@ -49,9 +49,16 @@ export function buildRequestFilter(filters, config) {
     ...config.permanentFilters?.map((f) => (isFunction(f) ? f() : f)),
   ].filter((f) => !!f);
 
-  // console.log(_configuredFacets, requestFilters);
+  const requestFilters = Object.keys(_fieldToFilterValueMap)
+    .filter((fname) => Object.keys(_configuredFacets).indexOf(fname) === -1)
+    .map((fname) => ({
+      [fname]: getTermFilter(_fieldToFilterValueMap[fname]),
+    }));
 
-  return requestFilters;
+  const res = [...configuredFilters, ...requestFilters];
+  // console.log('res', requestFilters);
+
+  return res;
 }
 
 export function getTermFilterValue(field, fieldValue) {

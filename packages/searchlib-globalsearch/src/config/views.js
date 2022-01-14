@@ -68,7 +68,7 @@ export default {
           id: 'countries',
           title: 'Countries',
           facetField: 'spatial',
-          filterType: 'any,exact',
+          filterType: 'any:exact',
         },
         {
           id: 'types',

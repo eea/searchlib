@@ -6,8 +6,10 @@ export const buildAggregationsQuery = (config) => {
   const aggregations = Object.assign(
     {},
     ...facets.map((facet) => {
-      const { buildRequest } = registry.resolve[facet.factory];
-      return buildRequest ? buildRequest(facet, config, true) : {}; // include the aggregations
+      const { buildRequest: buildFacetRequest } = registry.resolve[
+        facet.factory
+      ];
+      return buildFacetRequest ? buildFacetRequest(facet, config) : {}; // include the aggregations
     }),
   );
 
@@ -15,7 +17,7 @@ export const buildAggregationsQuery = (config) => {
 };
 
 // TODO: exclude current aggregation field from request
-export const buildTermFacetAggregationRequest = (facet) => {
+export const buildTermFacetAggregationRequest = (facet, config) => {
   return {
     [facet.field]: {
       terms: {

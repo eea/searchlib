@@ -52,7 +52,15 @@ const LandingPage = (props) => {
       let facets;
 
       if (!landingPageData) {
-        const state = { filters: [] };
+        const state = {
+          filters: sections
+            ?.filter((f) => f.filterType === 'any:exact')
+            .map(({ facetField, filterType = 'any' }) => ({
+              field: `items_count_${facetField}`,
+              values: [],
+              type: filterType,
+            })),
+        };
         const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
           state,
           appConfig,
@@ -68,7 +76,13 @@ const LandingPage = (props) => {
     if (!landingPageData) {
       fetchFacets();
     }
-  }, [appConfig, sectionFacetFields, landingPageData, setLandingPageData]);
+  }, [
+    appConfig,
+    sectionFacetFields,
+    landingPageData,
+    setLandingPageData,
+    sections,
+  ]);
 
   return (
     <div className="landing-page-container">

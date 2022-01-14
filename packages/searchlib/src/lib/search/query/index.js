@@ -47,7 +47,12 @@ function boostFacets(filters, config) {
  *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-from-size.html
  *
  */
-export default function buildRequest(state, config, includeAggs = false) {
+export default function buildRequest(
+  state,
+  config,
+  includeAggs = false,
+  // requestParams = {}, // an optional, "appConfig-like" object to configure the request
+) {
   const {
     current,
     filters,
