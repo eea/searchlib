@@ -120,10 +120,10 @@ const FacetWrapperComponent = (props) => {
     ? filters?.find((f) => f.field === field)?.type || fallback
     : fallback;
   //debugger;
-  const defaultTypeValue = defaultValue ? defaultValue.split(',')[0] : '';
+  const defaultTypeValue = defaultValue ? defaultValue.split(':')[0] : '';
   const defaultExactValue = defaultValue
-    ? defaultValue.split(',').length > 1
-      ? defaultValue.split(',')[1]
+    ? defaultValue.split(':').length > 1
+      ? defaultValue.split(':')[1]
       : ''
     : '';
 
