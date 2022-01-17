@@ -84,7 +84,9 @@ export function getTermFilter(filter) {
       [op]: filter.values.map((filterValue) => ({
         term: getTermFilterValue(filter.field, filterValue),
       })),
-      ...(filter.values?.length ? { minimum_should_match: 1 } : {}),
+      ...(filter.values?.length && op === 'should'
+        ? { minimum_should_match: 1 }
+        : {}),
       ...(exact
         ? {
             must: {
