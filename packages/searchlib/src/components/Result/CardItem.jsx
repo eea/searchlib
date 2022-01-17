@@ -156,24 +156,26 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           {/* > */}
           {/*   less like this */}
           {/* </Button> */}
-          {Object.keys(clusters).map((cluster, index) => (
-            <Button
-              key={index}
-              className="metaButton"
-              floated="right"
-              target="_blank"
-              as="a"
-              href={result.id}
-              circular
-              size="mini"
-              compact
-              icon={
-                <div className="card-icon">
-                  <Icon {...clusters[cluster].icon} size="mini" />
-                </div>
-              }
-            ></Button>
-          ))}
+          <div className="card-icons">
+            {Object.keys(clusters).map((cluster, index) => (
+              <Button
+                key={index}
+                className="metaButton"
+                floated="right"
+                target="_blank"
+                as="a"
+                href={result.id}
+                circular
+                size="mini"
+                compact
+                icon={
+                  <div className="card-icon">
+                    <Icon {...clusters[cluster].icon} size="mini" />
+                  </div>
+                }
+              ></Button>
+            ))}
+          </div>
         </Card.Meta>
       </Card.Content>
     </Card>
