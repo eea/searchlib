@@ -25,7 +25,9 @@ const WHITESPACE_RE = /\n|\t/;
 
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context = '', context, answer } = answerItem;
-
+  debugger;
+  const clusters = item.clusterInfo;
+  console.log('CLUSTERS:', clusters);
   const start = (full_context || context || '').indexOf(answer);
 
   const pre = (full_context
@@ -52,7 +54,9 @@ const AnswerContext = ({ item, answerItem }) => {
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
-          <Icon family="Content types" {...item.clusterIcon} />
+          {Object.keys(clusters).map((cluster, index) => (
+            <Icon family="Content types" {...clusters[cluster].icon} />
+          ))}
           {item.title}
         </ExternalLink>
       </h4>
@@ -129,9 +133,9 @@ score: 6.118757247924805
               const primaryAnswer = filtered?.[0];
               const primaryResult = primaryAnswer
                 ? buildResult(
-                    { ...primaryAnswer, _source: primaryAnswer?.source },
-                    appConfig,
-                  )
+                  { ...primaryAnswer, _source: primaryAnswer?.source },
+                  appConfig,
+                )
                 : null;
 
               return (
