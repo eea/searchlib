@@ -1,9 +1,9 @@
 import React from 'react';
 import getIndexInfo from '@eeacms/search/lib/getIndexInfo';
 import { DateTime } from 'luxon';
-import { useIsMounted } from '@eeacms/search/lib/hocs';
+import { useAtom } from 'jotai';
+import { indexMetadataAtom, hasRequestAtom } from './state';
 
-//async function getInfo(appConfig) {
 const getInfo = async (appConfig) => {
   const { elastic_index } = appConfig;
 
@@ -28,18 +28,27 @@ const getInfo = async (appConfig) => {
 function AppInfo({ appConfig, ...rest }) {
   const { app_name, app_version } = appConfig;
   const hostname = window.runtimeConfig?.HOSTNAME || 'localhost';
-  const [crt, setCrt] = React.useState([]);
-  const isMounted = useIsMounted();
+
+  const [indexMetadata, setIndexMetadata] = useAtom(indexMetadataAtom);
+  const [hasRequest, setHasRequest] = useAtom(hasRequestAtom);
 
   React.useEffect(() => {
-    getInfo(appConfig).then((response) => {
-      if (isMounted.current) setCrt(response || '');
-    });
-  }, [appConfig, isMounted]);
+    if (!hasRequest) {
+      setHasRequest(true);
+    } else {
+      return;
+    }
+    if (!indexMetadata) {
+      getInfo(appConfig).then((response) => {
+        setIndexMetadata(response || '');
+      });
+    }
+  }, [appConfig, indexMetadata, setIndexMetadata, hasRequest, setHasRequest]);
 
   return (
     <div {...rest} className="sui-app-info">
-      Application data last refreshed <strong>{crt}</strong>. Version info{' '}
+      Application data last refreshed <strong>{indexMetadata}</strong>. Version
+      info{' '}
       <strong>
         {app_name}:{app_version}
       </strong>{' '}
