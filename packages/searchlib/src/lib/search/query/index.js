@@ -69,7 +69,7 @@ export default function buildRequest(
   const from = buildFrom(current, resultsPerPage, config);
   const filter = buildRequestFilter(filters, config, {
     ...options, // TODO: actually use this option
-    includeDefaultValues: !!searchTerm,
+    // includeDefaultValues: !!searchTerm,
   });
   const aggs = includeAggs ? buildAggregationsQuery(config) : {};
   const highlight = buildHighlight(searchTerm, config);

@@ -84,6 +84,8 @@ const LandingPage = (props) => {
       fetchFacets();
     }
   }, [
+    isRequested,
+    setIsRequested,
     appConfig,
     sectionFacetFields,
     landingPageData,
@@ -119,6 +121,15 @@ const LandingPage = (props) => {
                 topic.value,
                 getFacetConfig(sections, activeSection).filterType || 'any',
               );
+
+              // apply configured default values
+              appConfig.facets
+                .filter((f) => f.field !== activeSection && f.default)
+                .forEach((facet) => {
+                  facet.default.values.forEach((value) =>
+                    setFilter(facet.field, value, facet.default.type || 'any'),
+                  );
+                });
               setSort(sortField, sortDirection);
               setShowFacets(true);
             };
