@@ -5,9 +5,9 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { useAtom } from 'jotai';
 
 import { showFacetsAsideAtom } from '@eeacms/search/state';
-import { getDisjunctiveFacetCounts } from '@eeacms/search';
+import { getFacetCounts } from './request';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
-import { landingPageDataAtom } from './state';
+import { landingPageDataAtom, isRequestedAtom } from './state';
 import { Icon, Term } from '@eeacms/search/components';
 
 import './tiles.less';
@@ -35,6 +35,7 @@ const LandingPage = (props) => {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
 
   const [landingPageData, setLandingPageData] = useAtom(landingPageDataAtom);
+  const [isRequested, setIsRequested] = useAtom(isRequestedAtom);
 
   const getTiles = (maxPerSection) => {
     const result = landingPageData?.[activeSection]?.[0]?.data || [];
@@ -50,6 +51,11 @@ const LandingPage = (props) => {
   useDeepCompareEffect(() => {
     async function fetchFacets() {
       let facets;
+      if (!isRequested) {
+        setIsRequested(true);
+      } else {
+        return;
+      }
 
       if (!landingPageData) {
         const state = {
@@ -61,13 +67,13 @@ const LandingPage = (props) => {
               type: filterType,
             })),
         };
-        console.log('state', state);
-        const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(
+        // console.log('state', state);
+        const facetCounts = await getFacetCounts(
           state,
           appConfig,
           sectionFacetFields,
         );
-        facets = buildStateFacets(disjunctiveFacetCounts, appConfig);
+        facets = buildStateFacets(facetCounts, appConfig);
       }
 
       if (!landingPageData && facets) {
