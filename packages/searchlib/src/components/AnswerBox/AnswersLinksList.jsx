@@ -10,10 +10,17 @@ import { highlightUrl } from './utils';
 export default ({ filtered, appConfig }) => {
   return filtered.map((item, i) => {
     const result = buildResult({ ...item, _source: item.source }, appConfig);
+    const clusters = result.clusterInfo;
 
     return (
       <div key={i} className={cx({ primary: i === 0 })}>
-        <Icon family="Content types" {...result.clusterIcon} />
+        {Object.keys(clusters).map((cluster, index) => (
+          <Icon
+            key={index}
+            family="Content types"
+            {...clusters[cluster].icon}
+          />
+        ))}
         <ExternalLink href={highlightUrl(result.href, item.answer)}>
           {result.title}
         </ExternalLink>{' '}

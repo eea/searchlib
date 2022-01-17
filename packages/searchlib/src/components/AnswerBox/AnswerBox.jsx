@@ -53,7 +53,11 @@ const AnswerContext = ({ item, answerItem }) => {
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <SegmentedBreadcrumb href={item.href} />
           {Object.keys(clusters).map((cluster, index) => (
-            <Icon family="Content types" {...clusters[cluster].icon} />
+            <Icon
+              key={index}
+              family="Content types"
+              {...clusters[cluster].icon}
+            />
           ))}
           {item.title}
         </ExternalLink>
