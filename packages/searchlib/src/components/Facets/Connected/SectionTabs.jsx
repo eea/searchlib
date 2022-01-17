@@ -75,7 +75,7 @@ const SectionTabs = (props) => {
       visibleSections.push(section);
     }
   }
-  const enableFeature = true; // WIP use it to test the partial solution
+  const enableFeature = false; // WIP use it to test the partial solution
 
   if (enableFeature) {
     sections = visibleSections;
