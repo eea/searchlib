@@ -8,6 +8,7 @@ import {
 } from '@eeacms/search';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
+import topicsBlacklist from './json/topicsBlacklist.json';
 import { getTodayWithTime } from '../utils';
 
 const facets = [
@@ -57,6 +58,7 @@ const facets = [
     isFilterable: true,
     isMulti: true,
     label: 'Topics',
+    blacklist: topicsBlacklist,
     factory: 'MultiTermListFacet',
     wrapper: 'ModalFacetWrapper',
     show: 10000,
