@@ -57,10 +57,13 @@ const MoreLikeThisEntry = (props) => {
           <DateTime format="DATE_MED" value={item.issued} />
           &nbsp;
           {Object.entries(item.clusterInfo).map(([clusterName, cluster]) => (
-            <span key={clusterName}>
-              <Icon family="Content types" name={cluster.icon.name} />
-              <StringList value={cluster.content_types} />
-            </span>
+            <>
+              <br />
+              <span key={clusterName}>
+                <Icon family="Content types" name={cluster.icon.name} />
+                <StringList value={cluster.content_types} />
+              </span>
+            </>
           ))}
         </div>
       </div>
