@@ -41,20 +41,17 @@ export async function getDisjunctiveFacetCounts(
   state,
   config,
   disjunctiveFacets,
-  skipRemoveSelf = false,
 ) {
   const responses = await Promise.all(
     // Note that this could be optimized by *not* executing a request if not
     // filter is currently applied for that field. Kept simple here for
     // clarity.
     (disjunctiveFacets || config.disjunctiveFacets).map((facetName) => {
-      const newState = skipRemoveSelf
-        ? removeFilterByName(state, facetName)
-        : state;
+      const newState = removeFilterByName(state, facetName);
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
-      // console.log('req', facetName, { newState, body });
+      console.log('req', facetName, { newState, body });
       return runRequest(body, config);
     }),
   );

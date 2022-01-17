@@ -12,8 +12,9 @@ const isFunction = (value) =>
  * This will participate in the query part, filtering the result set.
  *
  */
-export function buildRequestFilter(filters, config) {
+export function buildRequestFilter(filters, config, options = {}) {
   if (!(filters.length || config.permanentFilters?.length)) return;
+  const { includeDefaultValues = false } = options;
 
   // a field:value map
   const _fieldToFilterValueMap = Object.assign(
@@ -37,7 +38,7 @@ export function buildRequestFilter(filters, config) {
     ...Object.entries(_configuredFacets).map(([fieldName, facetConfig]) =>
       facetConfig.buildFilter(
         _fieldToFilterValueMap[facetConfig.field] ??
-          (facetConfig.defaultValue
+          (facetConfig.default && includeDefaultValues
             ? {
                 field: facetConfig.field,
                 ...facetConfig.default,
@@ -83,8 +84,7 @@ export function getTermFilter(filter) {
       [op]: filter.values.map((filterValue) => ({
         term: getTermFilterValue(filter.field, filterValue),
       })),
-      // minimum_should_match: filter.values?.length ? 1 : 0,
-      minimum_should_match: '100%',
+      ...(filter.values?.length ? { minimum_should_match: '100%' } : {}),
       ...(exact
         ? {
             must: {

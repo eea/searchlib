@@ -51,6 +51,7 @@ export default function buildRequest(
   state,
   config,
   includeAggs = false,
+  options = {},
   // requestParams = {}, // an optional, "appConfig-like" object to configure the request
 ) {
   const {
@@ -66,7 +67,10 @@ export default function buildRequest(
   const match = buildFullTextMatch(searchTerm, filters, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
-  const filter = buildRequestFilter(filters, config);
+  const filter = buildRequestFilter(filters, config, {
+    ...options, // TODO: actually use this option
+    includeDefaultValues: !!searchTerm,
+  });
   const aggs = includeAggs ? buildAggregationsQuery(config) : {};
   const highlight = buildHighlight(searchTerm, config);
 
