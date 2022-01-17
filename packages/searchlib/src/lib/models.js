@@ -153,10 +153,30 @@ export class ResultModel extends BasicModel {
     return icon;
   }
 
+  get clusterInfo() {
+    const clusterIcons = this.appConfig.icons['Content types'];
+
+    let clusters = {};
+    let ops = this._result.objectProvides?.raw;
+    if (!Array.isArray(ops)) {
+      ops = [ops];
+    }
+    ops.forEach((op) => {
+      let cluster =
+        this.appConfig.contentSectionsParams.clusterMapping[op] || 'Others';
+      if (clusters[cluster] === undefined) {
+        clusters[cluster] = { content_types: [] };
+        clusters[cluster].icon = clusterIcons[op] || clusterIcons.fallback;
+      }
+      clusters[cluster].content_types.push(op);
+    });
+    return clusters;
+  }
+
   get clusterName() {
     return (
       this.appConfig.contentSectionsParams.clusterMapping[
-        this._result.objectProvides?.raw
+      this._result.objectProvides?.raw
       ] || 'Others'
     );
   }

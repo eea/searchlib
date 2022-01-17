@@ -62,6 +62,8 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
 
   const [hovered, setHovered] = React.useState(false);
 
+  const clusters = result.clusterInfo;
+
   let metaType = result[props.metatypeField]?.raw || '';
   if (metaType.length === 0) {
     metaType = ['Other'];
@@ -154,22 +156,24 @@ const CardItemComponent = withSearch(({ setFilter, removeFilter }) => ({
           {/* > */}
           {/*   less like this */}
           {/* </Button> */}
-
-          <Button
-            className="metaButton"
-            floated="right"
-            target="_blank"
-            as="a"
-            href={result.id}
-            circular
-            size="mini"
-            compact
-            icon={
-              <div className="card-icon">
-                <Icon {...result.clusterIcon} size="mini" />
-              </div>
-            }
-          ></Button>
+          {Object.keys(clusters).map((cluster, index) => (
+            <Button
+              key={index}
+              className="metaButton"
+              floated="right"
+              target="_blank"
+              as="a"
+              href={result.id}
+              circular
+              size="mini"
+              compact
+              icon={
+                <div className="card-icon">
+                  <Icon {...clusters[cluster].icon} size="mini" />
+                </div>
+              }
+            ></Button>
+          ))}
         </Card.Meta>
       </Card.Content>
     </Card>

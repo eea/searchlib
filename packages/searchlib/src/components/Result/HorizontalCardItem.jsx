@@ -51,7 +51,7 @@ const CardItem = (props) => {
 
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 1000;
-
+  const clusters = result.clusterInfo;
   return (
     <div
       className={cx('search-result', { hovered })}
@@ -63,18 +63,19 @@ const CardItem = (props) => {
           <span className="date">
             <DateTime format="DATE_MED" value={result.issued} />
           </span>
-          <span className="cluster-icon">
-            <Icon {...result.clusterIcon} />
-          </span>
-          <span className="tags">
-            <StringList value={result.clusterName} />
-            {metaType !== result.clusterName && (
-              <>
+          {Object.keys(clusters).map((cluster, index) => (
+            <span key={index}>
+              <span className="cluster-icon">
+                <Icon {...clusters[cluster].icon} />
+              </span>
+              <span className="tags">
+                <StringList value={cluster} />
                 <Icon name="angle right" />
-                <StringList value={metaType} />
-              </>
-            )}
-          </span>
+                <StringList value={clusters[cluster].content_types} />
+              </span>
+            </span>
+          ))}
+
           <span className="tags-list">
             <TagsList value={result.tags} />
           </span>
@@ -146,25 +147,27 @@ const CardItem = (props) => {
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
       </div>
-      {result.hasImage ? (
-        <div className="col-right">
-          <a
-            className={`centered fluid image img-thumbnail`}
-            href={result.href}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              alt={result.href}
-              src={result.thumbUrl}
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-          </a>
-        </div>
-      ) : null}
-    </div>
+      {
+        result.hasImage ? (
+          <div className="col-right">
+            <a
+              className={`centered fluid image img-thumbnail`}
+              href={result.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt={result.href}
+                src={result.thumbUrl}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </a>
+          </div>
+        ) : null
+      }
+    </div >
   );
 };
 
