@@ -25,9 +25,7 @@ const WHITESPACE_RE = /\n|\t/;
 
 const AnswerContext = ({ item, answerItem }) => {
   const { full_context = '', context, answer } = answerItem;
-  debugger;
   const clusters = item.clusterInfo;
-  console.log('CLUSTERS:', clusters);
   const start = (full_context || context || '').indexOf(answer);
 
   const pre = (full_context

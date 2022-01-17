@@ -56,8 +56,12 @@ const MoreLikeThisEntry = (props) => {
         <div className="meta">
           <DateTime format="DATE_MED" value={item.issued} />
           &nbsp;
-          <Icon family="Content types" type={item.metaTypes} />
-          <StringList value={item.metaTypes} />
+          {Object.entries(item.clusterInfo).map(([clusterName, cluster]) => (
+            <span key={clusterName}>
+              <Icon family="Content types" name={cluster.icon.name} />
+              <StringList value={cluster.content_types} />
+            </span>
+          ))}
         </div>
       </div>
     </div>
