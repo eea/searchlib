@@ -15,11 +15,8 @@ function combineAggregationsFromResponses(responses) {
 // facet values would collapse to just one value, which is whatever you have
 // filtered on in that facet.
 function removeFilterByName(state, facetName) {
-  // items_count_ is to support exact facets
-  // const validNames = [facetName, `items_count_${facetName}`];
   return {
     ...state,
-    // filters: state.filters.filter((f) => validNames.indexOf(f.field) > -1),
     filters: state.filters.filter((f) => f.field !== facetName),
   };
 }
@@ -44,18 +41,20 @@ export async function getDisjunctiveFacetCounts(
   state,
   config,
   disjunctiveFacets,
+  skipRemoveSelf = false,
 ) {
   const responses = await Promise.all(
     // Note that this could be optimized by *not* executing a request if not
     // filter is currently applied for that field. Kept simple here for
     // clarity.
     (disjunctiveFacets || config.disjunctiveFacets).map((facetName) => {
-      let newState = removeFilterByName(state, facetName);
-      console.log({ newState, state, facetName });
+      const newState = skipRemoveSelf
+        ? removeFilterByName(state, facetName)
+        : state;
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
       body = removeAllFacetsExcept(body, facetName);
-      // console.log('req', { facetName, body, newState });
+      // console.log('req', facetName, { newState, body });
       return runRequest(body, config);
     }),
   );
