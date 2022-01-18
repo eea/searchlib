@@ -18,6 +18,7 @@ const facets = [
     id: 'archived-facet',
     showInFacetsList: false,
     showInSecondaryFacetsList: true,
+    isFilter: true, // filters don't need facet options to show up
 
     // we want this to be applied by default
     // when the facet is checked, then apply the `on` key:

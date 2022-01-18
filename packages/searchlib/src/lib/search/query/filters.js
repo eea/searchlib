@@ -51,11 +51,17 @@ export function buildRequestFilter(filters, config, options = {}) {
   ].filter((f) => !!f);
 
   const requestFilters = Object.keys(_fieldToFilterValueMap)
-    .filter((fname) => Object.keys(_configuredFacets).indexOf(fname) === -1)
+    .filter(
+      (fname) =>
+        [
+          ...Object.keys(_configuredFacets),
+          ...Object.values(_configuredFacets).map((f) => f.field),
+        ].indexOf(fname) === -1,
+    )
     .map((fname) => getTermFilter(_fieldToFilterValueMap[fname]));
 
   const res = [...configuredFilters, ...requestFilters];
-  // console.log('res', requestFilters);
+  // console.log('res', { requestFilters, _configuredFacets });
 
   return res;
 }

@@ -47,13 +47,7 @@ function boostFacets(filters, config) {
  *  https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-from-size.html
  *
  */
-export default function buildRequest(
-  state,
-  config,
-  includeAggs = false,
-  options = {},
-  // requestParams = {}, // an optional, "appConfig-like" object to configure the request
-) {
+export default function buildRequest(state, config, includeAggs = false) {
   const {
     current,
     filters,
@@ -67,10 +61,7 @@ export default function buildRequest(
   const match = buildFullTextMatch(searchTerm, filters, config);
   const size = resultsPerPage;
   const from = buildFrom(current, resultsPerPage, config);
-  const filter = buildRequestFilter(filters, config, {
-    ...options, // TODO: actually use this option
-    // includeDefaultValues: !!searchTerm,
-  });
+  const filter = buildRequestFilter(filters, config);
   const aggs = includeAggs ? buildAggregationsQuery(config) : {};
   const highlight = buildHighlight(searchTerm, config);
 
@@ -98,13 +89,13 @@ export default function buildRequest(
     ...(sort && { sort }),
     ...(size && { size }),
     ...(from && { from }),
-    track_total_hits: true,
     ...(config.runtime_mappings && {
       runtime_mappings: config.runtime_mappings,
     }),
     ...(config.enableNLP && {
       ...config.requestParams,
     }),
+    track_total_hits: true,
   };
 
   return body;
