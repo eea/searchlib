@@ -70,8 +70,13 @@ const CardItem = (props) => {
               </span>
               <span className="tags">
                 <StringList value={cluster} />
-                <Icon name="angle right" />
-                <StringList value={clusters[cluster].content_types} />
+                {(clusters[cluster].content_types.length === 1 &&
+                  cluster === clusters[cluster].content_types[0]) || (
+                    <>
+                      <Icon name="angle right" />
+                      <StringList value={clusters[cluster].content_types} />
+                    </>
+                  )}
               </span>
             </span>
           ))}
@@ -146,27 +151,25 @@ const CardItem = (props) => {
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
       </div>
-      {
-        result.hasImage ? (
-          <div className="col-right">
-            <a
-              className={`centered fluid image img-thumbnail`}
-              href={result.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                alt={result.href}
-                src={result.thumbUrl}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-            </a>
-          </div>
-        ) : null
-      }
-    </div >
+      {result.hasImage ? (
+        <div className="col-right">
+          <a
+            className={`centered fluid image img-thumbnail`}
+            href={result.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              alt={result.href}
+              src={result.thumbUrl}
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </a>
+        </div>
+      ) : null}
+    </div>
   );
 };
 
