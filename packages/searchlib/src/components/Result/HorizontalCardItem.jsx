@@ -72,11 +72,11 @@ const CardItem = (props) => {
                 <StringList value={cluster} />
                 {(clusters[cluster].content_types.length === 1 &&
                   cluster === clusters[cluster].content_types[0]) || (
-                    <>
-                      <Icon name="angle right" />
-                      <StringList value={clusters[cluster].content_types} />
-                    </>
-                  )}
+                  <>
+                    <Icon name="angle right" />
+                    <StringList value={clusters[cluster].content_types} />
+                  </>
+                )}
               </span>
             </span>
           ))}

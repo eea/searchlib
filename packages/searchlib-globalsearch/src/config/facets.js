@@ -208,7 +208,7 @@ const facets = [
   }),
   dateRangeFacet({
     field: 'issued.date',
-    label: 'Freshness',
+    label: ' ',
     isFilter: true, // filters don't need facet options to show up
     showInFacetsList: false,
     showInSecondaryFacetsList: true,

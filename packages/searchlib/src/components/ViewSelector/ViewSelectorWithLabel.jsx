@@ -33,8 +33,11 @@ const ViewSelectorWithLabel = (props) => {
     <div className="view-selector">
       <span>
         <Dropdown
-          text={label}
-          icon={iconNames[active]}
+          trigger={
+            <>
+              {label} <Icon name={iconNames[active]} />
+            </>
+          }
           key={active}
           inline
           options={viewOptions}
@@ -43,7 +46,6 @@ const ViewSelectorWithLabel = (props) => {
             onSetView(value);
           }}
         />
-        <Icon name="dropdown" />
       </span>
     </div>
   );
