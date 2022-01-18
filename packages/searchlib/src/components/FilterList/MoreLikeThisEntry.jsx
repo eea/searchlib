@@ -58,11 +58,10 @@ const MoreLikeThisEntry = (props) => {
           &nbsp;
           {Object.entries(item.clusterInfo).map(([clusterName, cluster]) => (
             <>
-              <br />
-              <span key={clusterName}>
+              <div key={clusterName}>
                 <Icon family="Content types" name={cluster.icon.name} />
                 <StringList value={cluster.content_types} />
-              </span>
+              </div>
             </>
           ))}
         </div>
