@@ -13,6 +13,8 @@ import {
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
+const resetFilters = () => {};
+
 export default function SearchApp(props) {
   const {
     appName,
@@ -69,7 +71,13 @@ export default function SearchApp(props) {
         onSearch,
       }}
     >
-      <WithSearch mapContextToProps={(context) => ({ ...context, isLoading })}>
+      <WithSearch
+        mapContextToProps={(context) => ({
+          ...context,
+          isLoading,
+          resetFilters: resetFilters.bind(context),
+        })}
+      >
         {(params) => {
           return (
             <AppConfigContext.Provider value={appConfigContext}>

@@ -12,10 +12,13 @@ function toArray(s) {
   return a;
 }
 
+const resetFilters = () => {};
+
 export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
-  const { setSearchTerm, setSort } = useSearchContext();
+  const { setSearchTerm, setSort, ...rest } = useSearchContext();
 
+  console.log('rest', rest);
   const {
     defaultPromptQueries = [],
     promptQueries,
@@ -58,7 +61,8 @@ export default function SampleQueryPrompt() {
         onClick={(evt) => {
           evt.preventDefault();
           // setTriedDemoQuestion(true);
-          setSearchTerm(queries[index]);
+          resetFilters();
+          setSearchTerm(queries[index], { shouldClearFilters: false });
           setSort('', '');
         }}
         key={queries[index]}
