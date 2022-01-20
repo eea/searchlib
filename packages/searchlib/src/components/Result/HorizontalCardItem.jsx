@@ -52,6 +52,7 @@ const CardItem = (props) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 1000;
   const clusters = result.clusterInfo;
+
   return (
     <div
       className={cx('search-result', { hovered })}

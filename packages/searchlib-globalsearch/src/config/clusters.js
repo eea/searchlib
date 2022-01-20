@@ -29,7 +29,6 @@ export const clusters = {
         'Figure (chart/map)',
         'Chart (interactive)',
         'Infographic',
-        'Data set',
         'Dashboard',
         'Map (interactive)',
       ],
