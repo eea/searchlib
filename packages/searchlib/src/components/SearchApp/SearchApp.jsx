@@ -61,16 +61,19 @@ export default function SearchApp(props) {
     paramOnAutocomplete,
   ]);
 
+  const config = {
+    ...appConfig,
+    onResultClick,
+    onAutocompleteResultClick,
+    onAutocomplete,
+    onSearch,
+    initialState: {
+      resultsPerPage: appConfig.resultsPerPage || 20,
+    },
+  };
+
   return (
-    <SearchProvider
-      config={{
-        ...appConfig,
-        onResultClick,
-        onAutocompleteResultClick,
-        onAutocomplete,
-        onSearch,
-      }}
-    >
+    <SearchProvider config={config}>
       <WithSearch
         mapContextToProps={(context) => ({
           ...context,

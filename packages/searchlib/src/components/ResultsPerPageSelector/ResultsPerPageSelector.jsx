@@ -1,11 +1,12 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 
 const ResultsPerPageSelector = (props) => {
-  const defaultProps = [20, 40, 60];
+  const { appConfig } = useAppConfig();
+  const { availableResultsPerPage } = appConfig;
 
-  const options = defaultProps.map((item) => ({
+  const options = availableResultsPerPage.map((item) => ({
     key: item,
     text: <> {item} </>,
     value: item,
