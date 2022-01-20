@@ -33,6 +33,7 @@ import SearchInput from '@eeacms/search/components/SearchInput/SearchInput';
 import ListingViewItem from '@eeacms/search/components/Result/ListingViewItem';
 import StickyFacetList from '@eeacms/search/components/Facets/StickyFacetList';
 import SecondaryFacetsList from '@eeacms/search/components/Facets/SecondaryFacetsList';
+import DefaultFacetsList from '@eeacms/search/components/Facets/DefaultFacetsList';
 import CardItem from '@eeacms/search/components/Result/CardItem';
 import HorizontalCardItem from '@eeacms/search/components/Result/HorizontalCardItem';
 import DefaultContentView from '@eeacms/search/components/SearchView/DefaultContentView';
@@ -206,7 +207,7 @@ const config = {
       component: TilesLandingPage,
     },
     DefaultFacetsList: {
-      component: ({ children }) => <div className="facets">{children}</div>,
+      component: DefaultFacetsList,
     },
     SecondaryFacetsList: {
       component: SecondaryFacetsList,
