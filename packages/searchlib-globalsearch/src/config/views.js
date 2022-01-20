@@ -89,8 +89,8 @@ export default {
           id: 'language',
           title: 'Languages',
           facetField: 'language',
-          sortOn: 'count',
-          sortOrder: 'desc',
+          sortOn: 'alpha',
+          sortOrder: 'asc',
         },
         {
           id: 'website',

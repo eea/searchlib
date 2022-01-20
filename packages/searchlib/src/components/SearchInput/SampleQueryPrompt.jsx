@@ -18,7 +18,6 @@ export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
   const { setSearchTerm, setSort, ...rest } = useSearchContext();
 
-  console.log('rest', rest);
   const {
     defaultPromptQueries = [],
     promptQueries,
