@@ -275,6 +275,9 @@ const config = {
         },
       },
 
+      resultsPerPage: 10,
+      availableResultsPerPage: [10, 25, 50],
+
       enableNLP: false, // enables NLP capabilities
       nlp: {
         classifyQuestion: {

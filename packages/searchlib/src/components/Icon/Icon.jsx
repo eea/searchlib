@@ -7,6 +7,18 @@ import React from 'react';
 import { Icon as UiIcon, Image, Flag } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search';
 
+const CountryFlag = ({ country }) => {
+  const countryAlias = {
+    Czechia: 'Czech Republic',
+    'North Macedonia': 'Macedonia',
+    'British Indian Ocean Territory': 'United Kingdom',
+  };
+
+  let countryName = countryAlias[country] || country;
+
+  return <Flag name={countryName.toLowerCase()} />;
+};
+
 const Icon = (props) => {
   const { name, country, family = 'default', type, url, ...rest } = props;
   const { appConfig } = useAppConfig();
@@ -17,20 +29,8 @@ const Icon = (props) => {
     return <Image src={url} {...rest} />;
   }
 
-  const countryFlag = (country) => {
-    const countryAlias = {
-      Czechia: 'Czech Republic',
-      'North Macedonia': 'Macedonia',
-      'British Indian Ocean Territory': 'United Kingdom',
-    };
-
-    let countryName = countryAlias[country] || country;
-
-    return <Flag name={countryName.toLowerCase()} />;
-  };
-
-  if (country) {
-    return countryFlag(country);
+  if (family === 'CountryFlags') {
+    return <CountryFlag country={type} />;
   }
 
   const icons = appConfig.icons[family];
@@ -41,7 +41,9 @@ const Icon = (props) => {
   ) : icon.url ? (
     <Image src={icon.url} {...rest} />
   ) : icon.country ? (
-    countryFlag(type) // icon.country is a placeholder, we already have the name
+    // icon.country is a placeholder, we already have the name
+    // TODO: does this work????
+    <CountryFlag country={type} />
   ) : null;
 };
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { suiFacet, mergeConfig } from '@eeacms/search';
 import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './../utils';
 

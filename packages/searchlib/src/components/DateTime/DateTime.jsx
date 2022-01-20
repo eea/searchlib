@@ -9,7 +9,9 @@ const FormatDateTime = (props) => {
       : DateTime.fromISO(value)
     : DateTime.local();
 
-  return dt.toLocaleString(DateTime[format]);
+  return format === 'DATE_MED'
+    ? dt.toFormat('d MMMM yyyy')
+    : dt.toLocaleString(DateTime[format]);
 };
 
 export default FormatDateTime;

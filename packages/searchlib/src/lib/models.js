@@ -71,6 +71,15 @@ export const convertHitToResult = (record, field_filters) => {
   return rec;
 };
 
+function _getThumb() {
+  const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
+  const getThumb =
+    registry.resolve[thumbFactoryName] ||
+    ((result, config, fallback) => fallback);
+
+  return getThumb(this._result, this.appConfig);
+}
+
 /**
  * Superclass for result models.
  *
@@ -176,7 +185,7 @@ export class ResultModel extends BasicModel {
   get clusterName() {
     return (
       this.appConfig.contentSectionsParams.clusterMapping[
-      this._result.objectProvides?.raw
+        this._result.objectProvides?.raw
       ] || 'Others'
     );
   }
@@ -211,16 +220,12 @@ export class ResultModel extends BasicModel {
     // Example of a fallback image:
     // https://www.eea.europa.eu/help/faq/what-is-the-status-of/image_preview
     // return parseInt(1 + Math.random() * 3) === 1;
-    return true;
+    const thumb = _getThumb.bind(this).apply() || '';
+    return thumb.search(/portal_depiction/) === -1;
   }
 
   get thumbUrl() {
-    const thumbFactoryName = this.appConfig.resultItemModel.getThumbnailUrl;
-    const getThumb =
-      registry.resolve[thumbFactoryName] ||
-      ((result, config, fallback) => fallback);
-
-    return getThumb(this._result, this.appConfig);
+    return _getThumb.bind(this).apply();
   }
 
   get highlight() {

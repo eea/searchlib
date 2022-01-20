@@ -160,7 +160,7 @@ const CardItem = (props) => {
             rel="noreferrer"
           >
             <img
-              alt={result.href}
+              alt={result.title}
               src={result.thumbUrl}
               onError={(e) => {
                 e.target.style.display = 'none';

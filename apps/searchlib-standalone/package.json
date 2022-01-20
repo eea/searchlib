@@ -12,7 +12,7 @@
     "@eeacms/search": "workspace:*",
     "@eeacms/globalsearch": "workspace:*",
     "@eeacms/search-middleware": "workspace:*",
-    "@elastic/react-search-ui-views": "^1.5.1",
+    "@elastic/react-search-ui-views": "^1.9.0",
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.0",

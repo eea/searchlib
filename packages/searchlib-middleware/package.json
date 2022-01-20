@@ -170,7 +170,7 @@
   },
   "dependencies": {
     "@eeacms/search": "workspace:*",
-    "@elastic/search-ui": "^1.5.1",
+    "@elastic/search-ui": "^1.9.0",
     "babel-preset-react-app": "^10.0.0",
     "classnames": "^2.3.1",
     "cors": "^2.8.5",

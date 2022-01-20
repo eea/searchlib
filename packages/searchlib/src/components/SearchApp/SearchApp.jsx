@@ -13,6 +13,8 @@ import {
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
+const resetFilters = () => {};
+
 export default function SearchApp(props) {
   const {
     appName,
@@ -59,17 +61,26 @@ export default function SearchApp(props) {
     paramOnAutocomplete,
   ]);
 
+  const config = {
+    ...appConfig,
+    onResultClick,
+    onAutocompleteResultClick,
+    onAutocomplete,
+    onSearch,
+    initialState: {
+      resultsPerPage: appConfig.resultsPerPage || 20,
+    },
+  };
+
   return (
-    <SearchProvider
-      config={{
-        ...appConfig,
-        onResultClick,
-        onAutocompleteResultClick,
-        onAutocomplete,
-        onSearch,
-      }}
-    >
-      <WithSearch mapContextToProps={(context) => ({ ...context, isLoading })}>
+    <SearchProvider config={config}>
+      <WithSearch
+        mapContextToProps={(context) => ({
+          ...context,
+          isLoading,
+          resetFilters: resetFilters.bind(context),
+        })}
+      >
         {(params) => {
           return (
             <AppConfigContext.Provider value={appConfigContext}>
