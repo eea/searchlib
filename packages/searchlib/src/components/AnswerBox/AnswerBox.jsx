@@ -106,7 +106,9 @@ score: 6.118757247924805
     <div className="answers-list">
       {showLoader ? (
         <Segment className="answers__loading">
-          <div className="loading-tip">Searching for direct answers...</div>
+          <div className="loading-tip">
+            Searching for answers for <strong>{resultSearchTerm}</strong>
+          </div>
           <div className="progress">
             <div className="color"></div>
           </div>
@@ -135,9 +137,9 @@ score: 6.118757247924805
               const primaryAnswer = filtered?.[0];
               const primaryResult = primaryAnswer
                 ? buildResult(
-                  { ...primaryAnswer, _source: primaryAnswer?.source },
-                  appConfig,
-                )
+                    { ...primaryAnswer, _source: primaryAnswer?.source },
+                    appConfig,
+                  )
                 : null;
 
               return (
