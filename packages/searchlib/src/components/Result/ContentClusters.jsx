@@ -4,8 +4,13 @@ import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 const ContentClusters = ({ clusters }) => {
   const context = useSearchContext();
+  const clusterFilter = context.filters?.find((f) => f.field === 'op_cluster');
+  const activeCluster = clusterFilter?.values?.[0];
+  const displayClusters = activeCluster
+    ? { [activeCluster]: { ...clusters[activeCluster] } }
+    : clusters;
 
-  return Object.keys(clusters).map((cluster, index) => (
+  return Object.keys(displayClusters).map((cluster, index) => (
     <span key={index}>
       <span className="cluster-icon">
         <Icon {...clusters[cluster].icon} />
