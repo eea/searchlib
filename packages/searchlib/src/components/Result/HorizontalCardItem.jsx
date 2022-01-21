@@ -2,20 +2,20 @@ import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
 import { Label, Button, Dropdown } from 'semantic-ui-react';
-import { getTermDisplayValue } from '@eeacms/search/lib/utils';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
-
 import {
-  Icon,
+  useAppConfig,
+  useSearchContext,
+  useWindowDimensions,
+} from '@eeacms/search/lib/hocs';
+import {
+  SegmentedBreadcrumb,
   DateTime,
-  StringList,
   TagsList,
 } from '@eeacms/search/components';
+import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 import ResultContext from './ResultContext';
-import { SegmentedBreadcrumb } from '@eeacms/search/components';
-import { useWindowDimensions, useSearchContext } from '@eeacms/search/lib/hocs';
-import { firstWords } from './utils';
+import ContentClusters from './ContentClusters';
 
 export const ExternalLink = (props) => {
   return (
@@ -69,23 +69,7 @@ const CardItem = (props) => {
           <span className="date">
             <DateTime format="DATE_MED" value={result.issued} />
           </span>
-          {Object.keys(clusters).map((cluster, index) => (
-            <span key={index}>
-              <span className="cluster-icon">
-                <Icon {...clusters[cluster].icon} />
-              </span>
-              <span className="tags">
-                <StringList value={cluster} />
-                {(clusters[cluster].content_types.length === 1 &&
-                  cluster === clusters[cluster].content_types[0]) || (
-                  <>
-                    <Icon name="angle right" />
-                    <StringList value={clusters[cluster].content_types} />
-                  </>
-                )}
-              </span>
-            </span>
-          ))}
+          <ContentClusters clusters={clusters} />
         </div>
       </div>
       <div className={classColLeft}>

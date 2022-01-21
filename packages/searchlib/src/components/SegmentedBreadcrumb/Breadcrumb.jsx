@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumb } from 'semantic-ui-react';
-import { firstChars } from './../Result/utils';
+import { firstChars } from '@eeacms/search/lib/utils';
 
 const URLBreadcrumb = ({
   href,
