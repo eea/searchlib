@@ -69,13 +69,13 @@ export async function getDisjunctiveFacetCounts(
  *
  * @return {Promise<Object>} A map of updated aggregation counts for the specified facet names
  */
-export default async function applyDisjunctiveFaceting(json, state, config) {
+export default async function applyDisjunctiveFaceting(body, state, config) {
   const disjunctiveFacetCounts = await getDisjunctiveFacetCounts(state, config);
 
   return {
-    ...json,
+    ...body,
     aggregations: {
-      ...json.aggregations,
+      ...body.aggregations,
       ...disjunctiveFacetCounts,
     },
   };

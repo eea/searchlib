@@ -63,6 +63,7 @@ const facets = [
     factory: 'MultiTermListFacet',
     wrapper: 'ModalFacetWrapper',
     show: 10000,
+    showAllOptions: true, // show all options (even if 0) in modal facet
     // factory: 'sui.Facet',
   }),
   multiTermFacet({
@@ -97,6 +98,7 @@ const facets = [
     wrapper: 'ModalFacetWrapper',
     show: 10000,
     factory: 'MultiTermListFacet',
+    showAllOptions: true, // show all options (even if 0) in modal facet
   }),
   multiTermFacet({
     field: 'objectProvides',

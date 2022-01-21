@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { ToggleSort, Icon, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Checkbox, Button } from 'semantic-ui-react'; // , Header
+import { Checkbox, Button, Divider } from 'semantic-ui-react'; // , Header
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
@@ -22,7 +22,13 @@ const FacetOptions = (props) => {
     onRemove,
     iconsFamily,
     field,
+    availableOptions,
   } = props;
+
+  const sortedOptionKeys = sortedOptions.map((o) => o.value);
+  const zeroValueOptions = (availableOptions || [])
+    .filter((name) => !sortedOptionKeys.includes(name))
+    .map((name) => ({ value: name, count: 0, selected: false }));
 
   let isGroupedByLetters = false;
   if (Object.keys(groupedOptionsByLetters).length > 0) {
@@ -47,6 +53,8 @@ const FacetOptions = (props) => {
       isGroupedByNumbers = true;
     }
   }
+
+  // console.log('sortedOptions', sortedOptions, availableOptions);
 
   return (
     <div>
@@ -193,6 +201,32 @@ const FacetOptions = (props) => {
           );
         })}
       {sortedOptions.length < 1 && <div>No matching options</div>}
+
+      {zeroValueOptions.length ? (
+        <>
+          {zeroValueOptions.map((option, index) => (
+            <Button
+              key={`${getFilterValueDisplay(option.value)}`}
+              className="term"
+              toggle
+              active={false}
+              disabled
+            >
+              {iconsFamily && (
+                <Icon
+                  family={iconsFamily}
+                  type={option.value}
+                  className="facet-option-icon"
+                />
+              )}
+              <span className="title">
+                <Term term={option.value} field={field} />
+              </span>
+              <span className="count">{option.count.toLocaleString('en')}</span>
+            </Button>
+          ))}
+        </>
+      ) : null}
     </div>
   );
 };
@@ -218,11 +252,10 @@ const ViewComponent = (props) => {
     onChangeFilterExact,
     filterExact,
     enableExact = false,
+    availableOptions,
   } = props;
-  // console.log('pp', props);
-  const { appConfig } = useAppConfig();
 
-  // const sortedOptions = sorted(options, sortOn, sortOrder);
+  const { appConfig } = useAppConfig();
 
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
@@ -361,6 +394,7 @@ const ViewComponent = (props) => {
             onRemove={onRemove}
             onSelect={onSelect}
             sortedOptions={sortedOptions}
+            availableOptions={availableOptions}
             sorting={sorting}
           />
           {showMore && (

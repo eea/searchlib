@@ -49,7 +49,7 @@ const OptionsWrapper = (props) => {
   const { options, view, state, dispatch, facet, field, ...rest } = props;
   const searchContext = useSearchContext();
   const { registry } = useAppConfig();
-  const { filters } = searchContext;
+  const { filters, facetOptions } = searchContext;
   const View = view;
 
   const previousOptions = usePrevious(options);
@@ -101,6 +101,7 @@ const OptionsWrapper = (props) => {
       HeaderWrapper={Modal.Header}
       ContentWrapper={renderContent}
       options={optionsFilter ? optionsFilter(newOptions, filters) : newOptions}
+      availableOptions={facetOptions[field]}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });
       }}

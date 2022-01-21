@@ -1,16 +1,28 @@
 import registry from '@eeacms/search/registry';
 
-export const buildAggregationsQuery = (config) => {
+/**
+ * Build a suitable object for the aggregations part of the query.
+ *
+ * Pass a suitable list as facetFieldNames if you want to limit the facets
+ * retrieved.
+ */
+export const buildAggregationsQuery = (config, includeAggs) => {
   const facets = config.facets;
 
   const aggregations = Object.assign(
     {},
-    ...facets.map((facet) => {
-      const { buildRequest: buildFacetRequest } = registry.resolve[
-        facet.factory
-      ];
-      return buildFacetRequest ? buildFacetRequest(facet, config) : {}; // include the aggregations
-    }),
+    ...facets
+      .filter((facet) =>
+        includeAggs && Array.isArray(includeAggs)
+          ? includeAggs.includes(facet.field)
+          : !!includeAggs,
+      )
+      .map((facet) => {
+        const { buildRequest: buildFacetRequest } = registry.resolve[
+          facet.factory
+        ];
+        return buildFacetRequest ? buildFacetRequest(facet, config) : {}; // include the aggregations
+      }),
   );
 
   return aggregations;

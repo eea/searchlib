@@ -15,12 +15,13 @@ import {
   bindOnSearch,
 } from '@eeacms/search/lib/request';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { getFacetOptions } from './request';
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
 const resetFilters = () => {};
 
-export default function SearchApp(props) {
+function SearchApp(props) {
   const {
     appName,
     registry,
@@ -35,8 +36,12 @@ export default function SearchApp(props) {
   );
 
   const isMountedRef = useIsMounted();
-  const facetOptions = React.useState(); // cache for all facet values, for some facets;
-  const appConfigContext = { appConfig, registry };
+  const [facetOptions, setFacetOptions] = React.useState(); // cache for all facet values, for some facets;
+
+  const appConfigContext = React.useMemo(() => ({ appConfig, registry }), [
+    appConfig,
+    registry,
+  ]);
 
   // <ErrorBoundary>
   // </ErrorBoundary>
@@ -68,18 +73,30 @@ export default function SearchApp(props) {
     paramOnAutocomplete,
   ]);
 
-  const config = {
-    ...appConfig,
-    onResultClick,
-    onAutocompleteResultClick,
-    onAutocomplete,
-    onSearch,
-    initialState: {
-      resultsPerPage: appConfig.resultsPerPage || 20,
-    },
-  };
+  const config = React.useMemo(
+    () => ({
+      ...appConfig,
+      onResultClick,
+      onAutocompleteResultClick,
+      onAutocomplete,
+      onSearch,
+      initialState: {
+        resultsPerPage: appConfig.resultsPerPage || 20,
+      },
+    }),
+    [appConfig, onAutocomplete, onSearch],
+  );
 
-  const fetchFacetOptions = React.useCallback(() => {}, []);
+  const fetchFacetOptions = React.useCallback(
+    async (facetFieldNames) => {
+      const facetNames = appConfig.facets
+        .filter((f) => f.showAllOptions)
+        .map((f) => f.field);
+      const facetOptions = await getFacetOptions(appConfig, facetNames);
+      isMountedRef.current && setFacetOptions(facetOptions);
+    },
+    [appConfig, isMountedRef],
+  );
 
   const facetsWithAllOptions =
     appConfig.facets?.filter((f) => f.showAllOptions) || [];
@@ -95,9 +112,11 @@ export default function SearchApp(props) {
           ...context,
           isLoading,
           resetFilters: resetFilters.bind(context),
+          facetOptions,
         })}
       >
         {(params) => {
+          // TODO: this needs to be optimized, it causes unmounts
           return (
             <AppConfigContext.Provider value={appConfigContext}>
               <SearchContext.Provider value={params}>
@@ -115,3 +134,5 @@ export default function SearchApp(props) {
     </SearchProvider>
   );
 }
+
+export default React.memo(SearchApp, () => true);
