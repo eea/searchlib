@@ -189,3 +189,14 @@ export function valueToString(value) {
 
   return value.toString();
 }
+
+export function getFilterValueDisplay(filterValue) {
+  if (filterValue === undefined || filterValue === null) return '';
+  if (filterValue.hasOwnProperty('name')) return filterValue.name;
+  return String(filterValue);
+}
+
+export function getTermDisplayValue({ vocab, term, field }) {
+  const base = getFilterValueDisplay(term);
+  return vocab[field]?.[base] || base;
+}

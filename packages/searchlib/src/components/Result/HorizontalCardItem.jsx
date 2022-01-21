@@ -2,6 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import { useAtom } from 'jotai';
 import { Label, Button, Dropdown } from 'semantic-ui-react';
+import { getTermDisplayValue } from '@eeacms/search/lib/utils';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 import {
   Icon,
@@ -33,6 +35,9 @@ export const ExternalLink = (props) => {
 const CardItem = (props) => {
   const { result, showControls = true } = props;
   const context = useSearchContext();
+  const { appConfig } = useAppConfig();
+  const { vocab = {} } = appConfig;
+
   const { setFilter, removeFilter, setSearchTerm } = context;
 
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
@@ -107,7 +112,14 @@ const CardItem = (props) => {
             <span>Source: </span>
             <ExternalLink href={result.href}>
               <span title={result.source} className="source">
-                {firstWords(result.source, 3)}
+                {firstWords(
+                  getTermDisplayValue({
+                    vocab,
+                    field: 'cluster_name',
+                    term: result.source,
+                  }),
+                  8,
+                )}
               </span>
               <SegmentedBreadcrumb
                 href={result.href}
