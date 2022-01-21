@@ -153,3 +153,20 @@ export default {
     ),
   },
 };
+
+export function typesForClustersOptionsFilter(options, filters) {
+  // Only display content types that belong to the currently selected cluster
+  const clusterMap = Object.assign(
+    {},
+    ...clusters.clusters.map(({ name, values }) =>
+      Object.assign({}, ...values.map((v) => ({ [v]: name }))),
+    ),
+  );
+
+  const clusterFilter = filters?.find((f) => f.field === 'op_cluster');
+  const activeCluster = clusterFilter?.values?.[0];
+
+  return activeCluster
+    ? options.filter((f) => clusterMap[f.value] === activeCluster)
+    : options;
+}

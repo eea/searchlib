@@ -5,7 +5,7 @@ import { useSearchContext } from '@eeacms/search/lib/hocs';
 import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { isEqual } from 'lodash';
-import Filter from './../../FilterList/Filter';
+import Filter from '@eeacms/search/components/FilterList/Filter';
 
 function normalize_state(state) {
   let tmp_state = [];
@@ -46,8 +46,10 @@ function reducer(state, action) {
 }
 
 const OptionsWrapper = (props) => {
-  const { options, view, state, dispatch, ...rest } = props;
+  const { options, view, state, dispatch, facet, field, ...rest } = props;
   const searchContext = useSearchContext();
+  const { registry } = useAppConfig();
+  const { filters } = searchContext;
   const View = view;
 
   const previousOptions = usePrevious(options);
@@ -88,13 +90,17 @@ const OptionsWrapper = (props) => {
     );
   }, []);
 
+  const optionsFilter = facet.optionsFilter
+    ? registry.resolve[facet.optionsFilter]
+    : null;
+
   return (
     <View
       {...rest}
       {...searchContext}
       HeaderWrapper={Modal.Header}
       ContentWrapper={renderContent}
-      options={newOptions}
+      options={optionsFilter ? optionsFilter(newOptions, filters) : newOptions}
       onSelect={(value, force) => {
         dispatch({ type: 'set', force, value });
       }}
@@ -213,6 +219,8 @@ const FacetWrapperComponent = (props) => {
         view={(innerProps) => (
           <OptionsWrapper
             {...innerProps}
+            field={field}
+            facet={facet}
             filterType={localFilterType}
             filterExact={isExact}
             onChangeFilterType={(v) => setLocalFilterType(v)}

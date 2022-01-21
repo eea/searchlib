@@ -107,6 +107,7 @@ const facets = [
     //whitelist: objectProvidesWhitelist,
     wrapper: 'ModalFacetWrapper',
     factory: 'MultiTermListFacet',
+    optionsFilter: 'typesForClustersOptionsFilter',
   }),
   multiTermFacet({
     field: 'cluster_name',

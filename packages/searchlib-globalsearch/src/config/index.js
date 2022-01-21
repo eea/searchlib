@@ -1,5 +1,6 @@
 import { suiFacet, mergeConfig } from '@eeacms/search';
 import { getGlobalsearchThumbUrl, getGlobalsearchIconUrl } from './../utils';
+import { typesForClustersOptionsFilter } from './clusters';
 
 // import WebsiteFilterListComponent from './../components/WebsiteFilterListComponent';
 
@@ -66,6 +67,8 @@ export default function install(config) {
   config.resolve.getGlobalsearchThumbUrl = getGlobalsearchThumbUrl(
     contentTypeNormalize,
   );
+
+  config.resolve.typesForClustersOptionsFilter = typesForClustersOptionsFilter;
   // config.resolve.WebsiteFilterListComponent = {
   //   component: WebsiteFilterListComponent,
   // };

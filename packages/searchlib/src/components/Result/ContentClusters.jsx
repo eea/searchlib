@@ -10,22 +10,28 @@ const ContentClusters = ({ clusters }) => {
     ? { [activeCluster]: { ...clusters[activeCluster] } }
     : clusters;
 
-  return Object.keys(displayClusters).map((cluster, index) => (
-    <span key={index}>
-      <span className="cluster-icon">
-        <Icon {...clusters[cluster].icon} />
-      </span>
-      <span className="tags">
-        <StringList value={cluster} />
-        {(clusters[cluster].content_types.length === 1 &&
-          cluster === clusters[cluster].content_types[0]) || (
-          <>
-            <Icon name="angle right" />
-            <StringList value={clusters[cluster].content_types} />
-          </>
-        )}
-      </span>
-    </span>
-  ));
+  return Object.entries(displayClusters).map(
+    ([clusterName, cluster], index) => {
+      // protect against async cluster information not filled in yet
+      return Object.keys(cluster).length ? (
+        <span key={index}>
+          <span className="cluster-icon">
+            <Icon {...cluster.icon} />
+          </span>
+          <span className="tags">
+            <StringList value={clusterName} />
+            {clusterName !== cluster.content_types?.[0] && (
+              <>
+                <Icon name="angle right" />
+                <StringList
+                  value={displayClusters[clusterName].content_types}
+                />
+              </>
+            )}
+          </span>
+        </span>
+      ) : null;
+    },
+  );
 };
 export default ContentClusters;
