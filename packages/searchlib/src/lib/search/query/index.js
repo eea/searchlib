@@ -95,6 +95,9 @@ export default function buildRequest(state, config, includeAggs = false) {
     ...(config.enableNLP && {
       ...config.requestParams,
     }),
+    source: {
+      exclude: [...(config.sourceExcludedFields || [])],
+    },
     track_total_hits: true,
   };
 
