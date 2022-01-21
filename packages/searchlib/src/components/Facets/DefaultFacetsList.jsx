@@ -37,10 +37,12 @@ export default (props) => {
   }, [hasFilters, setShowFacets]);
 
   return (
-    <div class="facets-list">
+    <div className="facets-list">
       <FacetsList
         defaultWraper={AccordionFacetWrapper}
-        view={({ children }) => <div class="facets-inner"> {children} </div>}
+        view={({ children }) => (
+          <div className="facets-inner"> {children} </div>
+        )}
       />
     </div>
   );
