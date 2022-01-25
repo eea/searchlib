@@ -11,7 +11,7 @@ import FacetsList from './FacetsList';
 import MoreLikeThis from './Connected/MoreLikeThis';
 import { ErrorBoundary } from '@elastic/react-search-ui';
 
-const DimmerFacets = (props) => {
+const DimmerFacets = () => {
   const [active, setActive] = React.useState(false);
   const [showFacets] = useAtom(showFacetsAsideAtom);
 
@@ -66,7 +66,7 @@ const DimmerFacets = (props) => {
   );
 };
 
-const NormalFacets = (props) => {
+const NormalFacets = () => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
@@ -108,11 +108,10 @@ const NormalFacets = (props) => {
   );
 };
 
-export default (props) => {
-  // const [bodyRef] = useAtom(bodyContentRefAtom);
+export default () => {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
-  // const isActive = width > 766;
+
   const isSmallScreen = width <= 766;
   const searchContext = useSearchContext();
   const hasFilters = searchContext.filters.length > 0;
@@ -121,13 +120,5 @@ export default (props) => {
     if (hasFilters) setShowFacets(true);
   }, [hasFilters, setShowFacets]);
 
-  return (
-    <>
-      {isSmallScreen ? (
-        <DimmerFacets props={props} />
-      ) : (
-        <NormalFacets props={props} />
-      )}
-    </>
-  );
+  return isSmallScreen ? <DimmerFacets /> : <NormalFacets />;
 };
