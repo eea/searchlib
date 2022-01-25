@@ -110,7 +110,7 @@ export default {
       },
 
       'etc-bd': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-bd.jpg'),
       },
 
       'etc-cca': {
@@ -122,7 +122,7 @@ export default {
       },
 
       'etc-icm': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-icm.jpg'),
       },
 
       'etc-uls': {

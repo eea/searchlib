@@ -45,15 +45,15 @@ const vocab = {
     'wise-freshwater': 'Fresh Water Information System for Europe',
     'wise-marine': 'Marine Water Information System for Europe',
     etc: 'European Environment Information and Observation Network (Eionet)',
-    'etc etc-atni':
+    'etc-atni':
       'ETC on Air Pollution, Transport, Noise and Industrial Pollution',
-    'etc etc-bd': 'ETC on Biological Diversity',
-    'etc etc-cca':
+    'etc-bd': 'ETC on Biological Diversity',
+    'etc-cca':
       'ETC on Climate Change Impacts, Vulnerability and Adaptation',
-    'etc etc-cme': 'ETC on Climate Change Mitigation and Energy',
-    'etc etc-icm': 'ETC on Inland, Coastal and Marine Waters',
-    'etc etc-uls': 'ETC on Urban, Land and Soil Systems',
-    'etc etc-wmge': 'ETC on Waste and Materials in Green Economy',
+    'etc-cme': 'ETC on Climate Change Mitigation and Energy',
+    'etc-icm': 'ETC on Inland, Coastal and Marine Waters',
+    'etc-uls': 'ETC on Urban, Land and Soil Systems',
+    'etc-wmge': 'ETC on Waste and Materials in Green Economy',
   },
 };
 
