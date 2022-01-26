@@ -51,14 +51,17 @@ const FacetOptions = (props) => {
 };
 
 const Select = ({ options, value, onChange, className }) => {
-  const handler = (e) => onChange(e.target.value);
-  // console.log('value', value);
+  const [val, setVal] = React.useState(value);
+  const handler = (e) => {
+    onChange(e.target.value);
+    setVal(e.target.value);
+  };
 
   return (
     <select
       onBlur={handler}
       onChange={handler}
-      value={value}
+      value={val}
       className={className}
     >
       {options.map((opt) => (

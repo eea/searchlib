@@ -5,12 +5,26 @@ import { Accordion, Icon } from 'semantic-ui-react';
 import { useAtom } from 'jotai';
 import { openFacetsAtom } from '../state';
 import { useUpdateAtom } from 'jotai/utils';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 const FacetWrapperComponent = (props) => {
   const { collapsable = true, filters = [], field, label } = props;
   const hasFilter = !!filters.find((filter) => field === filter.field);
   const [openFacets] = useAtom(openFacetsAtom);
   const updateOpenFacets = useUpdateAtom(openFacetsAtom);
+
+  const { appConfig } = useAppConfig();
+  const facet = appConfig.facets?.find((f) => f.field === field);
+  const fallback = props.filterType ? props.filterType : facet.filterType;
+  const defaultValue = field
+    ? filters?.find((f) => f.field === field)?.type || fallback
+    : fallback;
+
+  const [defaultTypeValue] = (defaultValue || '').split(':');
+
+  const [localFilterType, setLocalFilterType] = React.useState(
+    defaultTypeValue,
+  );
 
   React.useEffect(() => {
     let temp = openFacets;
@@ -48,11 +62,20 @@ const FacetWrapperComponent = (props) => {
         {label}
       </Accordion.Title>
       <Accordion.Content active={isOpened}>
-        <SUIFacet {...props} active={isOpened} />
+        <SUIFacet
+          {...props}
+          active={isOpened}
+          filterType={localFilterType}
+          onChangeFilterType={(v) => setLocalFilterType(v)}
+        />
       </Accordion.Content>
     </Accordion>
   ) : (
-    <SUIFacet {...props} />
+    <SUIFacet
+      {...props}
+      filterType={localFilterType}
+      onChangeFilterType={(v) => setLocalFilterType(v)}
+    />
   );
 };
 
