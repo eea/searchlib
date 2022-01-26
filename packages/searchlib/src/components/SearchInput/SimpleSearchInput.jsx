@@ -3,12 +3,18 @@
  */
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 
 function SearchInput({ getAutocomplete, getButtonProps, getInputProps }) {
+  const { appConfig } = useAppConfig();
+  let inputProps = getInputProps();
+  const { searchInputPlaceholder = '' } = appConfig;
+  inputProps.placeholder = searchInputPlaceholder;
+
   return (
     <>
       <div className="sui-search-box__wrapper">
-        <input {...getInputProps()} />
+        <input {...inputProps} />
         {getAutocomplete()}
       </div>
       <input {...getButtonProps()} />
