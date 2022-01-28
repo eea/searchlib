@@ -15,6 +15,7 @@ import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 import { Icon, DateTime } from '@eeacms/search/components'; //, StringList
+import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 
 import AnswerBoxDetails from './AnswerBoxDetails';
 import AnswerLinksList from './AnswersLinksList';
@@ -26,6 +27,9 @@ const MAX_COUNT = 3;
 const WHITESPACE_RE = /\n|\t/;
 
 const AnswerContext = ({ item, answerItem }) => {
+  const { appConfig } = useAppConfig();
+  const { vocab = {} } = appConfig;
+
   const { full_context = '', context, answer } = answerItem;
   const clusters = item.clusterInfo;
   const start = (full_context || context || '').indexOf(answer);
@@ -53,7 +57,20 @@ const AnswerContext = ({ item, answerItem }) => {
       <DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
-          <SegmentedBreadcrumb href={item.href} />
+          <div class="ui breadcrumb">
+            <span title={item.source} className="source">
+              {firstWords(
+                getTermDisplayValue({
+                  vocab,
+                  field: 'cluster_name',
+                  term: item.source,
+                }),
+                8,
+              )}
+            </span>
+            <SegmentedBreadcrumb href={item.href} short={true} maxChars={40} />
+          </div>
+
           {Object.keys(clusters).map((cluster, index) => (
             <Icon
               key={index}
@@ -61,6 +78,7 @@ const AnswerContext = ({ item, answerItem }) => {
               {...clusters[cluster].icon}
             />
           ))}
+
           {item.title}
         </ExternalLink>
       </h4>

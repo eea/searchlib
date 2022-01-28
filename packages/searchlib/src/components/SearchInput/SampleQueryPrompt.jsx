@@ -12,11 +12,9 @@ function toArray(s) {
   return a;
 }
 
-const resetFilters = () => {};
-
 export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
-  const { setSearchTerm, setSort, ...rest } = useSearchContext();
+  const { setSearchTerm, setSort, resetFilters } = useSearchContext();
 
   const {
     defaultPromptQueries = [],
