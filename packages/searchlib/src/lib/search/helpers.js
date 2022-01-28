@@ -125,3 +125,57 @@ export function mergeFilters(filters1, filters2) {
     return [...acc, next];
   }, filters1);
 }
+
+export function resetFiltersToDefault(searchContext, appConfig) {
+  const { setFilter, clearFilters } = searchContext;
+
+  clearFilters();
+
+  appConfig.facets
+    .filter((f) => !!f.default)
+    .forEach((facet) => {
+      facet.default.values.forEach((value) =>
+        setFilter(facet.field, value, facet.default.type || 'any'),
+      );
+    });
+}
+
+/**
+ * Returns true/false depending of if current filters are exactly the value of
+ * the default filters
+ */
+export function hasNonDefaultFilters(filters, appConfig) {
+  const defaultFiltersList = appConfig.facets
+    .filter((f) => !!f.default)
+    .map((facet) => ({
+      field: facet.field,
+      values: facet.default.values.sort(),
+      type: facet.default.type || 'any',
+    }));
+
+  const defaultFilterFields = defaultFiltersList.map((f) => f.field);
+  const activeFilterFields = filters.map((f) => f.field);
+
+  const nonDefaultFilterFields = activeFilterFields.filter(
+    (name) => defaultFilterFields.indexOf(name) === -1,
+  );
+
+  if (nonDefaultFilterFields.length) return true;
+
+  const defaultFilterFieldsNotApplied = defaultFilterFields.filter(
+    (name) => activeFilterFields.indexOf(name) === -1,
+  );
+
+  if (defaultFilterFieldsNotApplied.length) return true;
+
+  const activeFilters = Object.assign(
+    {},
+    ...filters.map((f) => ({ [f.field]: { ...f, values: f.values.sort() } })),
+  );
+  const defaultFilters = Object.assign(
+    {},
+    ...defaultFiltersList.map((f) => ({ [f.field]: f })),
+  );
+
+  return !deepEqual(activeFilters, defaultFilters);
+}

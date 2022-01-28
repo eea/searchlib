@@ -5,6 +5,7 @@ import {
   Rating,
   Popup,
   Button,
+  Message,
   // Transition,
 } from 'semantic-ui-react'; //, Accordion
 
@@ -12,6 +13,7 @@ import { SegmentedBreadcrumb } from '@eeacms/search/components';
 import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 import { Icon, DateTime } from '@eeacms/search/components'; //, StringList
 
 import AnswerBoxDetails from './AnswerBoxDetails';
@@ -73,7 +75,11 @@ const AnswerBox = (props) => {
   const { data = {}, loading, loaded, searchedTerm } = props;
   const { sortedClusters = [] } = data || {};
   const { searchContext } = props;
-  const { resultSearchTerm = '' } = searchContext;
+  const { resultSearchTerm = '', filters, resetFilters } = searchContext;
+
+  const hasActiveFilters = hasNonDefaultFilters(filters, appConfig);
+  console.log('filters', filters);
+
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
 context: "nto account when assessing water quality (organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters.↵(Source: RRDA)"
@@ -91,31 +97,9 @@ score: 6.118757247924805
 
   const showLoader = loading && !loaded;
 
-  if (
-    !(
-      showLoader ||
-      (resultSearchTerm &&
-        searchedTerm === resultSearchTerm &&
-        sortedClusters.length)
-    )
-  ) {
-    return null;
-  }
-
-  return (
-    <div className="answers-list">
-      {showLoader ? (
-        <Segment className="answers__loading">
-          <div className="loading-tip">
-            Searching for answers for <strong>{resultSearchTerm}</strong>
-          </div>
-          <div className="progress">
-            <div className="color"></div>
-          </div>
-        </Segment>
-      ) : resultSearchTerm &&
-        searchedTerm === resultSearchTerm &&
-        sortedClusters.length ? (
+  const Answers = React.useCallback(
+    (props) => {
+      return (
         <div>
           {sortedClusters.length > 1 && (
             <Button.Group size="mini" floated="right" color="blue">
@@ -181,12 +165,62 @@ score: 6.118757247924805
                         <AnswerBoxDetails />
                       </Popup>
                     </div>
+                    {hasActiveFilters ? (
+                      <Message warning>
+                        This answer is extracted from documents matching the
+                        active filters. You can{' '}
+                        <Button
+                          size="mini"
+                          compact
+                          primary
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            resetFilters();
+                          }}
+                        >
+                          reset
+                        </Button>{' '}
+                        the filters to improve the quality of results.
+                      </Message>
+                    ) : (
+                      ''
+                    )}
                   </Segment>
                 </div>
               );
             })}
           </div>
         </div>
+      );
+    },
+    [appConfig, position, searchedTerm, sortedClusters, filters, resetFilters],
+  );
+
+  if (
+    !(showLoader || (resultSearchTerm && searchedTerm === resultSearchTerm))
+  ) {
+    return null;
+  } // && sortedClusters.length
+
+  const showAnswers =
+    resultSearchTerm &&
+    searchedTerm === resultSearchTerm &&
+    sortedClusters.length;
+
+  return (
+    <div className="answers-list">
+      {showLoader ? (
+        <Segment className="answers__loading">
+          <div className="loading-tip">
+            Searching for answers for <strong>{resultSearchTerm}</strong>
+          </div>
+          <div className="progress">
+            <div className="color"></div>
+          </div>
+        </Segment>
+      ) : showAnswers ? (
+        <Answers />
       ) : (
         ''
       )}
@@ -195,22 +229,3 @@ score: 6.118757247924805
 };
 
 export default withAnswers(AnswerBox);
-
-//
-// {sortedClusters.length > 1 && (
-//   <div className="answers-bullets">
-//     {Array(sortedClusters.length)
-//       .fill(null)
-//       .map((item, k) => (
-//         <div
-//           aria-label={`Set answerbox page to: ${k + 1}`}
-//           onKeyDown={() => {}}
-//           tabIndex="-1"
-//           role="button"
-//           key={k}
-//           className={`bullet ${position === k ? 'active' : ''}`}
-//           onClick={() => setPosition(k)}
-//         ></div>
-//       ))}
-//   </div>
-// )}

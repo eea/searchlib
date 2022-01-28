@@ -16,10 +16,15 @@ import {
 } from '@eeacms/search/lib/request';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { getFacetOptions } from './request';
+import { resetFiltersToDefault } from '@eeacms/search/lib/search/helpers';
 
 // import '@elastic/react-search-ui-views/lib/styles/styles.css';
 
-const resetFilters = () => {};
+function resetFilters() {
+  const { appConfig, searchContext } = this;
+
+  return resetFiltersToDefault(searchContext, appConfig);
+}
 
 function SearchApp(props) {
   const {
@@ -108,10 +113,10 @@ function SearchApp(props) {
   return (
     <SearchProvider config={config}>
       <WithSearch
-        mapContextToProps={(context) => ({
-          ...context,
+        mapContextToProps={(searchContext) => ({
+          ...searchContext,
           isLoading,
-          resetFilters: resetFilters.bind(context),
+          resetFilters: resetFilters.bind({ appConfig, searchContext }),
           facetOptions,
         })}
       >

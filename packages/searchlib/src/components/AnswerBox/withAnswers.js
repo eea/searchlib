@@ -44,6 +44,8 @@ const withAnswers = (WrappedComponent) => {
       cutoff = 0.1;
     }
 
+    const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
+
     useDeepCompareEffect(() => {
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
@@ -56,7 +58,7 @@ const withAnswers = (WrappedComponent) => {
           const requestBody = buildQuestionRequest(searchContext, appConfig);
 
           // TODO: this might not be perfect, can be desynced
-          if (!(loading || loaded) && qa_queryTypes.indexOf(query_type) > -1) {
+          if (!(loading || loaded) && isQuestion) {
             dispatch({ type: 'loading' });
 
             const response = await runRequest(requestBody, appConfig);
@@ -149,12 +151,11 @@ const withAnswers = (WrappedComponent) => {
         }, 100);
       }
     }, [
+      isQuestion,
       isMounted,
       appConfig,
       searchContext,
       searchTerm,
-      qa_queryTypes,
-      query_type,
       dispatch,
       request,
       filters,
@@ -164,6 +165,7 @@ const withAnswers = (WrappedComponent) => {
     return (
       <WrappedComponent
         {...props}
+        isQuestion={isQuestion}
         data={request.data}
         loading={request.loading}
         loaded={request.loaded}
