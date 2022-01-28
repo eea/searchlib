@@ -78,7 +78,7 @@ const AnswerBox = (props) => {
   const { resultSearchTerm = '', filters, resetFilters } = searchContext;
 
   const hasActiveFilters = hasNonDefaultFilters(filters, appConfig);
-  console.log('filters', filters);
+  // console.log('filters', filters);
 
   /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"
@@ -184,7 +184,7 @@ score: 6.118757247924805
                         the filters to improve the quality of results.
                       </Message>
                     ) : (
-                      ''
+                      'Nothing to see here, move along.'
                     )}
                   </Segment>
                 </div>
@@ -194,7 +194,14 @@ score: 6.118757247924805
         </div>
       );
     },
-    [appConfig, position, searchedTerm, sortedClusters, filters, resetFilters],
+    [
+      appConfig,
+      position,
+      searchedTerm,
+      sortedClusters,
+      resetFilters,
+      hasActiveFilters,
+    ],
   );
 
   if (
@@ -221,8 +228,25 @@ score: 6.118757247924805
         </Segment>
       ) : showAnswers ? (
         <Answers />
+      ) : hasActiveFilters ? (
+        <Message warning>
+          Now answers found, but you have active filters. You may try to{' '}
+          <Button
+            size="mini"
+            compact
+            primary
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              resetFilters();
+            }}
+          >
+            reset
+          </Button>{' '}
+          the filters to improve the quality of results.
+        </Message>
       ) : (
-        ''
+        <Message warning>Now direct answers for your question.</Message>
       )}
     </div>
   );
