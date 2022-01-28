@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, StringList } from '@eeacms/search/components';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 
-const ContentClusters = ({ clusters }) => {
+const ContentClusters = ({ clusters, item }) => {
   const context = useSearchContext();
   const clusterFilter = context.filters?.find((f) => f.field === 'op_cluster');
   const activeCluster = clusterFilter?.values?.[0];
@@ -27,6 +27,11 @@ const ContentClusters = ({ clusters }) => {
                   value={displayClusters[clusterName].content_types}
                 />
               </>
+            )}
+            {item.format?.raw === 'application/pdf' ? (
+              <span className="pdf-icon">PDF</span>
+            ) : (
+              ''
             )}
           </span>
         </span>

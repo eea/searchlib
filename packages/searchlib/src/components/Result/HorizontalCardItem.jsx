@@ -58,8 +58,6 @@ const CardItem = (props) => {
   const isSmallScreen = width < 1000;
   const clusters = result.clusterInfo;
 
-  console.log('result', result.source);
-
   return (
     <div
       className={cx('search-result', { hovered })}
@@ -71,7 +69,7 @@ const CardItem = (props) => {
           <span className="date">
             <DateTime format="DATE_MED" value={result.issued} />
           </span>
-          <ContentClusters clusters={clusters} />
+          <ContentClusters clusters={clusters} item={result} />
         </div>
       </div>
       <div className={classColLeft}>
