@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAtom } from 'jotai';
-import { Button, Card, Dimmer, Icon, Sticky } from 'semantic-ui-react';
-// import { Checkbox, Grid, Menu, Segment, Sidebar } from 'semantic-ui-react';
+import { Button, Card, Dimmer, Icon, Sticky, Segment } from 'semantic-ui-react';
 
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { bodyContentRefAtom, showFacetsAsideAtom } from '@eeacms/search/state';
@@ -66,7 +65,7 @@ const DimmerFacets = () => {
   );
 };
 
-const NormalFacets = () => {
+const NormalFacets = ({ isLoading }) => {
   const [bodyRef] = useAtom(bodyContentRefAtom);
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
@@ -76,34 +75,36 @@ const NormalFacets = () => {
 
   return (
     <Sticky context={bodyRef} active={isActive}>
-      {showFacets ? (
-        <>
-          <ErrorBoundary>
-            <MoreLikeThis />
-          </ErrorBoundary>
-          <FacetsList
-            defaultWraper={ModalFacetWrapper}
-            view={({ children }) => (
-              <Card.Group stackable itemsPerRow={1}>
-                {children}
-              </Card.Group>
-            )}
-          />
-        </>
-      ) : (
-        ''
-      )}
-      <Button
-        className="show-filters"
-        toggle
-        active={showFacets}
-        onClick={() => {
-          setShowFacets(!showFacets);
-        }}
-      >
-        <Icon name="filter" />
-        {showFacets ? 'Hide filters' : 'Filters'}
-      </Button>
+      <Segment className="facetslist-wrapper" loading={isLoading}>
+        {showFacets ? (
+          <>
+            <ErrorBoundary>
+              <MoreLikeThis />
+            </ErrorBoundary>
+            <FacetsList
+              defaultWraper={ModalFacetWrapper}
+              view={({ children }) => (
+                <Card.Group stackable itemsPerRow={1}>
+                  {children}
+                </Card.Group>
+              )}
+            />
+          </>
+        ) : (
+          ''
+        )}
+        <Button
+          className="show-filters"
+          toggle
+          active={showFacets}
+          onClick={() => {
+            setShowFacets(!showFacets);
+          }}
+        >
+          <Icon name="filter" />
+          {showFacets ? 'Hide filters' : 'Filters'}
+        </Button>
+      </Segment>
     </Sticky>
   );
 };
@@ -120,5 +121,9 @@ export default () => {
     if (hasFilters) setShowFacets(true);
   }, [hasFilters, setShowFacets]);
 
-  return isSmallScreen ? <DimmerFacets /> : <NormalFacets />;
+  return isSmallScreen ? (
+    <DimmerFacets {...searchContext} />
+  ) : (
+    <NormalFacets {...searchContext} />
+  );
 };
