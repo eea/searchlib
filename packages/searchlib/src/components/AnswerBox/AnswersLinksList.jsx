@@ -26,7 +26,7 @@ export default ({ filtered, appConfig }) => {
         <ExternalLink href={highlightUrl(result.href, item.answer)}>
           {result.title}
         </ExternalLink>{' '}
-        <span className="answer__domain">
+        <div className="answer__domain">
           <ExternalLink href={result.href}>
             <span title={result.source} className="source">
               {firstWords(
@@ -50,7 +50,7 @@ export default ({ filtered, appConfig }) => {
           <span className="answer__date">
             (<DateTime format="DATE_MED" value={result.issued} />)
           </span>
-        </span>
+        </div>
         {result.isNew && (
           <Label className="new-item" horizontal>
             New
