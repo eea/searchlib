@@ -184,7 +184,7 @@ score: 6.118757247924805
                         the filters to improve the quality of results.
                       </Message>
                     ) : (
-                      'Nothing to see here, move along.'
+                      ''
                     )}
                   </Segment>
                 </div>
