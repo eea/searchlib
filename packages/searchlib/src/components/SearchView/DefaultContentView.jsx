@@ -1,24 +1,30 @@
 import React from 'react';
-import { ResultsPerPage, Paging, Sorting } from '@elastic/react-search-ui';
+import { ResultsPerPage, Sorting } from '@elastic/react-search-ui'; // Paging
+import Paging from './../Paging/Paging';
+import ResultsPerPageSelector from './../ResultsPerPageSelector/ResultsPerPageSelector';
 import {
   ViewSelector,
   FilterList,
-  SortingDropdown,
+  // SortingDropdown,
+  SortingDropdownWithLabel,
   AnswerBox,
   DownloadButton,
 } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { useViews } from '@eeacms/search/lib/hocs';
+import { checkInteracted } from './utils';
 
 export const DefaultContentView = (props) => {
   const { appConfig, registry } = useAppConfig();
-  const { children } = props;
+  const { children, filters, searchTerm } = props;
   const { activeViewId, setActiveViewId } = useViews();
   const { sortOptions, resultViews } = appConfig;
 
   const listingViewDef = resultViews.filter((v) => v.id === activeViewId)[0];
   const ResultViewComponent =
     registry.resolve[listingViewDef.factories.view].component;
+
+  const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
 
   const availableResultViews = [
     ...resultViews.filter(({ id }) => {
@@ -40,20 +46,26 @@ export const DefaultContentView = (props) => {
           onSetView={setActiveViewId}
         />
         <Sorting
-          label={'Order'}
+          label={'Sort by '}
           sortOptions={sortOptions}
-          view={SortingDropdown}
+          view={SortingDropdownWithLabel}
         />
       </div>
       <ResultViewComponent>{children}</ResultViewComponent>
+
       <div className="row">
-        <div>
-          <DownloadButton appConfig={appConfig} />
-        </div>
         <div className="search-body-footer">
-          <div></div>
-          <Paging />
-          <ResultsPerPage />
+          <div className="prev-next-paging">
+            {wasInteracted ? (
+              <>
+                <Paging />
+              </>
+            ) : null}
+          </div>
+          <ResultsPerPageSelector />
+          <div>
+            <DownloadButton appConfig={appConfig} />
+          </div>
         </div>
       </div>
     </>
