@@ -248,7 +248,7 @@ score: 6.118757247924805
         <Answers />
       ) : hasActiveFilters ? (
         <Message warning>
-          Now answers found, but you have active filters. You may try to{' '}
+          No answers found, but you have active filters. You may try to{' '}
           <Button
             size="mini"
             compact
@@ -264,7 +264,7 @@ score: 6.118757247924805
           the filters to improve the quality of results.
         </Message>
       ) : (
-        <Message warning>Now direct answers for your question.</Message>
+        <Message warning>No direct answers for your question.</Message>
       )}
     </div>
   );
