@@ -32,7 +32,7 @@ export const DefaultContentView = (props) => {
   return (
     <>
       <FilterList />
-      <AnswerBox />
+      {appConfig.enableNLP ? <AnswerBox /> : ''}
       <div className="above-results">
         <ViewSelector
           views={availableResultViews}
