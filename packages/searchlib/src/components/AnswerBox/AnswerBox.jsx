@@ -19,6 +19,7 @@ import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 
 import AnswerBoxDetails from './AnswerBoxDetails';
 import AnswerLinksList from './AnswersLinksList';
+import AnswerFeedback from './AnswerFeedback';
 
 import { highlightUrl } from './utils';
 import withAnswers from './withAnswers';
@@ -57,6 +58,18 @@ const AnswerContext = ({ item, answerItem }) => {
       <DateTime format="DATE_MED" value={item.issued} />)
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
+          <div>
+            {Object.keys(clusters).map((cluster, index) => (
+              <Icon
+                key={index}
+                family="Content types"
+                {...clusters[cluster].icon}
+              />
+            ))}
+
+            {item.title}
+          </div>
+
           <div class="ui breadcrumb">
             <span title={item.source} className="source">
               {firstWords(
@@ -70,16 +83,6 @@ const AnswerContext = ({ item, answerItem }) => {
             </span>
             <SegmentedBreadcrumb href={item.href} short={true} maxChars={40} />
           </div>
-
-          {Object.keys(clusters).map((cluster, index) => (
-            <Icon
-              key={index}
-              family="Content types"
-              {...clusters[cluster].icon}
-            />
-          ))}
-
-          {item.title}
         </ExternalLink>
       </h4>
     </div>
@@ -166,22 +169,39 @@ score: 6.118757247924805
                       </div>
                     </div>
                     <div className="answers__bottom">
-                      <Rating
-                        rating={Math.round(5 * primaryAnswer.score)}
-                        maxRating={5}
-                        size="mini"
-                        disabled
-                      />
-                      <div className="answers__bottom__spacer"></div>
                       <Popup
                         trigger={
-                          <Button basic size="mini">
-                            Direct answer
-                          </Button>
+                          <Rating
+                            rating={Math.round(5 * primaryAnswer.score)}
+                            maxRating={5}
+                            size="mini"
+                            disabled
+                          />
                         }
                       >
-                        <AnswerBoxDetails />
+                        <p>
+                          The star scores indicates how confident the search
+                          engine is about the accuracy of the answer.{' '}
+                        </p>
+                        <p>
+                          It is not an indication on the quality of the linked
+                          document or page.
+                        </p>
                       </Popup>
+                      <div className="answers__bottom__spacer"></div>
+                      <div className="right">
+                        <Popup
+                          trigger={
+                            <Button basic size="mini">
+                              <Icon name="help circle" />
+                              About direct answers
+                            </Button>
+                          }
+                        >
+                          <AnswerBoxDetails />
+                        </Popup>
+                        <AnswerFeedback />
+                      </div>
                     </div>
                     {hasActiveFilters ? (
                       <Message warning>
@@ -238,7 +258,7 @@ score: 6.118757247924805
       {showLoader ? (
         <Segment className="answers__loading">
           <div className="loading-tip">
-            Searching for answers for <strong>{resultSearchTerm}</strong>
+            Searching answers for <strong>{resultSearchTerm}</strong>
           </div>
           <div className="progress">
             <div className="color"></div>

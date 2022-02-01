@@ -44,6 +44,8 @@ const withAnswers = (WrappedComponent) => {
       cutoff = 0.1;
     }
 
+    console.log('cutoff', cutoff, appConfig.nlp);
+
     const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
 
     useDeepCompareEffect(() => {
