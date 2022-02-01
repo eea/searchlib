@@ -3,7 +3,8 @@ import { ResultsPerPage, Sorting } from '@elastic/react-search-ui'; // Paging
 import Paging from './../Paging/Paging';
 import ResultsPerPageSelector from './../ResultsPerPageSelector/ResultsPerPageSelector';
 import {
-  ViewSelector,
+  // ViewSelector,
+  ViewSelectorWithLabel,
   FilterList,
   // SortingDropdown,
   SortingDropdownWithLabel,
@@ -40,7 +41,7 @@ export const DefaultContentView = (props) => {
       <FilterList />
       {appConfig.enableNLP ? <AnswerBox /> : ''}
       <div className="above-results">
-        <ViewSelector
+        <ViewSelectorWithLabel
           views={availableResultViews}
           active={activeViewId}
           onSetView={setActiveViewId}

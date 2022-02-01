@@ -9,6 +9,7 @@ const ViewSelectorWithLabel = (props) => {
     horizontalCard: 'list alternate',
     card: 'th',
     table: 'table',
+    listing: 'list alternate', // used by WISE
   };
 
   const viewOptions = views.map((view) => ({
