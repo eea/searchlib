@@ -103,6 +103,7 @@ export default function buildRequest(state, config, includeAggs = null) {
         }
       : {}),
     track_total_hits: true,
+    ...(config.debugQuery ? { explain: true } : {}),
   };
 
   return body;

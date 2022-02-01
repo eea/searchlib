@@ -44,6 +44,7 @@ export const buildQuestionRequest = (state, config) => {
     endpoint: config.nlp.qa.servicePath,
     query: question,
     track_total_hits: false,
+    ...(config.debugQuery ? { explain: true } : {}),
     params: {
       use_dp: config.nlp.qa.use_dp || false,
       config: filterNLPConfig(config),
@@ -58,7 +59,6 @@ export const buildQuestionRequest = (state, config) => {
       AnswerExtraction: {
         top_k: parseInt(config.nlp.qa.topk_reader || 10),
       },
-      ...(config.debugQuery ? { explain: true } : {}),
       custom_query: {
         // Dynamic values based on current Search UI state
         function_score: {
