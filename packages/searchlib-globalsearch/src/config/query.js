@@ -1,5 +1,5 @@
 export default {
-  debugQuery: true,
+  debugQuery: false,
   extraQueryParams: {
     text_fields: [
       'title^2',
