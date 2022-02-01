@@ -58,12 +58,12 @@ export const buildQuestionRequest = (state, config) => {
       AnswerExtraction: {
         top_k: parseInt(config.nlp.qa.topk_reader || 10),
       },
+      ...(config.debugQuery ? { explain: true } : {}),
       custom_query: {
         // Dynamic values based on current Search UI state
         function_score: {
           functions: config?.extraQueryParams?.functions,
           score_mode: config?.extraQueryParams?.score_mode,
-          ...(config.debugQuery ? { explain: true } : {}),
           query: {
             bool: {
               ...(config?.extraQAQueryFilters || {}),
