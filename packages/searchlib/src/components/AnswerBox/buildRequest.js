@@ -63,8 +63,10 @@ export const buildQuestionRequest = (state, config) => {
         function_score: {
           functions: config?.extraQueryParams?.functions,
           score_mode: config?.extraQueryParams?.score_mode,
+          ...(config.debugQuery ? { explain: true } : {}),
           query: {
             bool: {
+              ...(config?.extraQAQueryFilters || {}),
               must: [
                 {
                   multi_match: {
