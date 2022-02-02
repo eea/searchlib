@@ -3,11 +3,9 @@
 export function getValueFacet({
   aggregations,
   fieldName,
-  whitelist,
-  blacklist,
-  config,
+  whitelist = [],
+  blacklist = [],
 }) {
-  const bl = blacklist || [];
   if (aggregations?.[fieldName]?.buckets?.length > 0) {
     const unfiltered_data = aggregations[fieldName].buckets.map((bucket) => ({
       // Boolean values and date values require using `key_as_string`
@@ -15,9 +13,9 @@ export function getValueFacet({
       count: bucket.doc_count,
     }));
     let filtered_data = unfiltered_data.filter(
-      (bucket) => bl.indexOf(bucket.value) === -1,
+      (bucket) => blacklist.indexOf(bucket.value) === -1,
     );
-    if (whitelist) {
+    if (whitelist.length) {
       filtered_data = filtered_data.filter(
         (bucket) => whitelist.indexOf(bucket.value) !== -1,
       );
