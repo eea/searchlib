@@ -57,28 +57,24 @@ const AnswerBox = (props) => {
           resetFilters={resetFilters}
         />
       ) : hasActiveFilters ? (
-        <Toast level="warning">
-          <Message warning>
-            No answers found, but you have active filters. You may try to{' '}
-            <Button
-              size="mini"
-              compact
-              primary
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                resetFilters();
-              }}
-            >
-              reset
-            </Button>{' '}
-            the filters to improve the quality of results.
-          </Message>
-        </Toast>
+        <Message warning>
+          No answers found, but you have active filters. You may try to{' '}
+          <Button
+            size="mini"
+            compact
+            primary
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              resetFilters();
+            }}
+          >
+            reset
+          </Button>{' '}
+          the filters to improve the quality of results.
+        </Message>
       ) : (
-        <Toast level="warning">
-          <Message warning>No direct answers for your question.</Message>
-        </Toast>
+        <Message warning>No direct answers for your question.</Message>
       )}
     </div>
   );
