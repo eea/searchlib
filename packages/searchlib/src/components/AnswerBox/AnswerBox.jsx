@@ -1,12 +1,8 @@
 import React from 'react';
 
-import {
-  Segment,
-  Button,
-  Message,
-  // Transition,
-} from 'semantic-ui-react'; //, Accordion
+import { Segment, Button, Message } from 'semantic-ui-react'; //, Accordion
 
+import { Toast } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 
@@ -29,12 +25,13 @@ const AnswerBox = (props) => {
 
   const showLoader = loading && !loaded;
 
-  if (
+  const dontShow =
     !(showLoader || (resultSearchTerm && searchedTerm === resultSearchTerm)) ||
-    hasActiveCluster
-  ) {
-    return null;
-  } // && sortedClusters.length
+    hasActiveCluster;
+
+  if (dontShow) return null;
+
+  // && sortedClusters.length
 
   const showAnswers =
     resultSearchTerm &&
@@ -60,24 +57,28 @@ const AnswerBox = (props) => {
           resetFilters={resetFilters}
         />
       ) : hasActiveFilters ? (
-        <Message warning>
-          No answers found, but you have active filters. You may try to{' '}
-          <Button
-            size="mini"
-            compact
-            primary
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              resetFilters();
-            }}
-          >
-            reset
-          </Button>{' '}
-          the filters to improve the quality of results.
-        </Message>
+        <Toast level="warning">
+          <Message warning>
+            No answers found, but you have active filters. You may try to{' '}
+            <Button
+              size="mini"
+              compact
+              primary
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                resetFilters();
+              }}
+            >
+              reset
+            </Button>{' '}
+            the filters to improve the quality of results.
+          </Message>
+        </Toast>
       ) : (
-        <Message warning>No direct answers for your question.</Message>
+        <Toast level="warning">
+          <Message warning>No direct answers for your question.</Message>
+        </Toast>
       )}
     </div>
   );

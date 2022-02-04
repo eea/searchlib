@@ -1,4 +1,5 @@
 import Component from './Component/Component';
+import Toast from './Toast/Toast';
 import Facet from './Facets/Facet';
 import Term from './Term/Term';
 import Icon from './Icon/Icon';
@@ -39,6 +40,7 @@ import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 
 export {
   Component,
+  Toast,
   Facet,
   Icon,
   Term,

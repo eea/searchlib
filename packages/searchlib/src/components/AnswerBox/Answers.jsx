@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Rating, Popup, Button, Message } from 'semantic-ui-react'; //, Accordion
 
-import { Icon } from '@eeacms/search/components'; //, StringList
+import { Icon, Toast } from '@eeacms/search/components'; //, StringList
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 
@@ -18,6 +18,31 @@ const Answers = (props) => {
   const { sortedClusters = [] } = data || {};
   const [position, setPosition] = React.useState(0);
   // loading, loaded,
+
+  const ExtractMessageWarning = React.useMemo(
+    (props) => {
+      return (
+        <Message warning>
+          This answer is extracted from documents matching the active filters.
+          You can{' '}
+          <Button
+            size="mini"
+            compact
+            primary
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              resetFilters();
+            }}
+          >
+            reset
+          </Button>{' '}
+          the filters to improve the quality of results.
+        </Message>
+      );
+    },
+    [resetFilters],
+  );
 
   return (
     <div>
@@ -99,27 +124,7 @@ const Answers = (props) => {
                     <AnswerFeedback />
                   </div>
                 </div>
-                {hasActiveFilters ? (
-                  <Message warning>
-                    This answer is extracted from documents matching the active
-                    filters. You can{' '}
-                    <Button
-                      size="mini"
-                      compact
-                      primary
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        resetFilters();
-                      }}
-                    >
-                      reset
-                    </Button>{' '}
-                    the filters to improve the quality of results.
-                  </Message>
-                ) : (
-                  ''
-                )}
+                {/* {hasActiveFilters ? <Toast>fadas</Toast> : ''} */}
               </Segment>
             </div>
           );

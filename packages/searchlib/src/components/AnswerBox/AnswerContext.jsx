@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ExternalLink from '@eeacms/search/components/Result/ExternalLink';
-import { Icon, DateTime, ResultSource } from '@eeacms/search/components'; //, StringList
+import { Icon, ResultSource } from '@eeacms/search/components'; //, StringList
 
 import { highlightUrl } from './utils';
 
