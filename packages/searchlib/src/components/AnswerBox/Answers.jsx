@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Segment,
-  Rating,
-  Popup,
-  Button,
-  Message,
-  // Transition,
-} from 'semantic-ui-react'; //, Accordion
+import { Segment, Rating, Popup, Button, Message } from 'semantic-ui-react'; //, Accordion
 
 import { Icon } from '@eeacms/search/components'; //, StringList
 import { useAppConfig } from '@eeacms/search/lib/hocs';

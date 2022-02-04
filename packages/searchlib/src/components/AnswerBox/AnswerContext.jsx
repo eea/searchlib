@@ -1,19 +1,13 @@
 import React from 'react';
 
-import { ExternalLink } from '@eeacms/search/components/Result/HorizontalCardItem';
-
-import { SegmentedBreadcrumb, Icon, DateTime } from '@eeacms/search/components'; //, StringList
-import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import ExternalLink from '@eeacms/search/components/Result/ExternalLink';
+import { Icon, DateTime, ResultSource } from '@eeacms/search/components'; //, StringList
 
 import { highlightUrl } from './utils';
 
 const WHITESPACE_RE = /\n|\t/;
 
 const AnswerContext = ({ item, answerItem }) => {
-  const { appConfig } = useAppConfig();
-  const { vocab = {} } = appConfig;
-
   const { full_context = '', context, answer } = answerItem;
   const clusters = item.clusterInfo;
   const start = (full_context || context || '').indexOf(answer);
@@ -37,8 +31,7 @@ const AnswerContext = ({ item, answerItem }) => {
       <ExternalLink href={highlightUrl(item.href, ans)}>
         <span dangerouslySetInnerHTML={{ __html: ans }}></span>
       </ExternalLink>{' '}
-      <span dangerouslySetInnerHTML={{ __html: post }}></span> (
-      <DateTime format="DATE_MED" value={item.issued} />)
+      <span dangerouslySetInnerHTML={{ __html: post }}></span>
       <h4 className="answer__primarylink">
         <ExternalLink href={highlightUrl(item.href, ans)}>
           <div>
@@ -52,22 +45,8 @@ const AnswerContext = ({ item, answerItem }) => {
 
             {item.title}
           </div>
-
-          <div class="ui breadcrumb">
-            <span>Source:</span>
-            <span title={item.source} className="source">
-              {firstWords(
-                getTermDisplayValue({
-                  vocab,
-                  field: 'cluster_name',
-                  term: item.source,
-                }),
-                8,
-              )}
-            </span>
-            <SegmentedBreadcrumb href={item.href} short={true} maxChars={40} />
-          </div>
         </ExternalLink>
+        <ResultSource item={item} />
       </h4>
     </div>
   );

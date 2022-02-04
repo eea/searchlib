@@ -14,23 +14,10 @@ import {
 } from '@eeacms/search/components';
 import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
+
+import ExternalLink from './ExternalLink';
 import ResultContext from './ResultContext';
 import ContentClusters from './ContentClusters';
-
-export const ExternalLink = (props) => {
-  return (
-    <a
-      className={props.className}
-      href={props.href}
-      target="_blank"
-      rel="noreferrer"
-      style={props.style}
-      title={props.title}
-    >
-      {props.children}
-    </a>
-  );
-};
 
 const CardItem = (props) => {
   const { result, showControls = true } = props;

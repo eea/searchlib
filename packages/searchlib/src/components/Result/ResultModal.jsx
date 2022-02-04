@@ -46,7 +46,7 @@ export const ListingViewDetails = (props) => {
   );
 };
 
-export const Header = (props) => {
+export const ResultHeader = (props) => {
   const [showModal, setShowModal] = React.useState(false);
   const { result, appConfig, details } = props;
   const { Level = 'h4', urlField, titleField } = props;
@@ -59,6 +59,8 @@ export const Header = (props) => {
     setShowModal(false);
   };
 
+  const rawId = result.id?.raw;
+
   const openModal = React.useCallback(() => {
     setShowModal(true);
     window.location.hash = modalHash;
@@ -68,7 +70,7 @@ export const Header = (props) => {
     if (window.location.hash.includes('showitem' + result.id?.raw)) {
       openModal();
     }
-  }, [result.id.raw, openModal, result.id?.raw]);
+  }, [result.id.raw, openModal, rawId]);
 
   return (
     <>

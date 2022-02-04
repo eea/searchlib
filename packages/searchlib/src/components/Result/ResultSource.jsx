@@ -1,0 +1,39 @@
+/**
+ * A breadcrumb to show an enhanced URL path for a result
+ */
+import React from 'react';
+import ExternalLink from '@eeacms/search/components/Result/ExternalLink';
+import { SegmentedBreadcrumb, DateTime } from '@eeacms/search/components'; //, StringList
+import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+
+const ResultSource = ({ item }) => {
+  const { appConfig } = useAppConfig();
+  const { vocab = {} } = appConfig;
+
+  return (
+    <div class="result__source">
+      <span className="label">Source:</span>
+
+      <ExternalLink href={item.href}>
+        <span title={item.source} className="source">
+          {firstWords(
+            getTermDisplayValue({
+              vocab,
+              field: 'cluster_name',
+              term: item.source,
+            }),
+            8,
+          )}
+        </span>
+        <SegmentedBreadcrumb href={item.href} short={true} maxChars={40} />
+      </ExternalLink>
+
+      <span className="answer__date">
+        (<DateTime format="DATE_MED" value={item.issued} />)
+      </span>
+    </div>
+  );
+};
+
+export default ResultSource;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Item } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs/appConfig';
 import String from './String';
-import { Header } from './ResultModal';
+import { ResultHeader } from './ResultModal';
 
 // needed because of weird use of component from react-search-ui
 const Inner = (props) => {
@@ -14,7 +14,7 @@ const Inner = (props) => {
   return (
     <Item>
       <Item.Content>
-        <Header {...props} {...listingViewParams} appConfig={appConfig} />
+        <ResultHeader {...props} {...listingViewParams} appConfig={appConfig} />
         <Item.Extra>
           {listingViewParams?.extraFields?.map(({ field, label }, i) => (
             <div className="simple-item-extra" key={i}>

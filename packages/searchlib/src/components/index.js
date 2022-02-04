@@ -4,6 +4,7 @@ import Term from './Term/Term';
 import Icon from './Icon/Icon';
 import MultiCheckboxFacet from './Facets/Unconnected/MultiCheckboxFacet';
 import SectionTabs from './Facets/Connected/SectionTabs';
+import ResultSource from './Result/ResultSource';
 import TableView from './Result/TableView';
 import FacetsList from './Facets/FacetsList';
 import FilterList from './FilterList/FilterList';
@@ -32,7 +33,7 @@ import AnswerBox from './AnswerBox/AnswerBox';
 import DownloadButton from './DownloadButton/DownloadButton';
 import AppInfo from './AppInfo/AppInfo';
 import String from './Result/String';
-import { Header } from './Result/ResultModal';
+import { ResultHeader } from './Result/ResultModal';
 import DefaultContentView from './SearchView/DefaultContentView';
 import SegmentedBreadcrumb from './SegmentedBreadcrumb/Breadcrumb';
 
@@ -70,10 +71,11 @@ export {
   AnswerBox,
   DownloadButton,
   AppInfo,
-  Header,
+  ResultHeader,
   String,
   DefaultContentView,
   SectionTabs,
+  ResultSource,
 };
 
 // SimpleSearchInput,

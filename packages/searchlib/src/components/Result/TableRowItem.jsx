@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Table, Label } from 'semantic-ui-react';
-import { Header } from './ResultModal';
+import { ResultHeader } from './ResultModal';
 
 const normalizeStr = (str) => {
   let tmp = document.createElement('DIV');
@@ -29,7 +29,11 @@ const WrappedRowItem = (props) => {
           {index === 0 ? (
             <>
               <div>
-                <Header {...props} {...tableViewParams} appConfig={appConfig} />
+                <ResultHeader
+                  {...props}
+                  {...tableViewParams}
+                  appConfig={appConfig}
+                />
               </div>
               {days < 30 ? (
                 <>
