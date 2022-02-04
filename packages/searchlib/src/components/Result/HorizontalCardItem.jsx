@@ -23,8 +23,7 @@ const CardItem = (props) => {
   const { result, showControls = true } = props;
   const context = useSearchContext();
   const { appConfig } = useAppConfig();
-  const { vocab = {} } = appConfig;
-
+  const { vocab = {}, debugQuery } = appConfig;
   const { setFilter, removeFilter, setSearchTerm } = context;
 
   const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
@@ -134,6 +133,12 @@ const CardItem = (props) => {
           </div>
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
+        {debugQuery && (
+          <div>
+            <div>Explanation:</div>
+            <pre>{JSON.stringify(result.explanation, undefined, 2)}</pre>
+          </div>
+        )}
       </div>
       {result.hasImage ? (
         <div className="col-right">

@@ -251,4 +251,8 @@ export class ResultModel extends BasicModel {
     // }
     return this._result.objectProvides?.raw;
   }
+
+  get explanation() {
+    return this._original?._explanation;
+  }
 }
