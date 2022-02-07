@@ -357,6 +357,9 @@ const config = {
           didYouMean: {
             sectionTitle: 'Did you mean...',
           },
+          faq: {
+            sectionTitle: 'Frequently asked questions',
+          },
         },
 
         // {

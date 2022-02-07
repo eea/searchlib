@@ -17,7 +17,6 @@ const Answers = (props) => {
   const { data = {}, searchedTerm, hasActiveFilters, resetFilters } = props;
   const { sortedClusters = [] } = data || {};
   const [position, setPosition] = React.useState(0);
-  // loading, loaded,
 
   const ExtractMessageWarning = React.useMemo(() => {
     return () => (
