@@ -19,15 +19,26 @@ export default {
     ],
     score_mode: 'sum',
   },
-  extraQAQueryFilters: {
-    should: [
-      {
-        multi_match: {
-          query: 'News Articles Briefing',
-          minimum_should_match: '0%',
-          fields: ['searchable_objectProvides'],
-        },
-      },
-    ],
-  },
+  // extraQAQueryFilters: {
+  //   should: [
+  //     {
+  //       multi_match: {
+  //         query: 'News Articles Briefing',
+  //         minimum_should_match: '0%',
+  //         fields: ['searchable_objectProvides'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // extraRAWQueryFilters: {
+  //   should: [
+  //     {
+  //       multi_match: {
+  //         query: 'News Articles Briefing',
+  //         minimum_should_match: '0%',
+  //         fields: ['searchable_objectProvides'],
+  //       },
+  //     },
+  //   ],
+  // },
 };

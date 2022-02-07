@@ -73,6 +73,7 @@ export default function buildRequest(state, config, includeAggs = null) {
       function_score: {
         query: {
           bool: {
+            ...(config?.extraRAWQueryFilters || {}),
             must: [match],
             ...(filter && { filter }),
           },
