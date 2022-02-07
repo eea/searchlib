@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Segment, Button, Message } from 'semantic-ui-react'; //, Accordion
+import { Segment, Button, Message, Label } from 'semantic-ui-react'; //, Accordion
 
-import { Toast } from '@eeacms/search/components';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 
 import Answers from './Answers';
 import withAnswers from './withAnswers';
+import useTimedMessage from './useTimedMessage';
 
 const AnswerBox = (props) => {
   const { appConfig } = useAppConfig();
@@ -23,7 +23,17 @@ const AnswerBox = (props) => {
     filters.findIndex((f) => f.field === 'op_cluster') > -1;
   // console.log('filters', filters);
 
+  const messageCounter = useTimedMessage({
+    resultSearchTerm,
+    searchedTerm,
+    timeout: 5,
+  });
+
   const showLoader = loading && !loaded;
+  const hasAnswers =
+    resultSearchTerm &&
+    searchedTerm === resultSearchTerm &&
+    sortedClusters.length;
 
   const dontShow =
     !(showLoader || (resultSearchTerm && searchedTerm === resultSearchTerm)) ||
@@ -31,52 +41,56 @@ const AnswerBox = (props) => {
 
   if (dontShow) return null;
 
-  // && sortedClusters.length
-
-  const showAnswers =
-    resultSearchTerm &&
-    searchedTerm === resultSearchTerm &&
-    sortedClusters.length;
-
-  return (
+  return showLoader ? (
     <div className="answers-list">
-      {showLoader ? (
-        <Segment className="answers__loading">
-          <div className="loading-tip">
-            Searching answers for <strong>{resultSearchTerm}</strong>
-          </div>
-          <div className="progress">
-            <div className="color"></div>
-          </div>
-        </Segment>
-      ) : showAnswers ? (
-        <Answers
-          hasActiveFilters={hasActiveFilters}
-          data={data}
-          searchedTerm={searchedTerm}
-          resetFilters={resetFilters}
-        />
-      ) : hasActiveFilters ? (
-        <Message warning>
-          No answers found, but you have active filters. You may try to{' '}
-          <Button
-            size="mini"
-            compact
-            primary
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              resetFilters();
-            }}
-          >
-            reset
-          </Button>{' '}
-          the filters to improve the quality of results.
-        </Message>
-      ) : (
-        <Message warning>No direct answers for your question.</Message>
-      )}
+      <Segment className="answers__loading">
+        <div className="loading-tip">
+          Searching answers for <strong>{resultSearchTerm}</strong>
+        </div>
+        <div className="progress">
+          <div className="color"></div>
+        </div>
+      </Segment>
     </div>
+  ) : hasAnswers ? (
+    <div className="answers-list">
+      <Answers
+        hasActiveFilters={hasActiveFilters}
+        data={data}
+        searchedTerm={searchedTerm}
+        resetFilters={resetFilters}
+      />
+    </div>
+  ) : hasActiveFilters ? (
+    <div className="answers-list">
+      <Message warning>
+        No answers found, but you have active filters. You may try to{' '}
+        <Button
+          size="mini"
+          compact
+          primary
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            resetFilters();
+          }}
+        >
+          reset
+        </Button>{' '}
+        the filters to improve the quality of results.
+      </Message>
+    </div>
+  ) : (
+    messageCounter > 0 && (
+      <div className="answers-list">
+        <Message warning>
+          No direct answers for your question.
+          <Label circular color="teal">
+            {messageCounter}
+          </Label>
+        </Message>
+      </div>
+    )
   );
 };
 
