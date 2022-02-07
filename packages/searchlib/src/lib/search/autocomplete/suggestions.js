@@ -11,11 +11,16 @@ export async function getAutocompleteSuggestions(props, config) {
 
   const requestBody = buildDidYouMeanRequest(props, config);
   const json = await runRequest(requestBody, config);
-  const didYouMeanState = buildState(json.body, props, config);
+  const didYouMeanState = buildState(
+    json.body,
+    props,
+    config,
+    config.autocomplete.include_searchterm,
+  );
 
   const faqRequestBody = buildFaqRequest(props, config);
   const faqJson = await runRequest(faqRequestBody, config);
-  const faqState = buildState(faqJson.body, props, config);
+  const faqState = buildState(faqJson.body, props, config, false, true);
 
   return {
     didYouMean: didYouMeanState.state,

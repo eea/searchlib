@@ -16,13 +16,18 @@ const getHighlight = (term, search_term) => {
     : term;
 };
 
-export function buildState(data, { searchTerm }, config) {
+export function buildState(
+  data,
+  { searchTerm },
+  config,
+  include_searchterm = true,
+  skip_highlight = false,
+) {
   // console.log('hits', data);
+  const buckets_full = data.aggregations?.autocomplete_full?.buckets || [];
+  const buckets_last = data.aggregations?.autocomplete_last?.buckets || [];
 
-  const buckets_full = data.aggregations?.autocomplete_full.buckets || [];
-  const buckets_last = data.aggregations?.autocomplete_last.buckets || [];
-
-  const { autocomplete: settings = {} } = config;
+  // const { autocomplete: settings = {} } = config;
 
   const phrases = searchTerm.split('|');
   const search_term = phrases[phrases.length - 1];
@@ -49,7 +54,7 @@ export function buildState(data, { searchTerm }, config) {
   // }
 
   // Add search term as first item in array
-  if (settings.include_searchterm) {
+  if (include_searchterm) {
     hints.unshift(search_term);
     hints.pop();
   }
@@ -57,7 +62,7 @@ export function buildState(data, { searchTerm }, config) {
   return {
     state: uniq(hints).map((term) => ({
       suggestion: term,
-      highlight: getHighlight(term, search_term),
+      highlight: skip_highlight ? term : getHighlight(term, search_term),
       data: null,
     })),
     // faq: uniq(hints).map((term) => ({
