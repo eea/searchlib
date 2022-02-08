@@ -51,15 +51,15 @@ export const ResultHeader = (props) => {
   const { result, appConfig, details } = props;
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
-  const title = result[titleField]?.raw || result.id?.raw;
-  const modalHash = `showitem${result.id?.raw}`;
+  const title = result[titleField]?.raw || result.id;
+  const modalHash = `showitem${result.id}`;
 
   const closeModal = () => {
     window.location.hash = '';
     setShowModal(false);
   };
 
-  const rawId = result.id?.raw;
+  const resultID = result.id;
 
   const openModal = React.useCallback(() => {
     setShowModal(true);
@@ -67,10 +67,10 @@ export const ResultHeader = (props) => {
   }, [modalHash]);
 
   React.useEffect(() => {
-    if (window.location.hash.includes('showitem' + result.id?.raw)) {
+    if (window.location.hash.includes('showitem' + result.id)) {
       openModal();
     }
-  }, [result.id.raw, openModal, rawId]);
+  }, [result.id, openModal, resultID]);
 
   return (
     <>
