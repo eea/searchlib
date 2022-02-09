@@ -10,6 +10,7 @@ import { checkInteracted } from './utils';
 import { getDefaultFilterValues } from '@eeacms/search/lib/utils';
 import { BodyContent } from './BodyContent';
 import { isLandingPageAtom } from './state';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const SearchView = (props) => {
   const {
@@ -51,7 +52,7 @@ export const SearchView = (props) => {
   const wasInteracted = checkInteracted({
     wasSearched,
     filters,
-    searchTerm, //: searchedTerm,
+    //    searchTerm, //: searchedTerm,
     appConfig,
   });
 
@@ -100,12 +101,16 @@ export const SearchView = (props) => {
     InitialViewComponent,
   ]);
 
+  const searchContext = useSearchContext();
+
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
       <Layout
         appConfig={appConfig}
         header={
           <SearchBox
+            searchContext={searchContext}
+            isLandingPage={isLandingPage}
             autocompleteMinimumCharacters={3}
             autocompleteResults={appConfig.autocomplete.results}
             autocompleteSuggestions={appConfig.autocomplete.suggestions}

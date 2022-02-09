@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SearchBoxView from './SearchBoxView';
 import { withSearch } from '@elastic/react-search-ui';
+import { resetFiltersToDefault } from '../../lib/search/helpers';
 
 export class SearchBoxContainer extends Component {
   static propTypes = {
@@ -89,9 +90,22 @@ export class SearchBoxContainer extends Component {
   };
 
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
-    const { shouldClearFilters, setSearchTerm } = this.props;
+    const { isLandingPage, shouldClearFilters, setSearchTerm, searchContext } =
+      this.props;
     const { clearSearchTerm, deleteOneTerm } = options;
 
+    //    const { setFilter } = searchContext;
+    const { resetFilters } = searchContext;
+    if (isLandingPage) {
+      resetFilters();
+      // appConfig.facets
+      //   .filter((f) => f.default)
+      //   .forEach((facet) => {
+      //     facet.default.values.forEach((value) =>
+      //       setFilter(facet.field, value, facet.default.type || 'any'),
+      //     );
+      //   });
+    }
     // const existingPhrases = this.props.searchTerm?.split('|');
 
     let searchTerm;
@@ -251,9 +265,9 @@ export class SearchBoxContainer extends Component {
             handleOnSelectAutocomplete || this.defaultOnSelectAutocomplete,
           onSubmit: onSubmit
             ? (e) => {
-                e && e.preventDefault();
-                onSubmit(searchTerm);
-              }
+              e && e.preventDefault();
+              onSubmit(searchTerm);
+            }
             : this.handleSubmit,
           useAutocomplete: useAutocomplete,
           value: searchTerm,
