@@ -1,3 +1,33 @@
+function getTodayWithTime() {
+  const d = new Date();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hour = d.getHours();
+  const minute = d.getMinutes();
+  const second = d.getSeconds();
+
+  const output = [
+    d.getFullYear(),
+    '-',
+    month < 10 ? '0' : '',
+    month,
+    '-',
+    day < 10 ? '0' : '',
+    day,
+    'T',
+    hour < 10 ? '0' : '',
+    hour,
+    ':',
+    minute < 10 ? '0' : '',
+    minute,
+    ':',
+    second < 10 ? '0' : '',
+    second,
+    'Z',
+  ].join('');
+  return output;
+}
+
 export function buildDidYouMeanRequest({ searchTerm }, config) {
   const phrases = searchTerm.split('|');
   let search_term = phrases[phrases.length - 1];
@@ -65,7 +95,6 @@ export function buildFaqRequest({ searchTerm }, config) {
   // if (correct_search_term) {
   //   search_term = correct_search_term.join(' ');
   // }
-
   const query = {
     size: 0,
     aggs: {
@@ -77,7 +106,26 @@ export function buildFaqRequest({ searchTerm }, config) {
     },
     query: {
       bool: {
+        should: [
+          {
+            bool: {
+              must_not: {
+                exists: {
+                  field: 'expires',
+                },
+              },
+            },
+          },
+          {
+            range: {
+              expires: {
+                gte: getTodayWithTime(),
+              },
+            },
+          },
+        ],
         must: [
+          { range: { 'issued.date': { lte: getTodayWithTime() } } },
           {
             multi_match: {
               query: search_term,
