@@ -7,13 +7,7 @@ export default {
     () => ({
       constant_score: {
         filter: {
-          bool: {
-            should: [
-              { bool: { must_not: { exists: { field: 'issued' } } } },
-              // TODO: this needs to be made a dynamic function
-              { range: { 'issued.date': { lte: getTodayWithTime() } } },
-            ],
-          },
+               range: { 'issued.date': { lte: getTodayWithTime() } },
         },
       },
     }),
