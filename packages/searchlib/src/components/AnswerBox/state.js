@@ -33,10 +33,7 @@ export const requestFamily = atomFamily(
       },
       requestReducer,
     ),
-  (a, b) => {
-    const res = isEqual(a, b);
-    return res;
-  },
+  isEqual,
 );
 
 export const debounceAtom = atom(0);

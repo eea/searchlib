@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import cx from 'classnames';
-import { Resizable, ToggleSort } from '@eeacms/search/components';
+import { Resizable, ToggleSort, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 // import MultiTypeFacetWrapper from './MultiTypeFacetWrapper';
 
@@ -11,7 +11,7 @@ function getFilterValueDisplay(filterValue) {
   return String(filterValue);
 }
 const FacetOptions = (props) => {
-  const { sortedOptions, label, onSelect, onRemove } = props;
+  const { sortedOptions, label, onSelect, onRemove, field } = props;
   return (
     <div className="sui-multi-checkbox-facet">
       {sortedOptions.map((option) => {
@@ -37,7 +37,7 @@ const FacetOptions = (props) => {
                 }
               />
               <span className="sui-multi-checkbox-facet__input-text">
-                {getFilterValueDisplay(option.value)}
+                <Term term={option.value} field={field} />
               </span>
             </div>
             <span className="sui-multi-checkbox-facet__option-count">
@@ -86,6 +86,7 @@ const ViewComponent = (props) => {
     onSearch,
     searchPlaceholder,
     onChangeFilterType,
+    field,
     filterType = 'any',
   } = props;
 
@@ -173,6 +174,7 @@ const ViewComponent = (props) => {
           label={label}
           onSelect={onSelect}
           onRemove={onRemove}
+          field={field}
         />
       </Resizable>
 
