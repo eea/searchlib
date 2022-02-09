@@ -16,6 +16,7 @@ export async function getAutocompleteSuggestions(props, config) {
     props,
     config,
     config.autocomplete.include_searchterm,
+    true,
   );
 
   const faqRequestBody = buildFaqRequest(props, config);
