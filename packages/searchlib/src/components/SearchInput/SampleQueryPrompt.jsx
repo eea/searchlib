@@ -80,7 +80,6 @@ export default function SampleQueryPrompt() {
           applyQuery(value);
         }}
         floating
-        pointing
         scrolling
       />
     </p>
