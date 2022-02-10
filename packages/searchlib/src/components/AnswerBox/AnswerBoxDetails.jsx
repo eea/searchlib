@@ -4,11 +4,12 @@ import AnswerFeedback from './AnswerFeedback';
 
 export default (props) => {
   const [open, setOpen] = React.useState(false);
+  const { basic } = props;
   return (
     <Modal
       open={open}
       trigger={
-        <Button basic size="mini" onClick={() => setOpen(true)}>
+        <Button basic={basic} size="mini" onClick={() => setOpen(true)}>
           <Icon name="help circle" />
           About direct answers
         </Button>

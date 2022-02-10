@@ -107,8 +107,8 @@ const Answers = (props) => {
                   </Popup>
                   <div className="answers__bottom__spacer"></div>
                   <div className="right">
-                    <AnswerBoxDetails />
-                    <AnswerFeedback />
+                    <AnswerBoxDetails basic />
+                    <AnswerFeedback basic />
                   </div>
                 </div>
                 {hasActiveFilters && <ExtractMessageWarning />}
