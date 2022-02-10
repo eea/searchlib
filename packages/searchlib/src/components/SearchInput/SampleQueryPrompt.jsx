@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
-import { Button } from 'semantic-ui-react';
+import { Dropdown, Button, Icon } from 'semantic-ui-react';
 
 function toArray(s) {
   let a = [];
@@ -45,6 +45,15 @@ export default function SampleQueryPrompt() {
     return () => clearInterval(timerRef.current);
   }, [paused, promptQueryInterval, randomizer]);
 
+  const applyQuery = React.useCallback(
+    (text) => {
+      resetFilters();
+      setSearchTerm(text, { shouldClearFilters: false });
+      setSort('', '');
+    },
+    [resetFilters, setSearchTerm, setSort],
+  );
+
   return queries.length ? (
     <p className="demo-question">
       <span>Try searching for: </span>
@@ -58,14 +67,22 @@ export default function SampleQueryPrompt() {
         onClick={(evt) => {
           evt.preventDefault();
           // setTriedDemoQuestion(true);
-          resetFilters();
-          setSearchTerm(queries[index], { shouldClearFilters: false });
-          setSort('', '');
+          applyQuery(queries[index]);
         }}
         key={queries[index]}
       >
         {queries[index]}
       </Button>
+      <Dropdown
+        text={<Icon name="caret down" />}
+        options={queries.map((text, i) => ({ key: i, text, value: text }))}
+        onChange={(e, { value }) => {
+          applyQuery(value);
+        }}
+        floating
+        pointing
+        scrolling
+      />
     </p>
   ) : null;
 }
