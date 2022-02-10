@@ -62,9 +62,9 @@ const Answers = (props) => {
           const primaryAnswer = filtered?.[0];
           const primaryResult = primaryAnswer
             ? buildResult(
-                { ...primaryAnswer, _source: primaryAnswer?.source },
-                appConfig,
-              )
+              { ...primaryAnswer, _source: primaryAnswer?.source },
+              appConfig,
+            )
             : null;
 
           return (
@@ -107,16 +107,7 @@ const Answers = (props) => {
                   </Popup>
                   <div className="answers__bottom__spacer"></div>
                   <div className="right">
-                    <Popup
-                      trigger={
-                        <Button basic size="mini">
-                          <Icon name="help circle" />
-                          About direct answers
-                        </Button>
-                      }
-                    >
-                      <AnswerBoxDetails />
-                    </Popup>
+                    <AnswerBoxDetails />
                     <AnswerFeedback />
                   </div>
                 </div>
