@@ -49,10 +49,12 @@ export const SearchView = (props) => {
   );
 
   // const searchedTerm = driver.URLManager.getStateFromURL().searchTerm;
+  const searchContext = useSearchContext();
+  const { resultSearchTerm } = searchContext;
   const wasInteracted = checkInteracted({
     wasSearched,
     filters,
-    //    searchTerm, //: searchedTerm,
+    searchTerm: resultSearchTerm, //: searchedTerm,
     appConfig,
   });
 
@@ -100,8 +102,6 @@ export const SearchView = (props) => {
     setSort,
     InitialViewComponent,
   ]);
-
-  const searchContext = useSearchContext();
 
   return (
     <div className={`searchapp searchapp-${appName} ${customClassName}`}>
