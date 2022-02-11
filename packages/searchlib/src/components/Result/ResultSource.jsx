@@ -16,7 +16,7 @@ const ResultSource = ({ item }) => {
       <span className="label">Source:</span>
 
       <ExternalLink href={item.href}>
-        <span title={item.source} className="source">
+        <strong title={item.source} className="source">
           {firstWords(
             getTermDisplayValue({
               vocab,
@@ -25,7 +25,7 @@ const ResultSource = ({ item }) => {
             }),
             8,
           )}
-        </span>
+        </strong>
         <SegmentedBreadcrumb href={item.href} short={true} maxChars={40} />
       </ExternalLink>
 
