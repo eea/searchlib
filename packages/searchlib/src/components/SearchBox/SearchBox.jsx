@@ -84,14 +84,18 @@ export class SearchBoxContainer extends Component {
       });
     } else {
       setSearchTerm(suggestedTerm, {
-        shouldClearFilters,
+        shouldClearFilters: false,
       });
     }
   };
 
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
-    const { isLandingPage, shouldClearFilters, setSearchTerm, searchContext } =
-      this.props;
+    const {
+      isLandingPage,
+      shouldClearFilters,
+      setSearchTerm,
+      searchContext,
+    } = this.props;
     const { clearSearchTerm, deleteOneTerm } = options;
 
     //    const { setFilter } = searchContext;
@@ -135,7 +139,7 @@ export class SearchBoxContainer extends Component {
 
     e && e.preventDefault();
     setSearchTerm(searchTerm, {
-      shouldClearFilters,
+      shouldClearFilters: false,
     });
     this.props.setSort('', '');
   };
@@ -265,9 +269,9 @@ export class SearchBoxContainer extends Component {
             handleOnSelectAutocomplete || this.defaultOnSelectAutocomplete,
           onSubmit: onSubmit
             ? (e) => {
-              e && e.preventDefault();
-              onSubmit(searchTerm);
-            }
+                e && e.preventDefault();
+                onSubmit(searchTerm);
+              }
             : this.handleSubmit,
           useAutocomplete: useAutocomplete,
           value: searchTerm,

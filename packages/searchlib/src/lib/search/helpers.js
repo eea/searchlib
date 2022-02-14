@@ -145,6 +145,8 @@ export function resetFiltersToDefault(searchContext, appConfig) {
  * the default filters
  */
 export function hasNonDefaultFilters(filters, appConfig) {
+  if (!filters?.length) return false;
+
   const defaultFiltersList = appConfig.facets
     .filter((f) => !!f.default)
     .map((facet) => ({
