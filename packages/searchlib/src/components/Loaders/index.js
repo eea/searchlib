@@ -3,6 +3,7 @@ import React from 'react';
 import { MutatingDots } from './MutatingDots';
 import { Watch } from './Watch';
 import { RevolvingDot } from './RevolvingDot';
+import ThreeDots from './ThreeDots';
 
 const Spinner = {
   // 'Audio',
@@ -15,7 +16,7 @@ const Spinner = {
   // 'Puff',
   // 'Rings',
   // 'TailSpin',
-  // 'ThreeDots',
+  ThreeDots,
   // 'RevolvingDot',
   // 'Triangle',
   // 'Plane',

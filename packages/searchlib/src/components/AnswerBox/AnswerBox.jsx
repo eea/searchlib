@@ -8,6 +8,7 @@ import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 import Answers from './Answers';
 import withAnswers from './withAnswers';
 import useTimedMessage from './useTimedMessage';
+import Loader from '../Loaders';
 
 const AnswerBox = (props) => {
   const { appConfig } = useAppConfig();
@@ -26,7 +27,7 @@ const AnswerBox = (props) => {
   const messageCounter = useTimedMessage({
     resultSearchTerm,
     searchedTerm,
-    timeout: 5,
+    timeout: 15,
   });
 
   const showLoader = loading && !loaded;
@@ -47,9 +48,19 @@ const AnswerBox = (props) => {
         <div className="loading-tip">
           Searching answers for <strong>{resultSearchTerm}</strong>
         </div>
+
         <div className="progress">
-          <div className="color"></div>
+          <Loader
+            type="ThreeDots"
+            visible={true}
+            color="green"
+            width={80}
+            height={20}
+          />
         </div>
+        {/* <div className="progress"> */}
+        {/*   <div className="color"></div> */}
+        {/* </div> */}
       </Segment>
     </div>
   ) : hasAnswers ? (
@@ -110,18 +121,3 @@ question: null
 score: 6.118757247924805
 */
 //
-
-// const Answers = React.useCallback(
-//   (props) => {
-//     return (
-//     );
-//   },
-//   [
-//     appConfig,
-//     position,
-//     searchedTerm,
-//     sortedClusters,
-//     resetFilters,
-//     hasActiveFilters,
-//   ],
-// );
