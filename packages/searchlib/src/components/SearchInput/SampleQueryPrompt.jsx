@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
-import { Dropdown, Button, Icon } from 'semantic-ui-react';
+import { Modal, Button, Icon, List } from 'semantic-ui-react';
 
 function toArray(s) {
   let a = [];
@@ -15,6 +15,7 @@ function toArray(s) {
 export default function SampleQueryPrompt() {
   const { appConfig } = useAppConfig();
   const { setSearchTerm, setSort, resetFilters } = useSearchContext();
+  const [showModal, setShowModal] = React.useState();
 
   const {
     defaultPromptQueries = [],
@@ -73,15 +74,61 @@ export default function SampleQueryPrompt() {
       >
         {queries[index]}
       </Button>
-      <Dropdown
-        text={<Icon name="caret down" />}
-        options={queries.map((text, i) => ({ key: i, text, value: text }))}
-        onChange={(e, { value }) => {
-          applyQuery(value);
+
+      <Button
+        compact
+        inverted
+        onClick={(e) => {
+          setShowModal(true);
+          e.preventDefault();
+          e.stopPropagation();
         }}
-        floating
-        scrolling
-      />
+      >
+        <Icon name="caret down" />
+      </Button>
+
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onOpen={() => setShowModal(true)}
+      >
+        <Modal.Header>Pick one of our sample questions</Modal.Header>
+        <Modal.Content scrolling>
+          <List>
+            {queries.map((text, i) => (
+              <List.Item key={i}>
+                <List.Content>
+                  <List.Header
+                    as="a"
+                    onClick={() => {
+                      setShowModal(false);
+                      applyQuery(text);
+                    }}
+                    onKeydown={() => {
+                      setShowModal(false);
+                      applyQuery(text);
+                    }}
+                  >
+                    {text}
+                  </List.Header>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="black" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </p>
   ) : null;
 }
+
+// {/*  */}
+// {/* onChange= */}
+// {/* {(e, { value }) => { */}
+// {/*   applyQuery(value); */}
+// {/* }} */}
+// {/* floating scrolling */}
