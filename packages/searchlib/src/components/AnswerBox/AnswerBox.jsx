@@ -47,17 +47,17 @@ const AnswerBox = (props) => {
       <Segment className="answers__loading">
         <div className="loading-tip">
           Searching answers for <strong>{resultSearchTerm}</strong>
-        </div>
-
-        <div className="progress">
           <Loader
+            className="three-dots-loader"
             type="ThreeDots"
             visible={true}
-            color="green"
+            color="#2d9390"
             width={80}
-            height={20}
+            height={10}
           />
         </div>
+
+        <div className="progress"></div>
         {/* <div className="progress"> */}
         {/*   <div className="color"></div> */}
         {/* </div> */}
