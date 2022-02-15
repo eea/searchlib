@@ -44,7 +44,7 @@ function SearchInput({
             <Icon name="search" size="large" color="grey" />
           </div>
 
-          {searchPhrases.length && (
+          {searchPhrases.length === 0 ? (
             <input
               {...domProps}
               enterkeyhint="search"
@@ -81,6 +81,8 @@ function SearchInput({
               }}
               onBlur={() => {}}
             />
+          ) : (
+            ''
           )}
 
           <div className="input-controls">
