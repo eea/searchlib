@@ -13,7 +13,7 @@ import Loader from '../Loaders';
 const AnswerBox = (props) => {
   const { appConfig } = useAppConfig();
 
-  const { data = {}, loading, loaded, searchedTerm } = props;
+  const { data = {}, loading, loaded, searchedTerm, isQuestion } = props;
   const { sortedClusters = [] } = data || {};
   const { searchContext } = props;
   const { resultSearchTerm = '', filters, resetFilters } = searchContext;
@@ -28,6 +28,8 @@ const AnswerBox = (props) => {
     searchedTerm,
     timeout: 15,
   });
+
+  if (!isQuestion) return null;
 
   const showLoader = loading && !loaded;
   const hasAnswers =
