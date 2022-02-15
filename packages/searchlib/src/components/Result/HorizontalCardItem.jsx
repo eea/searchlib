@@ -1,34 +1,23 @@
 import React from 'react';
 import cx from 'classnames';
-import { useAtom } from 'jotai';
 import { Label, Button, Dropdown } from 'semantic-ui-react';
-import {
-  useAppConfig,
-  useSearchContext,
-  useWindowDimensions,
-} from '@eeacms/search/lib/hocs';
+import { useAppConfig, useWindowDimensions } from '@eeacms/search/lib/hocs';
 import {
   SegmentedBreadcrumb,
   DateTime,
   TagsList,
 } from '@eeacms/search/components';
 import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
-import { moreLikeThisAtom, showFacetsAsideAtom } from '@eeacms/search/state';
 
+import MoreLikeThisTrigger from './MoreLikeThisTrigger';
 import ExternalLink from './ExternalLink';
 import ResultContext from './ResultContext';
 import ContentClusters from './ContentClusters';
 
 const CardItem = (props) => {
   const { result, showControls = true } = props;
-  const context = useSearchContext();
   const { appConfig } = useAppConfig();
   const { vocab = {}, debugQuery } = appConfig;
-  const { setFilter, removeFilter, setSearchTerm } = context;
-
-  const [, setMoreLikeThis] = useAtom(moreLikeThisAtom);
-  const [, setOpenFacets] = useAtom(showFacetsAsideAtom);
-
   const [hovered, setHovered] = React.useState(false);
 
   // console.log('result', result.metaTypes, result._result);
@@ -99,34 +88,23 @@ const CardItem = (props) => {
             </ExternalLink>
 
             {showControls && !isSmallScreen && (
-              <Button
+              <MoreLikeThisTrigger
+                view={Button}
                 className="mlt"
                 compact
                 color="green"
                 size="mini"
-                onClick={() => {
-                  removeFilter('lessLikeThis');
-                  setSearchTerm('');
-                  setMoreLikeThis(result);
-                  setFilter('moreLikeThis', result._original._id, 'none');
-                  setOpenFacets(true);
-                }}
+                result={result}
               >
                 more like this
-              </Button>
+              </MoreLikeThisTrigger>
             )}
             {showControls && isSmallScreen && (
               <Dropdown icon="ellipsis vertical">
                 <Dropdown.Menu className="mlt">
-                  <Dropdown.Item
-                    onClick={() => {
-                      removeFilter('lessLikeThis');
-                      setMoreLikeThis(result);
-                      setFilter('moreLikeThis', result._original._id, 'none');
-                    }}
-                  >
+                  <MoreLikeThisTrigger result={result} view={Dropdown.Item}>
                     More like this
-                  </Dropdown.Item>
+                  </MoreLikeThisTrigger>
                 </Dropdown.Menu>
               </Dropdown>
             )}
