@@ -22,7 +22,6 @@ const AnswerBox = (props) => {
   // TODO: this is hardcoded for globalsearch
   const hasActiveCluster =
     filters.findIndex((f) => f.field === 'op_cluster') > -1;
-  // console.log('filters', filters);
 
   const messageCounter = useTimedMessage({
     resultSearchTerm,
@@ -58,9 +57,6 @@ const AnswerBox = (props) => {
         </div>
 
         <div className="progress"></div>
-        {/* <div className="progress"> */}
-        {/*   <div className="color"></div> */}
-        {/* </div> */}
       </Segment>
     </div>
   ) : hasAnswers ? (

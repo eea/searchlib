@@ -127,10 +127,3 @@ export default function SampleQueryPrompt() {
     </p>
   ) : null;
 }
-
-// {/*  */}
-// {/* onChange= */}
-// {/* {(e, { value }) => { */}
-// {/*   applyQuery(value); */}
-// {/* }} */}
-// {/* floating scrolling */}
