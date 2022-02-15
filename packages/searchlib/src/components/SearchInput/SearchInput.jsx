@@ -26,6 +26,7 @@ function SearchInput({
   mode,
 }) {
   const inputProps = getInputProps();
+  // console.log('inputProps', inputProps);
   const { setSearchTerm } = useSearchContext();
 
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
@@ -114,6 +115,10 @@ function SearchInput({
                     return;
                   }
                 }
+
+                // ev.preventDefault();
+                // ev.stopPropagation();
+                // console.log('onKeyDown', ev);
 
                 return inputProps.onKeyDown(ev);
               }}

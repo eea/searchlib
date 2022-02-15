@@ -78,11 +78,13 @@ export default function SampleQueryPrompt() {
       <Button
         compact
         inverted
+        as="a"
         onClick={(e) => {
           setShowModal(true);
           e.preventDefault();
           e.stopPropagation();
         }}
+        onKeyDown={() => {}}
       >
         <Icon name="caret down" />
       </Button>
@@ -104,7 +106,7 @@ export default function SampleQueryPrompt() {
                       setShowModal(false);
                       applyQuery(text);
                     }}
-                    onKeydown={() => {
+                    onKeyDown={() => {
                       setShowModal(false);
                       applyQuery(text);
                     }}
