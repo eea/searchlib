@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import SearchBoxView from './SearchBoxView';
 import { withSearch } from '@elastic/react-search-ui';
-import { resetFiltersToDefault } from '../../lib/search/helpers';
+import { resetFiltersToDefault } from '@eeacms/search/lib/search/helpers';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
+import { compose } from 'redux';
 
 export class SearchBoxContainer extends Component {
   static propTypes = {
@@ -83,6 +85,9 @@ export class SearchBoxContainer extends Component {
         shouldClearFilters,
       });
     } else {
+      const { searchContext, appConfig } = this.props;
+      if (!searchContext.filters?.length)
+        resetFiltersToDefault(searchContext, appConfig);
       setSearchTerm(suggestedTerm, {
         shouldClearFilters: false,
       });
@@ -92,7 +97,7 @@ export class SearchBoxContainer extends Component {
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
     const {
       isLandingPage,
-      shouldClearFilters,
+      // shouldClearFilters,
       setSearchTerm,
       searchContext,
     } = this.props;
@@ -129,13 +134,6 @@ export class SearchBoxContainer extends Component {
       if (!!searchTerm && !searchTerm.endsWith('|'))
         searchTerm = `${searchTerm}|`;
     }
-
-    // console.log(`handle submit`, {
-    //   submittedSearchTerm,
-    //   propsSearchTerm: this.props.searchTerm,
-    //   searchTerm,
-    //   ...options,
-    // });
 
     e && e.preventDefault();
     setSearchTerm(searchTerm, {
@@ -288,20 +286,39 @@ export class SearchBoxContainer extends Component {
   }
 }
 
-export default withSearch(
-  ({
-    autocompletedResults,
-    autocompletedSuggestions,
-    searchTerm,
-    setSearchTerm,
-    setSort,
-    trackAutocompleteClickThrough,
-  }) => ({
-    autocompletedResults,
-    autocompletedSuggestions,
-    searchTerm,
-    setSearchTerm,
-    setSort,
-    trackAutocompleteClickThrough,
-  }),
+function withHooks(WrappedComponent) {
+  function Wrapped(props) {
+    const { appConfig } = useAppConfig();
+    const searchContext = useSearchContext();
+
+    return (
+      <WrappedComponent
+        appConfig={appConfig}
+        searchContext={searchContext}
+        {...props}
+      />
+    );
+  }
+  return Wrapped;
+}
+
+export default compose(
+  withHooks,
+  withSearch(
+    ({
+      autocompletedResults,
+      autocompletedSuggestions,
+      searchTerm,
+      setSearchTerm,
+      setSort,
+      trackAutocompleteClickThrough,
+    }) => ({
+      autocompletedResults,
+      autocompletedSuggestions,
+      searchTerm,
+      setSearchTerm,
+      setSort,
+      trackAutocompleteClickThrough,
+    }),
+  ),
 )(SearchBoxContainer);

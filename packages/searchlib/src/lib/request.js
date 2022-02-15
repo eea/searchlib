@@ -11,6 +11,7 @@ export function onResultClick() {
 }
 
 export function onAutocompleteResultClick() {
+  console.log('click', arguments);
   /* Not implemented */
 }
 

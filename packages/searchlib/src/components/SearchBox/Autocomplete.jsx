@@ -2,10 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import cx from 'classnames';
 
-// import { Result } from './types';
-// import { Suggestion } from './types';
-// import { appendClassName } from './view-helpers';
-
 function getRaw(result, value) {
   if (!result[value] || !result[value].raw) return;
   return result[value].raw;
