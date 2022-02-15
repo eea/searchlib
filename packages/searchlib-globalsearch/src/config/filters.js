@@ -7,7 +7,7 @@ export default {
     () => ({
       constant_score: {
         filter: {
-               range: { 'issued.date': { lte: getTodayWithTime() } },
+          range: { 'issued.date': { lte: getTodayWithTime() } },
         },
       },
     }),

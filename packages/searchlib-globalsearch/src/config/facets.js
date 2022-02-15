@@ -5,6 +5,7 @@ import {
   histogramFacet,
   makeRange,
   multiTermFacet,
+  viewFacet,
 } from '@eeacms/search';
 import spatialWhitelist from './json/spatialWhitelist.json';
 import placesBlacklist from './json/placesBlacklist.json';
@@ -12,6 +13,13 @@ import topicsBlacklist from './json/topicsBlacklist.json';
 import { getTodayWithTime } from '../utils';
 
 const facets = [
+  viewFacet({
+    field: 'view',
+    isFilterable: true,
+    isMulti: false,
+    label: 'Current view',
+    showInFacetsList: false,
+  }),
   booleanFacet(() => ({
     field: 'IncludeArchived',
     label: 'Include archived content',

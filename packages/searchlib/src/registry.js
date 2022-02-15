@@ -222,6 +222,12 @@ const config = {
       ),
     },
 
+    Dummy: {
+      buildRequest: (r) => undefined,
+      buildFilter: (f) => undefined,
+      getValue: (v) => undefined,
+    },
+
     ResultModel,
     highlightQueryBuilder,
   },

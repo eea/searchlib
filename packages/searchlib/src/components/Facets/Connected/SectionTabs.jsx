@@ -98,9 +98,10 @@ const SectionTabs = (props) => {
               active={activeValues.includes(value)}
               onClick={() => {
                 searchContext.setFilter(facetField, value, 'any');
-                views.setActiveViewId(
-                  sectionMapping[value].defaultResultView || 'listing',
-                );
+                const viewId =
+                  sectionMapping[value].defaultResultView || 'listing';
+                searchContext.setFilter('view', viewId, null);
+                views.setActiveViewId(viewId);
               }}
             >
               <Icon type={value} family="Content types" />

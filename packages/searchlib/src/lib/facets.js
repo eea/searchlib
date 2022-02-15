@@ -9,6 +9,23 @@ const defaults = {
   // filterListComponent: 'FilterResultEntry',
 };
 
+export const viewFacet = ({
+  field,
+  label,
+  isFilterable = false,
+  ...params
+}) => {
+  return {
+    ...defaults,
+    field,
+    label: label || field,
+    showInFacetsList: true,
+    isFilterable,
+    factory: 'Dummy',
+    ...params,
+  };
+};
+
 export const histogramFacet = ({
   field,
   label,
