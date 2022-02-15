@@ -95,27 +95,13 @@ export class SearchBoxContainer extends Component {
   };
 
   handleSubmit = (e, submittedSearchTerm, options = {}) => {
-    const {
-      isLandingPage,
-      // shouldClearFilters,
-      setSearchTerm,
-      searchContext,
-    } = this.props;
+    const { isLandingPage, setSearchTerm, searchContext } = this.props;
     const { clearSearchTerm, deleteOneTerm } = options;
 
-    //    const { setFilter } = searchContext;
-    const { resetFilters } = searchContext;
+    const { appConfig } = this.props;
     if (isLandingPage) {
-      resetFilters();
-      // appConfig.facets
-      //   .filter((f) => f.default)
-      //   .forEach((facet) => {
-      //     facet.default.values.forEach((value) =>
-      //       setFilter(facet.field, value, facet.default.type || 'any'),
-      //     );
-      //   });
+      resetFiltersToDefault(searchContext, appConfig);
     }
-    // const existingPhrases = this.props.searchTerm?.split('|');
 
     let searchTerm;
     if (clearSearchTerm) {
