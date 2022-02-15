@@ -4,7 +4,8 @@ import Downshift from 'downshift';
 import cx from 'classnames';
 import { Grid } from 'semantic-ui-react';
 
-import { Result, Autocomplete } from '@elastic/react-search-ui-views';
+import { Result } from '@elastic/react-search-ui-views';
+import Autocomplete from './Autocomplete';
 
 import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 
