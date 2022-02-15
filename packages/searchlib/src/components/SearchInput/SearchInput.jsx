@@ -12,11 +12,6 @@ import { showExtraFacetsAtom } from './state';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import SampleQueryPrompt from './SampleQueryPrompt';
 
-// import { useState } from 'react';
-// import ExactPhrasesFacet from './ExactPhrasesFacet';
-// import IncludeArchivedFacet from './IncludeArchivedFacet';
-// import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
-
 function SearchInput({
   getAutocomplete,
   getButtonProps,
@@ -26,7 +21,6 @@ function SearchInput({
   mode,
 }) {
   const inputProps = getInputProps();
-  // console.log('inputProps', inputProps);
   const { setSearchTerm } = useSearchContext();
 
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
@@ -50,41 +44,7 @@ function SearchInput({
             <Icon name="search" size="large" color="grey" />
           </div>
 
-          {/*
-          <div className="search-terms">
-            {searchPhrases.map(
-              (phrase, i) =>
-                phrase &&
-                phrase.trim() && (
-                  <Label key={i} className="search-phrase">
-                    {phrase}{' '}
-                    <Icon
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onSubmit(
-                          e,
-                          [
-                            ...searchPhrases.filter((p) => p !== phrase),
-                            currentTerm,
-                          ].join('|'),
-                          {
-                            deleteOneTerm: true,
-                          },
-                        );
-
-                        setTimeout(() => {
-                          inpRef.current && inpRef.current.focus();
-                        }, 500);
-                      }}
-                      name="trash"
-                      size="small"
-                    />
-                  </Label>
-                ),
-            )}
-          </div>*/}
-
-          {searchPhrases.length === 0 ? (
+          {searchPhrases.length && (
             <input
               {...domProps}
               enterkeyhint="search"
@@ -117,18 +77,10 @@ function SearchInput({
                   }
                 }
 
-                // ev.preventDefault();
-                // ev.stopPropagation();
-                // console.log('onKeyDown', ev);
-
                 return inputProps.onKeyDown(ev);
               }}
-              onBlur={() => {
-                // console.log('blur?');
-              }}
+              onBlur={() => {}}
             />
-          ) : (
-            ''
           )}
 
           <div className="input-controls">
@@ -145,22 +97,6 @@ function SearchInput({
                 />
               </div>
             )}
-
-            {/*
-            <div
-              className={'ui button basic ' + (showExtraFacets ? 'opened' : '')}
-            >
-              <Icon
-                name="sliders"
-                role="button"
-                onClick={() => {
-                  setShowExtraFacets(!showExtraFacets);
-                }}
-              />
-            </div>
-            */}
-
-            {/* <MicrophoneInput onChange={onChange} /> */}
           </div>
 
           {getAutocomplete()}
@@ -168,16 +104,6 @@ function SearchInput({
       </div>
 
       <SampleQueryPrompt />
-
-      {/*showExtraFacets ? (
-        <div className="extra-facets">
-          {searchPhrases.length > 0 &&
-            searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
-              <ExactPhrasesFacet />
-            )}
-          <IncludeArchivedFacet />
-        </div>
-      ) : null*/}
     </>
   );
 }

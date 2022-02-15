@@ -10,7 +10,7 @@ import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import MicrophoneInput from '../MicrophoneInput/MicrophoneInput';
 import ExactPhrasesFacet from './ExactPhrasesFacet';
-import IncludeArchivedFacet from './IncludeArchivedFacet';
+// import IncludeArchivedFacet from './IncludeArchivedFacet';
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
 
@@ -157,7 +157,7 @@ function SearchInput({
             searchPhrases.find((phrase) => phrase.indexOf(' ') > -1) && (
               <ExactPhrasesFacet />
             )}
-          <IncludeArchivedFacet />
+          {/* <IncludeArchivedFacet /> */}
         </div>
       ) : null}
     </>
