@@ -87,6 +87,7 @@ function SearchInput({
           {searchPhrases.length === 0 ? (
             <input
               {...domProps}
+              enterkeyhint="search"
               value={currentTerm}
               ref={inpRef}
               className=""
