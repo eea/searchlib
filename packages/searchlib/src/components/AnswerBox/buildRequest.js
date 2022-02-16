@@ -1,5 +1,6 @@
 import { buildRequestFilter } from '@eeacms/search/lib/search/query/filters';
 import { filterNLPConfig } from './utils';
+import { extractExactPhrases } from '@eeacms/search/lib/search/query/fullText';
 
 export const buildClassifyQuestionRequest = (state, appConfig) => {
   const { searchTerm } = state;
@@ -95,6 +96,13 @@ export const buildQuestionRequest = (state, config) => {
     // ...(from && { from }),
     // isQuestion: true,
   };
+
+  const exactPhrases = extractExactPhrases(searchTerm);
+  exactPhrases.forEach((phrase) =>
+    body.params.custom_query.function_score.query.bool.must.push({
+      match_phrase: { all_fields_for_freetext: phrase },
+    }),
+  );
 
   return body;
 };

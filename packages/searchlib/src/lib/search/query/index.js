@@ -74,7 +74,7 @@ export default function buildRequest(state, config, includeAggs = null) {
         query: {
           bool: {
             ...(config?.extraRAWQueryFilters || {}),
-            must: [match],
+            must: match,
             ...(filter && { filter }),
           },
         },
@@ -98,10 +98,10 @@ export default function buildRequest(state, config, includeAggs = null) {
     }),
     ...(config.sourceExcludedFields?.length
       ? {
-          source: {
-            exclude: [...(config.sourceExcludedFields || [])],
-          },
-        }
+        source: {
+          exclude: [...(config.sourceExcludedFields || [])],
+        },
+      }
       : {}),
     track_total_hits: true,
     ...(config.debugQuery ? { explain: true } : {}),
