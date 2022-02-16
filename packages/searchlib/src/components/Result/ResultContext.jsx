@@ -11,10 +11,15 @@ const normalizeStr = (str) => {
 };
 
 function Highlight(props) {
+  const { result } = props;
   const { fragments = {} } = props;
   return Object.keys(fragments).map((name, i) => {
     return (
       <p className={`highlight-${name}`} key={`${i}-${name}`}>
+        <span className="date">
+          <DateTime format="DATE_MED" value={result.issued} /> &mdash;{' '}
+        </span>
+
         {fragments[name].map((f, j) => (
           <span className="fragment" key={`${i}-${j}-${name}`}>
             <span dangerouslySetInnerHTML={{ __html: f }} />
@@ -32,7 +37,7 @@ const ResultContext = (props) => {
   const max_length = 250;
 
   return result.highlight ? (
-    <Highlight fragments={result.highlight} />
+    <Highlight fragments={result.highlight} result={result} />
   ) : (
     <p>
       <span className="date">
