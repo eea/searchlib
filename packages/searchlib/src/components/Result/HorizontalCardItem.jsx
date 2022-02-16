@@ -2,11 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Label, Button, Dropdown } from 'semantic-ui-react';
 import { useAppConfig, useWindowDimensions } from '@eeacms/search/lib/hocs';
-import {
-  SegmentedBreadcrumb,
-  DateTime,
-  TagsList,
-} from '@eeacms/search/components';
+import { SegmentedBreadcrumb, TagsList } from '@eeacms/search/components';
 import { firstWords, getTermDisplayValue } from '@eeacms/search/lib/utils';
 
 import MoreLikeThisTrigger from './MoreLikeThisTrigger';
@@ -41,17 +37,14 @@ const CardItem = (props) => {
     >
       <div className="col-full">
         <div className="meta">
-          <span className="date">
-            <DateTime format="DATE_MED" value={result.issued} />
-          </span>
           <ContentClusters clusters={clusters} item={result} />
+          <div className="tags-list">
+            <TagsList value={result.tags} />
+          </div>
         </div>
       </div>
       <div className={classColLeft}>
         <div className="details">
-          <span className="tags-list">
-            <TagsList value={result.tags} />
-          </span>
           <h3>
             <ExternalLink href={result.href} title={result.title}>
               {firstWords(result.title, 12)}
@@ -109,6 +102,7 @@ const CardItem = (props) => {
               </Dropdown>
             )}
           </div>
+
           {props.children ? props.children : <ResultContext {...props} />}
         </div>
         {debugQuery && (
