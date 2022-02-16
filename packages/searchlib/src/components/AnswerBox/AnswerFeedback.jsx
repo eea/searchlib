@@ -33,7 +33,9 @@ const feedbacks = [
 
 const AnswerFeedback = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [think, setThink] = React.useState('');
   const { basic } = props;
+
   return (
     <Modal
       open={open}
@@ -49,10 +51,15 @@ const AnswerFeedback = (props) => {
         <Form>
           {feedbacks.map(({ id, title }) => (
             <Form.Field key={id}>
-              <Radio label={title} />
+              <Radio
+                name="feedback"
+                label={title}
+                checked={id === think}
+                onChange={() => setThink(id)}
+              />
             </Form.Field>
           ))}
-          <Header as="h3">Comments or suggestions?</Header>
+          <Header as="h4">Comments or suggestions?</Header>
           <Form.Field>
             <TextArea placeholder="Optional"></TextArea>
           </Form.Field>
@@ -69,7 +76,7 @@ const AnswerFeedback = (props) => {
           Cancel
         </Button>
         <Button
-          content="Send"
+          content="Send feedback"
           labelPosition="right"
           icon="checkmark"
           onClick={() => setOpen(false)}

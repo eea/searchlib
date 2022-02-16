@@ -10,7 +10,7 @@ const FormatDateTime = (props) => {
     : DateTime.local();
 
   return format === 'DATE_MED'
-    ? dt.toFormat('d MMMM yyyy')
+    ? dt.toFormat('d MMM yyyy')
     : dt.toLocaleString(DateTime[format]);
 };
 
