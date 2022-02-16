@@ -38,13 +38,13 @@ const CardItem = (props) => {
       <div className="col-full">
         <div className="meta">
           <ContentClusters clusters={clusters} item={result} />
+          <div className="tags-list">
+            <TagsList value={result.tags} />
+          </div>
         </div>
       </div>
       <div className={classColLeft}>
         <div className="details">
-          <span className="tags-list">
-            <TagsList value={result.tags} />
-          </span>
           <h3>
             <ExternalLink href={result.href} title={result.title}>
               {firstWords(result.title, 12)}
