@@ -23,7 +23,7 @@ export const clusters = {
       defaultResultView: 'horizontalCard',
     },
     {
-      name: 'Visualizations',
+      name: 'Maps and charts',
       icon: { name: 'chart area' },
       values: [
         'Figure (chart/map)',
