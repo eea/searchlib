@@ -4,7 +4,12 @@ import { Button, Card, Dimmer, Icon, Sticky, Segment } from 'semantic-ui-react';
 
 import { ModalFacetWrapper } from '@eeacms/search/components';
 import { bodyContentRefAtom, showFacetsAsideAtom } from '@eeacms/search/state';
-import { useWindowDimensions, useSearchContext } from '@eeacms/search/lib/hocs';
+import {
+  useWindowDimensions,
+  useSearchContext,
+  useAppConfig,
+} from '@eeacms/search/lib/hocs';
+import { hasAppliedCustomFilters } from '@eeacms/search/lib/utils';
 
 import FacetsList from './FacetsList';
 import MoreLikeThis from './Connected/MoreLikeThis';
@@ -70,8 +75,6 @@ const LargeScreenFacets = ({ isLoading }) => {
   const [showFacets, setShowFacets] = useAtom(showFacetsAsideAtom);
   const { width } = useWindowDimensions();
   const isActive = width > 766;
-  // const searchContext = useSearchContext();
-  // const hasFilters = searchContext.filters.length > 0;
 
   return (
     <Sticky context={bodyRef} active={isActive}>
@@ -113,11 +116,14 @@ const SMALL_SCREEN_SIZE = 766;
 
 export default () => {
   const [, setShowFacets] = useAtom(showFacetsAsideAtom);
+  const { appConfig } = useAppConfig();
   const { width } = useWindowDimensions();
 
   const isSmallScreen = width <= SMALL_SCREEN_SIZE;
   const searchContext = useSearchContext();
-  const hasFilters = searchContext.filters.length > 0;
+  const hasFilters =
+    searchContext.filters.length > 0 &&
+    hasAppliedCustomFilters(searchContext.filters, appConfig);
 
   React.useEffect(() => {
     if (hasFilters) setShowFacets(true);

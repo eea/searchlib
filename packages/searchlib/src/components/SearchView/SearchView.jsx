@@ -22,7 +22,7 @@ export const SearchView = (props) => {
     setSort,
     wasSearched,
     filters,
-    searchTerm,
+    // searchTerm,
     mode = 'view',
   } = props;
   const { defaultSearchText = '' } = appConfig;

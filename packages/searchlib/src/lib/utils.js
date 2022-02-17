@@ -221,3 +221,13 @@ export const firstChars = (text, charsNumber) => {
     return text;
   }
 };
+
+export const hasAppliedCustomFilters = (filters, appConfig) => {
+  const normalizedDefaultFilters = getDefaultFilterValues(appConfig.facets);
+
+  const normalizedFilters = normalizeDefaultFilters(filters);
+
+  const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
+
+  return !filtersEqual;
+};
