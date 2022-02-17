@@ -76,6 +76,7 @@ export default function SampleQueryPrompt() {
       </Button>
 
       <Button
+        className="explore-more-queries"
         compact
         inverted
         as="a"
@@ -86,6 +87,7 @@ export default function SampleQueryPrompt() {
         }}
         onKeyDown={() => {}}
       >
+        Explore more queries
         <Icon name="caret down" />
       </Button>
 
