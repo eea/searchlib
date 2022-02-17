@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Segment, Button, Message, Label } from 'semantic-ui-react'; //, Accordion
+import { Segment, Button, Message, Label, Icon } from 'semantic-ui-react'; //, Accordion
 
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
@@ -73,6 +73,7 @@ const AnswerBox = (props) => {
   ) : hasActiveFilters ? (
     <div className="answers-list">
       <Message warning>
+        <Icon name="warning sign" />
         No answers found, but you have active filters. You may try to{' '}
         <Button
           size="mini"
@@ -93,6 +94,7 @@ const AnswerBox = (props) => {
     messageCounter > 0 && (
       <div className="answers-list">
         <Message warning>
+          <Icon name="warning sign" />
           No direct answers for your question.
           <Label circular color="teal">
             {messageCounter}
