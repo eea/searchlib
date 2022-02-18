@@ -2,6 +2,30 @@ import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { Component } from '@eeacms/search/components';
 
+const Facet = ({ info, defaultWrapper }) => {
+  const { factory, wrapper } = info;
+  // const facet = registry.resolve[factory];
+  const FacetWrapperComponent = wrapper ? Component : defaultWrapper;
+  const props = {
+    ...info,
+    ...info.params,
+    // ...facet,
+  };
+  const { field } = info;
+  const Facet = React.useCallback(
+    (props) => <Component factoryName={factory} {...props} field={field} />,
+    [factory, field],
+  );
+  return (
+    <FacetWrapperComponent
+      factoryName={wrapper}
+      {...props}
+      field={info.field}
+      view={Facet}
+    />
+  );
+};
+
 const FacetsList = ({ view, defaultWrapper }) => {
   const { appConfig } = useAppConfig();
   const { facets = [] } = appConfig;
@@ -10,31 +34,9 @@ const FacetsList = ({ view, defaultWrapper }) => {
     <ViewComponent name="DefaultFacetsList">
       {facets
         .filter((f) => f.showInFacetsList)
-        .map((info, i) => {
-          const { factory, wrapper } = info;
-          // const facet = registry.resolve[factory];
-          const FacetWrapperComponent = wrapper ? Component : defaultWrapper;
-          const props = {
-            ...info,
-            ...info.params,
-            // ...facet,
-          };
-          return (
-            <FacetWrapperComponent
-              factoryName={wrapper}
-              key={i}
-              {...props}
-              field={info.field}
-              view={(props) => (
-                <Component
-                  factoryName={factory}
-                  {...props}
-                  field={info.field}
-                />
-              )}
-            />
-          );
-        })}
+        .map((info, i) => (
+          <Facet info={info} key={i} defaultWrapper={defaultWrapper} />
+        ))}
     </ViewComponent>
   );
 };

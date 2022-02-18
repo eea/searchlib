@@ -35,11 +35,11 @@ const FacetContainer = (props) => {
   } = props;
   const searchContext = useSearchContext();
 
-  // React.useEffect(() => {
-  //   return () => {
-  //     console.log('unmount FacetContainer', field);
-  //   };
-  // }, [field]);
+  React.useEffect(() => {
+    return () => {
+      console.log('unmount FacetContainer', field);
+    };
+  }, [field]);
 
   const { filters, facets, addFilter, removeFilter, setFilter } = searchContext;
 
