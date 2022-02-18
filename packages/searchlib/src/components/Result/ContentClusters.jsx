@@ -10,6 +10,9 @@ const ContentClusters = ({ clusters, item }) => {
     ? { [activeCluster]: { ...clusters[activeCluster] } }
     : clusters;
 
+  const format = Array.isArray(item.format?.raw)
+    ? item.format?.raw
+    : [item.format?.raw];
   return Object.entries(displayClusters).map(
     ([clusterName, cluster], index) => {
       // protect against async cluster information not filled in yet
@@ -28,7 +31,7 @@ const ContentClusters = ({ clusters, item }) => {
                 />
               </>
             )}
-            {item.format?.raw === 'application/pdf' ? (
+            {format.includes('application/pdf') ? (
               <span className="pdf-icon">PDF</span>
             ) : (
               ''
