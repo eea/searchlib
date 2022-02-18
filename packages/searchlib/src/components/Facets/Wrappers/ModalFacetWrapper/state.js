@@ -41,8 +41,7 @@ export function filterStateReducer(prev, action) {
     case 'reset':
       return [...action.value];
     default:
-      return [];
-    // throw new Error();
+      throw new Error('unknown action type for filterStateReducer');
   }
 }
 
