@@ -42,7 +42,7 @@ const vocab = {
     energy: 'Climate and Energy in the EU',
     cca: 'Climate Adaptation Platform',
     ias: 'Invasive Alien Species',
-    'wise-freshwater': 'Fresh Water Information System for Europe',
+    'wise-freshwater': 'Freshwater Information System for Europe',
     'wise-marine': 'Marine Water Information System for Europe',
     etc: 'European Environment Information and Observation Network (Eionet)',
     'etc-atni':
