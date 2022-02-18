@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEqual } from 'lodash';
+// import { isEqual } from 'lodash';
 import { Modal } from 'semantic-ui-react'; // , Header, Image
 import { useAtom } from 'jotai'; // , atom
 import { filterFamily } from './state';
@@ -20,9 +20,9 @@ const OptionsWrapper = (props) => {
 
   const fieldAtom = filterFamily({ fieldName: field });
   const [state, dispatch] = useAtom(fieldAtom);
-  console.log('Options state', state);
+  // console.log('Options state', state);
 
-  const previousOptions = usePrevious(options);
+  // const previousOptions = usePrevious(options);
   // React.useEffect(() => {
   //   if (previousOptions && !isEqual(options, previousOptions)) {
   //     const newState = options

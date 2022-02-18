@@ -46,14 +46,14 @@ const FacetWrapperComponent = (props) => {
   //     ? initialValue
   //     : [initialValue],
   // );
-  // const [state, dispatch] = useFilterState(
-  //   field,
-  //   !initialValue
-  //     ? []
-  //     : Array.isArray(initialValue)
-  //     ? initialValue
-  //     : [initialValue],
-  // );
+  const [stateX, dispatchX] = useFilterState(
+    field,
+    !initialValue
+      ? []
+      : Array.isArray(initialValue)
+      ? initialValue
+      : [initialValue],
+  );
 
   const state = {};
   const dispatch = () => {};
