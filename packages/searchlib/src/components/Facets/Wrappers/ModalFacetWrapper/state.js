@@ -19,15 +19,11 @@ export function normalize_state(state) {
 }
 
 export const filterFamily = atomFamily(
-  ({ filterName, initialState }) => {
-    // console.log('f', { filterName, initialState });
-    return atom(initialState);
-  },
+  ({ filterName, initialState }) => atom(initialState),
   (a, b) => a.filterName === b.filterName,
 );
 
 export function filterStateReducer(prev, action) {
-  // console.log('reduce', prev, action);
   const { value } = action;
   const { tmp_state, has_names } = normalize_state(prev);
   const tmp_value = typeof value === 'object' ? value.name : value;
@@ -52,15 +48,5 @@ export function filterStateReducer(prev, action) {
 
 export function useFilterState(filterName, initialState) {
   const filterAtom = filterFamily({ filterName, initialState });
-  // return useReducerAtom(filterAtom, filterStateReducer);
-
-  // console.log('filterAtom', filterAtom, filterName);
-  const [state, dispatch] = useReducerAtom(filterAtom, filterStateReducer);
-  return [
-    state,
-    (action) => {
-      // console.log('throughdispatch', action);
-      return dispatch(action);
-    },
-  ];
+  return useReducerAtom(filterAtom, filterStateReducer);
 }

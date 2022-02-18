@@ -302,12 +302,6 @@ const ViewComponent = (props) => {
     });
   }
 
-  // React.useEffect(() => {
-  //   return () => {
-  //     console.log('unmount MultiTermListFacet', field);
-  //   };
-  // }, [field]);
-
   const customClass =
     'facet-' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
   return (

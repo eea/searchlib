@@ -38,14 +38,6 @@ const FacetWrapperComponent = (props) => {
     (filters.find((f) => f.field === field) || {})?.values || [];
   const isActive = initialValue.length > 0;
 
-  // const [state, dispatch] = React.useReducer(
-  //   filterStateReducer,
-  //   !initialValue
-  //     ? []
-  //     : Array.isArray(initialValue)
-  //     ? initialValue
-  //     : [initialValue],
-  // );
   const [state, dispatch] = useFilterState(
     field,
     !initialValue
@@ -55,16 +47,7 @@ const FacetWrapperComponent = (props) => {
       : [initialValue],
   );
 
-  // const state = {};
-  // const dispatch = () => {};
-
   const { clearFilters, setFilter } = useSearchContext();
-
-  // React.useEffect(() => {
-  //   return () => {
-  //     console.log('unmount FacetWrapper', field);
-  //   };
-  // }, [field]);
 
   const OptionsView = props.view;
 
