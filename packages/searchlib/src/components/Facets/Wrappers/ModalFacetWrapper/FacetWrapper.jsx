@@ -1,116 +1,14 @@
 import React from 'react';
-import { Facet as SUIFacet } from '@elastic/react-search-ui';
+import { filterStateReducer } from './state';
+
+// import { Facet as SUIFacet } from '@elastic/react-search-ui';
+import { Facet } from '@eeacms/search/components';
 import { Card, Modal, Button, Icon } from 'semantic-ui-react'; // , Header, Image
-import { useSearchContext } from '@eeacms/search/lib/hocs';
-import usePrevious from '@eeacms/search/lib/hocs/usePrevious';
-import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { isEqual } from 'lodash';
+import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
+
 import Filter from '@eeacms/search/components/FilterList/Filter';
-
-function normalize_state(state) {
-  let tmp_state = [];
-  let has_names = true;
-  if (typeof state?.[0] === 'string') {
-    tmp_state = state;
-  }
-  if (typeof state?.[0] === 'object') {
-    if (state?.[0]?.name) {
-      tmp_state = state.map((st) => st.name);
-    } else {
-      tmp_state = state;
-      has_names = false;
-    }
-  }
-  return { tmp_state, has_names };
-}
-
-function reducer(state, action) {
-  const { value } = action;
-  const { tmp_state, has_names } = normalize_state(state);
-  const tmp_value = typeof value === 'object' ? value.name : value;
-  switch (action.type) {
-    case 'set':
-      if (has_names && tmp_state.includes(tmp_value)) {
-        return;
-      }
-      return action.force ? value : [...state, value];
-    case 'remove':
-      return [...state].filter((v) =>
-        typeof v === 'object' ? v.name !== tmp_value : v !== tmp_value,
-      );
-    case 'reset':
-      return [...action.value];
-    default:
-      throw new Error();
-  }
-}
-
-const OptionsWrapper = (props) => {
-  const { options, view, state, dispatch, facet, field, ...rest } = props;
-  const searchContext = useSearchContext();
-  const { registry } = useAppConfig();
-  const { filters, facetOptions } = searchContext;
-  const View = view;
-
-  const previousOptions = usePrevious(options);
-  React.useEffect(() => {
-    if (previousOptions && !isEqual(options, previousOptions)) {
-      const newState = options
-        .filter(({ selected }) => !!selected)
-        .map(({ value }) => value);
-      dispatch({
-        type: 'reset',
-        value: newState,
-      });
-    }
-  }, [state, dispatch, options, previousOptions]);
-
-  const { tmp_state, has_names } = normalize_state(state);
-
-  let newOptions = [];
-  if (has_names) {
-    newOptions = options.map(({ value, count, selected }) => ({
-      value,
-      count,
-      selected: tmp_state.includes(
-        typeof value === 'object' ? value.name : value,
-      )
-        ? true
-        : false,
-    }));
-  } else {
-    newOptions = tmp_state;
-  }
-
-  const renderContent = React.useCallback(({ children }) => {
-    return (
-      <Modal.Content image scrolling>
-        {children}
-      </Modal.Content>
-    );
-  }, []);
-
-  const optionsFilter = facet.optionsFilter
-    ? registry.resolve[facet.optionsFilter]
-    : null;
-
-  return (
-    <View
-      {...rest}
-      {...searchContext}
-      HeaderWrapper={Modal.Header}
-      ContentWrapper={renderContent}
-      options={optionsFilter ? optionsFilter(newOptions, filters) : newOptions}
-      availableOptions={facetOptions[field]}
-      onSelect={(value, force) => {
-        dispatch({ type: 'set', force, value });
-      }}
-      onRemove={(value) => {
-        dispatch({ type: 'remove', value });
-      }}
-    />
-  );
-};
+import OptionsWrapper from './OptionsWrapper';
+import { useFilterState } from './state';
 
 const FacetWrapperComponent = (props) => {
   const searchContext = useSearchContext();
@@ -140,16 +38,53 @@ const FacetWrapperComponent = (props) => {
     (filters.find((f) => f.field === field) || {})?.values || [];
   const isActive = initialValue.length > 0;
 
-  const [state, dispatch] = React.useReducer(
-    reducer,
-    !initialValue
-      ? []
-      : Array.isArray(initialValue)
-      ? initialValue
-      : [initialValue],
-  );
+  // const [state, dispatch] = React.useReducer(
+  //   filterStateReducer,
+  //   !initialValue
+  //     ? []
+  //     : Array.isArray(initialValue)
+  //     ? initialValue
+  //     : [initialValue],
+  // );
+  // const [state, dispatch] = useFilterState(
+  //   field,
+  //   !initialValue
+  //     ? []
+  //     : Array.isArray(initialValue)
+  //     ? initialValue
+  //     : [initialValue],
+  // );
+
+  const state = {};
+  const dispatch = () => {};
 
   const { clearFilters, setFilter } = useSearchContext();
+
+  // React.useEffect(() => {
+  //   return () => {
+  //     console.log('unmount FacetWrapper', field);
+  //   };
+  // }, [field]);
+
+  const OptionsView = props.view;
+
+  const BoundOptionsWrapper = React.useCallback(
+    (innerProps) => {
+      return (
+        <OptionsWrapper
+          {...innerProps}
+          field={field}
+          facet={facet}
+          filterType={localFilterType}
+          filterExact={isExact}
+          onChangeFilterType={(v) => setLocalFilterType(v)}
+          onChangeFilterExact={(v) => setIsExact(v)}
+          view={OptionsView}
+        />
+      );
+    },
+    [OptionsView, facet, field, isExact, localFilterType],
+  );
 
   return (
     <Modal
@@ -214,24 +149,7 @@ const FacetWrapperComponent = (props) => {
         />
       }
     >
-      <SUIFacet
-        {...props}
-        active={isOpened}
-        view={(innerProps) => (
-          <OptionsWrapper
-            {...innerProps}
-            field={field}
-            facet={facet}
-            filterType={localFilterType}
-            filterExact={isExact}
-            onChangeFilterType={(v) => setLocalFilterType(v)}
-            onChangeFilterExact={(v) => setIsExact(v)}
-            view={props.view}
-            state={state}
-            dispatch={dispatch}
-          />
-        )}
-      />
+      <Facet {...props} active={isOpened} view={BoundOptionsWrapper} />
       <Modal.Actions>
         <Button
           color="black"

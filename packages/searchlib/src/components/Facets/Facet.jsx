@@ -23,8 +23,6 @@ const FacetContainer = (props) => {
     setMore(visibleOptionsCount);
   };
 
-  // console.log('myprops', props);
-
   const {
     className,
     id,
@@ -36,6 +34,12 @@ const FacetContainer = (props) => {
     ...rest
   } = props;
   const searchContext = useSearchContext();
+
+  // React.useEffect(() => {
+  //   return () => {
+  //     console.log('unmount FacetContainer', field);
+  //   };
+  // }, [field]);
 
   const { filters, facets, addFilter, removeFilter, setFilter } = searchContext;
 
@@ -55,8 +59,6 @@ const FacetContainer = (props) => {
     filterType,
   ).data;
 
-  // console.log({ facet, facetValues, filters, field, filterType });
-
   const selectedValues = facetValues
     .filter((fv) => fv.selected)
     .map((fv) => fv.value);
@@ -72,6 +74,7 @@ const FacetContainer = (props) => {
   }
 
   const View = view; //  || MultiCheckboxFacet
+  console.log('render facet', field);
 
   return (
     <View
@@ -91,7 +94,10 @@ const FacetContainer = (props) => {
       showMore={facetValues.length > more}
       values={selectedValues}
       showSearch={isFilterable}
-      onSearch={(v) => setSearchTerm(v)}
+      onSearch={(v) => {
+        console.log('search', `"${v}"-"${searchTerm}"`);
+        setSearchTerm(v);
+      }}
       searchPlaceholder={`Filter ${field}`}
       {...rest}
     />
