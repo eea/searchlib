@@ -256,12 +256,13 @@ const ViewComponent = (props) => {
   } = props;
 
   const { appConfig } = useAppConfig();
+  const facetConfig = appConfig.facets.find((f) => f.field === field);
 
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
     ['value', 'count'],
     {
-      defaultSortOn: 'count',
+      defaultSortOn: facetConfig?.sortOn || 'count',
       defaultSortOrder: {
         // each criteria has its own default sort order
         count: 'descending',
@@ -270,7 +271,6 @@ const ViewComponent = (props) => {
     },
   );
 
-  const facetConfig = appConfig.facets.find((f) => f.field === field);
 
   const byLetters = {};
   if (sorting.sortOn === 'value') {
