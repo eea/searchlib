@@ -17,10 +17,7 @@ const OptionsWrapper = (props) => {
   const { filters, facetOptions } = searchContext;
   const View = view;
 
-  // const fieldAtom = filterFamily({ fieldName: field });
-  // const [state, dispatch] = useAtom(fieldAtom);
   const [state, dispatch] = useFilterState(field);
-  // console.log('Options state', state);
 
   // this clears the selection state, in case the user cleared the filter from
   // the filter list
@@ -41,7 +38,6 @@ const OptionsWrapper = (props) => {
 
   const previousOptions = usePrevious(options);
   React.useEffect(() => {
-    // console.log({ options, previousOptions });
     if (
       !previousOptions ||
       (previousOptions && !isEqual(options, previousOptions))
@@ -67,12 +63,6 @@ const OptionsWrapper = (props) => {
   const optionsFilter = facet.optionsFilter
     ? registry.resolve[facet.optionsFilter]
     : null;
-
-  // React.useEffect(() => {
-  //   return () => {
-  //     console.log('unmount OptionsWrapper', field);
-  //   };
-  // }, [field]);
 
   return (
     <View
