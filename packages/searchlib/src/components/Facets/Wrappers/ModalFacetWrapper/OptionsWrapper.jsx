@@ -1,8 +1,7 @@
 import React from 'react';
-// import { isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { Modal } from 'semantic-ui-react'; // , Header, Image
-import { useAtom } from 'jotai'; // , atom
-import { filterFamily } from './state';
+import { useFilterState } from './state';
 
 import {
   usePrevious,
@@ -18,22 +17,13 @@ const OptionsWrapper = (props) => {
   const { filters, facetOptions } = searchContext;
   const View = view;
 
-  const fieldAtom = filterFamily({ fieldName: field });
-  const [state, dispatch] = useAtom(fieldAtom);
+  // const fieldAtom = filterFamily({ fieldName: field });
+  // const [state, dispatch] = useAtom(fieldAtom);
+  const [state, dispatch] = useFilterState(field);
   // console.log('Options state', state);
 
-  // const previousOptions = usePrevious(options);
-  // React.useEffect(() => {
-  //   if (previousOptions && !isEqual(options, previousOptions)) {
-  //     const newState = options
-  //       .filter(({ selected }) => !!selected)
-  //       .map(({ value }) => value);
-  //     dispatch({
-  //       type: 'reset',
-  //       value: newState,
-  //     });
-  //   }
-  // }, [state, dispatch, options, previousOptions]);
+  // this clears the selection state, in case the user cleared the filter from
+  // the filter list
 
   const { tmp_state, has_names } = normalize_state(state);
 
@@ -48,6 +38,23 @@ const OptionsWrapper = (props) => {
           : false,
       }))
     : tmp_state;
+
+  const previousOptions = usePrevious(options);
+  React.useEffect(() => {
+    // console.log({ options, previousOptions });
+    if (
+      !previousOptions ||
+      (previousOptions && !isEqual(options, previousOptions))
+    ) {
+      const newState = options
+        .filter(({ selected }) => !!selected)
+        .map(({ value }) => value);
+      dispatch({
+        type: 'reset',
+        value: newState,
+      });
+    }
+  }, [state, dispatch, options, previousOptions]);
 
   const renderContent = React.useCallback(({ children }) => {
     return (

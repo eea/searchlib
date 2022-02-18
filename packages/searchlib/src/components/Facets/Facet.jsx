@@ -74,7 +74,7 @@ const FacetContainer = (props) => {
   }
 
   const View = view; //  || MultiCheckboxFacet
-  console.log('render facet', field);
+  // console.log('render facet', field);
 
   return (
     <View

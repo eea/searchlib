@@ -1,7 +1,4 @@
 import React from 'react';
-import { filterStateReducer } from './state';
-
-// import { Facet as SUIFacet } from '@elastic/react-search-ui';
 import { Facet } from '@eeacms/search/components';
 import { Card, Modal, Button, Icon } from 'semantic-ui-react'; // , Header, Image
 import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
@@ -9,6 +6,9 @@ import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import Filter from '@eeacms/search/components/FilterList/Filter';
 import OptionsWrapper from './OptionsWrapper';
 import { useFilterState } from './state';
+
+// import { filterStateReducer } from './state';
+// import { Facet as SUIFacet } from '@elastic/react-search-ui';
 
 const FacetWrapperComponent = (props) => {
   const searchContext = useSearchContext();
@@ -46,7 +46,7 @@ const FacetWrapperComponent = (props) => {
   //     ? initialValue
   //     : [initialValue],
   // );
-  const [stateX, dispatchX] = useFilterState(
+  const [state, dispatch] = useFilterState(
     field,
     !initialValue
       ? []
@@ -55,8 +55,8 @@ const FacetWrapperComponent = (props) => {
       : [initialValue],
   );
 
-  const state = {};
-  const dispatch = () => {};
+  // const state = {};
+  // const dispatch = () => {};
 
   const { clearFilters, setFilter } = useSearchContext();
 
