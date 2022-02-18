@@ -25,4 +25,5 @@ const useTimedMessage = ({ resultSearchTerm, timeout = 5 }) => {
 
   return count.timeout;
 };
+
 export default useTimedMessage;

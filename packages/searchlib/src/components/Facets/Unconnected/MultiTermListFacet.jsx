@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { ToggleSort, Icon, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Checkbox, Button, Divider } from 'semantic-ui-react'; // , Header
+import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Divider
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
@@ -53,8 +53,6 @@ const FacetOptions = (props) => {
       isGroupedByNumbers = true;
     }
   }
-
-  // console.log('sortedOptions', sortedOptions, availableOptions);
 
   return (
     <div>
@@ -303,6 +301,12 @@ const ViewComponent = (props) => {
       }
     });
   }
+
+  // React.useEffect(() => {
+  //   return () => {
+  //     console.log('unmount MultiTermListFacet', field);
+  //   };
+  // }, [field]);
 
   const customClass =
     'facet-' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
