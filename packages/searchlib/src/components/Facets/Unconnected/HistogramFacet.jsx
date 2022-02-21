@@ -1,10 +1,13 @@
 import React from 'react';
-import { ResponsiveHistogramChart } from '@eeacms/search/components/Vis';
-import { RangeSlider } from '@eeacms/search/components';
 import { getRangeStartEnd } from '@eeacms/search/lib/utils';
-// import { withSearch } from '@elastic/react-search-ui';
 import { Input } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { HistogramSlider } from '@eeacms/search/components/Vis';
+
+// import { RangeSlider } from '@eeacms/search/components';
+// import { HistogramSlider } from '@eeacms/search/components/Vis';
+// import { ResponsiveHistogramChart } from '@eeacms/search/components/Vis';
+// import { withSearch } from '@elastic/react-search-ui';
 
 function toFloat(value) {
   try {
@@ -35,6 +38,8 @@ const ViewComponent = (props) => {
 
   const [rangeStart, setRangeStart] = React.useState(start);
   const [rangeEnd, setRangeEnd] = React.useState(end);
+
+  console.log('data', data);
 
   const settings = {
     min: range.start,
@@ -67,12 +72,12 @@ const ViewComponent = (props) => {
     [onChange, settings.max, settings.min],
   );
   const {
-    className,
+    // className,
     label,
-    onRemove,
-    onSelect,
-    options,
-    facets,
+    // onRemove,
+    // onSelect,
+    // options,
+    // facets,
     field,
     HeaderWrapper = 'div',
     ContentWrapper = 'div',
@@ -106,19 +111,43 @@ const ViewComponent = (props) => {
               max={end}
             />
           </div>
-          <ResponsiveHistogramChart
-            {...props}
-            data={data}
-            activeRange={[rangeStart, rangeEnd]}
+
+          <HistogramSlider
+            data={data.map((d) => ({
+              x0: d.value.from,
+              x: d.value.to,
+              y: d.count,
+            }))}
           />
-          <div className="range-slider-container">
-            <RangeSlider
-              value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]}
-              multiple
-              color="red"
-              settings={{ ...settings, onChange: onChangeValue }}
-            />
-          </div>
+
+          {/* <HistogramSlider */}
+          {/*   data={data.map((d) => ({ */}
+          {/*     x0: d.value.from, */}
+          {/*     x: d.value.to, */}
+          {/*     y: d.count, */}
+          {/*   }))} */}
+          {/*   padding={20} */}
+          {/*   selection={[rangeEnd, rangeStart]} */}
+          {/*   onChange={(array) => { */}
+          {/*     setRangeStart(array[0]); */}
+          {/*     setRangeEnd(array[1]); */}
+          {/*     console.log(array); */}
+          {/*   }} */}
+          {/* /> */}
+
+          {/*   <ResponsiveHistogramChart */}
+          {/*     {...props} */}
+          {/*     data={data} */}
+          {/*     activeRange={[rangeStart, rangeEnd]} */}
+          {/*   /> */}
+          {/*   <div className="range-slider-container"> */}
+          {/*     <RangeSlider */}
+          {/*       value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]} */}
+          {/*       multiple */}
+          {/*       color="red" */}
+          {/*       settings={{ ...settings, onChange: onChangeValue }} */}
+          {/*     /> */}
+          {/*   </div> */}
         </div>
       </ContentWrapper>
     </>
@@ -162,24 +191,3 @@ const HistogramFacet = (props) => {
 };
 
 export default HistogramFacet;
-
-// return (
-//   <FacetWrapper
-//     {...props}
-//     filterType="any"
-//     show={100000}
-//     view={(props) =>
-//       // only show facet when toggled, to allow rangeslider to work properly
-//     }
-//   />
-// );
-// export default withSearch(
-//   ({ filters, facets, addFilter, removeFilter, setFilter, a11yNotify }) => ({
-//     filters,
-//     facets,
-//     addFilter,
-//     removeFilter,
-//     setFilter,
-//     a11yNotify,
-//   }),
-// )(HistogramFacet);
