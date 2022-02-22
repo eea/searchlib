@@ -12,16 +12,7 @@ export const accentFold = (str = '') =>
   str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 const FacetContainer = (props) => {
-  const [more, setMore] = React.useState(20);
   const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleClickMore = (totalOptions) => {
-    let visibleOptionsCount = more + 10;
-    const showingAll = visibleOptionsCount >= totalOptions;
-    if (showingAll) visibleOptionsCount = totalOptions;
-
-    setMore(visibleOptionsCount);
-  };
 
   const {
     className,
@@ -73,7 +64,6 @@ const FacetContainer = (props) => {
     <View
       className={className}
       label={label}
-      onMoreClick={handleClickMore}
       onRemove={(value) => {
         removeFilter(field, value, filterType);
       }}
@@ -83,8 +73,7 @@ const FacetContainer = (props) => {
       onSelect={(value) => {
         addFilter(field, value, filterType);
       }}
-      options={facetValues.slice(0, more)}
-      showMore={facetValues.length > more}
+      options={facetValues}
       values={selectedValues}
       showSearch={isFilterable}
       onSearch={(v) => {

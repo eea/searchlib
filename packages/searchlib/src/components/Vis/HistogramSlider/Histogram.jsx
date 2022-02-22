@@ -14,11 +14,9 @@ class Histogram extends Component {
       histogramStyle,
       showOnDrag,
       selection,
-      // histogramPadding,
       reset,
       selectedColor,
       unselectedColor,
-      // selectBucket,
       scale,
       barBorderRadius,
       barStyle,
@@ -27,6 +25,8 @@ class Histogram extends Component {
       width,
       max,
       dragging,
+      // histogramPadding,
+      // selectBucket,
     } = this.props;
 
     const selectionSorted = Array.from(selection).sort((a, b) => +a - +b);
@@ -37,7 +37,6 @@ class Histogram extends Component {
       : true;
     const h = showHistogramPredicate ? height : 0;
     const o = showHistogramPredicate ? 1 : 0;
-    // console.log('data', data);
 
     return (
       <Motion style={{ height: spring(h), opacity: spring(o) }}>
@@ -66,8 +65,6 @@ class Histogram extends Component {
                   <g transform="scale(1,-1)">
                     {data.map((bucket, i) => {
                       let opacity = 0;
-
-                      // console.log('bucket', bucket);
 
                       if (
                         selectionSorted[0] > bucket.x ||
@@ -98,11 +95,16 @@ class Histogram extends Component {
                           (selectionSorted[1] - bucket.x0) /
                           (bucket.x - bucket.x0);
                       } else {
-                        // Parital match
+                        // Partial match
                         opacity =
                           (selectionSorted[1] - selectionSorted[0]) /
                           (bucket.x - bucket.x0);
                       }
+                      // console.log(
+                      //   'width',
+                      //   bucket,
+                      //   scale(bucket.x) - scale(bucket.x0) - barPadding,
+                      // );
                       return (
                         <g
                           key={i}
@@ -169,8 +171,8 @@ Histogram.propTypes = {
   onChange: PropTypes.func,
 };
 
-Histogram.defaultProps = {
-  histogramPadding: 1,
-};
+// Histogram.defaultProps = {
+//   histogramPadding: 1,
+// };
 
 export default Histogram;

@@ -200,7 +200,13 @@ export class Handle extends Component {
 // TRACK COMPONENT
 // *******************************************************
 
-export const Track = ({ source, target, getTrackProps, disabled }) => {
+export const Track = ({
+  source,
+  target,
+  getTrackProps,
+  disabled,
+  trackColor = 'red',
+}) => {
   return (
     <div
       style={{
@@ -208,7 +214,7 @@ export const Track = ({ source, target, getTrackProps, disabled }) => {
         transform: 'translate(0%, -50%)',
         height: 14,
         zIndex: 1,
-        backgroundColor: disabled ? '#999' : '#6d4b51',
+        backgroundColor: disabled ? '#999' : trackColor,
         borderRadius: 7,
         cursor: 'pointer',
         left: `${source.percent}%`,
