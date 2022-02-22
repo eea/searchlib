@@ -1,11 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
+import { withTooltip, Tooltip, defaultStyles } from '@visx/tooltip';
+
+const DataTooltip = ({
+  tooltipLeft,
+  tooltipData,
+  tooltipTop,
+  fieldName,
+  ...rest
+}) => (
+  <Tooltip
+    top={tooltipTop}
+    left={tooltipLeft}
+    style={{
+      ...defaultStyles,
+      lineHeight: 'initial',
+      boxShadow: '',
+      fontSize: 'x-small',
+    }}
+  >
+    <div style={{ color: 'black' }}>
+      <strong>{`${tooltipData.x0} to ${tooltipData.x}`}</strong>
+      <br />
+      {fieldName}
+      <br />
+      {`${tooltipData.y} items`}
+    </div>
+  </Tooltip>
+);
 
 class Histogram extends Component {
   selectBucket(bucket) {
     this.props.onChange([bucket.x0, bucket.x]);
   }
+
+  tooltipTimeout = React.createRef();
 
   render() {
     const {
@@ -25,9 +55,15 @@ class Histogram extends Component {
       width,
       max,
       dragging,
+      tooltipOpen,
+      hideTooltip,
+      showTooltip,
       // histogramPadding,
       // selectBucket,
     } = this.props;
+
+    // TODO: properly implement react-motion; the "dragging" prop and
+    // showOnDrag needs to be passed down;
 
     const selectionSorted = Array.from(selection).sort((a, b) => +a - +b);
     const showHistogramPredicate = showOnDrag
@@ -137,6 +173,25 @@ class Histogram extends Component {
                             rx={barBorderRadius}
                             ry={barBorderRadius}
                             x={0}
+                            onMouseLeave={() => {
+                              this.tooltipTimeout.current = window.setTimeout(
+                                () => {
+                                  hideTooltip();
+                                },
+                                1000,
+                              );
+                            }}
+                            onMouseMove={() => {
+                              if (this.tooltipTimeout.current)
+                                clearTimeout(this.tooltipTimeout.current);
+                              // const top = barY + barHeight + margin.top;
+                              // const left = barX - barWidth + margin.left;
+                              showTooltip({
+                                tooltipData: bucket,
+                                tooltipTop: 0,
+                                tooltipLeft: scale(bucket.x) - 50,
+                              });
+                            }}
                           />
                         </g>
                       );
@@ -144,6 +199,10 @@ class Histogram extends Component {
                   </g>
                 </g>
               </svg>
+
+              {tooltipOpen && (
+                <DataTooltip {...this.props} fieldName={this.props.label} />
+              )}
             </div>
           );
         }}
@@ -175,4 +234,4 @@ Histogram.propTypes = {
 //   histogramPadding: 1,
 // };
 
-export default Histogram;
+export default withTooltip(Histogram);
