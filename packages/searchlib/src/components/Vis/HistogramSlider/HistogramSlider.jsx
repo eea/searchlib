@@ -24,7 +24,7 @@ const HistogramSlider = ({
   selection,
   onChange,
 }) => {
-  const [update, setUpdate] = React.useState([]);
+  // const [update, setUpdate] = React.useState(selection || []);
   const [width, setWidth] = React.useState(defaultWidth);
 
   const innerHeight = height - padding * 2;
@@ -44,9 +44,7 @@ const HistogramSlider = ({
   scale.clamp(true);
   const step = (extent[1] - extent[0]) / data.length;
 
-  // console.log('domain', { extent, innerWidth, ex: scale(2010), step });
   // TODO: fix step, ticks count
-  // const nodeRef = React.useRef(nodeRef);
 
   return (
     <div
@@ -58,7 +56,7 @@ const HistogramSlider = ({
       <Histogram
         height={histogramHeight}
         data={data}
-        selection={values}
+        selection={selection}
         scale={scale}
         width={width}
         reset={() => onChange([extent[0], extent[1]])}
@@ -74,7 +72,7 @@ const HistogramSlider = ({
         step={step}
         domain={extent}
         rootStyle={sliderStyle}
-        onUpdate={(update) => setUpdate(update)}
+        onUpdate={onChange}
         onChange={onChange}
         values={values}
       >

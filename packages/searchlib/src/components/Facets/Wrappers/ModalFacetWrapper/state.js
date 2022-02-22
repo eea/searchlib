@@ -4,17 +4,30 @@ import { atomFamily, useReducerAtom } from 'jotai/utils';
 export function normalize_state(state) {
   let tmp_state = [];
   let has_names = true;
+
   if (typeof state?.[0] === 'string') {
     tmp_state = state;
   }
+
   if (typeof state?.[0] === 'object') {
     if (state?.[0]?.name) {
       tmp_state = state.map((st) => st.name);
+      // } else if (state?.[0]?.to ?? null) {
+      //   // support histogram range facet
+      //   tmp_state = [
+      //     ...state.map(({ from, to }) =>
+      //       Array(to - from + 1)
+      //         .fill(1)
+      //         .map((x, y) => from - 1 + x + y),
+      //     ),
+      //   ];
+      //   has_names = false;
     } else {
       tmp_state = state;
       has_names = false;
     }
   }
+
   return { tmp_state, has_names };
 }
 
@@ -47,5 +60,13 @@ export function filterStateReducer(prev, action) {
 
 export function useFilterState(filterName, initialState) {
   const filterAtom = filterFamily({ filterName, initialState });
-  return useReducerAtom(filterAtom, filterStateReducer);
+  const [state, dispatch] = useReducerAtom(filterAtom, filterStateReducer);
+
+  return [
+    state,
+    (v) => {
+      // console.log('dispatch', filterName, v);
+      return dispatch(v);
+    },
+  ];
 }
