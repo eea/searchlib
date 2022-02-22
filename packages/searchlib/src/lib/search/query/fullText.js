@@ -1,16 +1,24 @@
 import { EXACT_PHRASES } from '@eeacms/search/constants';
 
 export function extractExactPhrases(searchTerm) {
-  return searchTerm
-    .split('"') // split by "
+  const parts = searchTerm.split('"'); // split by "
+  const phrases = parts
     .slice(0, -1) // remove last element from the array
     .filter((el, idx) => idx % 2 === 1); // return odd elements of the array
+  let terms = parts.filter((el, idx) => idx % 2 !== 1); // return odd elements of the array
+  if (parts.length % 2 !== 1) {
+    terms.push(parts[parts.length - 1]);
+  }
+  return {
+    phrases,
+    terms: terms.join(' ').trim(),
+  };
 }
 
 export function buildFullTextMatch(searchTerm = '', filters = [], config) {
   // const originalSearchTerm = searchTerm;
 
-  const exactPhrases = extractExactPhrases(searchTerm);
+  const { phrases } = extractExactPhrases(searchTerm);
   let must_query = [{ match_all: {} }];
   if (searchTerm.length > 0) {
     must_query = [
@@ -27,7 +35,7 @@ export function buildFullTextMatch(searchTerm = '', filters = [], config) {
         },
       },
     ];
-    exactPhrases.forEach((phrase) =>
+    phrases.forEach((phrase) =>
       must_query.push({ match_phrase: { all_fields_for_freetext: phrase } }),
     );
   }

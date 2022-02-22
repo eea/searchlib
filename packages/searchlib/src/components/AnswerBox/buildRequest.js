@@ -97,8 +97,8 @@ export const buildQuestionRequest = (state, config) => {
     // isQuestion: true,
   };
 
-  const exactPhrases = extractExactPhrases(searchTerm);
-  exactPhrases.forEach((phrase) =>
+  const { phrases } = extractExactPhrases(searchTerm);
+  phrases.forEach((phrase) =>
     body.params.custom_query.function_score.query.bool.must.push({
       match_phrase: { all_fields_for_freetext: phrase },
     }),
