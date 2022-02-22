@@ -54,7 +54,7 @@ const globalSearchConfig = {
       fragment_size: 200,
       number_of_fragments: 3,
     },
-    fields: ['description'],
+    fields: ['description.highlight'],
     queryBuilder: {
       factory: 'highlightQueryBuilder',
     },
