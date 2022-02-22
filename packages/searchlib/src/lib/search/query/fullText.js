@@ -11,7 +11,11 @@ export function extractExactPhrases(searchTerm) {
   }
   return {
     phrases,
-    terms: terms.join(' ').trim(),
+    terms: terms
+      .map((el) => el.trim())
+      .filter((el) => el.length > 0)
+      .join(' ')
+      .trim(),
   };
 }
 
