@@ -19,9 +19,6 @@ const HistogramFacetComponent = (props) => {
     end = selection ? selection[1] : undefined ?? range.end,
   } = props;
 
-  // const [rangeStart, setRangeStart] = React.useState(start);
-  // const [rangeEnd, setRangeEnd] = React.useState(end);
-
   return (
     <div className="histogram-facet">
       <div className="text-input">

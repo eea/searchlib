@@ -16,7 +16,7 @@ const HistogramSlider = ({
   // width = 400,
   height = 200,
   padding = 10,
-  sliderHeight = 20,
+  sliderHeight = 0,
   defaultWidth = 200,
   selectedColor = 'blue',
   unselectedColor = 'gray',
@@ -48,7 +48,12 @@ const HistogramSlider = ({
 
   return (
     <div
-      style={{ height, width: '100%', padding: `${padding}px` }}
+      style={{
+        height: `${height}px`,
+        width: '100%',
+        padding: `${padding}px`,
+        marginBottom: '20px',
+      }}
       ref={(node) => {
         node && setWidth(node.clientWidth);
       }}
@@ -64,6 +69,7 @@ const HistogramSlider = ({
         barPadding={0}
         padding={0}
         onChange={onChange}
+        showOnDrag={false}
         unselectedColor={unselectedColor}
         selectedColor={selectedColor}
       />
