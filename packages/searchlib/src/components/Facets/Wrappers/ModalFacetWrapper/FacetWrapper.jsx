@@ -44,6 +44,10 @@ const FacetWrapperComponent = (props) => {
       : [initialValue],
   );
 
+  // if (field === 'year') {
+  //   console.log('state', field, state, initialValue);
+  // }
+
   const { clearFilters, setFilter } = useSearchContext();
 
   const OptionsView = props.view;
@@ -129,13 +133,18 @@ const FacetWrapperComponent = (props) => {
         />
       }
     >
-      <Facet {...props} active={isOpened} view={BoundOptionsWrapper} />
+      <Facet
+        {...props}
+        active={isOpened}
+        view={BoundOptionsWrapper}
+        state={state}
+      />
       <Modal.Actions>
         <Button
           color="black"
           onClick={() => {
             setIsOpened(false);
-            dispatch({ type: 'reset', value: initialValue });
+            dispatch({ type: 'reset', value: initialValue, id: 'btn-cancel' });
           }}
         >
           Cancel
@@ -168,7 +177,7 @@ const FacetWrapperComponent = (props) => {
             onClick={(evt) => {
               evt.preventDefault();
               if (state.length) {
-                dispatch({ type: 'reset', value: [] });
+                dispatch({ type: 'reset', value: [], id: 'btn-clear-filters' });
               }
             }}
           >
