@@ -4,86 +4,30 @@ import { Input } from 'semantic-ui-react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { HistogramSlider } from '@eeacms/search/components/Vis';
 
-// import { RangeSlider } from '@eeacms/search/components';
-// import { HistogramSlider } from '@eeacms/search/components/Vis';
-// import { ResponsiveHistogramChart } from '@eeacms/search/components/Vis';
-// import { withSearch } from '@elastic/react-search-ui';
-
-function toFloat(value) {
-  try {
-    return parseFloat(value);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('Error in parsing float', value);
-    return value;
-  }
-}
-
-function extractNumeric(value) {
-  if (typeof value === 'string') {
-    return toFloat(value);
-  }
-  if (value && typeof value === 'object') {
-    return toFloat(value.value);
-  }
-
-  return value;
-}
+const visualStyle = {
+  selectedColor: 'lightblue',
+  unselectedColor: 'gray',
+  trackColor: '#62819e',
+};
 
 const ViewComponent = (props) => {
-  const { data, ranges, onChange } = props;
+  const { data, ranges, onChange, selection } = props;
+
+  console.log('props', props);
 
   const range = getRangeStartEnd(ranges);
-  const { start = range.start, end = range.end, step = 1 } = props;
-
-  const [rangeStart, setRangeStart] = React.useState(start);
-  const [rangeEnd, setRangeEnd] = React.useState(end);
-
-  console.log('data', data);
-
-  const settings = {
-    min: range.start,
-    max: range.end,
-    step,
-  };
-
-  const timeoutRef = React.useRef();
-
-  const onChangeValue = React.useCallback(
-    (value, { triggeredByUser }) => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-      timeoutRef.current = setTimeout(() => {
-        const start = extractNumeric(value[0]);
-        const end = extractNumeric(value[1]);
-        setRangeStart(start);
-        setRangeEnd(end);
-        let val = {};
-        if (settings.min !== start) {
-          val.from = start;
-        }
-        if (settings.max !== end) {
-          val.to = end;
-        }
-        onChange(val);
-      }, 300);
-      return () => timeoutRef.current && clearTimeout(timeoutRef.current);
-    },
-    [onChange, settings.max, settings.min],
-  );
   const {
-    // className,
-    label,
-    // onRemove,
-    // onSelect,
-    // options,
-    // facets,
-    field,
-    HeaderWrapper = 'div',
-    ContentWrapper = 'div',
+    start = selection ? selection[0] : undefined ?? range.start,
+    end = selection ? selection[1] : undefined ?? range.end,
   } = props;
+
+  // const [rangeStart, setRangeStart] = React.useState(start);
+  // const [rangeEnd, setRangeEnd] = React.useState(end);
+
+  const { label, field, HeaderWrapper = 'div', ContentWrapper = 'div' } = props;
   const { appConfig } = useAppConfig();
   const facetConfig = appConfig.facets.find((f) => f.field === field);
+
   return (
     <>
       <HeaderWrapper>
@@ -98,15 +42,15 @@ const ViewComponent = (props) => {
           <div className="text-input">
             <Input
               type="number"
-              value={rangeStart}
-              onChange={(e, { value }) => setRangeStart(value)}
+              value={start}
+              onChange={(e, { value }) => onChange([value, selection[1]])}
               min={start}
               max={end}
             />
             <Input
               type="number"
-              value={rangeEnd}
-              onChange={(e, { value }) => setRangeEnd(value)}
+              value={end}
+              onChange={(e, { value }) => onChange([selection[0], value])}
               min={start}
               max={end}
             />
@@ -118,36 +62,10 @@ const ViewComponent = (props) => {
               x: d.value.to,
               y: d.count,
             }))}
+            {...visualStyle}
+            selection={[start, end]}
+            onChange={(range) => onChange({ from: range[0], to: range[1] })}
           />
-
-          {/* <HistogramSlider */}
-          {/*   data={data.map((d) => ({ */}
-          {/*     x0: d.value.from, */}
-          {/*     x: d.value.to, */}
-          {/*     y: d.count, */}
-          {/*   }))} */}
-          {/*   padding={20} */}
-          {/*   selection={[rangeEnd, rangeStart]} */}
-          {/*   onChange={(array) => { */}
-          {/*     setRangeStart(array[0]); */}
-          {/*     setRangeEnd(array[1]); */}
-          {/*     console.log(array); */}
-          {/*   }} */}
-          {/* /> */}
-
-          {/*   <ResponsiveHistogramChart */}
-          {/*     {...props} */}
-          {/*     data={data} */}
-          {/*     activeRange={[rangeStart, rangeEnd]} */}
-          {/*   /> */}
-          {/*   <div className="range-slider-container"> */}
-          {/*     <RangeSlider */}
-          {/*       value={[Math.max(rangeStart, start), Math.min(rangeEnd, end)]} */}
-          {/*       multiple */}
-          {/*       color="red" */}
-          {/*       settings={{ ...settings, onChange: onChangeValue }} */}
-          {/*     /> */}
-          {/*   </div> */}
         </div>
       </ContentWrapper>
     </>
@@ -159,25 +77,28 @@ export const HistogramFacetComponent = (props) => {
 };
 
 const HistogramFacet = (props) => {
-  const { facets, field, options, onSelect } = props; // , filters
+  const { facets, filters, field, onSelect } = props; // , filters
   // const initialStart = initialValue?.[0]?.from;
   // const initialEnd = initialValue?.[0]?.to;
-  // const filterValue = filters.find((f) => f.field === field);
+  const filterValue = filters.find((f) => f.field === field);
 
   // copied from react-search-ui/Facet.jsx
   // By using `[0]`, we are currently assuming only 1 facet per field. This will likely be enforced
   // in future version, so instead of an array, there will only be one facet allowed per field.
   const facetsForField = facets[field];
   const facet = facetsForField?.[0] || {};
+  const value = filterValue
+    ? [filterValue.values?.[0]?.from, filterValue.values?.[0]?.to]
+    : null;
   // TODO: resume work here
-  // console.log('ff', facet, filters);
+  console.log('ff', facet, filters);
   return props.active && facet?.data ? (
     <HistogramFacetComponent
       {...props}
-      start={options?.[0]?.from}
-      end={options?.[0]?.to}
       data={facet?.data}
+      selection={value}
       onChange={({ to, from }) => {
+        onSelect([], true);
         if (to || from) {
           onSelect([{ to, from, type: 'range' }], true);
         } else {

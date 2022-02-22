@@ -7,9 +7,6 @@ import Filter from '@eeacms/search/components/FilterList/Filter';
 import OptionsWrapper from './OptionsWrapper';
 import { useFilterState } from './state';
 
-// import { filterStateReducer } from './state';
-// import { Facet as SUIFacet } from '@elastic/react-search-ui';
-
 const FacetWrapperComponent = (props) => {
   const searchContext = useSearchContext();
   const { filters = [], addFilter, removeFilter } = searchContext;
@@ -149,6 +146,7 @@ const FacetWrapperComponent = (props) => {
           icon="checkmark"
           onClick={() => {
             setIsOpened(false);
+            removeFilter(field, '', '');
             removeFilter(field, '', 'any');
             removeFilter(field, '', 'all');
             removeFilter(field, '', 'any:exact');

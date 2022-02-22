@@ -11,9 +11,6 @@ const sliderStyle = {
   width: '100%',
 };
 
-// const domain = [100, 500];
-// const defaultValues = [200, 400];
-
 const HistogramSlider = ({
   data,
   // width = 400,
@@ -21,10 +18,14 @@ const HistogramSlider = ({
   padding = 10,
   sliderHeight = 20,
   defaultWidth = 200,
+  selectedColor = 'blue',
+  unselectedColor = 'gray',
+  trackColor = 'red',
+  selection,
+  onChange,
 }) => {
   const [update, setUpdate] = React.useState([]);
   const [width, setWidth] = React.useState(defaultWidth);
-  // const [selection, setSelection] = React.useState([]);
 
   const innerHeight = height - padding * 2;
   const innerWidth = width - padding * 2;
@@ -35,21 +36,21 @@ const HistogramSlider = ({
     min(sortedData, ({ x0 }) => +x0),
     max(sortedData, ({ x }) => +x),
   ];
-  const [values, setValues] = React.useState([extent[0], extent[1]]);
+  const values = selection || [...extent];
 
   const maxValue = max(sortedData, ({ y }) => +y);
 
   const scale = linear().domain(extent).range([0, innerWidth]);
   scale.clamp(true);
   const step = (extent[1] - extent[0]) / data.length;
-  console.log('domain', { extent, innerWidth, ex: scale(2010), step });
 
+  // console.log('domain', { extent, innerWidth, ex: scale(2010), step });
   // TODO: fix step, ticks count
   // const nodeRef = React.useRef(nodeRef);
 
   return (
     <div
-      style={{ height, width: '100%' }}
+      style={{ height, width: '100%', padding: `${padding}px` }}
       ref={(node) => {
         node && setWidth(node.clientWidth);
       }}
@@ -60,11 +61,13 @@ const HistogramSlider = ({
         selection={values}
         scale={scale}
         width={width}
-        reset={() => setValues([extent[0], extent[1]])}
+        reset={() => onChange([extent[0], extent[1]])}
         max={maxValue}
         barPadding={0}
         padding={0}
-        onChange={(value) => setValues(value)}
+        onChange={onChange}
+        unselectedColor={unselectedColor}
+        selectedColor={selectedColor}
       />
       <Slider
         mode={2}
@@ -72,7 +75,7 @@ const HistogramSlider = ({
         domain={extent}
         rootStyle={sliderStyle}
         onUpdate={(update) => setUpdate(update)}
-        onChange={(values) => setValues(values)}
+        onChange={onChange}
         values={values}
       >
         <Rail>
@@ -98,6 +101,7 @@ const HistogramSlider = ({
             <div className="slider-tracks">
               {tracks.map(({ id, source, target }) => (
                 <Track
+                  trackColor={trackColor}
                   key={id}
                   source={source}
                   target={target}
