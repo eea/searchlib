@@ -122,7 +122,7 @@ export function getRangeFilter(filter) {
           },
         },
       })),
-      minimum_should_match: 1,
+      ...(op === 'should' ? { minimum_should_match: 1 } : {}),
     },
   };
 }

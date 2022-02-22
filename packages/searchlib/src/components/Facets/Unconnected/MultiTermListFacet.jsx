@@ -269,7 +269,6 @@ const ViewComponent = (props) => {
     },
   );
 
-
   const byLetters = {};
   if (sorting.sortOn === 'value') {
     byLetters.letters = [];
