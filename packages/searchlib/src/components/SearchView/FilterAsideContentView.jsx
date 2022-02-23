@@ -13,6 +13,7 @@ import { useViews } from '@eeacms/search/lib/hocs';
 
 import registry from '@eeacms/search/registry';
 import { AnswerBox, Component } from '@eeacms/search/components';
+import { NoResults } from '@eeacms/search/components/Result/NoResults';
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, children, filters, searchTerm, current } = props;
@@ -37,43 +38,48 @@ export const FilterAsideContentView = (props) => {
 
   return (
     <>
-      <SectionTabs />
+      {children.length > 0 && (
+        <>
+          <SectionTabs />
 
-      <div className={`results-layout ${layoutMode}`}>
-        <div className="above-results">
-          <Component factoryName="SecondaryFacetsList" {...props} />
-          <Sorting
-            label={'Sort by '}
-            sortOptions={sortOptions}
-            view={SortingDropdownWithLabel}
-          />
-          <ViewSelectorWithLabel
-            views={availableResultViews}
-            active={activeViewId}
-            onSetView={setActiveViewId}
-          />
-        </div>
-
-        {current === 1 ? <AnswerBox /> : ''}
-
-        <ResultViewComponent>{children}</ResultViewComponent>
-
-        <div className="row">
-          <div className="search-body-footer">
-            <div className="prev-next-paging">
-              {wasInteracted ? (
-                <>
-                  <Paging />
-                </>
-              ) : null}
+          <div className={`results-layout ${layoutMode}`}>
+            <div className="above-results">
+              <Component factoryName="SecondaryFacetsList" {...props} />
+              <Sorting
+                label={'Sort by '}
+                sortOptions={sortOptions}
+                view={SortingDropdownWithLabel}
+              />
+              <ViewSelectorWithLabel
+                views={availableResultViews}
+                active={activeViewId}
+                onSetView={setActiveViewId}
+              />
             </div>
-            <ResultsPerPageSelector />
-            <div>
-              <DownloadButton appConfig={appConfig} />
+
+            {current === 1 ? <AnswerBox /> : ''}
+
+            {<ResultViewComponent>{children}</ResultViewComponent>}
+
+            <div className="row">
+              <div className="search-body-footer">
+                <div className="prev-next-paging">
+                  {wasInteracted ? (
+                    <>
+                      <Paging />
+                    </>
+                  ) : null}
+                </div>
+                <ResultsPerPageSelector />
+                <div>
+                  <DownloadButton appConfig={appConfig} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
+      {children.length === 0 && <NoResults />}
     </>
   );
 };
