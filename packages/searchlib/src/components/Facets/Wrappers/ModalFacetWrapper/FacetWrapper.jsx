@@ -44,10 +44,6 @@ const FacetWrapperComponent = (props) => {
       : [initialValue],
   );
 
-  // if (field === 'year') {
-  //   console.log('state', field, state, initialValue);
-  // }
-
   const { clearFilters, setFilter } = useSearchContext();
 
   const OptionsView = props.view;
@@ -92,6 +88,11 @@ const FacetWrapperComponent = (props) => {
                       evt.preventDefault();
                       setIsOpened(false);
                       (state || []).forEach((v) => {
+                        dispatch({
+                          type: 'reset',
+                          value: [],
+                          id: 'btn-clear-filters',
+                        });
                         removeFilter(
                           field,
                           v,
@@ -115,13 +116,24 @@ const FacetWrapperComponent = (props) => {
                     {...filter}
                     noTitle={true}
                     setFilter={setFilter}
-                    removeFilter={removeFilter}
+                    removeFilter={(a, b, c) => {
+                      // console.log('remove', a, b, c);
+                      // TODO: add dispatch call here, can remove useEffect
+                      // from OptionsWrapper
+                      removeFilter(a, b, c);
+                    }}
                     onClear={(field) => {
                       const activeFilters = filters.map(({ field }) => field);
                       const exclude = activeFilters.filter(
                         (name) => name !== field,
                       );
                       clearFilters(exclude);
+                      // dispatch({ type: 'remove', exclude });
+                      dispatch({
+                        type: 'reset',
+                        value: [],
+                        id: 'filter-onClear',
+                      });
                     }}
                   />
                 ) : null;
