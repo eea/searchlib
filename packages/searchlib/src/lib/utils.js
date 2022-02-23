@@ -223,10 +223,15 @@ export const firstChars = (text, charsNumber) => {
 };
 
 export const hasAppliedCustomFilters = (filters, appConfig) => {
-  const normalizedDefaultFilters = getDefaultFilterValues(appConfig.facets);
-
-  const normalizedFilters = normalizeDefaultFilters(filters);
-
+  const mainFacetFields = appConfig.facets
+    .filter((f) => f.showInFacetsList ?? true)
+    .map((f) => f.field);
+  const mainFacets = appConfig.facets.filter((f) =>
+    mainFacetFields.includes(f.field),
+  );
+  const mainFilters = filters.filter((f) => mainFacetFields.includes(f.field));
+  const normalizedDefaultFilters = getDefaultFilterValues(mainFacets);
+  const normalizedFilters = normalizeDefaultFilters(mainFilters);
   const filtersEqual = deepEqual(normalizedDefaultFilters, normalizedFilters);
 
   return !filtersEqual;
