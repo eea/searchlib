@@ -65,7 +65,7 @@ export function useFilterState(filterName, initialState) {
   return [
     state,
     (v) => {
-      // console.log('dispatch', filterName, v);
+      console.log('dispatch', filterName, v);
       return dispatch(v);
     },
   ];

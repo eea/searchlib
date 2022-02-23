@@ -116,11 +116,12 @@ const FacetWrapperComponent = (props) => {
                     {...filter}
                     noTitle={true}
                     setFilter={setFilter}
-                    removeFilter={(a, b, c) => {
-                      // console.log('remove', a, b, c);
+                    removeFilter={(field, value, type) => {
+                      // console.log('remove', { field, value, type });
                       // TODO: add dispatch call here, can remove useEffect
                       // from OptionsWrapper
-                      removeFilter(a, b, c);
+                      dispatch({ type: 'remove', value });
+                      removeFilter(field, value, type);
                     }}
                     onClear={(field) => {
                       const activeFilters = filters.map(({ field }) => field);

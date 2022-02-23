@@ -43,36 +43,36 @@ const OptionsWrapper = (props) => {
   const derivedOptions = getOptions(state, options);
   const previousOptions = usePrevious(options);
 
-  React.useEffect(() => {
-    if (
-      !previousOptions ||
-      (previousOptions && !isEqual(options, previousOptions))
-    ) {
-      if (state?.[0]?.to ?? null) {
-        // don't reset histogram facet;
-        // TODO: this is the coward option; proper thing would be to do the
-        // reset here. It works out because the histogram facet reads its value
-        // directly from the filters list
-        // const newOptions = getOptions(state, options);
-        // console.log('reset', {
-        //   previousOptions,
-        //   options,
-        //   newOptions,
-        //   newState,
-        //   state,
-        // });
-        return;
-      }
-      const newState = options
-        .filter(({ selected }) => !!selected)
-        .map(({ value }) => value);
-      dispatch({
-        type: 'reset',
-        value: newState,
-        id: `${field}-options-wrapper`,
-      });
-    }
-  }, [state, dispatch, options, previousOptions, field]);
+  // React.useEffect(() => {
+  //   if (
+  //     !previousOptions ||
+  //     (previousOptions && !isEqual(options, previousOptions))
+  //   ) {
+  //     if (state?.[0]?.to ?? null) {
+  //       // don't reset histogram facet;
+  //       // TODO: this is the coward option; proper thing would be to do the
+  //       // reset here. It works out because the histogram facet reads its value
+  //       // directly from the filters list
+  //       // const newOptions = getOptions(state, options);
+  //       // console.log('reset', {
+  //       //   previousOptions,
+  //       //   options,
+  //       //   newOptions,
+  //       //   newState,
+  //       //   state,
+  //       // });
+  //       return;
+  //     }
+  //     const newState = options
+  //       .filter(({ selected }) => !!selected)
+  //       .map(({ value }) => value);
+  //     dispatch({
+  //       type: 'reset',
+  //       value: newState,
+  //       id: `${field}/options-wrapper`,
+  //     });
+  //   }
+  // }, [state, dispatch, options, previousOptions, field]);
 
   const renderContent = React.useCallback(({ children }) => {
     return (
