@@ -6,7 +6,7 @@ import GenericWrapper from './Wrappers/GenericWrapper';
 const SecondaryFacetsList = ({ defaultWrapper = GenericWrapper, ...rest }) => {
   const { appConfig, registry } = useAppConfig();
   const { facets = [] } = appConfig;
-  // console.log('facets', facets);
+
   return (
     <div className="secondary-facets">
       {facets
@@ -22,7 +22,7 @@ const SecondaryFacetsList = ({ defaultWrapper = GenericWrapper, ...rest }) => {
             ...info.params,
             // ...facet,
           };
-          // console.log('secfac', info);
+
           const FacetComponent = facetConfig.component;
 
           return (
