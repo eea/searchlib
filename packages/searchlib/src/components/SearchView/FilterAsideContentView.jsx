@@ -14,6 +14,7 @@ import { useViews } from '@eeacms/search/lib/hocs';
 import registry from '@eeacms/search/registry';
 import { AnswerBox, Component } from '@eeacms/search/components';
 import { NoResults } from '@eeacms/search/components/Result/NoResults';
+import { useSearchContext } from '@eeacms/search/lib/hocs';
 
 export const FilterAsideContentView = (props) => {
   const { appConfig, children, filters, searchTerm, current } = props;
@@ -36,6 +37,7 @@ export const FilterAsideContentView = (props) => {
   const wasInteracted = checkInteracted({ filters, searchTerm, appConfig });
   const layoutMode = activeViewId === 'horizontalCard' ? 'fixed' : 'fullwidth';
 
+  const { isLoading, wasSearched } = useSearchContext();
   return (
     <>
       {children.length > 0 && (
@@ -79,7 +81,7 @@ export const FilterAsideContentView = (props) => {
           </div>
         </>
       )}
-      {children.length === 0 && <NoResults />}
+      {children.length === 0 && !isLoading && wasSearched && <NoResults />}
     </>
   );
 };
