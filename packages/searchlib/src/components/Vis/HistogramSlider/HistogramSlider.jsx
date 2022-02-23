@@ -19,7 +19,7 @@ const HistogramSlider = ({
   sliderHeight = 0,
   defaultWidth = 200,
   selectedColor = 'blue',
-  unselectedColor = 'gray',
+  unselectedColor = '#e8e8e8',
   trackColor = 'red',
   selection,
   onChange,

@@ -148,6 +148,7 @@ export class Handle extends Component {
               position: 'absolute',
               marginLeft: '-11px',
               marginTop: '-35px',
+              backgroundColor: '#2C4870',
             }}
           >
             <div className="tooltip">
@@ -188,7 +189,7 @@ export class Handle extends Component {
             border: 0,
             borderRadius: '50%',
             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)',
-            backgroundColor: disabled ? '#666' : '#8b6068',
+            backgroundColor: disabled ? '#666' : '#00888A',
           }}
         />
       </Fragment>

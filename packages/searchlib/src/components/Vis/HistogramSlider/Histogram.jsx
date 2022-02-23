@@ -148,51 +148,62 @@ class Histogram extends Component {
                             scale(bucket.x0) + barPadding / 2
                           } 0)`}
                         >
-                          <rect
-                            fill={unselectedColor}
-                            width={
-                              scale(bucket.x) - scale(bucket.x0) - barPadding
-                            }
-                            height={(bucket.y / max) * height}
-                            rx={barBorderRadius}
-                            ry={barBorderRadius}
-                            x={0}
-                          />
-                          <rect
-                            fill={selectedColor}
-                            onClick={this.selectBucket.bind(this, bucket)}
-                            onDoubleClick={reset.bind(this)}
-                            style={Object.assign(
-                              { opacity, cursor: 'pointer' },
-                              barStyle,
-                            )}
-                            width={
-                              scale(bucket.x) - scale(bucket.x0) - barPadding
-                            }
-                            height={(bucket.y / max) * height}
-                            rx={barBorderRadius}
-                            ry={barBorderRadius}
-                            x={0}
-                            onMouseLeave={() => {
-                              this.tooltipTimeout.current = window.setTimeout(
-                                () => {
-                                  hideTooltip();
-                                },
-                                1000,
-                              );
-                            }}
-                            onMouseMove={() => {
-                              if (this.tooltipTimeout.current)
-                                clearTimeout(this.tooltipTimeout.current);
-                              // const top = barY + barHeight + margin.top;
-                              // const left = barX - barWidth + margin.left;
-                              showTooltip({
-                                tooltipData: bucket,
-                                tooltipTop: 0,
-                                tooltipLeft: scale(bucket.x) - 50,
-                              });
-                            }}
-                          />
+                          {opacity === 0 ? (
+                            <rect
+                              onClick={this.selectBucket.bind(this, bucket)}
+                              onDoubleClick={reset.bind(this)}
+                              fill={unselectedColor}
+                              width={
+                                scale(bucket.x) -
+                                scale(bucket.x0) -
+                                barPadding -
+                                4
+                              }
+                              height={(bucket.y / max) * height}
+                              rx={barBorderRadius}
+                              ry={barBorderRadius}
+                              x={0}
+                            />
+                          ) : (
+                            <rect
+                              fill={selectedColor}
+                              onClick={this.selectBucket.bind(this, bucket)}
+                              onDoubleClick={reset.bind(this)}
+                              style={Object.assign(
+                                { opacity, cursor: 'pointer' },
+                                barStyle,
+                              )}
+                              width={
+                                scale(bucket.x) -
+                                scale(bucket.x0) -
+                                barPadding -
+                                4
+                              }
+                              height={(bucket.y / max) * height}
+                              rx={barBorderRadius}
+                              ry={barBorderRadius}
+                              x={0}
+                              onMouseLeave={() => {
+                                this.tooltipTimeout.current = window.setTimeout(
+                                  () => {
+                                    hideTooltip();
+                                  },
+                                  1000,
+                                );
+                              }}
+                              onMouseMove={() => {
+                                if (this.tooltipTimeout.current)
+                                  clearTimeout(this.tooltipTimeout.current);
+                                // const top = barY + barHeight + margin.top;
+                                // const left = barX - barWidth + margin.left;
+                                showTooltip({
+                                  tooltipData: bucket,
+                                  tooltipTop: 0,
+                                  tooltipLeft: scale(bucket.x) - 50,
+                                });
+                              }}
+                            />
+                          )}
                         </g>
                       );
                     })}

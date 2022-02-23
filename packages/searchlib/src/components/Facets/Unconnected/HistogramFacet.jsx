@@ -5,9 +5,9 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { HistogramSlider } from '@eeacms/search/components/Vis';
 
 const visualStyle = {
-  selectedColor: 'lightblue',
-  unselectedColor: 'gray',
-  trackColor: '#62819e',
+  selectedColor: '#55cee4',
+  unselectedColor: '#e8e8e8',
+  trackColor: '#00548a',
 };
 
 const HistogramFacetComponent = (props) => {
