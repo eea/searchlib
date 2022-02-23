@@ -30,7 +30,7 @@ const FilterValue = (props) => {
       )}
       <span className="text filterValue" title={value}>
         <Term term={valueToString(value)} field={field} />
-        {type !== 'any' ? `(${type})` : ''}
+        {type !== 'any' ? ` (${type})` : ''}
       </span>
       <UiIcon name="delete" />
     </Label>
