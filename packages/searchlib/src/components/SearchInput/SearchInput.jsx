@@ -79,7 +79,7 @@ function SearchInput({
 
                 return inputProps.onKeyDown(ev);
               }}
-              onBlur={() => {}}
+              onBlur={() => { }}
             />
           ) : (
             ''
@@ -92,8 +92,8 @@ function SearchInput({
                   name="close"
                   role="button"
                   onClick={() => {
-                    inputProps.onChange({ target: { value: '' } });
-                    setSearchTerm('');
+                    // inputProps.onChange({ target: { value: '' } });
+                    setSearchTerm('', { shouldClearFilters: false });
                     // onSubmit();
                   }}
                 />
