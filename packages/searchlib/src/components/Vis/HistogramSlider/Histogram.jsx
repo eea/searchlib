@@ -153,6 +153,9 @@ class Histogram extends Component {
                               onClick={this.selectBucket.bind(this, bucket)}
                               onDoubleClick={reset.bind(this)}
                               fill={unselectedColor}
+                              style={Object.assign({
+                                cursor: 'pointer',
+                              })}
                               width={
                                 scale(bucket.x) -
                                 scale(bucket.x0) -
