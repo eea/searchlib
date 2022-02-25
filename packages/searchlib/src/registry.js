@@ -345,7 +345,7 @@ const config = {
       // },
 
       autocomplete: {
-        include_searchterm: true,
+        include_searchterm: false,
         hint_min_words: 3,
         results: {
           titleField: 'title',
