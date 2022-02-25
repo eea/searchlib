@@ -106,7 +106,7 @@ export default {
         url: require('../static/eionet-logo.png'),
       },
       'etc-atni': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-atni.png'),
       },
 
       'etc-bd': {
@@ -114,11 +114,11 @@ export default {
       },
 
       'etc-cca': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-cca.jpeg'),
       },
 
       'etc-cme': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-cme.png'),
       },
 
       'etc-icm': {
@@ -126,11 +126,11 @@ export default {
       },
 
       'etc-uls': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-uls.png'),
       },
 
       'etc-wmge': {
-        url: require('../static/eionet-logo.png'),
+        url: require('../static/etc-wmge.png'),
       },
     },
     Countries: {
