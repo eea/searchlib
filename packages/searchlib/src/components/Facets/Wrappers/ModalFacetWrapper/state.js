@@ -60,13 +60,15 @@ export function filterStateReducer(prev, action) {
 
 export function useFilterState(filterName, initialState) {
   const filterAtom = filterFamily({ filterName, initialState });
-  const [state, dispatch] = useReducerAtom(filterAtom, filterStateReducer);
-
-  return [
-    state,
-    (v) => {
-      console.log('dispatch', filterName, v);
-      return dispatch(v);
-    },
-  ];
+  return useReducerAtom(filterAtom, filterStateReducer);
+  // const [state, dispatch] = useReducerAtom(filterAtom, filterStateReducer);
+  //
+  // return [
+  //   state,
+  //   dispatch,
+  //   (v) => {
+  //     // console.log('dispatch', filterName, v);
+  //     return dispatch(v);
+  //   },
+  // ];
 }
