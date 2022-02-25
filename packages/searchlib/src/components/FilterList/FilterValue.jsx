@@ -4,7 +4,8 @@ import { Label, Icon as UiIcon } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
 
 const LABELS = {
-  'any:exact': 'Specific',
+  'any:exact': 'specific',
+  'all:exact': 'all, specific',
   all: 'all',
   any: '',
 };

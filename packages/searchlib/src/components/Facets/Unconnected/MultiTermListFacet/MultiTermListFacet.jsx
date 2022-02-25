@@ -1,112 +1,20 @@
 import React from 'react';
 import cx from 'classnames';
-import { ToggleSort, Icon, Term } from '@eeacms/search/components';
+import { ToggleSort, Icon } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
-import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Divider
+import { Checkbox } from 'semantic-ui-react'; // , Header, Divider
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
-import OptionsGroupedByLetters from './OptionsGroupedByLetters';
-import OptionsGroupedByNumbers from './OptionsGroupedByNumbers';
-import SortedOptions from './SortedOptions';
+import FacetOptions from './FacetOptions';
+
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
-
-import { getFilterValueDisplay } from './utils';
-
-const FacetOptions = (props) => {
-  const {
-    sortedOptions,
-    groupedOptionsByLetters,
-    groupedOptionsByNumbers,
-    sorting,
-    onSelect,
-    onRemove,
-    iconsFamily,
-    field,
-    availableOptions,
-  } = props;
-
-  const sortedOptionKeys = sortedOptions.map((o) => o.value);
-  const zeroValueOptions = (availableOptions || [])
-    .filter((name) => !sortedOptionKeys.includes(name))
-    .map((name) => ({ value: name, count: 0, selected: false }));
-
-  let isGroupedByLetters = false;
-  if (Object.keys(groupedOptionsByLetters).length > 0) {
-    if (
-      groupedOptionsByLetters.letters.length >= 5 &&
-      sortedOptions.length >= 100
-    ) {
-      // Apply grouping by letters only if we have at least 5 groups and
-      // at least 100 options.
-      isGroupedByLetters = true;
-    }
-  }
-
-  let isGroupedByNumbers = false;
-  if (Object.keys(groupedOptionsByNumbers).length > 0) {
-    if (
-      groupedOptionsByNumbers.numbers.length >= 3 &&
-      sortedOptions.length >= 50
-    ) {
-      // Apply grouping by numbers only if we have at least 5 groups and
-      // at least 50 options.
-      isGroupedByNumbers = true;
-    }
-  }
-
-  const optionProps = {
-    sortedOptions,
-    groupedOptionsByNumbers,
-    groupedOptionsByLetters,
-    onRemove,
-    onSelect,
-    iconsFamily,
-    field,
-    sorting,
-  };
-
-  return (
-    <div>
-      {isGroupedByLetters ? (
-        <OptionsGroupedByLetters {...optionProps} />
-      ) : isGroupedByNumbers ? (
-        <OptionsGroupedByNumbers {...optionProps} />
-      ) : (
-        <SortedOptions {...optionProps} />
-      )}
-
-      {sortedOptions.length < 1 && <div>No matching options</div>}
-
-      {zeroValueOptions.map((option, index) => (
-        <Button
-          key={`${getFilterValueDisplay(option.value)}`}
-          className="term"
-          toggle
-          active={false}
-          disabled
-        >
-          {iconsFamily && (
-            <Icon
-              family={iconsFamily}
-              type={option.value}
-              className="facet-option-icon"
-            />
-          )}
-          <span className="title">
-            <Term term={option.value} field={field} />
-          </span>
-          <span className="count">{option.count.toLocaleString('en')}</span>
-        </Button>
-      ))}
-    </div>
-  );
-};
 
 const ViewComponent = (props) => {
   const {
     className,
     label,
     onMoreClick,
+    onChange,
     onRemove,
     onSelect,
     options,
@@ -176,6 +84,7 @@ const ViewComponent = (props) => {
 
   const customClass =
     'facet-' + (facetConfig.title || label).replace(' ', '-').toLowerCase();
+
   return (
     <>
       <HeaderWrapper className={customClass}>
@@ -190,9 +99,7 @@ const ViewComponent = (props) => {
                   className="multitermlist__search__text-input"
                   type="search"
                   placeholder={searchPlaceholder || 'Search'}
-                  onChange={(e) => {
-                    onSearch(e.target.value);
-                  }}
+                  onChange={(e) => onSearch(e.target.value)}
                 />
               </div>
             )}
@@ -202,18 +109,16 @@ const ViewComponent = (props) => {
             toggle
             label="Match all selected"
             checked={filterType === 'all'}
-            onChange={(e, { checked }) => {
-              onChangeFilterType(checked ? 'all' : 'any');
-            }}
+            onChange={(e, { checked }) =>
+              onChangeFilterType(checked ? 'all' : 'any')
+            }
           />
           {enableExact && (
             <Checkbox
               toggle
               label="Only specific to selection"
               checked={!!filterExact}
-              onChange={(e, { checked }) => {
-                onChangeFilterExact(checked);
-              }}
+              onChange={(e, { checked }) => onChangeFilterExact(checked)}
             />
           )}
 
@@ -262,10 +167,12 @@ const ViewComponent = (props) => {
             iconsFamily={iconsFamily}
             label={label}
             onRemove={onRemove}
+            onChange={onChange}
             onSelect={onSelect}
             sortedOptions={sortedOptions}
             availableOptions={availableOptions}
             sorting={sorting}
+            enableExact={enableExact}
           />
           {showMore && (
             <button

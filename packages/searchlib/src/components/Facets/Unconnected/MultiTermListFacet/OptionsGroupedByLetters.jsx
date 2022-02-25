@@ -1,7 +1,4 @@
-import { Button } from 'semantic-ui-react'; // , Header, Divider
-import { Icon, Term } from '@eeacms/search/components';
-
-import { getFilterValueDisplay } from './utils';
+import React from 'react';
 
 const OptionsGroupedByLetters = ({
   groupedOptionsByLetters,
@@ -9,6 +6,7 @@ const OptionsGroupedByLetters = ({
   onSelect,
   iconsFamily,
   field,
+  OptionButton,
 }) =>
   groupedOptionsByLetters.letters.map((letter, index) => (
     <div className="by-groups" key={letter}>
@@ -19,9 +17,23 @@ const OptionsGroupedByLetters = ({
         <span>{letter}</span>
       </div>
       <div className="group-content" key={letter + 'c'}>
-        {groupedOptionsByLetters[letter].map((option, i) => {
-          const checked = option.selected;
-          return (
+        {groupedOptionsByLetters[letter].map((option, i) => (
+          <OptionButton
+            option={option}
+            checked={option.selected}
+            iconsFamily={iconsFamily}
+            field={field}
+            onRemove={onRemove}
+            onSelect={onSelect}
+          />
+        ))}
+      </div>
+    </div>
+  ));
+
+export default OptionsGroupedByLetters;
+
+/*
             <Button
               key={`${getFilterValueDisplay(option.value)}`}
               className="term"
@@ -43,10 +55,4 @@ const OptionsGroupedByLetters = ({
               </span>
               <span className="count">{option.count.toLocaleString('en')}</span>
             </Button>
-          );
-        })}
-      </div>
-    </div>
-  ));
-
-export default OptionsGroupedByLetters;
+            */
