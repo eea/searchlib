@@ -12,6 +12,154 @@ function getFilterValueDisplay(filterValue) {
   return String(filterValue);
 }
 
+const OptionsGroupedByLetters = ({
+  groupedOptionsByLetters,
+  onRemove,
+  onSelect,
+  iconsFamily,
+  field,
+}) =>
+  groupedOptionsByLetters.letters.map((letter, index) => (
+    <div className="by-groups" key={letter}>
+      <div
+        className={`group-heading ${index === 0 ? 'first' : ''}`}
+        key={letter + 'h'}
+      >
+        <span>{letter}</span>
+      </div>
+      <div className="group-content" key={letter + 'c'}>
+        {groupedOptionsByLetters[letter].map((option, i) => {
+          const checked = option.selected;
+          return (
+            <Button
+              key={`${getFilterValueDisplay(option.value)}`}
+              className="term"
+              toggle
+              active={checked}
+              onClick={() =>
+                checked ? onRemove(option.value) : onSelect(option.value)
+              }
+            >
+              {iconsFamily && (
+                <Icon
+                  family={iconsFamily}
+                  type={option.value}
+                  className="facet-option-icon"
+                />
+              )}
+              <span className="title">
+                <Term term={option.value} field={field} />
+              </span>
+              <span className="count">{option.count.toLocaleString('en')}</span>
+            </Button>
+          );
+        })}
+      </div>
+    </div>
+  ));
+
+const OptionsGroupedByNumbers = ({
+  groupedOptionsByNumbers,
+  sorting,
+  onRemove,
+  onSelect,
+  iconsFamily,
+  field,
+}) =>
+  groupedOptionsByNumbers.numbers.map((number, index) => {
+    let label = '';
+    let nextLimit = 0;
+    if (sorting.sortOrder === 'descending') {
+      if (index === 0) {
+        label = `More than ${number}`;
+      } else {
+        nextLimit = groupedOptionsByNumbers.numbers[index - 1];
+        label = `${number}...${nextLimit}`;
+      }
+    } else {
+      nextLimit = groupedOptionsByNumbers.numbers[index + 1];
+      if (nextLimit === undefined) {
+        label = `More than ${number}`;
+      } else {
+        label = `${number}...${nextLimit}`;
+      }
+    }
+    return (
+      <div className="by-groups" key={number}>
+        <div
+          className={`group-heading ${index === 0 ? 'first' : ''}`}
+          key={number + 'h'}
+        >
+          <span>{label}</span>
+        </div>
+        <div className="group-content" key={number + 'c'}>
+          {groupedOptionsByNumbers[number].map((option, i) => {
+            const checked = option.selected;
+            return (
+              <Button
+                key={`${getFilterValueDisplay(option.value)}`}
+                className="term"
+                toggle
+                active={checked}
+                onClick={() =>
+                  checked ? onRemove(option.value) : onSelect(option.value)
+                }
+              >
+                {iconsFamily && (
+                  <Icon
+                    family={iconsFamily}
+                    type={option.value}
+                    className="facet-option-icon"
+                  />
+                )}
+                <span className="title">
+                  <Term term={option.value} field={field} />
+                </span>
+                <span className="count">
+                  {option.count.toLocaleString('en')}
+                </span>
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  });
+
+const SortedOptions = ({
+  sortedOptions,
+  onRemove,
+  onSelect,
+  iconsFamily,
+  field,
+}) =>
+  sortedOptions.map((option) => {
+    const checked = option.selected;
+    return (
+      <Button
+        key={`${getFilterValueDisplay(option.value)}`}
+        className="term"
+        toggle
+        active={checked}
+        onClick={() =>
+          checked ? onRemove(option.value) : onSelect(option.value)
+        }
+      >
+        {iconsFamily && (
+          <Icon
+            family={iconsFamily}
+            type={option.value}
+            className="facet-option-icon"
+          />
+        )}
+        <span className="title">
+          <Term term={option.value} field={field} />
+        </span>
+        <span className="count">{option.count.toLocaleString('en')}</span>
+      </Button>
+    );
+  });
+
 const FacetOptions = (props) => {
   const {
     sortedOptions,
@@ -54,155 +202,31 @@ const FacetOptions = (props) => {
     }
   }
 
+  const optionProps = {
+    sortedOptions,
+    groupedOptionsByNumbers,
+    groupedOptionsByLetters,
+    onRemove,
+    onSelect,
+    iconsFamily,
+    field,
+    sorting,
+  };
+
   return (
     <div>
-      {isGroupedByLetters && (
-        <>
-          {groupedOptionsByLetters.letters.map((letter, index) => {
-            return (
-              <div className="by-groups" key={letter}>
-                <div
-                  className={`group-heading ${index === 0 ? 'first' : ''}`}
-                  key={letter + 'h'}
-                >
-                  <span>{letter}</span>
-                </div>
-                <div className="group-content" key={letter + 'c'}>
-                  {groupedOptionsByLetters[letter].map((option, i) => {
-                    const checked = option.selected;
-                    return (
-                      <Button
-                        key={`${getFilterValueDisplay(option.value)}`}
-                        className="term"
-                        toggle
-                        active={checked}
-                        onClick={() =>
-                          checked
-                            ? onRemove(option.value)
-                            : onSelect(option.value)
-                        }
-                      >
-                        {iconsFamily && (
-                          <Icon
-                            family={iconsFamily}
-                            type={option.value}
-                            className="facet-option-icon"
-                          />
-                        )}
-                        <span className="title">
-                          <Term term={option.value} field={field} />
-                        </span>
-                        <span className="count">
-                          {option.count.toLocaleString('en')}
-                        </span>
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </>
+      {isGroupedByLetters ? (
+        <OptionsGroupedByLetters {...optionProps} />
+      ) : isGroupedByNumbers ? (
+        <OptionsGroupedByNumbers {...optionProps} />
+      ) : (
+        <SortedOptions {...optionProps} />
       )}
 
-      {isGroupedByNumbers && (
-        <>
-          {groupedOptionsByNumbers.numbers.map((number, index) => {
-            let label = '';
-            let nextLimit = 0;
-            if (sorting.sortOrder === 'descending') {
-              if (index === 0) {
-                label = `More than ${number}`;
-              } else {
-                nextLimit = groupedOptionsByNumbers.numbers[index - 1];
-                label = `${number}...${nextLimit}`;
-              }
-            } else {
-              nextLimit = groupedOptionsByNumbers.numbers[index + 1];
-              if (nextLimit === undefined) {
-                label = `More than ${number}`;
-              } else {
-                label = `${number}...${nextLimit}`;
-              }
-            }
-            return (
-              <div className="by-groups" key={number}>
-                <div
-                  className={`group-heading ${index === 0 ? 'first' : ''}`}
-                  key={number + 'h'}
-                >
-                  <span>{label}</span>
-                </div>
-                <div className="group-content" key={number + 'c'}>
-                  {groupedOptionsByNumbers[number].map((option, i) => {
-                    const checked = option.selected;
-                    return (
-                      <Button
-                        key={`${getFilterValueDisplay(option.value)}`}
-                        className="term"
-                        toggle
-                        active={checked}
-                        onClick={() =>
-                          checked
-                            ? onRemove(option.value)
-                            : onSelect(option.value)
-                        }
-                      >
-                        {iconsFamily && (
-                          <Icon
-                            family={iconsFamily}
-                            type={option.value}
-                            className="facet-option-icon"
-                          />
-                        )}
-                        <span className="title">
-                          <Term term={option.value} field={field} />
-                        </span>
-                        <span className="count">
-                          {option.count.toLocaleString('en')}
-                        </span>
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {!(isGroupedByLetters || isGroupedByNumbers) &&
-        sortedOptions.map((option) => {
-          const checked = option.selected;
-          return (
-            <Button
-              key={`${getFilterValueDisplay(option.value)}`}
-              className="term"
-              toggle
-              active={checked}
-              onClick={() =>
-                checked ? onRemove(option.value) : onSelect(option.value)
-              }
-            >
-              {iconsFamily && (
-                <Icon
-                  family={iconsFamily}
-                  type={option.value}
-                  className="facet-option-icon"
-                />
-              )}
-              <span className="title">
-                <Term term={option.value} field={field} />
-              </span>
-              <span className="count">{option.count.toLocaleString('en')}</span>
-            </Button>
-          );
-        })}
       {sortedOptions.length < 1 && <div>No matching options</div>}
 
-      {zeroValueOptions.length ? (
-        <>
-          {zeroValueOptions.map((option, index) => (
+      {zeroValueOptions.length
+        ? zeroValueOptions.map((option, index) => (
             <Button
               key={`${getFilterValueDisplay(option.value)}`}
               className="term"
@@ -222,9 +246,8 @@ const FacetOptions = (props) => {
               </span>
               <span className="count">{option.count.toLocaleString('en')}</span>
             </Button>
-          ))}
-        </>
-      ) : null}
+          ))
+        : null}
     </div>
   );
 };
@@ -336,7 +359,7 @@ const ViewComponent = (props) => {
           {enableExact && (
             <Checkbox
               toggle
-              label="Exact"
+              label="Only specific to selection"
               checked={!!filterExact}
               onChange={(e, { checked }) => {
                 onChangeFilterExact(checked);

@@ -3,6 +3,11 @@ import { valueToString } from '@eeacms/search/lib/utils';
 import { Label, Icon as UiIcon } from 'semantic-ui-react';
 import { Icon, Term } from '@eeacms/search/components';
 
+const LABELS = {
+  'any:exact': 'Specific',
+  all: 'all',
+  any: '',
+};
 const FilterValue = (props) => {
   const {
     value,
@@ -16,6 +21,7 @@ const FilterValue = (props) => {
   const facetConfig =
     appConfig.facets.find((facet) => facet.field === field) || {};
   const { iconsFamily } = facetConfig;
+  const label = LABELS[type];
 
   return (
     <Label
@@ -30,7 +36,7 @@ const FilterValue = (props) => {
       )}
       <span className="text filterValue" title={value}>
         <Term term={valueToString(value)} field={field} />
-        {type !== 'any' ? ` (${type})` : ''}
+        {label ? ` (${label})` : ''}
       </span>
       <UiIcon name="delete" />
     </Label>
