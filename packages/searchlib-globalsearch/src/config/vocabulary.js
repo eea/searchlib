@@ -48,8 +48,7 @@ const vocab = {
     'etc-atni':
       'ETC on Air Pollution, Transport, Noise and Industrial Pollution',
     'etc-bd': 'ETC on Biological Diversity',
-    'etc-cca':
-      'ETC on Climate Change Impacts, Vulnerability and Adaptation',
+    'etc-cca': 'ETC on Climate Change Impacts, Vulnerability and Adaptation',
     'etc-cme': 'ETC on Climate Change Mitigation and Energy',
     'etc-icm': 'ETC on Inland, Coastal and Marine Waters',
     'etc-uls': 'ETC on Urban, Land and Soil Systems',
