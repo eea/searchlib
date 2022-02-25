@@ -27,8 +27,49 @@ function getTodayWithTime() {
   ].join('');
   return output;
 }
+const zeroPad = (num, places) => String(num).padStart(places, '0')
 
 export function buildDidYouMeanRequest({ searchTerm }, config) {
+  const cleanSearchTerms = searchTerm;
+  const terms = cleanSearchTerms.split(' ');
+  const query = {
+    size: 0,
+    suggest: Object.assign(
+      {},
+      ...terms.map((term, idx) => ({
+        [`did_you_mean_${zeroPad(idx, 3)}`]: {
+          text: term,
+          phrase: {
+            field: 'did_you_mean',
+          },
+        },
+      })),
+    ),
+    query: {
+      bool: {
+        must: [], // TODO: predefined_filters
+      },
+    },
+    ...(config.enableNLP && {
+      ...config.requestParams,
+    }),
+  };
+  /*const query = {
+    size: 0,
+    suggest: {
+      did_you_mean_0: {
+        text: 'watre',
+        phrase: {
+          field: 'did_you_mean',
+        },
+      },
+    },
+  };*/
+  console.log(query);
+  return query;
+}
+
+export function buildAutocompleteRequest({ searchTerm }, config) {
   const phrases = searchTerm.split('|');
   let search_term = phrases[phrases.length - 1];
 

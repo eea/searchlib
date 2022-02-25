@@ -1,6 +1,25 @@
 import runRequest from '@eeacms/search/lib/runRequest';
-import { buildDidYouMeanRequest, buildFaqRequest } from './autocompleteRequest';
+import {
+  buildAutocompleteRequest,
+  buildDidYouMeanRequest,
+  buildFaqRequest,
+} from './autocompleteRequest';
 import { buildState } from './autocompleteState';
+
+export async function getDidYouMeanTerms(props, config) {
+  const didYouMeanRequestBody = buildDidYouMeanRequest(props, config);
+  const didYouMeanJson = await runRequest(didYouMeanRequestBody, config);
+
+  const keys = Object.keys(didYouMeanJson.body.suggest).sort();
+
+  let terms = [];
+  keys.forEach((key) => {
+    const dym = didYouMeanJson.body.suggest[key][0];
+    terms.push(dym.options.length === 0 ? dym.text : dym.options[0].text);
+  });
+
+  return terms;
+}
 
 export async function getAutocompleteSuggestions(props, config) {
   // console.log('onAutocomplete', { requestBody, props, config });
@@ -9,7 +28,12 @@ export async function getAutocompleteSuggestions(props, config) {
     Promise.resolve({});
   }
 
-  const requestBody = buildDidYouMeanRequest(props, config);
+  const didYouMeanTerms = await getDidYouMeanTerms(props, config);
+
+  const requestBody = buildAutocompleteRequest(
+    { searchTerm: didYouMeanTerms.join(' ') },
+    config,
+  );
   const json = await runRequest(requestBody, config);
   const didYouMeanState = buildState(
     json.body,
@@ -19,7 +43,10 @@ export async function getAutocompleteSuggestions(props, config) {
     true,
   );
 
-  const faqRequestBody = buildFaqRequest(props, config);
+  const faqRequestBody = buildFaqRequest(
+    { searchTerm: didYouMeanTerms.join(' ') },
+    config,
+  );
   const faqJson = await runRequest(faqRequestBody, config);
   const faqState = buildState(faqJson.body, props, config, false, true);
 

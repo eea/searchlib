@@ -36,11 +36,16 @@ export function buildState(
     .map((h) => clean(h.key))
     .filter((h) => h !== search_term);
 
-  buckets_last.forEach(({ key }) => {
-    if (!hints.includes(key) && key !== search_term) {
-      hints.push(clean(key));
-    }
-  });
+  if (buckets_full.length === 0) {
+    const parts = search_term.split(' ').filter((element) => element);
+    parts.pop();
+    const prefix = parts.join(' ');
+    buckets_last.forEach(({ key }) => {
+      if (!hints.includes(key) && key !== search_term) {
+        hints.push(prefix + ' ' + clean(key));
+      }
+    });
+  }
 
   // const current_parts = [];
   // for (var i = 0; i < buckets_last.length; i++) {
