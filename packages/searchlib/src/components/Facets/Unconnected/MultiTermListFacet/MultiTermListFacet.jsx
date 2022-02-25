@@ -4,161 +4,13 @@ import { ToggleSort, Icon, Term } from '@eeacms/search/components';
 import { useSort } from '@eeacms/search/lib/hocs';
 import { Checkbox, Button } from 'semantic-ui-react'; // , Header, Divider
 import { useAppConfig } from '@eeacms/search/lib/hocs';
+
+import OptionsGroupedByLetters from './OptionsGroupedByLetters';
+import OptionsGroupedByNumbers from './OptionsGroupedByNumbers';
+import SortedOptions from './SortedOptions';
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
-function getFilterValueDisplay(filterValue) {
-  if (filterValue === undefined || filterValue === null) return '';
-  if (filterValue.hasOwnProperty('name')) return filterValue.name;
-  return String(filterValue);
-}
-
-const OptionsGroupedByLetters = ({
-  groupedOptionsByLetters,
-  onRemove,
-  onSelect,
-  iconsFamily,
-  field,
-}) =>
-  groupedOptionsByLetters.letters.map((letter, index) => (
-    <div className="by-groups" key={letter}>
-      <div
-        className={`group-heading ${index === 0 ? 'first' : ''}`}
-        key={letter + 'h'}
-      >
-        <span>{letter}</span>
-      </div>
-      <div className="group-content" key={letter + 'c'}>
-        {groupedOptionsByLetters[letter].map((option, i) => {
-          const checked = option.selected;
-          return (
-            <Button
-              key={`${getFilterValueDisplay(option.value)}`}
-              className="term"
-              toggle
-              active={checked}
-              onClick={() =>
-                checked ? onRemove(option.value) : onSelect(option.value)
-              }
-            >
-              {iconsFamily && (
-                <Icon
-                  family={iconsFamily}
-                  type={option.value}
-                  className="facet-option-icon"
-                />
-              )}
-              <span className="title">
-                <Term term={option.value} field={field} />
-              </span>
-              <span className="count">{option.count.toLocaleString('en')}</span>
-            </Button>
-          );
-        })}
-      </div>
-    </div>
-  ));
-
-const OptionsGroupedByNumbers = ({
-  groupedOptionsByNumbers,
-  sorting,
-  onRemove,
-  onSelect,
-  iconsFamily,
-  field,
-}) =>
-  groupedOptionsByNumbers.numbers.map((number, index) => {
-    let label = '';
-    let nextLimit = 0;
-    if (sorting.sortOrder === 'descending') {
-      if (index === 0) {
-        label = `More than ${number}`;
-      } else {
-        nextLimit = groupedOptionsByNumbers.numbers[index - 1];
-        label = `${number}...${nextLimit}`;
-      }
-    } else {
-      nextLimit = groupedOptionsByNumbers.numbers[index + 1];
-      if (nextLimit === undefined) {
-        label = `More than ${number}`;
-      } else {
-        label = `${number}...${nextLimit}`;
-      }
-    }
-    return (
-      <div className="by-groups" key={number}>
-        <div
-          className={`group-heading ${index === 0 ? 'first' : ''}`}
-          key={number + 'h'}
-        >
-          <span>{label}</span>
-        </div>
-        <div className="group-content" key={number + 'c'}>
-          {groupedOptionsByNumbers[number].map((option, i) => {
-            const checked = option.selected;
-            return (
-              <Button
-                key={`${getFilterValueDisplay(option.value)}`}
-                className="term"
-                toggle
-                active={checked}
-                onClick={() =>
-                  checked ? onRemove(option.value) : onSelect(option.value)
-                }
-              >
-                {iconsFamily && (
-                  <Icon
-                    family={iconsFamily}
-                    type={option.value}
-                    className="facet-option-icon"
-                  />
-                )}
-                <span className="title">
-                  <Term term={option.value} field={field} />
-                </span>
-                <span className="count">
-                  {option.count.toLocaleString('en')}
-                </span>
-              </Button>
-            );
-          })}
-        </div>
-      </div>
-    );
-  });
-
-const SortedOptions = ({
-  sortedOptions,
-  onRemove,
-  onSelect,
-  iconsFamily,
-  field,
-}) =>
-  sortedOptions.map((option) => {
-    const checked = option.selected;
-    return (
-      <Button
-        key={`${getFilterValueDisplay(option.value)}`}
-        className="term"
-        toggle
-        active={checked}
-        onClick={() =>
-          checked ? onRemove(option.value) : onSelect(option.value)
-        }
-      >
-        {iconsFamily && (
-          <Icon
-            family={iconsFamily}
-            type={option.value}
-            className="facet-option-icon"
-          />
-        )}
-        <span className="title">
-          <Term term={option.value} field={field} />
-        </span>
-        <span className="count">{option.count.toLocaleString('en')}</span>
-      </Button>
-    );
-  });
+import { getFilterValueDisplay } from './utils';
 
 const FacetOptions = (props) => {
   const {
@@ -225,29 +77,27 @@ const FacetOptions = (props) => {
 
       {sortedOptions.length < 1 && <div>No matching options</div>}
 
-      {zeroValueOptions.length
-        ? zeroValueOptions.map((option, index) => (
-            <Button
-              key={`${getFilterValueDisplay(option.value)}`}
-              className="term"
-              toggle
-              active={false}
-              disabled
-            >
-              {iconsFamily && (
-                <Icon
-                  family={iconsFamily}
-                  type={option.value}
-                  className="facet-option-icon"
-                />
-              )}
-              <span className="title">
-                <Term term={option.value} field={field} />
-              </span>
-              <span className="count">{option.count.toLocaleString('en')}</span>
-            </Button>
-          ))
-        : null}
+      {zeroValueOptions.map((option, index) => (
+        <Button
+          key={`${getFilterValueDisplay(option.value)}`}
+          className="term"
+          toggle
+          active={false}
+          disabled
+        >
+          {iconsFamily && (
+            <Icon
+              family={iconsFamily}
+              type={option.value}
+              className="facet-option-icon"
+            />
+          )}
+          <span className="title">
+            <Term term={option.value} field={field} />
+          </span>
+          <span className="count">{option.count.toLocaleString('en')}</span>
+        </Button>
+      ))}
     </div>
   );
 };
