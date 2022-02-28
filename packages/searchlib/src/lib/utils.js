@@ -178,6 +178,8 @@ export function valueToString(value) {
       break;
     case 'boolean':
       return value;
+    case 'number':
+      return value.toString();
     case 'undefined':
       return '';
     default:
@@ -185,7 +187,7 @@ export function valueToString(value) {
   }
 
   // eslint-disable-next-line no-console
-  console.warn('Unknown value type', value);
+  console.warn('Unknown value type', value, typeof value);
 
   return value.toString();
 }

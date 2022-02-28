@@ -9,7 +9,7 @@ import FacetOptions from './FacetOptions';
 
 // import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
 
-const ViewComponent = (props) => {
+const MultiTermListFacet = (props) => {
   const {
     className,
     label,
@@ -190,4 +190,4 @@ const ViewComponent = (props) => {
   );
 };
 
-export default ViewComponent;
+export default MultiTermListFacet;

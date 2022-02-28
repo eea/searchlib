@@ -5,11 +5,7 @@ import {
   useIsMounted,
 } from '@eeacms/search/lib/hocs';
 import runRequest from '@eeacms/search/lib/runRequest';
-import {
-  buildQuestionRequest,
-  buildSimilarityRequest,
-  // buildClassifyQuestionRequest,
-} from './buildRequest';
+import { buildQuestionRequest, buildSimilarityRequest } from './buildRequest';
 import { requestFamily } from './state';
 import { useAtom } from 'jotai';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -17,7 +13,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 const timeoutRef = {};
 
 const withAnswers = (WrappedComponent) => {
-  const Wrapped = (props) => {
+  const WrappedAnswerBox = (props) => {
     const searchContext = useSearchContext();
     const { appConfig } = useAppConfig();
     const isMounted = useIsMounted();
@@ -34,7 +30,6 @@ const withAnswers = (WrappedComponent) => {
     } = appConfig?.nlp?.qa || {};
 
     const requestAtom = requestFamily({ searchTerm, filters });
-    // console.log('filters', { filters, searchTerm, requestAtom, searchedTerm });
     const [request, dispatch] = useAtom(requestAtom);
 
     let cutoff = 0.1;
@@ -49,6 +44,7 @@ const withAnswers = (WrappedComponent) => {
     const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
 
     useDeepCompareEffect(() => {
+      let mounted = true;
       const timeoutRefCurrent = timeoutRef.current;
       if (timeoutRefCurrent) clearInterval(timeoutRef.current);
 
@@ -76,7 +72,7 @@ const withAnswers = (WrappedComponent) => {
                 type: 'loaded',
                 data: { data: [], answers: [], clusters: [] },
               });
-              setSearchedTerm(searchTerm);
+              mounted && setSearchedTerm(searchTerm);
               return;
             }
 
@@ -148,10 +144,12 @@ const withAnswers = (WrappedComponent) => {
               type: 'loaded',
               data: { clusters, answers: validAnswers, sortedClusters },
             });
-            setSearchedTerm(searchTerm);
+            mounted && setSearchedTerm(searchTerm);
           }
         }, 100);
       }
+
+      return () => (mounted = false);
     }, [
       isQuestion,
       isMounted,
@@ -176,7 +174,8 @@ const withAnswers = (WrappedComponent) => {
       />
     );
   };
-  return Wrapped;
+
+  return WrappedAnswerBox;
 };
 
 export default withAnswers;

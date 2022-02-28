@@ -272,8 +272,9 @@ export class SearchBoxContainer extends Component {
   }
 }
 
+// TODO: This may not be needed with the latest searchui libs
 function withHooks(WrappedComponent) {
-  function Wrapped(props) {
+  function WrappedWithHooks(props) {
     const { appConfig } = useAppConfig();
     const searchContext = useSearchContext();
 
@@ -285,7 +286,7 @@ function withHooks(WrappedComponent) {
       />
     );
   }
-  return Wrapped;
+  return WrappedWithHooks;
 }
 
 export default compose(

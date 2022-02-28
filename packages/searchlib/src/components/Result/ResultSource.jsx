@@ -12,7 +12,7 @@ const ResultSource = ({ item }) => {
   const { vocab = {} } = appConfig;
 
   return (
-    <div class="result__source">
+    <div className="result__source">
       <span className="label">Source:</span>
 
       <ExternalLink href={item.href}>

@@ -11,14 +11,11 @@ export function onResultClick() {
 }
 
 export function onAutocompleteResultClick() {
-  console.log('click', arguments);
   /* Not implemented */
 }
 
 export const bindOnAutocomplete = (config) =>
   async function onAutocomplete(props) {
-    console.log('onautocomplete', props);
-
     return {
       autocompletedSuggestions: await getAutocompleteSuggestions(props, config),
       autocompletedResults: [],
@@ -27,10 +24,8 @@ export const bindOnAutocomplete = (config) =>
 
 export const bindOnSearch = (config) =>
   async function onSearch(state) {
-    console.log('onsearch', state);
     const { resultsPerPage } = state;
     const requestBody = buildRequest(state, config);
-    // console.log('onSearch', { requestBody, config, state });
 
     // Note that this could be optimized by running all of these requests
     // at the same time. Kept simple here for clarity.

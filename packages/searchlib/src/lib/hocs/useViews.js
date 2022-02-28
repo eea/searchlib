@@ -24,15 +24,3 @@ const useViews = () => {
 };
 
 export default useViews;
-
-// import { useAtom } from 'jotai';
-// import { activeViewIdAtom } from './state';
-
-// const defaultViewId =
-//   resultViews.filter((v) => v.isDefault)[0]?.id || 'listing';
-// const [selectedActiveViewId, setActiveViewId] = useAtom(activeViewIdAtom);
-// const activeViewId = selectedActiveViewId || defaultViewId;
-
-// React.useEffect(() => {
-//   if (!activeViewId) setActiveViewId(defaultViewId);
-// }, [activeViewId, defaultViewId, setActiveViewId]);

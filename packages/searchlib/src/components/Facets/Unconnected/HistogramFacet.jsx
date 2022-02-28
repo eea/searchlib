@@ -31,6 +31,7 @@ const HistogramFacetComponent = (props) => {
           min={range.start}
           max={range.end}
           step={step}
+          disabled
         />
         <Input
           type="number"
@@ -41,6 +42,7 @@ const HistogramFacetComponent = (props) => {
           min={range.start}
           max={range.end}
           step={step}
+          disabled
         />
       </div>
 
