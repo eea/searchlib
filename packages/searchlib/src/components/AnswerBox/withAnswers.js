@@ -72,7 +72,7 @@ const withAnswers = (WrappedComponent) => {
                 type: 'loaded',
                 data: { data: [], answers: [], clusters: [] },
               });
-              mounted && setSearchedTerm(searchTerm);
+              setSearchedTerm(searchTerm);
               return;
             }
 
@@ -144,7 +144,7 @@ const withAnswers = (WrappedComponent) => {
               type: 'loaded',
               data: { clusters, answers: validAnswers, sortedClusters },
             });
-            mounted && setSearchedTerm(searchTerm);
+            setSearchedTerm(searchTerm);
           }
         }, 100);
       }
