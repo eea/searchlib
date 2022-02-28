@@ -33,7 +33,7 @@ export const NoResults = (props) => {
       {resultSearchTerm.trim().length > 0 && (
         <>
           <h3>
-            We could not find any results for '<b>{resultSearchTerm}</b>'
+            We could not find any results for '<b>{resultSearchTerm.trim()}</b>'
           </h3>
           <p>
             <span>Try instead: </span>
