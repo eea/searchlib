@@ -84,7 +84,7 @@ export const NoResults = (props) => {
         <div className="answers-list">
           <Message warning>
             <Icon name="warning sign" />
-            No answers found, but you have active filters. You may try to{' '}
+            No results found, but you have active filters. You may try to{' '}
             <Button
               size="mini"
               compact
