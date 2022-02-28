@@ -2,15 +2,24 @@ import React from 'react';
 import { useSearchContext } from '@eeacms/search/lib/hocs';
 import { getDidYouMeanTerms } from '@eeacms/search/lib/search/autocomplete/suggestions';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
-import { Button } from 'semantic-ui-react';
+import { Button, Message, Icon } from 'semantic-ui-react';
 
 const getSuggestions = async (term, config) => {
   const suggestions = await getDidYouMeanTerms({ searchTerm: term }, config);
   return suggestions.join(' ');
 };
 export const NoResults = (props) => {
-  const { resultSearchTerm, setSearchTerm } = useSearchContext();
+  const { resultSearchTerm, setSearchTerm, resetFilters, query_type } =
+    useSearchContext();
   const { appConfig } = useAppConfig();
+  const {
+    qa_queryTypes = [
+      'query:interrogative',
+      'query:declarative',
+      'query:keyword',
+    ],
+  } = appConfig?.nlp?.qa || {};
+  const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
   const [suggestions, setSuggestions] = React.useState();
   React.useEffect(() => {
     if (resultSearchTerm.trim().length > 0) {
@@ -70,6 +79,27 @@ export const NoResults = (props) => {
             <li>check the selected filters</li>
           </ul>
         </>
+      )}
+      {!isQuestion && (
+        <div className="answers-list">
+          <Message warning>
+            <Icon name="warning sign" />
+            No answers found, but you have active filters. You may try to{' '}
+            <Button
+              size="mini"
+              compact
+              primary
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                resetFilters();
+              }}
+            >
+              reset
+            </Button>{' '}
+            the filters.
+          </Message>
+        </div>
       )}
     </>
   );

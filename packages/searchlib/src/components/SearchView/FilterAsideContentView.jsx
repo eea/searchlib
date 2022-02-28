@@ -40,29 +40,31 @@ export const FilterAsideContentView = (props) => {
   const { isLoading, wasSearched } = useSearchContext();
   return (
     <>
-      {children.length > 0 && (
-        <>
-          <SectionTabs />
+      <>
+        <SectionTabs />
 
-          <div className={`results-layout ${layoutMode}`}>
-            <div className="above-results">
-              <Component factoryName="SecondaryFacetsList" {...props} />
-              <Sorting
-                label={'Sort by '}
-                sortOptions={sortOptions}
-                view={SortingDropdownWithLabel}
-              />
-              <ViewSelectorWithLabel
-                views={availableResultViews}
-                active={activeViewId}
-                onSetView={setActiveViewId}
-              />
-            </div>
+        <div className={`results-layout ${layoutMode}`}>
+          <div className="above-results">
+            <Component factoryName="SecondaryFacetsList" {...props} />
+            <Sorting
+              label={'Sort by '}
+              sortOptions={sortOptions}
+              view={SortingDropdownWithLabel}
+            />
+            <ViewSelectorWithLabel
+              views={availableResultViews}
+              active={activeViewId}
+              onSetView={setActiveViewId}
+            />
+          </div>
 
-            {current === 1 ? <AnswerBox /> : ''}
+          {children.length === 0 && !isLoading && wasSearched && <NoResults />}
 
-            {<ResultViewComponent>{children}</ResultViewComponent>}
+          {current === 1 ? <AnswerBox /> : ''}
 
+          {<ResultViewComponent>{children}</ResultViewComponent>}
+
+          {children.length > 0 && (
             <div className="row">
               <div className="search-body-footer">
                 <div className="prev-next-paging">
@@ -78,10 +80,9 @@ export const FilterAsideContentView = (props) => {
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-      {children.length === 0 && !isLoading && wasSearched && <NoResults />}
+          )}
+        </div>
+      </>
     </>
   );
 };
