@@ -64,14 +64,32 @@ function SearchInput({
                 inputProps.onChange({ target: { value } });
               }}
               onKeyDown={(ev) => {
-                if (ev.key === 'Home') {
+                if (ev.key === 'Home' || ev.key === 'End') {
                   ev.preventDefault();
-                  ev.currentTarget.setSelectionRange(0, 0);
-                  return;
-                }
-                if (ev.key === 'End') {
-                  ev.preventDefault();
-                  ev.currentTarget.setSelectionRange(10000, 10000);
+                  const { selectionStart, selectionEnd, selectionDirection } =
+                    ev.currentTarget;
+                  let from = ev.key === 'Home' ? 0 : 10000;
+                  let to = ev.key === 'Home' ? 0 : 10000;
+                  let direction = 'forward';
+                  if (ev.shiftKey) {
+                    if (ev.key === 'Home') {
+                      from = 0;
+                      to = selectionEnd;
+                      if (selectionDirection === 'forward') {
+                        to = selectionStart;
+                      }
+                      direction = 'backward';
+                    }
+                    if (ev.key === 'End') {
+                      from = selectionStart;
+                      to = 10000;
+                      if (selectionDirection === 'backward') {
+                        from = selectionEnd;
+                      }
+                      direction = 'forward';
+                    }
+                  }
+                  ev.currentTarget.setSelectionRange(from, to, direction);
                   return;
                 }
                 if (ev.key === 'Backspace') {
