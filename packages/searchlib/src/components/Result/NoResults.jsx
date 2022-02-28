@@ -16,7 +16,7 @@ export const NoResults = (props) => {
   React.useEffect(() => {
     if (resultSearchTerm.trim().length > 0) {
       getSuggestions(resultSearchTerm, appConfig).then((rsp) => {
-        setSuggestions(rsp);
+        setSuggestions(rsp.replace(/[^a-zA-Z ]/g, ' ').trim());
       });
     }
   });
