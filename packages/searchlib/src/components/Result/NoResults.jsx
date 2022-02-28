@@ -12,11 +12,15 @@ export const NoResults = (props) => {
   const { resultSearchTerm, setSearchTerm } = useSearchContext();
   const { appConfig } = useAppConfig();
   const [suggestions, setSuggestions] = React.useState();
-
   React.useEffect(() => {
     if (resultSearchTerm.trim().length > 0) {
       getSuggestions(resultSearchTerm, appConfig).then((rsp) => {
-        setSuggestions(rsp.replace(/[^a-zA-Z ]/g, ' ').trim());
+        const rsp_suggestion = rsp.replace(/[^a-zA-Z ]/g, ' ').trim();
+        if (resultSearchTerm.trim() !== rsp_suggestion) {
+          setSuggestions(rsp_suggestion);
+        } else {
+          setSuggestions(null);
+        }
       });
     }
   });
@@ -27,7 +31,6 @@ export const NoResults = (props) => {
     },
     [setSearchTerm],
   );
-
   return (
     <>
       {resultSearchTerm.trim().length > 0 && (
@@ -35,20 +38,24 @@ export const NoResults = (props) => {
           <h3>
             We could not find any results for '<b>{resultSearchTerm.trim()}</b>'
           </h3>
-          <p>
-            <span>Try instead: </span>
-            <Button
-              as="a"
-              className="suggestions-button"
-              basic
-              onClick={(evt) => {
-                evt.preventDefault();
-                applyQuery(suggestions);
-              }}
-            >
-              {suggestions}
-            </Button>
-          </p>
+          <>
+            {suggestions && (
+              <p>
+                <span>Try instead: </span>
+                <Button
+                  as="a"
+                  className="suggestions-button"
+                  basic
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    applyQuery(suggestions);
+                  }}
+                >
+                  {suggestions}
+                </Button>
+              </p>
+            )}
+          </>
           <ul>
             <li>check your spelling</li>
             <li>enter fewer words</li>
