@@ -61,6 +61,16 @@ function SearchInput({
                 inputProps.onChange({ target: { value } });
               }}
               onKeyDown={(ev) => {
+                if (ev.key === 'Home') {
+                  ev.preventDefault();
+                  ev.currentTarget.setSelectionRange(0, 0);
+                  return;
+                }
+                if (ev.key === 'End') {
+                  ev.preventDefault();
+                  ev.currentTarget.setSelectionRange(10000, 10000);
+                  return;
+                }
                 if (ev.key === 'Backspace') {
                   if (currentTerm === '' && searchPhrases.length > 0) {
                     const lastPhrase = searchPhrases[searchPhrases.length - 1];
