@@ -11,7 +11,7 @@ const visualStyle = {
 };
 
 const HistogramFacetComponent = (props) => {
-  const { data, ranges, onChange, selection } = props;
+  const { data, ranges, onChange, selection, step } = props;
 
   const range = getRangeStartEnd(ranges);
   const {
@@ -26,19 +26,21 @@ const HistogramFacetComponent = (props) => {
           type="number"
           value={start}
           onChange={(e, { value }) =>
-            onChange({ from: value, to: selection[1] })
+            onChange({ from: value, to: selection?.[1] })
           }
           min={range.start}
           max={range.end}
+          step={step}
         />
         <Input
           type="number"
           value={end}
           onChange={(e, { value }) =>
-            onChange({ from: selection[0], to: value })
+            onChange({ from: selection?.[0], to: value })
           }
           min={range.start}
           max={range.end}
+          step={step}
         />
       </div>
 
