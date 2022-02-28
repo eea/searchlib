@@ -9,7 +9,7 @@ import { Icon } from 'semantic-ui-react';
 
 import { useAtom } from 'jotai';
 import { showExtraFacetsAtom } from './state';
-import { useSearchContext } from '@eeacms/search/lib/hocs';
+import { useSearchContext, useAppConfig } from '@eeacms/search/lib/hocs';
 import SampleQueryPrompt from './SampleQueryPrompt';
 
 function SearchInput({
@@ -20,8 +20,11 @@ function SearchInput({
   onSubmit,
   mode,
 }) {
+  const { appConfig } = useAppConfig();
+  const { sortOptions } = appConfig;
+
   const inputProps = getInputProps();
-  const { setSearchTerm } = useSearchContext();
+  const { setSearchTerm, setSort } = useSearchContext();
 
   const { filters, addFilter, setFilter, ...domProps } = inputProps;
   const searchTerm = inputProps.value;
@@ -79,7 +82,7 @@ function SearchInput({
 
                 return inputProps.onKeyDown(ev);
               }}
-              onBlur={() => { }}
+              onBlur={() => {}}
             />
           ) : (
             ''
@@ -94,6 +97,11 @@ function SearchInput({
                   onClick={() => {
                     // inputProps.onChange({ target: { value: '' } });
                     setSearchTerm('', { shouldClearFilters: false });
+
+                    const sNew = sortOptions.filter((s) => s.name === 'Newest');
+                    if (sNew.length > 0) {
+                      setSort(sNew[0].value, sNew[0].direction);
+                    }
                     // onSubmit();
                   }}
                 />
