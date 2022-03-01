@@ -37,25 +37,19 @@ const customOrder = (values, facetValues) => {
   return result;
 };
 
-const sortedTiles = (tiles, section, appConfig) => {
-  if (section.sortOn === 'custom') {
+const sortedTiles = (tiles, sectionConfig, appConfig) => {
+  if (sectionConfig.sortOn === 'custom') {
     const fConfig = appConfig.facets.filter(
-      (f) => f.field === section.facetField,
+      (f) => f.field === sectionConfig.facetField,
     );
     const facetValues = fConfig[0].facetValues;
     return customOrder(tiles, facetValues);
   } else {
-    return tiles
-      .sort((a, b) =>
-        section.sortOn === 'alpha'
-          ? cmp(a.value, b.value, section.sortOrder || 'asc')
-          : cmp(a.count, b.count, section.sortOrder || 'asc'),
-      )
-      .sort((a, b) =>
-        section.sortOn === 'alpha'
-          ? cmp(a.value, b.value, section.sortOrder || 'asc')
-          : cmp(a.count, b.count, section.sortOrder || 'asc'),
-      );
+    return tiles.sort((a, b) =>
+      sectionConfig.sortOn === 'alpha'
+        ? cmp(a.value, b.value, sectionConfig.sortOrder || 'asc')
+        : cmp(a.count, b.count, sectionConfig.sortOrder || 'asc'),
+    );
   }
 };
 
