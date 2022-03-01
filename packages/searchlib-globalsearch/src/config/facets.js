@@ -243,6 +243,69 @@ const facets = [
       type: 'any',
     },
     factory: 'MultiTermListFacet',
+    // Languages, EEA ordered:
+    // Albanian (sq)
+    // Български (bg)
+    // Bosnian (bs)
+    // čeština (cs)
+    // Hrvatski (hr)
+    // dansk (da)
+    // Nederlands (nl)
+    // ελληνικά (el)
+    // English (en)
+    // eesti (et)
+    // Suomi (fi)
+    // Français (fr)
+    // Deutsch (de)
+    // magyar (hu)
+    // Íslenska (is)
+    // italiano (it)
+    // Latviešu (lv)
+    // lietuvių (lt)
+    // Macedonian (mk)
+    // Malti (mt)
+    // Norsk (no)
+    // polski (pl)
+    // Português (pt)
+    // Română (ro)
+    // Serbo-Croatian (sh)
+    // slovenčina (sk)
+    // Slovenščina (sl)
+    // Español (es)
+    // Svenska (sv)
+    // Türkçe (tr)
+    facetValues: [
+      'sq',
+      'bg',
+      'bs',
+      'cs',
+      'hr',
+      'da',
+      'nl',
+      'el',
+      'en',
+      'et',
+      'fi',
+      'fr',
+      'de',
+      'hu',
+      'is',
+      'it',
+      'lv',
+      'lt',
+      'mk',
+      'mt',
+      'no',
+      'pl',
+      'pt',
+      'ro',
+      'sh',
+      'sk',
+      'sl',
+      'es',
+      'sv',
+      'tr',
+    ],
   }),
 ];
 

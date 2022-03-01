@@ -89,7 +89,7 @@ export default {
           id: 'language',
           title: 'Languages',
           facetField: 'language',
-          sortOn: 'alpha',
+          sortOn: 'custom',
           sortOrder: 'asc',
         },
         {

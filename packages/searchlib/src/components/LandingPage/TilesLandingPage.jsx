@@ -21,6 +21,44 @@ const cmp = (a, b, sortOrder) => {
   return a > b ? modifier * 1 : a === b ? 0 : modifier * -1;
 };
 
+const customOrder = (values, facetValues) => {
+  // values: [{value: 'en', count: 20141}, ...]
+  // facetValues: ['sq', 'bg', ...]
+  // Return values ordered as in facetValues
+  let result = [];
+  for (let value of facetValues) {
+    let count = values.filter((c) => c.value === value)[0]?.count || 0;
+    if (count > 0) {
+      result.push({ value, count });
+    }
+  }
+  // console.log('BEFORE: ', values);
+  // console.log('AFTER: ', result);
+  return result;
+};
+
+const sortedTiles = (tiles, section, appConfig) => {
+  if (section.sortOn === 'custom') {
+    const fConfig = appConfig.facets.filter(
+      (f) => f.field === section.facetField,
+    );
+    const facetValues = fConfig[0].facetValues;
+    return customOrder(tiles, facetValues);
+  } else {
+    return tiles
+      .sort((a, b) =>
+        section.sortOn === 'alpha'
+          ? cmp(a.value, b.value, section.sortOrder || 'asc')
+          : cmp(a.count, b.count, section.sortOrder || 'asc'),
+      )
+      .sort((a, b) =>
+        section.sortOn === 'alpha'
+          ? cmp(a.value, b.value, section.sortOrder || 'asc')
+          : cmp(a.count, b.count, section.sortOrder || 'asc'),
+      );
+  }
+};
+
 const LandingPage = (props) => {
   const { appConfig, children, setFilter, setSort } = props;
   // const facetsConfig = appConfig.facets;
@@ -43,7 +81,13 @@ const LandingPage = (props) => {
   const [isRequested, setIsRequested] = useAtom(isRequestedAtom);
 
   const getTiles = (maxPerSection) => {
-    const result = landingPageData?.[activeSection]?.[0]?.data || [];
+    let result = landingPageData?.[activeSection]?.[0]?.data || [];
+
+    // if (activeSection === 'language') {
+    //   const fConfig = appConfig.facets.filter((f) => f.field === 'language');
+    //   const languages = fConfig[0].facetValues;
+    //   result = customOrder(result, languages);
+    // }
     return [result.length > maxPerSection, result.slice(0, maxPerSection)];
   };
 
@@ -118,59 +162,49 @@ const LandingPage = (props) => {
           })}
         </div>
         <div className="ui cards">
-          {tiles
-            .sort((a, b) =>
-              activeSectionConfig.sortOn === 'alpha'
-                ? cmp(a.value, b.value, activeSectionConfig.sortOrder || 'asc')
-                : cmp(a.count, b.count, activeSectionConfig.sortOrder || 'asc'),
-            )
-            .map((topic) => {
-              const onClickHandler = () => {
-                setFilter(
-                  activeSection,
-                  topic.value,
-                  activeSectionConfig.filterType || 'any',
-                );
+          {sortedTiles(tiles, activeSectionConfig, appConfig).map((topic) => {
+            const onClickHandler = () => {
+              setFilter(
+                activeSection,
+                topic.value,
+                activeSectionConfig.filterType || 'any',
+              );
 
-                // apply configured default values
-                appConfig.facets
-                  .filter((f) => f.field !== activeSection && f.default)
-                  .forEach((facet) => {
-                    facet.default.values.forEach((value) =>
-                      setFilter(
-                        facet.field,
-                        value,
-                        facet.default.type || 'any',
-                      ),
-                    );
-                  });
-                setSort(sortField, sortDirection);
-                setShowFacets(true);
-              };
+              // apply configured default values
+              appConfig.facets
+                .filter((f) => f.field !== activeSection && f.default)
+                .forEach((facet) => {
+                  facet.default.values.forEach((value) =>
+                    setFilter(facet.field, value, facet.default.type || 'any'),
+                  );
+                });
+              setSort(sortField, sortDirection);
+              setShowFacets(true);
+            };
 
-              return (
-                <div
-                  key={topic.value}
-                  tabIndex="-1"
-                  role="button"
-                  onKeyDown={onClickHandler}
-                  className="ui card"
-                  onClick={onClickHandler}
-                >
-                  <div className="content">
-                    <div className="header">
-                      {icon ? <Icon {...icon} type={topic.value} /> : ''}
-                      <Term term={topic.value} field={activeSection} />
-                    </div>
-                  </div>
-                  <div className="extra content">
-                    <span className="count">
-                      {topic.count} {topic.count === 1 ? 'item' : 'items'}
-                    </span>
+            return (
+              <div
+                key={topic.value}
+                tabIndex="-1"
+                role="button"
+                onKeyDown={onClickHandler}
+                className="ui card"
+                onClick={onClickHandler}
+              >
+                <div className="content">
+                  <div className="header">
+                    {icon ? <Icon {...icon} type={topic.value} /> : ''}
+                    <Term term={topic.value} field={activeSection} />
                   </div>
                 </div>
-              );
-            })}
+                <div className="extra content">
+                  <span className="count">
+                    {topic.count} {topic.count === 1 ? 'item' : 'items'}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
         {hasOverflow ? (
           <div className="info">
