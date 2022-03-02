@@ -306,7 +306,7 @@ const facets = [
       'sv',
       'tr',
     ],
-    sortOn: 'custom',
+    // sortOn: 'custom',
     sortOnCustomLabel: 'Alphabetical',
   }),
 ];
