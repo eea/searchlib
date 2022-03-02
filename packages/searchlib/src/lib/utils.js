@@ -238,3 +238,23 @@ export const hasAppliedCustomFilters = (filters, appConfig) => {
 
   return !filtersEqual;
 };
+
+export const customOrder = (values, facetValues, sortOrder = 'ascending') => {
+  // values: [{value: 'en', count: 20141}, ...]
+  // facetValues: ['sq', 'bg', ...]
+  // Return values ordered as in facetValues
+  let result = [];
+  for (let value of facetValues) {
+    let item = values.filter((c) => c.value === value)[0];
+    let count = item?.count || 0;
+    if (count > 0) {
+      result.push(item);
+    }
+  }
+
+  if (sortOrder === 'descending') {
+    return result.reverse();
+  }
+
+  return result;
+};

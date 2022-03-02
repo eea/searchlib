@@ -36,18 +36,21 @@ const MultiTermListFacet = (props) => {
 
   const { appConfig } = useAppConfig();
   const facetConfig = appConfig.facets.find((f) => f.field === field);
+  const defaultSortOn = facetConfig?.sortOn || 'count';
 
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
-    ['value', 'count'],
+    ['value', 'count', 'custom'],
     {
-      defaultSortOn: facetConfig?.sortOn || 'count',
+      defaultSortOn: defaultSortOn,
       defaultSortOrder: {
         // each criteria has its own default sort order
         count: 'descending',
         value: 'ascending',
+        custom: 'ascending',
       },
     },
+    field,
   );
 
   const byLetters = {};
@@ -137,18 +140,33 @@ const MultiTermListFacet = (props) => {
               }
             />
 
-            <ToggleSort
-              label="Alphabetical"
-              onToggle={() => toggleSort('value')}
-              on={sorting.sortOn === 'value'}
-              icon={
-                sorting.sortOrder === 'ascending' ? (
-                  <Icon name="sort alphabet ascending" />
-                ) : (
-                  <Icon name="sort alphabet descending" />
-                )
-              }
-            />
+            {defaultSortOn === 'custom' ? (
+              <ToggleSort
+                label="Alphabetical" // TODO Customizable label?
+                onToggle={() => toggleSort('custom')}
+                on={sorting.sortOn === 'custom'}
+                icon={
+                  sorting.sortOrder === 'ascending' ? (
+                    <Icon name="sort alphabet ascending" />
+                  ) : (
+                    <Icon name="sort alphabet descending" />
+                  )
+                }
+              />
+            ) : (
+              <ToggleSort
+                label="Alphabetical"
+                onToggle={() => toggleSort('value')}
+                on={sorting.sortOn === 'value'}
+                icon={
+                  sorting.sortOrder === 'ascending' ? (
+                    <Icon name="sort alphabet ascending" />
+                  ) : (
+                    <Icon name="sort alphabet descending" />
+                  )
+                }
+              />
+            )}
           </div>
         </div>
       </HeaderWrapper>

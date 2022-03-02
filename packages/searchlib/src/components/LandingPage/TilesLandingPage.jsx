@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import { showFacetsAsideAtom } from '@eeacms/search/state';
 import { getFacetCounts } from './request';
 import buildStateFacets from '@eeacms/search/lib/search/state/facets';
+import { customOrder } from '@eeacms/search/lib/utils';
 import { landingPageDataAtom, isRequestedAtom } from './state';
 import { Icon, Term } from '@eeacms/search/components';
 
@@ -19,22 +20,6 @@ const getFacetConfig = (sections, name) => {
 const cmp = (a, b, sortOrder) => {
   const modifier = sortOrder === 'desc' ? -1 : 1;
   return a > b ? modifier * 1 : a === b ? 0 : modifier * -1;
-};
-
-const customOrder = (values, facetValues) => {
-  // values: [{value: 'en', count: 20141}, ...]
-  // facetValues: ['sq', 'bg', ...]
-  // Return values ordered as in facetValues
-  let result = [];
-  for (let value of facetValues) {
-    let count = values.filter((c) => c.value === value)[0]?.count || 0;
-    if (count > 0) {
-      result.push({ value, count });
-    }
-  }
-  // console.log('BEFORE: ', values);
-  // console.log('AFTER: ', result);
-  return result;
 };
 
 const sortedTiles = (tiles, sectionConfig, appConfig) => {
