@@ -17,12 +17,12 @@ import { ErrorBoundary } from '@elastic/react-search-ui';
 
 const SmallScreenFacets = () => {
   const [active, setActive] = React.useState(false);
-  const [showFacets] = useAtom(showFacetsAsideAtom);
+  //const [showFacets] = useAtom(showFacetsAsideAtom);
 
   return (
     <div>
       <Dimmer active={active} verticalAlign="top" page className="facet-dimmer">
-        {showFacets ? (
+        {active ? (
           <>
             <ErrorBoundary>
               <MoreLikeThis />
