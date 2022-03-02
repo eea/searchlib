@@ -38,6 +38,11 @@ const MultiTermListFacet = (props) => {
   const facetConfig = appConfig.facets.find((f) => f.field === field);
   const defaultSortOn = facetConfig?.sortOn || 'count';
 
+  let customLabel = '';
+  if (defaultSortOn === 'custom') {
+    customLabel = facetConfig?.sortOnCustomLabel || 'Alphabetical';
+  }
+
   const { sortedValues: sortedOptions, toggleSort, sorting } = useSort(
     options,
     ['value', 'count', 'custom'],
@@ -142,7 +147,7 @@ const MultiTermListFacet = (props) => {
 
             {defaultSortOn === 'custom' ? (
               <ToggleSort
-                label="Alphabetical" // TODO Customizable label?
+                label={customLabel}
                 onToggle={() => toggleSort('custom')}
                 on={sorting.sortOn === 'custom'}
                 icon={
