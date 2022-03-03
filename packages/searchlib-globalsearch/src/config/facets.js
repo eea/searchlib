@@ -243,12 +243,8 @@ const facets = [
       type: 'any',
     },
     factory: 'MultiTermListFacet',
-    // TODO: order
-    // ar: 'العربية (ar)',
-    // ga: 'Gaeilge (ga)',
-    // ru: 'русский (ru)',
     facetValues: [
-      'ar', // correct order?
+      'ar',
       'sr',
       'sq',
       'bg',
@@ -262,7 +258,7 @@ const facets = [
       'et',
       'fi',
       'fr',
-      'ga', // correct order?
+      'ga',
       'de',
       'hu',
       'is',
@@ -275,7 +271,7 @@ const facets = [
       'pl',
       'pt',
       'ro',
-      'ru', // correct order?
+      'ru',
       'sh',
       'sk',
       'sl',
