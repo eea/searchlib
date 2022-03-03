@@ -247,7 +247,7 @@ export const customOrder = (values, facetValues, sortOrder = 'ascending') => {
   for (let value of facetValues) {
     let item = values.filter((c) => c.value === value)[0];
     let count = item?.count || 0;
-    if (count > 0) {
+    if (item !== undefined) {
       result.push(item);
     }
   }

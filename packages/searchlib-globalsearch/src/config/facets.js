@@ -243,38 +243,13 @@ const facets = [
       type: 'any',
     },
     factory: 'MultiTermListFacet',
-    // Languages, EEA ordered:
-    // Albanian (sq)
-    // Български (bg)
-    // Bosnian (bs)
-    // čeština (cs)
-    // Hrvatski (hr)
-    // dansk (da)
-    // Nederlands (nl)
-    // ελληνικά (el)
-    // English (en)
-    // eesti (et)
-    // Suomi (fi)
-    // Français (fr)
-    // Deutsch (de)
-    // magyar (hu)
-    // Íslenska (is)
-    // italiano (it)
-    // Latviešu (lv)
-    // lietuvių (lt)
-    // Macedonian (mk)
-    // Malti (mt)
-    // Norsk (no)
-    // polski (pl)
-    // Português (pt)
-    // Română (ro)
-    // Serbo-Croatian (sh)
-    // slovenčina (sk)
-    // Slovenščina (sl)
-    // Español (es)
-    // Svenska (sv)
-    // Türkçe (tr)
+    // TODO: order
+    // ar: 'العربية (ar)',
+    // ga: 'Gaeilge (ga)',
+    // ru: 'русский (ru)',
     facetValues: [
+      'ar', // correct order?
+      'sr',
       'sq',
       'bg',
       'bs',
@@ -287,6 +262,7 @@ const facets = [
       'et',
       'fi',
       'fr',
+      'ga', // correct order?
       'de',
       'hu',
       'is',
@@ -299,6 +275,7 @@ const facets = [
       'pl',
       'pt',
       'ro',
+      'ru', // correct order?
       'sh',
       'sk',
       'sl',
@@ -306,7 +283,7 @@ const facets = [
       'sv',
       'tr',
     ],
-    // sortOn: 'custom',
+    sortOn: 'custom',
     sortOnCustomLabel: 'Alphabetical',
   }),
 ];
