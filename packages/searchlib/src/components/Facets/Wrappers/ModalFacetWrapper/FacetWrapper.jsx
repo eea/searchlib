@@ -56,10 +56,10 @@ const FacetWrapperComponent = (props) => {
           field={field}
           facet={facet}
           filterType={localFilterType}
-          filterExact={isExact}
           onChangeFilterType={(v) => setLocalFilterType(v)}
-          onChangeFilterExact={(v) => setIsExact(v)}
           view={OptionsView}
+          filterExact={isExact}
+          onChangeFilterExact={(v) => setIsExact(v)}
         />
       );
     },

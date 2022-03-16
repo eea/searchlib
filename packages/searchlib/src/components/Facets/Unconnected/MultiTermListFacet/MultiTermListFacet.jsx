@@ -7,8 +7,6 @@ import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 import FacetOptions from './FacetOptions';
 
-// import withMultiTypeFilter from '@eeacms/search/components/Facets/lib/withMultiTypeFilter';
-
 const MultiTermListFacet = (props) => {
   const {
     className,
@@ -126,7 +124,9 @@ const MultiTermListFacet = (props) => {
               toggle
               label="Only specific to selection"
               checked={!!filterExact}
-              onChange={(e, { checked }) => onChangeFilterExact(checked)}
+              onChange={(e, { checked }) => {
+                onChangeFilterExact(checked);
+              }}
             />
           )}
 

@@ -56,6 +56,7 @@ const OptionsWrapper = (props) => {
         optionsFilter ? optionsFilter(derivedOptions, filters) : derivedOptions
       }
       availableOptions={facetOptions[field]}
+      filterExact={filterExact}
       onSelect={(value, force) => {
         if (filterExact) {
           dispatch({ type: 'set', force: true, value });
