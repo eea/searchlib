@@ -173,13 +173,22 @@ const FacetWrapperComponent = (props) => {
             removeFilter(field, '', 'all');
             removeFilter(field, '', 'any:exact');
             removeFilter(field, '', 'all:exact');
-            (state || []).forEach((v) => {
+            // console.log('state', state);
+            if (Array.isArray(state)) {
+              (state || []).forEach((v) => {
+                addFilter(
+                  field,
+                  v,
+                  `${localFilterType}${isExact ? ':exact' : ''}`,
+                );
+              });
+            } else {
               addFilter(
                 field,
-                v,
+                [state || ''],
                 `${localFilterType}${isExact ? ':exact' : ''}`,
               );
-            });
+            }
           }}
           positive
         />
