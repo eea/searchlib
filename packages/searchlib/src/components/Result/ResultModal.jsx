@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Item } from 'semantic-ui-react';
 import String from './String';
+import { firstWords } from '@eeacms/search/lib/utils';
 
 export const ListingViewDetails = (props) => {
   const { result, appConfig } = props;
@@ -100,7 +101,9 @@ export const ResultHeader = (props) => {
         closeOnDocumentClick={true}
       >
         <Modal.Header>
-          {details?.titleField ? result[details.titleField]?.raw : 'Details:'}
+          {details?.titleField
+            ? firstWords(result[details.titleField]?.raw, 10)
+            : 'Details:'}
         </Modal.Header>
         <Modal.Content scrolling>
           <ListingViewDetails result={result} appConfig={appConfig} />
