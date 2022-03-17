@@ -87,7 +87,20 @@ const FacetWrapperComponent = (props) => {
                     onClick={(evt) => {
                       evt.preventDefault();
                       setIsOpened(false);
-                      (state || []).forEach((v) => {
+                      if (Array.isArray(state)) {
+                        (state || []).forEach((v) => {
+                          dispatch({
+                            type: 'reset',
+                            value: [],
+                            id: 'btn-clear-filters',
+                          });
+                          removeFilter(
+                            field,
+                            v,
+                            `${localFilterType}${isExact ? ':exact' : ''}`,
+                          );
+                        });
+                      } else {
                         dispatch({
                           type: 'reset',
                           value: [],
@@ -95,10 +108,10 @@ const FacetWrapperComponent = (props) => {
                         });
                         removeFilter(
                           field,
-                          v,
+                          [state || ''],
                           `${localFilterType}${isExact ? ':exact' : ''}`,
                         );
-                      });
+                      }
                     }}
                   >
                     Clear
