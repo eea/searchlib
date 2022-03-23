@@ -53,6 +53,7 @@ export const ResultHeader = (props) => {
   const { Level = 'h4', urlField, titleField } = props;
   const url = result[urlField]?.raw;
   const title = result[titleField]?.raw || result.id;
+  const shortTitle = firstWords(title, 10);
   const modalHash = `showitem${result.id}`;
 
   const closeModal = () => {
@@ -77,7 +78,9 @@ export const ResultHeader = (props) => {
     <>
       <Level>
         {url ? (
-          <a href={url}>{title}</a>
+          <a href={url} title={title}>
+            {shortTitle}
+          </a>
         ) : (
           <Item.Header
             className="listing-view-item"
@@ -88,8 +91,9 @@ export const ResultHeader = (props) => {
               e.stopPropagation();
             }}
             onKeyDown={() => openModal(true)}
+            title={title}
           >
-            {title}
+            {shortTitle}
           </Item.Header>
         )}
       </Level>
