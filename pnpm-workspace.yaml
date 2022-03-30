@@ -3,6 +3,7 @@ packages:
   - 'packages/searchlib-middleware'
   - 'packages/searchlib-less'
   - 'packages/searchlib-globalsearch'
+  - 'packages/searchlib-datahub'
   - 'packages/demo'
   - 'packages/wise'
   - 'apps/searchlib-standalone'
