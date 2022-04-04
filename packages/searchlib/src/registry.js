@@ -297,6 +297,9 @@ const config = {
         spacy: {
           servicePath: 'ner-spacy',
         },
+        feedback: {
+          servicePath: 'feedback',
+        },
       },
 
       contentSectionsParams: {

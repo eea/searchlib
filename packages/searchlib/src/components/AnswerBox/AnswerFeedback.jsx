@@ -9,6 +9,10 @@ import {
   Segment,
 } from 'semantic-ui-react';
 import { Icon } from '@eeacms/search/components';
+import runRequest from '@eeacms/search/lib/runRequest';
+import { useAppConfig } from '@eeacms/search/lib/hocs';
+
+import { buildFeedbackRequest } from './buildRequest';
 
 const feedbacks = [
   { id: 'helpful', title: 'This is helpful' },
@@ -34,7 +38,17 @@ const feedbacks = [
 const AnswerFeedback = (props) => {
   const [open, setOpen] = React.useState(false);
   const [think, setThink] = React.useState('');
-  const { basic } = props;
+  const { basic, answer, query } = props;
+
+  const { appConfig } = useAppConfig();
+
+  const submitFeedback = React.useCallback(async () => {
+    const state = { answer, query };
+    const req = buildFeedbackRequest(state, appConfig);
+    console.log('request', req);
+    const res = await runRequest(req, appConfig);
+    console.log('res', res);
+  }, [appConfig, answer, query]);
 
   return (
     <Modal
@@ -79,7 +93,10 @@ const AnswerFeedback = (props) => {
           content="Send feedback"
           labelPosition="right"
           icon="checkmark"
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            submitFeedback(answer, feedbacks);
+            setOpen(false);
+          }}
           positive
         />
       </Modal.Actions>

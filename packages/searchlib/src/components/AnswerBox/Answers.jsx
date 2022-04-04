@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Rating, Popup, Button, Message } from 'semantic-ui-react'; //, Accordion
 
-import { Icon } from '@eeacms/search/components'; //, StringList//, Toast
+// import { Icon } from '@eeacms/search/components'; //, StringList//, Toast
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { buildResult } from '@eeacms/search/lib/search/state/results';
 
@@ -62,9 +62,9 @@ const Answers = (props) => {
           const primaryAnswer = filtered?.[0];
           const primaryResult = primaryAnswer
             ? buildResult(
-              { ...primaryAnswer, _source: primaryAnswer?.source },
-              appConfig,
-            )
+                { ...primaryAnswer, _source: primaryAnswer?.source },
+                appConfig,
+              )
             : null;
 
           return (
@@ -108,7 +108,11 @@ const Answers = (props) => {
                   <div className="answers__bottom__spacer"></div>
                   <div className="right">
                     <AnswerBoxDetails basic />
-                    <AnswerFeedback basic />
+                    <AnswerFeedback
+                      basic
+                      answer={primaryAnswer}
+                      query={searchedTerm}
+                    />
                   </div>
                 </div>
                 {hasActiveFilters && <ExtractMessageWarning />}
