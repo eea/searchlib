@@ -8,47 +8,38 @@ import {
   TextArea,
   Segment,
 } from 'semantic-ui-react';
+import loadable from '@loadable/component';
 import { Icon } from '@eeacms/search/components';
 import runRequest from '@eeacms/search/lib/runRequest';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 
 import { buildFeedbackRequest } from './buildRequest';
 
+import { toast } from 'react-toastify';
+
 const feedbacks = [
   { id: 'helpful', title: 'This is helpful' },
   { id: 'innacurate', title: 'This is misleading or innaccurate' },
-  // {
-  //   id: 'wrongpassage',
-  //   title: 'The document is correct but the marked answer is wrong',
-  // },
+  {
+    id: 'wrongpassage',
+    title: 'The document is correct but the marked answer is wrong',
+  },
 ];
-
-// if button_col1.button("👍", key=f"{result['context']}{count}1", help="Correct answer"):
-//     is_correct_answer=True
-//     is_correct_document=True
-//
-// if button_col2.button("👎", key=f"{result['context']}{count}2", help="Wrong answer and wrong passage"):
-//     is_correct_answer=False
-//     is_correct_document=False
-//
-// if button_col3.button("👎👍", key=f"{result['context']}{count}3", help="Wrong answer, but correct passage"):
-//     is_correct_answer=False
-//     is_correct_document=True
 
 const AnswerFeedback = (props) => {
   const [open, setOpen] = React.useState(false);
   const [think, setThink] = React.useState('');
+  const [comment, setComment] = React.useState('');
   const { basic, answer, query } = props;
 
   const { appConfig } = useAppConfig();
 
   const submitFeedback = React.useCallback(async () => {
-    const state = { answer, query };
+    const state = { answer, query, feedback: think, comment };
     const req = buildFeedbackRequest(state, appConfig);
-    console.log('request', req);
-    const res = await runRequest(req, appConfig);
-    console.log('res', res);
-  }, [appConfig, answer, query]);
+    await runRequest(req, appConfig);
+    toast.info(<div>Feedback submitted. Thank you!</div>);
+  }, [appConfig, answer, query, think, comment]);
 
   return (
     <Modal
@@ -75,7 +66,10 @@ const AnswerFeedback = (props) => {
           ))}
           <Header as="h4">Comments or suggestions?</Header>
           <Form.Field>
-            <TextArea placeholder="Optional"></TextArea>
+            <TextArea
+              placeholder="Optional"
+              onChange={(e, { value }) => setComment(value)}
+            ></TextArea>
           </Form.Field>
         </Form>
         <Segment>

@@ -3,7 +3,7 @@ import { filterNLPConfig } from './utils';
 import { extractExactPhrases } from '@eeacms/search/lib/search/query/fullText';
 
 export const buildFeedbackRequest = (state, appConfig) => {
-  const { answer, query } = state;
+  const { answer, query, feedback, comment } = state;
 
   // answer: Optional[str]
   // question: Optional[str]
@@ -24,9 +24,12 @@ export const buildFeedbackRequest = (state, appConfig) => {
     offsets_in_document: answer.original_answer.offsets_in_document,
     offsets_in_context: answer.original_answer.offsets_in_context,
     score: answer.score,
-    is_correct_answer: true,
-    is_correct_document: true,
+    is_correct_answer: feedback === 'helpful',
+    is_correct_document: feedback === 'helpful' || feedback === 'wrongpassage',
     no_answer: false,
+    meta: {
+      comment,
+    },
 
     // pipeline_id: '',
     // origin: 'user-feedback',
