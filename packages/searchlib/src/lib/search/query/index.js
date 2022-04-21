@@ -105,13 +105,13 @@ export default function buildRequest(state, config, includeAggs = null) {
       : {}),
     track_total_hits: true,
     ...(config.debugQuery ? { explain: true } : {}),
-    params: {
+/*    params: {
       use_dp: true,
-    },
+    },*/
   };
 
-  body.params.query = searchTerm;
-  body.params.custom_query = body.query;
+/*  body.params.query = searchTerm;
+  body.params.custom_query = body.query;*/
 
   return body;
 }
