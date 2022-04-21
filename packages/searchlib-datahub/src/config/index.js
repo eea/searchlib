@@ -24,6 +24,8 @@ export default function install(config) {
     host: process.env.RAZZLE_ES_PROXY_ADDR || 'http://localhost:3000',
   };
 
+  config.searchui.datahub.facets = envConfig.facets;
+
   if (typeof window !== 'undefined') {
     config.searchui.datahub.host =
       process.env.RAZZLE_ES_PROXY_ADDR || getClientProxyAddress();
