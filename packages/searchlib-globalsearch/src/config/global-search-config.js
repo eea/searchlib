@@ -17,7 +17,7 @@ const globalSearchConfig = {
   title: 'Global search and catalogue',
   layoutComponent: 'FilterAsideLayout',
   contentBodyComponent: 'FilterAsideContentView',
-  enableNLP: true, // enables NLP capabilities
+  enableNLP: false, // enables NLP capabilities
   facetsListComponent: 'VerticalCardsModalFacets',
   runtime_mappings: build_runtime_mappings(clusters),
   useSearchPhrases: false,
@@ -31,7 +31,7 @@ const globalSearchConfig = {
   ...download,
   ...clusterParams,
 
-  sourceExcludedFields: ['fulltext'], // don't need these in results
+//  sourceExcludedFields: ['fulltext'], // don't need these in results
 
   // these are used to "clean" the values in the results.
   field_filters: {
