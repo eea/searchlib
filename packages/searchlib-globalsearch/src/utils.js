@@ -136,6 +136,15 @@ export const getGlobalsearchThumbUrl = (contentTypeNormalize) => (
 ) => {
   let image = fallback;
   let has_img = false;
+  if ((result.site_id?.raw === 'sdi') && (result['overview.url'])){
+    if (!Array.isArray(result['overview.url']?.raw)) {
+      result['overview.url'].raw = [result['overview.url']?.raw];
+    }
+    if (result['overview.url']?.raw.length > 0) {
+      image = result['overview.url']?.raw[0];
+    }
+    has_img = true;
+  }
   if (
     result.about?.raw?.startsWith('http://www.eea.europa.eu/help/glossary/') ||
     result.about?.raw?.startsWith('https://www.eea.europa.eu/help/glossary/')
