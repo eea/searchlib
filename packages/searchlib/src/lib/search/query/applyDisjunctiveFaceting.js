@@ -50,6 +50,7 @@ export async function getDisjunctiveFacetCounts(
       const newState = removeFilterByName(state, facetName);
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
+      body.params = {};
       body = removeAllFacetsExcept(body, facetName);
       // console.log('req', facetName, { newState, body });
       return runRequest(body, config);
