@@ -111,22 +111,17 @@ const withStateAnswers = (WrappedComponent) => {
   const WrappedAnswerBox = (props) => {
     const searchContext = useSearchContext();
     const { resultSearchTerm = '', query_type } = searchContext;
-    // const { appConfig } = useAppConfig();
-    // const {
-    //   qa_queryTypes = [
-    //     'query:interrogative',
-    //     'query:declarative',
-    //     'query:keyword',
-    //     'request:query', // temporary
-    //   ],
-    // } = appConfig?.nlp?.qa || {};
 
-    const qa_queryTypes = [
-      'query:interrogative',
-      'query:declarative',
-      'query:keyword',
-      'request:query', // temporary
-    ];
+    const { appConfig } = useAppConfig();
+    const {
+      qa_queryTypes = [
+        'query:interrogative',
+        'query:declarative',
+        'query:keyword',
+        'request:query', // temporary
+      ],
+    } = appConfig?.nlp?.qa || {};
+
     const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
 
     if (searchContext.answers) {
