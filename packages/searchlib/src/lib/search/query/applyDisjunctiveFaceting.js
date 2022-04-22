@@ -48,9 +48,9 @@ export async function getDisjunctiveFacetCounts(
     // clarity.
     (disjunctiveFacets || config.disjunctiveFacets).map((facetName) => {
       const newState = removeFilterByName(state, facetName);
+      newState.resultsPerPage = 0;
       let body = buildRequest(newState, config, true);
       body = changeSizeToZero(body);
-      body.params = {};
       body = removeAllFacetsExcept(body, facetName);
       // console.log('req', facetName, { newState, body });
       return runRequest(body, config);

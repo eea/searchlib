@@ -22,13 +22,16 @@ export default function buildState(response, resultsPerPage, config) {
 
   const facets = buildStateFacets(response.aggregations, config);
 
-  return {
-    results,
-    totalPages,
-    totalResults,
-    ...(facets && { facets }),
-    query_type: response.query_type,
-  };
+  return (config.stateModifiers || []).reduce(
+    (acc, modifier) => modifier(acc, response, config),
+    {
+      results,
+      totalPages,
+      totalResults,
+      ...(facets && { facets }),
+      query_type: response.query_type,
+    },
+  );
 }
 
 function buildTotalPages(resultsPerPage, totalResults) {
