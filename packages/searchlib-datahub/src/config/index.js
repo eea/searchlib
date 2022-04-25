@@ -1,6 +1,8 @@
 import datahubSearchConfig from './datahub-search-config';
 import { mergeConfig } from '@eeacms/search';
 
+import DatahubLandingPage from '../components/LandingPage/DatahubLandingPage';
+
 const getClientProxyAddress = () => {
   const url = new URL(window.location);
   url.pathname = '';
@@ -25,6 +27,10 @@ export default function install(config) {
   };
 
   config.searchui.datahub.facets = envConfig.facets;
+
+  config.resolve['DatahubLandingPage'] = {
+    component: DatahubLandingPage,
+  };
 
   if (typeof window !== 'undefined') {
     config.searchui.datahub.host =

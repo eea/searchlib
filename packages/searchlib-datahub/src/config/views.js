@@ -1,6 +1,6 @@
 export default {
   initialView: {
-    factory: 'TilesLandingPage',
+    factory: 'DatahubLandingPage',
     tilesLandingPageParams: {
       maxPerSection: 30,
       sortField: 'issued.date',
@@ -17,6 +17,14 @@ export default {
           title: 'EEA topics',
           facetField: 'topic',
           sortOn: 'alpha',
+        },
+        {
+          id: 'website',
+          title: 'Sources',
+          facetField: 'cluster_name',
+          sortOn: 'count',
+          sortOrder: 'desc',
+          hidden: true,
         },
       ],
     },
