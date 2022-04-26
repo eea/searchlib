@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Segment, Button, Message, Label, Icon } from 'semantic-ui-react'; //, Accordion
 
-import { useAppConfig } from '@eeacms/search/lib/hocs';
+import { useAppConfig, useSearchContext } from '@eeacms/search/lib/hocs';
 import { hasNonDefaultFilters } from '@eeacms/search/lib/search/helpers';
 
 import Answers from './Answers';
@@ -105,7 +105,44 @@ const AnswerBox = (props) => {
   );
 };
 
-export default withAnswers(AnswerBox);
+const WithLiveAnswers = withAnswers(AnswerBox);
+
+const withStateAnswers = (WrappedComponent) => {
+  const WrappedAnswerBox = (props) => {
+    const searchContext = useSearchContext();
+    const { resultSearchTerm = '', query_type } = searchContext;
+
+    const { appConfig } = useAppConfig();
+    const {
+      qa_queryTypes = [
+        'query:interrogative',
+        'query:declarative',
+        'query:keyword',
+        'request:query', // temporary
+      ],
+    } = appConfig?.nlp?.qa || {};
+
+    const isQuestion = qa_queryTypes.indexOf(query_type) > -1;
+
+    if (searchContext.answers) {
+      return (
+        <WrappedComponent
+          isQuestion={isQuestion}
+          data={searchContext.answers}
+          loading={false}
+          loaded={true}
+          searchedTerm={resultSearchTerm}
+          searchContext={searchContext}
+        />
+      );
+    } else {
+      return <WithLiveAnswers {...props} />;
+    }
+  };
+  return WrappedAnswerBox;
+};
+
+export default withStateAnswers(AnswerBox);
 
 /*
 answer: "organoleptic factors, physico-chemical factors, toxic substances, microbiological parameters"

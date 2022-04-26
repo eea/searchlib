@@ -79,6 +79,7 @@ export const buildClassifyQuestionRequest = (state, appConfig) => {
 };
 
 export const buildQuestionRequest = (state, config) => {
+  console.log('buildQuestionRequest');
   const {
     searchTerm,
     filters,
@@ -97,6 +98,7 @@ export const buildQuestionRequest = (state, config) => {
   }
 
   const filter = buildRequestFilter(filters, config);
+  const cutoff = parseFloat(config.nlp.qa.cutoffScore ?? 0.1);
 
   const body = {
     requestType: 'nlp',
@@ -117,6 +119,9 @@ export const buildQuestionRequest = (state, config) => {
       },
       AnswerExtraction: {
         top_k: parseInt(config.nlp.qa.topk_reader || 10),
+      },
+      AnswerOptimizer: {
+        cutoff,
       },
       custom_query: {
         // Dynamic values based on current Search UI state

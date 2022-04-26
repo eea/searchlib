@@ -66,7 +66,9 @@ function SearchApp(props) {
   const onSearch = React.useCallback(
     async (state) => {
       setIsLoading(true);
+      console.log('searching');
       const res = await boundOnSearch(state);
+      console.log('search done', res);
       setIsLoading(false);
       return res;
     },
@@ -92,6 +94,7 @@ function SearchApp(props) {
     [appConfig, onAutocomplete, onSearch],
   );
 
+  // construct a data structure of all available options for all the facets
   const fetchFacetOptions = React.useCallback(
     async (facetFieldNames) => {
       const facetNames = appConfig.facets

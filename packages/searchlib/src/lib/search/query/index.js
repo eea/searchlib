@@ -67,51 +67,53 @@ export default function buildRequest(state, config, includeAggs = null) {
 
   // console.log({ sort, match, size, from, filter, filters });
 
-  const body = {
-    query: {
-      // Dynamic values based on current Search UI state
-      function_score: {
-        query: {
-          bool: {
-            ...(config?.extraRAWQueryFilters || {}),
-            must: match,
-            ...(filter && { filter }),
+  const body = (config.requestBodyModifiers || []).reduce(
+    (acc, modifier) => modifier(acc, config),
+    {
+      query: {
+        // Dynamic values based on current Search UI state
+        function_score: {
+          query: {
+            bool: {
+              ...(config?.extraRAWQueryFilters || {}),
+              must: match,
+              ...(filter && { filter }),
+            },
           },
+          functions: [
+            ...(config.extraQueryParams?.functions || []),
+            ...boostFacets(filters, config),
+          ],
+          score_mode: config.extraQueryParams?.score_mode || 'sum',
         },
-        functions: [
-          ...(config.extraQueryParams?.functions || []),
-          ...boostFacets(filters, config),
-        ],
-        score_mode: config.extraQueryParams?.score_mode || 'sum',
       },
-    },
-    ...highlight,
-    aggs,
-    ...(sort && { sort }),
-    ...(size && { size }),
-    ...(from && { from }),
-    ...(config.runtime_mappings && {
-      runtime_mappings: config.runtime_mappings,
-    }),
-    ...(config.enableNLP && {
-      ...config.requestParams,
-    }),
-    ...(config.enableNLP && config.sourceExcludedFields?.length
-      ? {
-          source: {
-            exclude: [...(config.sourceExcludedFields || [])],
-          },
-        }
-      : {}),
-    track_total_hits: true,
-    ...(config.debugQuery ? { explain: true } : {}),
-    params: {
-      use_dp: true,
-    },
-  };
+      aggs,
+      ...highlight,
+      ...(sort && { sort }),
+      ...(size && { size }),
+      ...(from && { from }),
+      ...(config.runtime_mappings && {
+        runtime_mappings: config.runtime_mappings,
+      }),
 
-  body.params.query = searchTerm;
-  body.params.custom_query = body.query;
+      ...config.requestParams,
+      ...(config.sourceExcludedFields?.length
+        ? {
+            source: {
+              exclude: [...(config.sourceExcludedFields || [])],
+            },
+          }
+        : {}),
+
+      track_total_hits: true,
+      ...(config.debugQuery ? { explain: true } : {}),
+    },
+  );
+
+  // if (size) console.log('body', body, config);
+
+  // body.params.query = searchTerm;
+  // body.params.custom_query = body.query;
 
   return body;
 }

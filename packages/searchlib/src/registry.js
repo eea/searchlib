@@ -62,6 +62,10 @@ import {
   buildBooleanFacetRequest,
 } from '@eeacms/search/lib/search';
 import { ResultModel } from '@eeacms/search/lib/models';
+import {
+  addQAParams,
+  extractAnswers,
+} from '@eeacms/search/components/AnswerBox';
 // import { valueToString } from './lib/utils';
 
 const config = {
@@ -280,6 +284,8 @@ const config = {
 
       resultsPerPage: 10,
       availableResultsPerPage: [10, 25, 50],
+      requestBodyModifiers: [addQAParams],
+      stateModifiers: [extractAnswers],
 
       enableNLP: false, // enables NLP capabilities
       nlp: {
