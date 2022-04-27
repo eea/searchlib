@@ -60,6 +60,12 @@ const Answers = (props) => {
         <h2>{searchedTerm}</h2>
         {sortedClusters.map((filtered, i) => {
           const primaryAnswer = filtered?.[0];
+
+          if (!primaryAnswer) {
+            console.log('no primary answer', sortedClusters);
+            return '';
+          }
+
           const primaryResult = primaryAnswer
             ? buildResult(
                 { ...primaryAnswer, _source: primaryAnswer?.source },
