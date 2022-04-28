@@ -10,7 +10,7 @@ import AnswerBoxDetails from './AnswerBoxDetails';
 import AnswerLinksList from './AnswersLinksList';
 import AnswerFeedback from './AnswerFeedback';
 
-const MAX_COUNT = 3;
+const MAX_COUNT = 1;
 
 const Answers = (props) => {
   const { appConfig } = useAppConfig();
@@ -57,7 +57,7 @@ const Answers = (props) => {
         </Button.Group>
       )}
       <div>
-        <h2>{searchedTerm}</h2>
+        {/* <h2>{searchedTerm}</h2> */}
         {sortedClusters.map((filtered, i) => {
           const primaryAnswer = filtered?.[0];
 
