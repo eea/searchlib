@@ -1,6 +1,8 @@
 import datahubSearchConfig from './datahub-search-config';
 import { mergeConfig } from '@eeacms/search';
 
+import DatahubLandingPage from '../components/LandingPage/DatahubLandingPage';
+
 const getClientProxyAddress = () => {
   const url = new URL(window.location);
   url.pathname = '';
@@ -22,6 +24,12 @@ export default function install(config) {
     ...mergeConfig(envConfig, config.searchui.globalsearch),
     elastic_index: 'es',
     host: process.env.RAZZLE_ES_PROXY_ADDR || 'http://localhost:3000',
+  };
+
+  config.searchui.datahub.facets = envConfig.facets;
+
+  config.resolve['DatahubLandingPage'] = {
+    component: DatahubLandingPage,
   };
 
   if (typeof window !== 'undefined') {
