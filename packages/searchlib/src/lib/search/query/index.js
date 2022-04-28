@@ -99,7 +99,7 @@ export default function buildRequest(state, config, includeAggs = null) {
       ...config.requestParams,
       ...(config.sourceExcludedFields?.length
         ? {
-            source: {
+            [config.enableNLP ? 'source' : '_source']: {
               exclude: [...(config.sourceExcludedFields || [])],
             },
           }
