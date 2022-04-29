@@ -47,7 +47,6 @@ importers:
     specifiers:
       '@babel/eslint-parser': ^7.14.3
       '@babel/runtime': ^7.14.0
-      '@eeacms/globalsearch': workspace:*
       '@eeacms/search': workspace:*
       '@eeacms/search-less': workspace:^1.0.0
       '@eeacms/search-middleware': workspace:*
@@ -89,7 +88,6 @@ importers:
       webpack: ^4.44.1
       webpack-dev-server: ^3.11.2
     dependencies:
-      '@eeacms/globalsearch': link:../../packages/searchlib-globalsearch
       '@eeacms/search': link:../../packages/searchlib
       '@eeacms/search-middleware': link:../../packages/searchlib-middleware
       '@elastic/react-search-ui-views': 1.5.1_react-dom@17.0.2+react@17.0.2

@@ -110,8 +110,6 @@ export default function buildRequest(state, config, includeAggs = null) {
     },
   );
 
-  // if (size) console.log('body', body, config);
-
   // body.params.query = searchTerm;
   // body.params.custom_query = body.query;
 
