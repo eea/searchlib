@@ -11,18 +11,23 @@ const getInfo = async (appConfig) => {
 
   const info = await getIndexInfo(appConfig);
 
-  if (info.error) {
+  if (info.error || info.detail) {
     // eslint-disable-next-line
     console.warn('Error in retrieving index info', info);
     return '';
   }
 
-  const indexes = Object.keys(info);
-  if (indexes.length < 1) return '';
+  try {
+    const indexes = Object.keys(info);
+    if (indexes.length < 1) return '';
 
-  const creation_ts = info[indexes[0]].settings.index.creation_date;
-  const dt = DateTime.fromMillis(parseInt(creation_ts));
-  return dt.toLocaleString(DateTime.DATETIME_FULL);
+    const creation_ts = info[indexes[0]].settings.index.creation_date;
+    const dt = DateTime.fromMillis(parseInt(creation_ts));
+    return dt.toLocaleString(DateTime.DATETIME_FULL);
+  } catch {
+    console.log('info', info);
+    return '';
+  }
 };
 
 function AppInfo({ appConfig, ...rest }) {

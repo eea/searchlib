@@ -64,6 +64,7 @@ export default function buildRequest(state, config, includeAggs = null) {
   const filter = buildRequestFilter(filters, config);
   const aggs = includeAggs ? buildAggregationsQuery(config, includeAggs) : {};
   const highlight = buildHighlight(searchTerm, config);
+  console.log('config', config);
 
   // console.log({ sort, match, size, from, filter, filters });
 
@@ -97,6 +98,7 @@ export default function buildRequest(state, config, includeAggs = null) {
       }),
 
       ...config.requestParams,
+      ...(config.index_name ? { index: config.index_name } : {}),
       ...(config.sourceExcludedFields?.length
         ? {
             [config.enableNLP ? 'source' : '_source']: {
