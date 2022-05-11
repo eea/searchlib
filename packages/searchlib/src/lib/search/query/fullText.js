@@ -1,4 +1,4 @@
-import { EXACT_PHRASES } from '@eeacms/search/constants';
+// import { EXACT_PHRASES } from '@eeacms/search/constants';
 
 export function extractExactPhrases(searchTerm) {
   const parts = searchTerm.split('"'); // split by "

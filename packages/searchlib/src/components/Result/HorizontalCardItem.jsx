@@ -10,7 +10,7 @@ import ExternalLink from './ExternalLink';
 import ResultContext from './ResultContext';
 import ContentClusters from './ContentClusters';
 
-const CardItem = (props) => {
+const HorizontalCardItem = (props) => {
   const { result, showControls = true } = props;
   const { appConfig } = useAppConfig();
   const { vocab = {}, debugQuery } = appConfig;
@@ -134,4 +134,4 @@ const CardItem = (props) => {
   );
 };
 
-export default CardItem;
+export default HorizontalCardItem;
