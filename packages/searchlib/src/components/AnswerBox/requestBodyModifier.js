@@ -1,6 +1,7 @@
 export default function addQAParams(body, config) {
   const { from, size } = body;
   if (!config.enableNLP || (size ?? 0) === 0 || (from ?? 0) !== 0) return body;
+
   body.params = {
     ...(body.params || {}),
 
@@ -12,6 +13,32 @@ export default function addQAParams(body, config) {
     RawRetriever: {
       top_k: parseInt(config.nlp.qa.topk_retriever || 10),
       index: config.nlp.qa.raw_index,
+      payload: {
+        custom_query: 'John',
+        query: {
+          nested: {
+            path: 'user',
+            query: {
+              bool: {
+                must: [
+                  {
+                    match: {
+                      'user.first': 'John',
+                    },
+                  },
+                ],
+              },
+            },
+            inner_hits: {
+              highlight: {
+                fields: {
+                  'user.last': {},
+                },
+              },
+            },
+          },
+        },
+      },
     },
     AnswerExtraction: {
       top_k: parseInt(config.nlp.qa.topk_reader || 10),
