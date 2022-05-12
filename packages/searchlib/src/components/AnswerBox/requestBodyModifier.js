@@ -1,4 +1,4 @@
-export default function addQAParams(body, config) {
+export default function addQAParams(body, config, { searchTerm = '' }) {
   const { from, size } = body;
   if (!config.enableNLP || (size ?? 0) === 0 || (from ?? 0) !== 0) return body;
 
@@ -14,16 +14,16 @@ export default function addQAParams(body, config) {
       top_k: parseInt(config.nlp.qa.topk_retriever || 10),
       index: config.nlp.qa.raw_index,
       payload: {
-        custom_query: 'John',
+        custom_query: searchTerm,
         query: {
           nested: {
-            path: 'user',
+            path: 'nlp_500',
             query: {
               bool: {
                 must: [
                   {
                     match: {
-                      'user.first': 'John',
+                      'nlp_500.text': searchTerm,
                     },
                   },
                 ],
@@ -32,7 +32,7 @@ export default function addQAParams(body, config) {
             inner_hits: {
               highlight: {
                 fields: {
-                  'user.last': {},
+                  'nlp_500.text': {},
                 },
               },
             },
@@ -42,6 +42,7 @@ export default function addQAParams(body, config) {
     },
     AnswerExtraction: {
       top_k: parseInt(config.nlp.qa.topk_reader || 10),
+      // query: searchTerm,
     },
     AnswerOptimizer: {
       cutoff: parseFloat(config.nlp.qa.cutoffScore ?? 0.1),

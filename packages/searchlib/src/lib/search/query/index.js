@@ -64,12 +64,12 @@ export default function buildRequest(state, config, includeAggs = null) {
   const filter = buildRequestFilter(filters, config);
   const aggs = includeAggs ? buildAggregationsQuery(config, includeAggs) : {};
   const highlight = buildHighlight(searchTerm, config);
-  console.log('config', config);
 
   // console.log({ sort, match, size, from, filter, filters });
+  const options = { searchTerm };
 
   const body = (config.requestBodyModifiers || []).reduce(
-    (acc, modifier) => modifier(acc, config),
+    (acc, modifier) => modifier(acc, config, options),
     {
       query: {
         // Dynamic values based on current Search UI state
