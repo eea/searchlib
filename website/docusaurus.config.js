@@ -30,7 +30,12 @@ module.exports = {
           label: 'Harvester',
           position: 'left',
         },
-        { type: 'doc', docId: 'indexing', label: 'Indexing', position: 'left' },
+        {
+          type: 'doc',
+          docId: 'nlpservice',
+          label: 'EEA NLPService',
+          position: 'left',
+        },
         {
           type: 'doc',
           docId: 'deployment/intro',

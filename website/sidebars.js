@@ -27,8 +27,8 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Indexing',
-      items: ['indexing'],
+      label: 'EEA NLPService',
+      items: ['nlpservice', 'endpoints'],
     },
     {
       type: 'category',
