@@ -32,7 +32,7 @@ module.exports = {
         },
         {
           type: 'doc',
-          docId: 'nlpservice',
+          docId: 'nlpservice/index',
           label: 'EEA NLPService',
           position: 'left',
         },
