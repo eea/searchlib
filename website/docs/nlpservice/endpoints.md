@@ -1,14 +1,18 @@
 # NLPService Endpoints
 
 
-## Converter
+## Converter ***
 
 ---
 #### *Path*
 ```textmate
 POST /api/converter
 ```
+#### *Description*
 
+Converts a text into a list of Documents. 
+
+It receives an URL with the given text and returns a list of Documents created based on the given text.
 
 ## Sentence Embedding
 
@@ -35,22 +39,51 @@ POST /api/feedback
 An endpoint to allow users to write feedback and correct classification on documents.
 
 
-## Language Detect
+## Language Detect ***
 
 ---
 #### *Path*
 ```textmate
 POST /api/langdetect
 ```
+#### *Description*
+An endpoint for predicting a list of languages used inside the input texts. 
 
-
-## Named-entity Recognition
+## Named-entity Recognition ***
 
 ---
 #### *Path*
 ```textmate
 POST /api/ner
 ```
+#### *Description*
+An endpoint for recognizing entities that are present in a given text document.
+Return the list of entities.
+
+Named Entity Recognition NER works by locating and identifying the named entities present in unstructured text into the standard categories such as person names, locations, organizations, time expressions, quantities, monetary values, percentage, codes etc.
+
+*Example of return:*
+```json
+[{
+  "end": 5, 
+  "entity": "B-ORG",
+  "index": 1,
+  "score": 0.9973650574684143,
+  "start": 1,
+  "word": ""
+}]
+```
+## Named-entity Recognition Spacy ***
+
+---
+#### *Path*
+```textmate
+POST /api/ner-spacy
+```
+#### *Description*
+Endpoint for Named-entity Recognition using Spacy that has a fast statistical entity recognition system.
+Receives a list of texts and returns a list of documents containing the predicted entities.
+
 
 ## Question and Answer
 
@@ -113,8 +146,7 @@ Common Query types
 POST /api/questiongeneration
 ```
 #### *Description*
-
-TBD
+ Based on a given text, on a split size and on a number_of_questions to be generated, it generates maximum number_of_questions pairs (question, answer).
 
 ## Semantically Re-ranked ElasticSearch queries
 
@@ -128,28 +160,48 @@ POST /api/_search
  A drop-in replacement of an ElasticSearch endpoint that can re-rank normal full-text queries.
 
 
-## Similarity
+## Similarity ***
 
 ---
 #### *Path*
 ```textmate
 POST /api/similarity
 ```
+#### *Description*
+Endpoint for computing the textual similarity between given text and a list of candidates texts.
+
+Returns:
+
+>* a list of predictions containing the cosine similarity score of texts.
+>* a list of clusters of texts obtained by hierarchical clustering bottom up approach.
 
 
-## Named-entity Recognition Spacy
-
----
-#### *Path*
-```textmate
-POST /api/ner-spacy
-```
-
-## Zeroshot Classifier
+## Zeroshot Classifier ***
 
 ---
 #### *Path*
 ```textmate
 POST /api/zeroshot
 ```
+#### *Description*
+Endpoint for predicting the label of a text based on given list of candidate labels. 
+It observes the candidate labels and predicts what is the list of labels and prediction score for the given text.
+Any combination of sequences and labels can be passed and each combination will be posed as a premise/hypothesis pair.
+
+##### Example:
+*Given* 
+>text = `Apple just announced the newest iPhone X`  
+>label candidates = ['technology', 'politics', 'sports']
+
+*Return a list of labels* 
+```json
+[ 
+  {"label": "technology", "score": 0.9663877487182617},
+  {"label": "sports", "score": 0.015614871867001057},
+  {"label": "politics", "score": 0.017997432500123978} 
+]
+```
+
+
+
 
