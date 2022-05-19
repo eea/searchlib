@@ -97,65 +97,68 @@ const MultiTermListFacet = (props) => {
         <div className="multitermlist__facet__header">
           <div className="facet-title">
             <h3>{facetConfig?.title || label}</h3>
-
-            {showSearch && (
-              <div className="search">
-                <Icon name="search" size="small" color="blue" />
-                <input
-                  className="multitermlist__search__text-input"
-                  type="search"
-                  placeholder={searchPlaceholder || 'Search'}
-                  onChange={(e) => onSearch(e.target.value)}
-                />
-              </div>
-            )}
           </div>
 
-          <Checkbox
-            toggle
-            label="Match all selected"
-            checked={filterType === 'all'}
-            onChange={(e, { checked }) =>
-              onChangeFilterType(checked ? 'all' : 'any')
-            }
-          />
-          {enableExact && (
-            <Checkbox
-              toggle
-              label="Only specific to selection"
-              checked={!!filterExact}
-              onChange={(e, { checked }) => {
-                onChangeFilterExact(checked);
-              }}
-            />
-          )}
+          <div className="multitermlist__facet__header_bottom">
+            <div className="search-wrapper">
+              {showSearch && (
+                <div className="search">
+                  <Icon name="search" size="small" color="blue" />
+                  <input
+                    className="multitermlist__search__text-input"
+                    type="search"
+                    placeholder={searchPlaceholder || 'Search'}
+                    onChange={(e) => onSearch(e.target.value)}
+                  />
+                </div>
+              )}
 
-          <div className="order-controls">
-            <span className="label">Order:</span>
-            <ToggleSort
-              label="By Count"
-              onToggle={() => toggleSort('count')}
-              on={sorting.sortOn === 'count'}
-              icon={
-                sorting.sortOrder === 'ascending' ? (
-                  <Icon name="sort numeric ascending" />
-                ) : (
-                  <Icon name="sort numeric descending" />
-                )
-              }
-            />
-            <ToggleSort
-              label={secondToggleSortConfig.label}
-              onToggle={() => toggleSort(secondToggleSortConfig.sortOn)}
-              on={sorting.sortOn === secondToggleSortConfig.sortOn}
-              icon={
-                sorting.sortOrder === 'ascending' ? (
-                  <Icon name="sort alphabet ascending" />
-                ) : (
-                  <Icon name="sort alphabet descending" />
-                )
-              }
-            />
+              <Checkbox
+                toggle
+                label="Match all selected"
+                checked={filterType === 'all'}
+                onChange={(e, { checked }) =>
+                  onChangeFilterType(checked ? 'all' : 'any')
+                }
+              />
+              {enableExact && (
+                <Checkbox
+                  toggle
+                  label="Only specific to selection"
+                  checked={!!filterExact}
+                  onChange={(e, { checked }) => {
+                    onChangeFilterExact(checked);
+                  }}
+                />
+              )}
+            </div>
+            <div className="order-controls">
+              <span className="label">Order:</span>
+              <ToggleSort
+                label="By Count"
+                onToggle={() => toggleSort('count')}
+                on={sorting.sortOn === 'count'}
+                icon={
+                  sorting.sortOrder === 'ascending' ? (
+                    <Icon name="sort numeric ascending" />
+                  ) : (
+                    <Icon name="sort numeric descending" />
+                  )
+                }
+              />
+              <ToggleSort
+                label={secondToggleSortConfig.label}
+                onToggle={() => toggleSort(secondToggleSortConfig.sortOn)}
+                on={sorting.sortOn === secondToggleSortConfig.sortOn}
+                icon={
+                  sorting.sortOrder === 'ascending' ? (
+                    <Icon name="sort alphabet ascending" />
+                  ) : (
+                    <Icon name="sort alphabet descending" />
+                  )
+                }
+              />
+            </div>
           </div>
         </div>
       </HeaderWrapper>
