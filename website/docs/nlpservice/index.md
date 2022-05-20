@@ -3,7 +3,7 @@
 NLP Service is a tool that provides services for ``Natural Language Processing``.
 
 
-### It provides the following services:
+#### It provides the following services:
 
 - ``Named-entity recognition (NER)`` for recognizing entities that are present in a given text document. NER works by locating and identifying the named entities present in unstructured text into the standard categories such as person names, locations, organizations, time expressions, quantities, monetary values, percentage, codes etc.
 - ``Question and answer`` that, based on the search term query, extracts answers from the ElasticSearch results.
