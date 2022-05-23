@@ -11,8 +11,6 @@ import { customOrder } from '@eeacms/search/lib/utils';
 import { landingPageDataAtom, isRequestedAtom } from './state';
 import { Icon, Term } from '@eeacms/search/components';
 
-import './tiles.less';
-
 const getFacetConfig = (sections, name) => {
   return sections?.find((facet) => facet.facetField === name);
 };
