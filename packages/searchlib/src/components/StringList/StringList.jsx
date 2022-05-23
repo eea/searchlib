@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 const StringList = ({ value }) => {
   return Array.isArray(value) ? value.join(', ') : value || '';

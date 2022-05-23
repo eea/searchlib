@@ -66,8 +66,11 @@ function SearchInput({
               onKeyDown={(ev) => {
                 if (ev.key === 'Home' || ev.key === 'End') {
                   ev.preventDefault();
-                  const { selectionStart, selectionEnd, selectionDirection } =
-                    ev.currentTarget;
+                  const {
+                    selectionStart,
+                    selectionEnd,
+                    selectionDirection,
+                  } = ev.currentTarget;
                   let from = ev.key === 'Home' ? 0 : 10000;
                   let to = ev.key === 'Home' ? 0 : 10000;
                   let direction = 'forward';

@@ -10,12 +10,12 @@ import cx from 'classnames';
 import ResultContext from './ResultContext';
 import { Icon } from '@eeacms/search/components';
 
-const normalizeStr = (str) => {
-  let tmp = document.createElement('DIV');
-  tmp.innerHTML = str;
-  str = tmp.textContent || tmp.innerText || '';
-  return str;
-};
+// const normalizeStr = (str) => {
+//   let tmp = document.createElement('DIV');
+//   tmp.innerHTML = str;
+//   str = tmp.textContent || tmp.innerText || '';
+//   return str;
+// };
 
 const ExternalLink = (props) => {
   return (

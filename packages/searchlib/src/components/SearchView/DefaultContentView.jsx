@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResultsPerPage, Sorting } from '@elastic/react-search-ui'; // Paging
+import { Sorting } from '@elastic/react-search-ui'; // Paging
 import Paging from './../Paging/Paging';
 import ResultsPerPageSelector from './../ResultsPerPageSelector/ResultsPerPageSelector';
 import {

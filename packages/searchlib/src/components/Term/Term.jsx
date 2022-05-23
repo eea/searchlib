@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { useAppConfig } from '@eeacms/search/lib/hocs';
 import { getTermDisplayValue } from '@eeacms/search/lib/utils';
 

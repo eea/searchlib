@@ -8,7 +8,7 @@ import {
   TextArea,
   Segment,
 } from 'semantic-ui-react';
-import loadable from '@loadable/component';
+// import loadable from '@loadable/component';
 import { Icon } from '@eeacms/search/components';
 import runRequest from '@eeacms/search/lib/runRequest';
 import { useAppConfig } from '@eeacms/search/lib/hocs';

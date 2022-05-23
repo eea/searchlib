@@ -18,7 +18,7 @@ function Paging({ className, resultsPerPage, onChange, ...rest }) {
 
   return (
     <>
-      <div className="wip">
+      <div>
         {current > 1 ? (
           <Button onClick={() => goToPrev()} className="prev" color="green">
             <Icon name="angle double left" />
