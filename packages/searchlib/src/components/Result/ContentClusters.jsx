@@ -17,7 +17,7 @@ const ContentClusters = ({ clusters, item }) => {
     ([clusterName, cluster], index) => {
       // protect against async cluster information not filled in yet
       return Object.keys(cluster).length ? (
-        <span key={index}>
+        <span className="tags-wrapper" key={index}>
           <span className="cluster-icon">
             <Icon {...cluster.icon} />
           </span>
