@@ -3,13 +3,13 @@
   "version": "0.2.2",
   "main": "src/index.js",
   "browser": {
-    "./dist/index.js": "./dist/index.js"
+    "./src/index.js": "./src/index.js"
   },
   "directories": {
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "src"
   ],
   "scripts": {
     "storybook": "start-storybook -p 6006",
