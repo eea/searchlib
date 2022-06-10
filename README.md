@@ -1,5 +1,7 @@
 # EEA Semantic Search
 
+> DEPRECATED: See https://github.com/eea/eeacms-searchlib
+
 This package contains libraries and demo code for the EEA Semantic Search
 service.
 
